@@ -1,0 +1,1 @@
+<a href="<?php echo url_for('@default?module=promovare&action=backgroundHomepage');?>" <?php if ($sf_params->get('action') == 'backgroundHomepage') echo 'class="selected"';?>>Background Homepage</a>

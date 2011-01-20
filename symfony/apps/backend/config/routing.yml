@@ -1,0 +1,126 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
+  
+PhotoAlbum_view:
+  url: /photos/view
+  param: {module: photos, action: view}
+
+PhotoAlbum_edit:
+  url: /photos/view
+  param: {module: photos, action: view}
+  
+PhotoAlbum_moderate:
+  url: /photos/moderate
+  param: {module: photos, action: moderate}  
+  
+VideoAlbum_view:
+  url: /videos/view
+  param: {module: videos, action: view}
+
+VideoAlbum_edit:
+  url: /videos/view
+  param: {module: videos, action: view}
+
+VideoAlbum_moderate:
+  url: /videos/moderate
+  param: {module: videos, action: moderate}  
+  
+Person_edit:
+  url: /persons/edit
+  param: {module: persons, action: edit}
+  
+Person_view:
+  url: /persons/view
+  param: {module: persons, action: view}
+
+Person_moderate:
+  url: /persons/moderate
+  param: {module: persons, action: moderate}  
+  
+Film_edit:
+  url: /films/edit
+  param: {module: films, action: edit}
+
+Film_view:
+  url: /films/view
+  param: {module: films, action: view}
+  
+Film_moderate:
+  url: /films/moderate
+  param: {module: films, action: moderate}  
+  
+Cinema_view:
+  url: /cinemas/view
+  param: {module: cinemas, action: view}
+
+Cinema_edit:
+  url: /cinemas/edit
+  param: {module: cinemas, action: edit}
+  
+Cinema_moderate:
+  url: /cinemas/moderate
+  param: {module: cinemas, action: moderate}  
+  
+FestivalEdition_edit:
+  url: /festivalEditions/edit
+  param: {module: festivalEditions, action: edit}
+
+FestivalEdition_view:
+  url: /festivalEditions/view
+  param: {module: festivalEditions, action: view}
+  
+FestivalEdition_moderate:
+  url: /festivalEditions/moderate
+  param: {module: festivalEditions, action: moderate}  
+  
+Article_edit:
+  url: /articles/edit
+  param: {module: articles, action: edit}
+
+Article_view:
+  url: /articles/view
+  param: {module: articles, action: view}
+  
+Article_moderate:
+  url: /articles/moderate
+  param: {module: articles, action: moderate}  
+
+Stire_view:
+  url: /stires/view
+  param: {module: stires, action: view}
+
+Stire_edit:
+  url: /stires/edit
+  param: {module: stires, action: edit}
+  
+Stire_moderate:
+  url: /stires/moderate
+  param: {module: stires, action: moderate}
+  
+  

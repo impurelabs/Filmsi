@@ -1,0 +1,640 @@
+Homepage:
+  options:
+    symfony: {filter: false}
+    charset: utf8
+  columns:
+    background_filename: { type: string(250) }
+
+Library:
+  options:
+    symfony: {filter: false, form: false}
+    charset: utf8
+  actAs: [Timestampable]
+  columns:
+    type: {type: string(250)} 
+    imdb: {type: string(250)}
+    name: {type: string(250)}
+    publish_date: {type: date}
+    type: {type: string(250)}
+    category: {type: string(250)}
+    user_id: {type: integer}
+    state: { type:enum, values: ['-1', '0', '1'] }
+    photo_album_id: {type: integer}
+    video_album_id: {type: integer}
+  relations:
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+
+PhotoAlbum:
+  options:
+    symfony: {filter: false}
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "PhotoAlbum", has_imdb: false, has_category: false, has_photo: false, has_video: false}
+  columns:
+    name: {type: string(250)}
+    library_id: {type: integer}
+    state: {type: enum, values: [-1, 0, 1]}
+    publish_date: {type: date}
+    user_id: {type: integer}
+  relations:
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Library: {class: Library, local: library_id, foreignType: one, onDelete: CASCADE}     
+    
+Photo:
+  options:
+    symfony: {filter: false}
+    charset: utf8
+  actAs:
+    Sortable: {uniqueBy: ['album_id']}
+  columns:
+    filename: {type: string(50), notnull:true}
+    description: {type: string(250)}
+    state: {type: enum, values: [-1, 0, 1]}
+    album_id: {type: integer}
+  relations:
+    Album: {class: PhotoAlbum, local: album_id, foreign: id, foreignAlias: Photos, onDelete: CASCADE, onUpdate: CASCADE}
+
+VideoAlbum:
+  options:
+    symfony: {filter: false}
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "VideoAlbum", has_imdb: false, has_category: false, has_photo: false, has_video: false}
+  columns:
+    name: {type: string(250)}
+    library_id: {type: integer}
+    state: {type: enum, values: [-1, 0, 1]}
+    publish_date: {type: date}
+    user_id: {type: integer}
+  relations:
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Library: {class: Library, local: library_id, foreignType: one, onDelete: CASCADE}     
+    
+Video:
+  options:
+    symfony: {filter: false}
+    charset: utf8
+  actAs:
+    Sortable: {uniqueBy: ['album_id']}
+  columns:
+    code: {type: string(250), notnull:true}
+    name: {type: string(250)}
+    state: {type: enum, values: [-1, 0, 1]}
+    album_id: {type: integer}
+  relations:
+    Album: {class: VideoAlbum, local: album_id, foreign: id, foreignAlias: Videos, onDelete: CASCADE, onUpdate: CASCADE}
+    
+Person:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "Person", has_imdb: true, has_category: false, has_photo: true, has_video: true}
+  columns:
+    first_name: { type: string(250) }
+    last_name: { type: string(250) }
+    date_of_birth: { type: date }
+    date_of_death: { type: date }
+    place_of_birth: { type: string(250) }
+    filename: { type: string(250)}
+    biography_teaser: { type: string(250) }
+    biography_content: { type: text }
+    meta_description: { type: string(250) }
+    meta_keywords: { type: string(250) }
+    url_key: { type: string(250) }
+    state: {type: enum, values: [-1, 0, 1]}
+    imdb: {type: string(250), notnull: true}
+    is_actor: { type: bool }
+    is_director: { type: bool }
+    is_scriptwriter: { type: bool }
+    is_producer: { type: bool }
+    publish_date: {type: date}
+    user_id: {type: integer}
+    library_id: {type: integer}
+    filename: {type: string(250)}
+    photo_album_id: {type: integer}
+    video_album_id: {type: integer}
+  relations:
+    PhotoAlbum: {class: PhotoAlbum, local: photo_album_id, foreignType: one, onDelete: CASCADE}
+    VideoAlbum: {class: VideoAlbum, local: video_album_id, foreignType: one, onDelete: CASCADE}
+    Films: { class: Film, local: person_id, foreign: film_id, refClass: FilmPerson, foreignAlias: Persons }
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Article: { class: Article, local: person_id, foreign: article_id, refClass: PersonArticle, foreignAlias: Persons }
+        
+Genre:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    name: { type: string(250) }
+    
+Film:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "Film", has_imdb: true, has_category: false, has_photo: true, has_video: true}
+  columns:
+    imdb: { type: string(250) }
+    is_series: { type: bool }
+    name_ro: { type: string(250) }
+    name_en: { type: string(250) }
+    year: { type: year } 
+    rating: { type: string(250) }
+    filename: { type: string(250) }
+    meta_description: { type: string(250) }
+    meta_keywords: { type: string(250) }
+    url_key: { type: string(250) }
+    duration: { type: string(250) }
+    is_type_film: { type: bool }
+    is_type_digital: { type: bool }
+    is_type_3d: { type: bool }
+    distribuitor: {type: string(250) }
+    description_teaser: { type: string(250) }
+    description_content: { type: text }
+    publish_date: { type: date }
+    state: {type: enum, values: [-1, 0, 1]}
+    user_id: {type: integer}
+    library_id: {type: integer}
+    photo_album_id: {type: integer}
+    video_album_id: {type: integer}
+    status_in_production: { type: bool }
+    status_cinema: { type: bool}
+    status_cinema_year: { type: integer }
+    status_cinema_month: { type: integer }
+    status_cinema_day: { type: integer }
+    status_dvd: { type: bool}
+    status_dvd_year: { type: integer }
+    status_dvd_month: { type: integer }
+    status_dvd_day: { type: integer }
+    status_bluray: { type: bool}
+    status_bluray_year: { type: integer }
+    status_bluray_month: { type: integer }
+    status_bluray_day: { type: integer }
+    status_online: { type: bool}
+    status_online_year: { type: integer }
+    status_online_month: { type: integer }
+    status_online_day: { type: integer }
+    background_filename: { type: string(250) }
+  relations:
+    PhotoAlbum: {class: PhotoAlbum, local: photo_album_id, foreignType: one, onDelete: CASCADE}
+    VideoAlbum: {class: VideoAlbum, local: video_album_id, foreignType: one, onDelete: CASCADE}
+    Genres: { class: Genre, local: film_id, foreign: genre_id, refClass: FilmGenre, foreignAlias: Films }
+    Persons: { class: Person, local: film_id, foreign: person_id, refClass: FilmPerson, foreignAlias: Films }
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Article: { class: Article, local: film_id, foreign: article_id, refClass: FilmArticle, foreignAlias: Films }
+
+FilmEpisode:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    imdb: { type: string(250) }
+    name: { type: string(250) }
+    season: { type: integer(1) }
+    number: { type: integer(1) }
+    film_id: { type: integer }
+  relations:
+    Film: {class: Film, local: film_id, foreignType: one, onDelete: CASCADE}
+
+FilmGenre:
+  options:
+    symfony: { form: false, filter: false }
+    charset: utf8
+  columns:
+    film_id: { type: integer, primary: true }
+    genre_id: { type: integer, primary: true }
+  relations:
+    Film: { class: Film, local: film_id, onDelete: CASCADE }
+    Genre: { class: Genre, local: genre_id, onDelete: CASCADE }
+     
+FilmPerson:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    film_id: { type: integer, primary: true }
+    person_id: { type: integer, primary: true }
+    is_actor: {type: bool}
+    is_director: {type: bool}
+    is_scriptwriter: {type: bool}
+    is_producer: {type: bool}
+  relations:
+    Film: { class: Film, local: film_id, onDelete: CASCADE }
+    Person: { class: Person, local: person_id, onDelete: CASCADE }
+   
+Festival:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    name: { type: string(250) }
+    imdb_key: { type: string(250)}
+    
+FestivalEdition:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "FestivalEdition", has_imdb: false, has_category: false, has_photo: true, has_video: true}
+  columns:
+    edition: { type: year, notnull: true }
+    filename: { type: string(250) }
+    meta_description: { type: string(250) }
+    meta_keywords: { type: string(250) }
+    url_key: { type: string(250) }
+    description_teaser: { type: string(250) }
+    description_content: { type: text }
+    publish_date: { type: date }
+    state: {type: enum, values: [-1, 0, 1]}
+    festival_id: {type: integer}
+    user_id: {type: integer}
+    library_id: {type: integer}
+    photo_album_id: {type: integer}
+    video_album_id: {type: integer}
+  relations:
+    PhotoAlbum: {class: PhotoAlbum, local: photo_album_id, foreignType: one, onDelete: CASCADE}
+    VideoAlbum: {class: VideoAlbum, local: video_album_id, foreignType: one, onDelete: CASCADE}
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Festival: {class: Festival, local: festival_id, foreignType: one, onDelete: CASCADE}
+    Article: { class: Article, local: festival_edition_id, foreign: article_id, refClass: FestivalEditionArticle, foreignAlias: FestivalEditions }
+
+FestivalSection:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    name: { type: string(250) }
+    imdb_key: { type: string(250)}
+    festival_edition_id: {type: integer}
+  relations:
+    Persons: { class: Person, local: festival_section_id, foreign: person_id, refClass: FestivalSectionPerson, foreignAlias: FestivalSection }
+    FestivalEdition: {class: FestivalEdition, local: festival_edition_id, foreign: id, foreignAlias: FestivalSections, onDelete: CASCADE, onUpdate: CASCADE}
+
+FestivalSectionPerson:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    festival_section_id: { type: integer, primary: true }
+    person_id: { type: integer, primary: true }
+  relations:
+    FestivalSection: { class: FestivalSection, local: festival_section_id, onDelete: CASCADE }
+    Person: { class: Person, local: person_id, onDelete: CASCADE }
+
+FestivalSectionParticipant:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    festival_section_id: { type: integer }
+    film_imdb: { type: string(250) }
+    person_imdb: { type: string(250) }
+    is_winner: {type: bool}
+  relations:
+    FestivalSection: { class: FestivalSection, local: festival_section_id, onDelete: CASCADE }
+      
+Cinema:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "Cinema", has_imdb: false, has_category: false, has_photo: false, has_video: false}
+  columns:
+    name: { type: string(250) }
+    location_id: {type: integer}
+    address: { type: string(250) }
+    phone: {type: string(250)}
+    website: {type: string(250) }
+    lat: { type: string(250) }
+    lng: { type: string(250) }
+    map_zoom: { type: integer(1), unsigned: true }
+    seats: { type: string(250)}
+    room_count: { type: integer(1), unsigned: true }
+    sound: { type: string(250) }
+    is_type_film: { type: bool }
+    is_type_digital: { type: bool }
+    is_type_3d: { type: bool }
+    ticket_price: {type: string(250) }
+    filename: { type: string(250) }
+    description_teaser: { type: string(250) }
+    description_content: { type: text }
+    meta_description: { type: string(250) }
+    meta_keywords: { type: string(250) }
+    url_key: { type: string(250) }
+    publish_date: { type: date }
+    state: {type: enum, values: [-1, 0, 1]}
+    user_id: {type: integer}
+    library_id: {type: integer}
+  relations:
+    Service: { class: Service, local: cinema_id, foreign: service_id, refClass: CinemaService, foreignAlias: Services }
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Location: { class: Location, local: location_id, foreignType: one}
+    Article: { class: Article, local: cinema_id, foreign: article_id, refClass: CinemaArticle, foreignAlias: Cinemas }
+
+Location:
+  options:
+    symfony: {filter: false}
+    charset: utf8
+  columns:
+    country: {type: string(128)}
+    region: {type: string(128)}
+    city: {type: string(128)}
+    importance: {type: integer(2)} 
+    
+Service:
+  options:
+    symfony: { filter: false }
+  columns:
+    name: { type: string(250) }
+     
+CinemaService:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    cinema_id: { type: integer, primary: true }
+    service_id: { type: integer, primary: true }
+  relations:
+    Cinema: { class: Cinema, local: cinema_id, onDelete: CASCADE }
+    Service: { class: Genre, local: service_id, onDelete: CASCADE }
+    
+CinemaPromotion:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    name: { type: string(250) }
+    filename: { type: string(250) }
+    content: { type: text }
+    cinema_id: { type: integer }
+  relations:
+    Cinema: {class: Cinema, local: cinema_id, foreign: id, foreignAlias: Promotions, onDelete: CASCADE, onUpdate: CASCADE}
+    
+CinemaSchedule:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    cinema_id: { type: integer }
+    film_id: { type: integer }
+    day: { type: date, notnull: true }
+    schedule: { type: string(250) }
+    format: {type: enum, values: ['pelicula', 'digital', '3d']}
+  relations:
+    Cinema: { class: Cinema, local: cinema_id, foreign: id, foreignAlias: Schedule, onDelete: CASCADE, onUpdate: CASCADE }
+    Film: { class: Film, local: film_id, foreign: id, foreignAlias: Schedule, onDelete: CASCADE, onUpdate: CASCADE }
+    
+Category:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    name: { type: string(250) }
+    
+Article:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "Article", has_imdb: false, has_category: true, has_photo: true, has_video: true}
+  columns:
+    name: { type: string(250) }
+    content_teaser: { type: string(250) }
+    content_content: { type: text }
+    filename: { type: string(250) }
+    meta_description: { type: string(250) }
+    meta_keywords: { type: string(250) }
+    url_key: { type: string(250) }
+    about_stars: { type: bool }
+    publish_date: { type: date }
+    expiration_date: { type: date }
+    state: {type: enum, values: [-1, 0, 1]}
+    user_id: {type: integer}
+    library_id: {type: integer}
+    photo_album_id: {type: integer}
+    video_album_id: {type: integer}
+  relations:
+    PhotoAlbum: {class: PhotoAlbum, local: photo_album_id, foreignType: one, onDelete: CASCADE}
+    VideoAlbum: {class: VideoAlbum, local: video_album_id, foreignType: one, onDelete: CASCADE}
+    Category: { class: Category, local: article_id, foreign: category_id, refClass: ArticleCategory, foreignAlias: Articles }
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Person: { class: Person, local: article_id, foreign: person_id, refClass: PersonArticle, foreignAlias: Articles }
+    Film: { class: Film, local: article_id, foreign: film_id, refClass: FilmArticle, foreignAlias: Articles }
+    Cinema: { class: Cinema, local: article_id, foreign: cinema_id, refClass: CinemaArticle, foreignAlias: Articles }
+    FestivalEdition: { class: FestivalEdition, local: article_id, foreign: festival_edition_id, refClass: FestivalEditionArticle, foreignAlias: Articles }
+     
+ArticleCategory:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    article_id: { type: integer, primary: true }
+    category_id: { type: integer, primary: true }
+  relations:
+    Article: { class: Article, local: article_id, onDelete: CASCADE }
+    Category: { class: Category, local: category_id, onDelete: CASCADE }
+     
+FilmArticle:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    article_id: { type: integer, primary: true }
+    film_id: { type: integer, primary: true }
+  relations:
+    Article: { class: Article, local: article_id, onDelete: CASCADE }
+    Film: { class: Film, local: film_id, onDelete: CASCADE }
+     
+PersonArticle:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    article_id: { type: integer, primary: true }
+    person_id: { type: integer, primary: true }
+  relations:
+    Article: { class: Article, local: article_id, onDelete: CASCADE }
+    Person: { class: Person, local: person_id, onDelete: CASCADE }
+     
+CinemaArticle:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    article_id: { type: integer, primary: true }
+    cinema_id: { type: integer, primary: true }
+  relations:
+    Article: { class: Article, local: article_id, onDelete: CASCADE }
+    Cinema: { class: Cinema, local: cinema_id, onDelete: CASCADE }
+     
+FestivalEditionArticle:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    article_id: { type: integer, primary: true }
+    festival_edition_id: { type: integer, primary: true }
+  relations:
+    Article: { class: Article, local: article_id, onDelete: CASCADE }
+    FestivalEdition: { class: FestivalEdition, local: festival_edition_id, onDelete: CASCADE }
+    
+
+    
+Stire:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs: 
+    inLibrary: { type_key: "Stire", has_imdb: false, has_category: false, has_photo: true, has_video: true}
+  columns:
+    name: { type: string(250) }
+    content_teaser: { type: string(250) }
+    content_content: { type: text }
+    filename: { type: string(250) }
+    meta_description: { type: string(250) }
+    meta_keywords: { type: string(250) }
+    url_key: { type: string(250) }
+    about_stars: { type: bool }
+    publish_date: { type: date }
+    expiration_date: { type: date }
+    state: {type: enum, values: [-1, 0, 1]}
+    user_id: {type: integer}
+    library_id: {type: integer}
+    photo_album_id: {type: integer}
+    video_album_id: {type: integer}
+  relations:
+    PhotoAlbum: {class: PhotoAlbum, local: photo_album_id, foreignType: one, onDelete: CASCADE}
+    VideoAlbum: {class: VideoAlbum, local: video_album_id, foreignType: one, onDelete: CASCADE}
+    Author: {class: sfGuardUser, local: user_id, foreignType: one, onDelete: CASCADE}
+    Person: { class: Person, local: stire_id, foreign: person_id, refClass: PersonStire, foreignAlias: Stires }
+    Film: { class: Film, local: stire_id, foreign: film_id, refClass: FilmStire, foreignAlias: Stires }
+    Cinema: { class: Cinema, local: stire_id, foreign: cinema_id, refClass: CinemaStire, foreignAlias: Stires }
+    FestivalEdition: { class: FestivalEdition, local: stire_id, foreign: festival_edition_id, refClass: FestivalEditionStire, foreignAlias: Stires }
+     
+FilmStire:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    stire_id: { type: integer, primary: true }
+    film_id: { type: integer, primary: true }
+  relations:
+    Stire: { class: Stire, local: stire_id, onDelete: CASCADE }
+    Film: { class: Film, local: film_id, onDelete: CASCADE }
+     
+PersonStire:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    stire_id: { type: integer, primary: true }
+    person_id: { type: integer, primary: true }
+  relations:
+    Stire: { class: Stire, local: stire_id, onDelete: CASCADE }
+    Person: { class: Person, local: person_id, onDelete: CASCADE }
+     
+CinemaStire:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    stire_id: { type: integer, primary: true }
+    cinema_id: { type: integer, primary: true }
+  relations:
+    Stire: { class: Stire, local: stire_id, onDelete: CASCADE }
+    Cinema: { class: Cinema, local: cinema_id, onDelete: CASCADE }
+     
+FestivalEditionStire:
+  options:
+    symfony: { form:   false, filter: false }
+    charset: utf8
+  columns:
+    stire_id: { type: integer, primary: true }
+    festival_edition_id: { type: integer, primary: true }
+  relations:
+    Stire: { class: Stire, local: stire_id, onDelete: CASCADE }
+    FestivalEdition: { class: FestivalEdition, local: festival_edition_id, onDelete: CASCADE }
+    
+Shop:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    name: { type: string(250) }
+    email: { type: string(250) }
+    phone: { type: string(250) }
+    url: { type: string(250) }
+    filename: { type: string(250) }
+    description: { type: text }
+  relations:
+    Films: { class: Film, local: shop_id, foreign: film_id, refClass: ShopFilm, foreignAlias: Shops }
+
+ShopFilm:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    shop_id: { type: integer }
+    film_id: { type: integer }
+    url: {type: string(250)}
+    format: {type: enum, values: ['dvd', 'bluray', 'online']}
+  relations:
+    Shop: { class: Shop, local: shop_id, onDelete: CASCADE }
+    Film: { class: Film, local: film_id, onDelete: CASCADE }
+    
+BoxofficeFilm:
+  options:
+    symfony: { filter: false }
+  columns:
+    type: { type: enum, values: [ro, us], primary: true}
+    film_1_id: { type: integer }
+    film_2_id: { type: integer }
+    film_3_id: { type: integer }
+    film_4_id: { type: integer }
+    film_5_id: { type: integer }
+  relations:
+    Film1: { class: Film, local: film_1_id, foreign: id }
+    Film2: { class: Film, local: film_2_id, foreign: id }
+    Film3: { class: Film, local: film_3_id, foreign: id }
+    Film4: { class: Film, local: film_4_id, foreign: id }
+    Film5: { class: Film, local: film_5_id, foreign: id }
+    
+Content:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  columns:
+    id: { type: integer, primary: true}
+    content: { type: text }
+
+Comment:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs:
+    Timestampable:
+      updated: {disabled: true}
+  columns:
+    name: { type: string }
+    email: { type: string, email: true }
+    content: { type: text }
+    user_id: { type: integer }
+    state: { type: bool }
+    ip: { type: string(100) }
+    type: { type: string(100) }
+
+Visit:
+  options:
+    symfony: { filter: false }
+    charset: utf8
+  actAs:
+    Timestampable:
+      updated: {disabled: true}
+  columns:
+    library_id: { type: integer }
+    url: { type: string(250) }
+    name: { type: string(250) }
+    ip: { type: string(100) }
+
+  

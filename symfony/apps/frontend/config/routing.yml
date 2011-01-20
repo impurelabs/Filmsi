@@ -1,0 +1,68 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+login:
+  url:   /login
+  param: { module: user, action: login }
+
+logout:
+  url:   /logout
+  param: { module: user, action: logout }
+
+forgot_password:
+  url:   /request_password
+  param: { module: user, action: password }
+
+articles:
+  url: /articole
+  param: { module: articles, action: index }
+
+article:
+  url: /articol/:id/:key
+  param: { module: articles, action: view }
+
+persons:
+  url: /persoane
+  param: { module: persons, action: index }
+
+person:
+  url: /persoana/:id/:key
+  param: { module: persons, action: view }
+
+films:
+  url: /films
+  param: { module: films, action: index }
+
+film:
+  url: /film/:id/:key
+  param: { module: films, action: view }
+
+cinemas:
+  url: /cinematografe
+  param: { module: cinemas, action: index }
+
+cinema:
+  url: /cinematograf/:id/:key
+  param: { module: cinemas, action: view }
+
+festivaleditions:
+  url: /festivaluri
+  param: { module: festivaleditions, action: index }
+
+festivaledition:
+  url: /festival/:id/:key
+  param: { module: festivaleditions, action: view }
+  
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

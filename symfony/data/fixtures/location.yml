@@ -1,0 +1,238 @@
+Location:
+    location-1: {country: "RO", region: "Bucuresti", city: "Bucuresti", importance: "1921"}
+    location-14: {country: "RO", region: "Ilfov", city: "Buftea", importance: "19"}
+    location-70: {country: "RO", region: "Ilfov", city: "Otopeni", importance: "10"}
+    location-104: {country: "RO", region: "Alba", city: "Abrud", importance: "6"}
+    location-108: {country: "RO", region: "Alba", city: "Aiud", importance: "28"}
+    location-110: {country: "RO", region: "Alba", city: "Alba Iulia", importance: "66"}
+    location-129: {country: "RO", region: "Alba", city: "Baia de Aries", importance: "4"}
+    location-154: {country: "RO", region: "Alba", city: "Blaj", importance: "21"}
+    location-259: {country: "RO", region: "Alba", city: "Cugir", importance: "30"}
+    location-496: {country: "RO", region: "Alba", city: "Ocna Mures", importance: "15"}
+    location-611: {country: "RO", region: "Alba", city: "Sebes", importance: "29"}
+    location-666: {country: "RO", region: "Alba", city: "Teius", importance: "7"}
+    location-761: {country: "RO", region: "Alba", city: "Zlatna", importance: "9"}
+    location-774: {country: "RO", region: "Brasov", city: "Brasov", importance: "283"}
+    location-787: {country: "RO", region: "Brasov", city: "Codlea", importance: "24"}
+    location-812: {country: "RO", region: "Brasov", city: "Fagaras", importance: "35"}
+    location-866: {country: "RO", region: "Brasov", city: "Predeal", importance: "6"}
+    location-878: {country: "RO", region: "Brasov", city: "Rupea", importance: "6"}
+    location-879: {country: "RO", region: "Brasov", city: "Sacele", importance: "29"}
+    location-920: {country: "RO", region: "Brasov", city: "Victoria", importance: "10"}
+    location-930: {country: "RO", region: "Brasov", city: "Zarnesti", importance: "26"}
+    location-944: {country: "RO", region: "Covasna", city: "Baraolt", importance: "10"}
+    location-1040: {country: "RO", region: "Covasna", city: "Targu Secuiesc", importance: "22"}
+    location-1070: {country: "RO", region: "Harghita", city: "Baile Tusnad", importance: "1"}
+    location-1071: {country: "RO", region: "Harghita", city: "Balan", importance: "9"}
+    location-1082: {country: "RO", region: "Harghita", city: "Borsec", importance: "3"}
+    location-1123: {country: "RO", region: "Harghita", city: "Cristuru Secuiesc", importance: "11"}
+    location-1151: {country: "RO", region: "Harghita", city: "Gheorgheni", importance: "21"}
+    location-1196: {country: "RO", region: "Harghita", city: "Miercurea-Ciuc", importance: "41"}
+    location-1212: {country: "RO", region: "Harghita", city: "Odorheiu Secuiesc", importance: "36"}
+    location-1274: {country: "RO", region: "Harghita", city: "Toplita", importance: "16"}
+    location-1302: {country: "RO", region: "Harghita", city: "Vlahita", importance: "7"}
+    location-1527: {country: "RO", region: "Mures", city: "Iernut", importance: "9"}
+    location-1559: {country: "RO", region: "Mures", city: "Ludus", importance: "18"}
+    location-1652: {country: "RO", region: "Mures", city: "Reghin", importance: "36"}
+    location-1701: {country: "RO", region: "Mures", city: "Sighisoara", importance: "32"}
+    location-1712: {country: "RO", region: "Mures", city: "Sovata", importance: "12"}
+    location-1799: {country: "RO", region: "Sibiu", city: "Agnita", importance: "12"}
+    location-1813: {country: "RO", region: "Sibiu", city: "Avrig", importance: "16"}
+    location-1837: {country: "RO", region: "Sibiu", city: "Cisnadie", importance: "17"}
+    location-1843: {country: "RO", region: "Sibiu", city: "Copsa Mica", importance: "5"}
+    location-1853: {country: "RO", region: "Sibiu", city: "Dumbraveni", importance: "8"}
+    location-1886: {country: "RO", region: "Sibiu", city: "Medias", importance: "55"}
+    location-1906: {country: "RO", region: "Sibiu", city: "Ocna Sibiului", importance: "4"}
+    location-1953: {country: "RO", region: "Sibiu", city: "Sibiu", importance: "155"}
+    location-1964: {country: "RO", region: "Sibiu", city: "Talmaciu", importance: "9"}
+    location-1991: {country: "RO", region: "Bacau", city: "Bacau", importance: "175"}
+    location-2056: {country: "RO", region: "Bacau", city: "Buhusi", importance: "21"}
+    location-2094: {country: "RO", region: "Bacau", city: "Comanesti", importance: "26"}
+    location-2119: {country: "RO", region: "Bacau", city: "Darmanesti", importance: "14"}
+    location-2240: {country: "RO", region: "Bacau", city: "Moinesti", importance: "25"}
+    location-2263: {country: "RO", region: "Bacau", city: "Onesti", importance: "51"}
+    location-2465: {country: "RO", region: "Botosani", city: "Botosani", importance: "115"}
+    location-2527: {country: "RO", region: "Botosani", city: "Darabani", importance: "12"}
+    location-2538: {country: "RO", region: "Botosani", city: "Dorohoi", importance: "31"}
+    location-2685: {country: "RO", region: "Botosani", city: "Saveni", importance: "8"}
+    location-2926: {country: "RO", region: "Iasi", city: "Iasi", importance: "321"}
+    location-2988: {country: "RO", region: "Iasi", city: "Pascani", importance: "42"}
+    location-3077: {country: "RO", region: "Iasi", city: "Targu Frumos", importance: "13"}
+    location-3164: {country: "RO", region: "Neamt", city: "Bicaz", importance: "8"}
+    location-3350: {country: "RO", region: "Neamt", city: "Piatra Neamt", importance: "105"}
+    location-3382: {country: "RO", region: "Neamt", city: "Roman", importance: "69"}
+    location-3425: {country: "RO", region: "Neamt", city: "Targu Neamt", importance: "22"}
+    location-3600: {country: "RO", region: "Suceava", city: "Falticeni", importance: "33"}
+    location-3627: {country: "RO", region: "Suceava", city: "Gura Humorului", importance: "16"}
+    location-3754: {country: "RO", region: "Suceava", city: "Radauti", importance: "32"}
+    location-3794: {country: "RO", region: "Suceava", city: "Siret", importance: "10"}
+    location-3800: {country: "RO", region: "Suceava", city: "Solca", importance: "4"}
+    location-3813: {country: "RO", region: "Suceava", city: "Suceava", importance: "106"}
+    location-3848: {country: "RO", region: "Suceava", city: "Vatra Dornei", importance: "17"}
+    location-4065: {country: "RO", region: "Vaslui", city: "Husi", importance: "33"}
+    location-4112: {country: "RO", region: "Vaslui", city: "Negresti", importance: "10"}
+    location-4262: {country: "RO", region: "Vaslui", city: "Vaslui", importance: "70"}
+    location-4287: {country: "RO", region: "Bihor", city: "Alesd", importance: "10"}
+    location-4309: {country: "RO", region: "Bihor", city: "Beius", importance: "12"}
+    location-4520: {country: "RO", region: "Bihor", city: "Marghita", importance: "18"}
+    location-4537: {country: "RO", region: "Bihor", city: "Nucet", importance: "2"}
+    location-4541: {country: "RO", region: "Bihor", city: "Oradea", importance: "206"}
+    location-4599: {country: "RO", region: "Bihor", city: "Sacueni", importance: "11"}
+    location-4609: {country: "RO", region: "Bihor", city: "Salonta", importance: "20"}
+    location-4645: {country: "RO", region: "Bihor", city: "Stei", importance: "9"}
+    location-4706: {country: "RO", region: "Bihor", city: "Valea lui Mihai", importance: "10"}
+    location-4718: {country: "RO", region: "Bihor", city: "Vascau", importance: "3"}
+    location-4738: {country: "RO", region: "Bistrita-Nasaud", city: "Beclean", importance: "12"}
+    location-4742: {country: "RO", region: "Bistrita-Nasaud", city: "Bistrita", importance: "81"}
+    location-4865: {country: "RO", region: "Bistrita-Nasaud", city: "Nasaud", importance: "11"}
+    location-5068: {country: "RO", region: "Cluj", city: "Cluj-Napoca", importance: "318"}
+    location-5103: {country: "RO", region: "Cluj", city: "Dej", importance: "38"}
+    location-5140: {country: "RO", region: "Cluj", city: "Gherla", importance: "24"}
+    location-5156: {country: "RO", region: "Cluj", city: "Huedin", importance: "9"}
+    location-5350: {country: "RO", region: "Cluj", city: "Turda", importance: "55"}
+    location-5395: {country: "RO", region: "Maramures", city: "Baia Mare", importance: "137"}
+    location-5396: {country: "RO", region: "Maramures", city: "Baia Sprie", importance: "15"}
+    location-5417: {country: "RO", region: "Maramures", city: "Borsa", importance: "27"}
+    location-5433: {country: "RO", region: "Maramures", city: "Cavnic", importance: "5"}
+    location-5576: {country: "RO", region: "Maramures", city: "Seini", importance: "9"}
+    location-5578: {country: "RO", region: "Maramures", city: "Sighetu Marmatiei", importance: "41"}
+    location-5595: {country: "RO", region: "Maramures", city: "Targu Lapus", importance: "14"}
+    location-5627: {country: "RO", region: "Maramures", city: "Viseu de Sus", importance: "18"}
+    location-5676: {country: "RO", region: "Salaj", city: "Cehu Silvaniei", importance: "8"}
+    location-5766: {country: "RO", region: "Salaj", city: "Jibou", importance: "12"}
+    location-5860: {country: "RO", region: "Salaj", city: "Simleu Silvaniei", importance: "17"}
+    location-5906: {country: "RO", region: "Salaj", city: "Zalau", importance: "63"}
+    location-5957: {country: "RO", region: "Satu Mare", city: "Carei", importance: "25"}
+    location-6057: {country: "RO", region: "Satu Mare", city: "Negresti-Oas", importance: "16"}
+    location-6104: {country: "RO", region: "Satu Mare", city: "Satu Mare", importance: "115"}
+    location-6124: {country: "RO", region: "Satu Mare", city: "Tasnad", importance: "10"}
+    location-6306: {country: "RO", region: "Arges", city: "Costesti", importance: "12"}
+    location-6322: {country: "RO", region: "Arges", city: "Curtea de Arges", importance: "32"}
+    location-6467: {country: "RO", region: "Arges", city: "Mioveni", importance: "35"}
+    location-6517: {country: "RO", region: "Arges", city: "Pitesti", importance: "168"}
+    location-6616: {country: "RO", region: "Arges", city: "Topoloveni", importance: "10"}
+    location-6704: {country: "RO", region: "Calarasi", city: "Budesti", importance: "9"}
+    location-6706: {country: "RO", region: "Calarasi", city: "Calarasi", importance: "71"}
+    location-6747: {country: "RO", region: "Calarasi", city: "Fundulea", importance: "6"}
+    location-6759: {country: "RO", region: "Calarasi", city: "Lehliu", importance: "6"}
+    location-6780: {country: "RO", region: "Calarasi", city: "Oltenita", importance: "31"}
+    location-6972: {country: "RO", region: "D", city: "Fieni", importance: "8"}
+    location-6981: {country: "RO", region: "D", city: "Gaesti", importance: "16"}
+    location-7064: {country: "RO", region: "D", city: "Moreni", importance: "22"}
+    location-7109: {country: "RO", region: "D", city: "Pucioasa", importance: "16"}
+    location-7164: {country: "RO", region: "D", city: "Titu", importance: "10"}
+    location-7216: {country: "RO", region: "Giurgiu", city: "Bolintin-Vale", importance: "11"}
+    location-7250: {country: "RO", region: "Giurgiu", city: "Dealu", importance: "8"}
+    location-7268: {country: "RO", region: "Giurgiu", city: "Giurgiu", importance: "69"}
+    location-7295: {country: "RO", region: "Giurgiu", city: "Mihailesti", importance: "7"}
+    location-7423: {country: "RO", region: "Ialomita", city: "Fetesti", importance: "33"}
+    location-7496: {country: "RO", region: "Ialomita", city: "Slobozia", importance: "52"}
+    location-7502: {country: "RO", region: "Ialomita", city: "Tandarei", importance: "14"}
+    location-7505: {country: "RO", region: "Ialomita", city: "Urziceni", importance: "19"}
+    location-7523: {country: "RO", region: "Prahova", city: "Azuga", importance: "6"}
+    location-7525: {country: "RO", region: "Prahova", city: "Baicoi", importance: "20"}
+    location-7559: {country: "RO", region: "Prahova", city: "Breaza", importance: "18"}
+    location-7571: {country: "RO", region: "Prahova", city: "Busteni", importance: "11"}
+    location-7613: {country: "RO", region: "Prahova", city: "Comarnic", importance: "13"}
+    location-7735: {country: "RO", region: "Prahova", city: "Mizil", importance: "17"}
+    location-7784: {country: "RO", region: "Prahova", city: "Ploiesti", importance: "232"}
+    location-7786: {country: "RO", region: "Prahova", city: "Plopeni", importance: "10"}
+    location-7859: {country: "RO", region: "Prahova", city: "Sinaia", importance: "14"}
+    location-7862: {country: "RO", region: "Prahova", city: "Slanic", importance: "7"}
+    location-7908: {country: "RO", region: "Prahova", city: "Urlati", importance: "11"}
+    location-7946: {country: "RO", region: "Prahova", city: "Valenii de Munte", importance: "13"}
+    location-7961: {country: "RO", region: "Teleorman", city: "Alexandria", importance: "50"}
+    location-8116: {country: "RO", region: "Teleorman", city: "Rosiori de Vede", importance: "31"}
+    location-8163: {country: "RO", region: "Teleorman", city: "Turnu Magurele", importance: "30"}
+    location-8182: {country: "RO", region: "Teleorman", city: "Videle", importance: "12"}
+    location-8188: {country: "RO", region: "Teleorman", city: "Zimnicea", importance: "16"}
+    location-8204: {country: "RO", region: "Braila", city: "Braila", importance: "216"}
+    location-8233: {country: "RO", region: "Braila", city: "Faurei", importance: "4"}
+    location-8250: {country: "RO", region: "Braila", city: "Ianca", importance: "12"}
+    location-8395: {country: "RO", region: "Buzau", city: "Buzau", importance: "133"}
+    location-8588: {country: "RO", region: "Buzau", city: "Nehoiu", importance: "12"}
+    location-8639: {country: "RO", region: "Buzau", city: "Pogoanele", importance: "7"}
+    location-8823: {country: "RO", region: "Constanta", city: "Cernavoda", importance: "20"}
+    location-8837: {country: "RO", region: "Constanta", city: "Constanta", importance: "310"}
+    location-8862: {country: "RO", region: "Constanta", city: "Eforie", importance: "9"}
+    location-8903: {country: "RO", region: "Constanta", city: "Mangalia", importance: "40"}
+    location-8904: {country: "RO", region: "Constanta", city: "Medgidia", importance: "43"}
+    location-8915: {country: "RO", region: "Constanta", city: "Navodari", importance: "32"}
+    location-8919: {country: "RO", region: "Constanta", city: "Negru Voda", importance: "5"}
+    location-8932: {country: "RO", region: "Constanta", city: "Ovidiu", importance: "13"}
+    location-8979: {country: "RO", region: "Constanta", city: "Techirghiol", importance: "7"}
+    location-9015: {country: "RO", region: "Galati", city: "Beresti", importance: "3"}
+    location-9066: {country: "RO", region: "Galati", city: "Galati", importance: "298"}
+    location-9159: {country: "RO", region: "Galati", city: "Tecuci", importance: "42"}
+    location-9187: {country: "RO", region: "Tulcea", city: "Babadag", importance: "10"}
+    location-9240: {country: "RO", region: "Tulcea", city: "Isaccea", importance: "5"}
+    location-9250: {country: "RO", region: "Tulcea", city: "Macin", importance: "11"}
+    location-9303: {country: "RO", region: "Tulcea", city: "Sulina", importance: "5"}
+    location-9311: {country: "RO", region: "Tulcea", city: "Tulcea", importance: "92"}
+    location-9324: {country: "RO", region: "Vrancea", city: "Adjud", importance: "20"}
+    location-9422: {country: "RO", region: "Vrancea", city: "Focsani", importance: "103"}
+    location-9475: {country: "RO", region: "Vrancea", city: "Marasesti", importance: "13"}
+    location-9503: {country: "RO", region: "Vrancea", city: "Odobesti", importance: "7"}
+    location-9510: {country: "RO", region: "Vrancea", city: "Panciu", importance: "9"}
+    location-9659: {country: "RO", region: "Dolj", city: "Bailesti", importance: "22"}
+    location-9707: {country: "RO", region: "Dolj", city: "Calafat", importance: "21"}
+    location-9750: {country: "RO", region: "Dolj", city: "Craiova", importance: "302"}
+    location-9775: {country: "RO", region: "Dolj", city: "Filiasi", importance: "20"}
+    location-9956: {country: "RO", region: "Dolj", city: "Segarcea", importance: "8"}
+    location-10093: {country: "RO", region: "Gorj", city: "Bumbesti-Jiu", importance: "11"}
+    location-10249: {country: "RO", region: "Gorj", city: "Motru", importance: "25"}
+    location-10260: {country: "RO", region: "Gorj", city: "Novaci", importance: "6"}
+    location-10327: {country: "RO", region: "Gorj", city: "Rovinari", importance: "12"}
+    location-10385: {country: "RO", region: "Gorj", city: "Ticleni", importance: "5"}
+    location-10388: {country: "RO", region: "Gorj", city: "Tismana", importance: "7"}
+    location-10448: {country: "RO", region: "Mehedinti", city: "Baia de Arama", importance: "5"}
+    location-10544: {country: "RO", region: "Mehedinti", city: "Drobeta-Turnu Severin", importance: "104"}
+    location-10656: {country: "RO", region: "Mehedinti", city: "Orsova", importance: "15"}
+    location-10740: {country: "RO", region: "Mehedinti", city: "Strehaia", importance: "12"}
+    location-10792: {country: "RO", region: "Olt", city: "Bals", importance: "23"}
+    location-10835: {country: "RO", region: "Olt", city: "Caracal", importance: "34"}
+    location-10868: {country: "RO", region: "Olt", city: "Corabia", importance: "21"}
+    location-10902: {country: "RO", region: "Olt", city: "Draganesti-Olt", importance: "13"}
+    location-11017: {country: "RO", region: "Olt", city: "Piatra", importance: "6"}
+    location-11070: {country: "RO", region: "Olt", city: "Scornicesti", importance: "13"}
+    location-11076: {country: "RO", region: "Olt", city: "Slatina", importance: "79"}
+    location-11170: {country: "RO", region: "Valcea", city: "Baile Govora", importance: "3"}
+    location-11171: {country: "RO", region: "Valcea", city: "Baile Olanesti", importance: "4"}
+    location-11216: {country: "RO", region: "Valcea", city: "Brezoi", importance: "7"}
+    location-11326: {country: "RO", region: "Valcea", city: "Dragasani", importance: "22"}
+    location-11392: {country: "RO", region: "Valcea", city: "Horezu", importance: "7"}
+    location-11487: {country: "RO", region: "Valcea", city: "Ocnele Mari", importance: "3"}
+    location-11715: {country: "RO", region: "Arad", city: "Arad", importance: "172"}
+    location-11760: {country: "RO", region: "Arad", city: "Chisineu-Cris", importance: "8"}
+    location-11780: {country: "RO", region: "Arad", city: "Curtici", importance: "9"}
+    location-11834: {country: "RO", region: "Arad", city: "Lipova", importance: "11"}
+    location-11865: {country: "RO", region: "Arad", city: "Nadlac", importance: "8"}
+    location-11906: {country: "RO", region: "Arad", city: "Sebis", importance: "6"}
+    location-11978: {country: "RO", region: "Caras-Severin", city: "Anina", importance: "10"}
+    location-11982: {country: "RO", region: "Caras-Severin", city: "Baile Herculane", importance: "6"}
+    location-11995: {country: "RO", region: "Caras-Severin", city: "Bocsa", importance: "19"}
+    location-12021: {country: "RO", region: "Caras-Severin", city: "Caransebes", importance: "31"}
+    location-12133: {country: "RO", region: "Caras-Severin", city: "Moldova Noua", importance: "15"}
+    location-12147: {country: "RO", region: "Caras-Severin", city: "Oravita", importance: "15"}
+    location-12148: {country: "RO", region: "Caras-Severin", city: "Otelu Rosu", importance: "13"}
+    location-12185: {country: "RO", region: "Caras-Severin", city: "Resita", importance: "83"}
+    location-12285: {country: "RO", region: "Hunedoara", city: "Aninoasa", importance: "6"}
+    location-12336: {country: "RO", region: "Hunedoara", city: "Brad", importance: "18"}
+    location-12362: {country: "RO", region: "Hunedoara", city: "Calan", importance: "14"}
+    location-12428: {country: "RO", region: "Hunedoara", city: "Deva", importance: "69"}
+    location-12456: {country: "RO", region: "Hunedoara", city: "Geoagiu", importance: "6"}
+    location-12481: {country: "RO", region: "Hunedoara", city: "Hateg", importance: "12"}
+    location-12488: {country: "RO", region: "Hunedoara", city: "Hunedoara", importance: "71"}
+    location-12515: {country: "RO", region: "Hunedoara", city: "Lupeni", importance: "31"}
+    location-12554: {country: "RO", region: "Hunedoara", city: "Orastie", importance: "24"}
+    location-12575: {country: "RO", region: "Hunedoara", city: "Petrila", importance: "28"}
+    location-12577: {country: "RO", region: "Hunedoara", city: "Petrosani", importance: "45"}
+    location-12651: {country: "RO", region: "Hunedoara", city: "Simeria", importance: "14"}
+    location-12706: {country: "RO", region: "Hunedoara", city: "Uricani", importance: "12"}
+    location-12739: {country: "RO", region: "Hunedoara", city: "Vulcan", importance: "33"}
+    location-12789: {country: "RO", region: "Timis", city: "Buzias", importance: "8"}
+    location-12839: {country: "RO", region: "Timis", city: "Deta", importance: "7"}
+    location-12855: {country: "RO", region: "Timis", city: "Faget", importance: "7"}
+    location-12911: {country: "RO", region: "Timis", city: "Jimbolia", importance: "10"}
+    location-13028: {country: "RO", region: "Timis", city: "Timisoara", importance: "317"}
+    

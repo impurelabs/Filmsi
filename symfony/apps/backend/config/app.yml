@@ -1,0 +1,24 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:
+  library:
+    list_limit: 50
+    types: [ PhotoAlbum, VideoAlbum, Person, Film, Cinema, FestivalEdition, Stire, Article ]
+    type_names: [ "Album Foto", "Album Video", Persoana, Film, Cinematograf, Festival, Stire, Articol ]
+    
+  film_status:
+    list_limit: 50
+  
+  users:
+    list_limit: 50
+    
+  content:
+    name_1: "Prima locatie"
+    name_2: "A doua locatie"
+    name_3: "A treia locatie"
+    width_1: 200
+    width_2: 300
+    width_3: 400
+    

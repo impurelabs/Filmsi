@@ -1,0 +1,69 @@
+sfGuardUser:
+  User_admin:
+    first_name:     John
+    last_name:      Doe
+    email_address:  john.doe@gmail.com
+    username:       admin
+    password:       admin
+    is_super_admin: true
+    Permissions:    [Permission_faramoderare]
+    
+
+sfGuardPermission:
+  Permission_webeditor: { name: "Webeditor" }
+  Permission_faramoderare: { name: "Fara_moderare" }
+  Permission_moderator: { name: "Moderator" }
+  Permission_articole: { name: "Article" }
+  Permission_stiri: { name: "Stire" }
+  Permission_persoane: { name: "Person" }
+  Permission_filme: { name: "Film" }
+  Permission_cinematografe: { name: "Cinema" }
+  Permission_festivaluri: { name: "Festival" }
+  Permission_foto: { name: "PhotoAlbum" }
+  Permission_video: { name: "VideoAlbum" }
+  Permission_cms: { name: "Cms" }
+  Permission_shop: { name: "Shop" }
+  Permission_status: { name: "Status" }
+  Permission_widget: { name: "Widget" }
+  Permission_widget: { name: "Promovare" }
+
+
+Genre:
+  Action: { name: "Actiune" }
+  Adventure: { name: "Aventura" }
+  Animation: { name: "Desene animate" }
+  Biography: { name: "Biografic" }
+  Comedy: { name: "Comedie" }
+  Crime: { name: "Crima" }
+  Documentary: { name: "Documentar" }
+  Drama: { name: "Drama" }
+  Family: { name: "Pentru Familie" }
+  Fantasi: { name: "Fantastic" }
+  Film-Noir: { name: "Film-Noir" }
+  Game-Show: { name: "Jocuri TV" }
+  History: { name: "Istoric" }
+  Horror: { name: "Horror" }
+  Music: { name: "Muzica" }
+  Musical: { name: "Musical" }
+  Mystery: { name: "Mister" }
+  News: { name: "Actualitate" }
+  Reality-TV: { name: "Reality Show" }
+  Romance: { name: "Romantic" }
+  Sci-Fi: { name: "Science-Fiction" }
+  Sport: { name: "Sport" }
+  Talk-Show: { name: "Talk-Show" }
+  Thriller: { name: "Thriller" }
+  War: { name: "Razboi" }
+  Western: { name: "Western" }
+  
+BoxofficeFilm:
+  Ro: { type: "ro" }
+  En: { type: "us" }
+  
+Content:
+  Location1: { id: 1 }
+  Location2: { id: 2 }
+  Location3: { id: 3 }
+
+Homepage:
+  First: { id: 1 }

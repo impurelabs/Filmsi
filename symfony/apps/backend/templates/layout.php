@@ -17,7 +17,10 @@
 			<a href="<?php echo url_for('@default_index?module=default');?>"><img src="<?php echo image_path('logo.png');?>" /></a>
         </div>
         <?php if ($sf_user->isAuthenticated()):?>
-		<div class="right">Logat ca: <a href="<?php echo url_for('@default_index?module=account');?>"><?php echo $sf_user->getUsername();?></a></div>
+		<div class="right">
+                    Logat ca: <a href="<?php echo url_for('@default_index?module=account');?>"><?php echo $sf_user->getUsername();?></a> |
+                    <a href="<?php echo url_for('@sf_guard_signout');?>">Logout</a>
+                </div>
         <div class="span-20 last mb-2">
         	<a href="<?php echo url_for('@default_index?module=default');?>" <?php if ($sf_params->get('module') == 'default' && $sf_params->get('action') == 'index') echo 'class="selected"';?>>Library</a> |
             <a href="<?php echo url_for('@default?module=default&action=newObject');?>" <?php if ($sf_params->get('action') == 'newObject') echo 'class="selected"';?>>Creeaza obiect nou</a> |
@@ -39,7 +42,9 @@
             <?php if ($sf_user->hasCredential('Moderator')):?>
             <a href="<?php echo url_for('@default?module=default&action=moderate');?>" <?php if ($sf_params->get('action') == 'moderate') echo 'class="selected"';?>>Pentru aprobare</a> |
             <?php endif?>
-            <a href="<?php echo url_for('@sf_guard_signout');?>">Logout</a> |
+            <?php if ($sf_user->hasCredential('Comentarii')):?>
+            <a href="<?php echo url_for('@default_index?module=comments');?>" <?php if ($sf_params->get('module') == 'comments') echo 'class="selected"';?>>Comentarii</a> |
+            <?php endif?>
         </div>
         <?php endif; ?>
         <div class="span-20 last">

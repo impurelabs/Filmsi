@@ -60,11 +60,12 @@ class articlesActions extends sfActions
 		$this->getResponse()->addMeta('keywords', $this->article->getMetaKeywords());
 		$this->getResponse()->addMeta('description', $this->article->getMetaDescription());
 
-		$this->comments = Doctrine_Core::getTable('Comment')->getActiveByType('Article:' . $this->article->getId(), $_SERVER['REMOTE_ADDR']);
 		$this->commentForm = new CommentForm(null, array(
-			'state' => 0,
+			'state' => 1,
 			'ip' => $_SERVER['REMOTE_ADDR'],
-			'type' => 'Article:' . $this->article->getId()
+			'model' => 'Article',
+                        'model_library_id' => $this->article->getLibraryId(),
+                        'model_name' => $this->article->getName()
 		));
 		if ($this->getUser()->isAuthenticated()){
 			$user = $this->getUser()->getGuardUser();
@@ -78,8 +79,13 @@ class articlesActions extends sfActions
 
 			if ($this->commentForm->isValid()){
 				$this->commentForm->save();
+
+                                $this->redirect($this->generateUrl('article', array('id' => $this->article->getId(), 'key' => $this->article->getUrlKey())) . '#comments');
 			}
 		}
+
+                $this->comments = Doctrine_Core::getTable('Comment')->getActiveByModel('Article', $this->article->getLibraryId(), $_SERVER['REMOTE_ADDR']);
+
 
 		/* Add the visit */
 		$visit = new Visit();

@@ -74,6 +74,6 @@ class Article extends BaseArticle
 
 	public function getCountComments()
 	{
-		return Doctrine_Core::getTable('Comment')->getCountByEntity('Article:' . $this->getId());
+		return Doctrine_Core::getTable('Comment')->getCountByEntity('Article', $this->getLibraryId());
 	}
 }

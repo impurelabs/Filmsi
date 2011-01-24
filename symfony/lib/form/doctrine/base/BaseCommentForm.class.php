@@ -22,7 +22,9 @@ abstract class BaseCommentForm extends BaseFormDoctrine
       'user_id'    => new sfWidgetFormInputText(),
       'state'      => new sfWidgetFormInputText(),
       'ip'         => new sfWidgetFormInputText(),
-      'type'       => new sfWidgetFormInputText(),
+      'model'       => new sfWidgetFormInputText(),
+      'model_library_id'       => new sfWidgetFormInputText(),
+      'model_name'       => new sfWidgetFormInputText(),
       'created_at' => new sfWidgetFormDateTime(),
     ));
 
@@ -34,7 +36,9 @@ abstract class BaseCommentForm extends BaseFormDoctrine
       'user_id'    => new sfValidatorInteger(array('required' => false)),
       'state'      => new sfValidatorPass(array('required' => false)),
       'ip'         => new sfValidatorString(array('max_length' => 100, 'required' => false)),
-      'type'       => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'model'       => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'model_library_id'       => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'model_name'       => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'created_at' => new sfValidatorDateTime(),
     ));
 

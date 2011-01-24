@@ -58,9 +58,16 @@ abstract class BaseComment extends sfDoctrineRecord
              'type' => 'string',
              'length' => 100,
              ));
-        $this->hasColumn('type', 'string', 100, array(
+        $this->hasColumn('model', 'string', 100, array(
              'type' => 'string',
              'length' => 100,
+             ));
+        $this->hasColumn('model_library_id', 'string', 100, array(
+             'type' => 'integer'
+             ));
+        $this->hasColumn('model_name', 'string', 100, array(
+             'type' => 'string',
+             'length' => 250
              ));
 
         $this->option('symfony', array(

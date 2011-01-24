@@ -1,4 +1,4 @@
-<h4>Webeditori</h4>
+<h4>Useri</h4>
 <div class="mb-3"><button type="button" onclick="location.href='<?php echo url_for('@default?module=users&action=newUser');?>'">Adauga User nou</button></div>
 
 <strong>Filtre</strong>

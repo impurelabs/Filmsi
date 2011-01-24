@@ -68,7 +68,17 @@
 								</p>
 							</li>
 						<?php endif; ?>
-					<?php endif; ?>
+					<?php else: ?>
+                                            <li class="cell-separator-dotted-bottom innerspacer-bottom-s spacer-bottom-s">
+                                                    <p class="explanation spacer-bottom-s">
+                                                            <a href="" class="important-link"><?php echo $comment->getName();?></a>
+                                                            - <?php echo format_datetime($comment->getCreatedAt(), 'f', 'ro');?>
+                                                    </p>
+                                                    <p class="spacer-left-m">
+                                                            <?php echo $comment->getContent();?>
+                                                    </p>
+                                            </li>
+                                        <?php endif;?>
 				<?php endforeach;?>
             </ul>
         </div>

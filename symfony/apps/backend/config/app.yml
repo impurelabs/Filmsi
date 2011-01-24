@@ -10,8 +10,11 @@ all:
     
   film_status:
     list_limit: 50
-  
+
   users:
+    list_limit: 50
+
+  comments:
     list_limit: 50
     
   content:

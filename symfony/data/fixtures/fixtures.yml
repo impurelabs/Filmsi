@@ -25,7 +25,8 @@ sfGuardPermission:
   Permission_shop: { name: "Shop" }
   Permission_status: { name: "Status" }
   Permission_widget: { name: "Widget" }
-  Permission_widget: { name: "Promovare" }
+  Permission_promotion: { name: "Promovare" }
+  Permission_comments: { name: "Comentarii" }
 
 
 Genre:

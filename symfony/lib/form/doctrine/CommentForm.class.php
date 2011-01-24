@@ -20,7 +20,9 @@ class CommentForm extends BaseCommentForm
 
 		$this->state = $options['state'];
 		$this->ip = $options['ip'];
-		$this->type = $options['type'];
+		$this->model = $options['model'];
+		$this->model_library_id = $options['model_library_id'];
+		$this->model_name = $options['model_name'];
 	}
 
 	public function configure()
@@ -49,7 +51,9 @@ class CommentForm extends BaseCommentForm
 		$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
 		$object->setState($this->state);
 		$object->setIp($this->ip);
-		$object->setType($this->type);
+		$object->setModel($this->model);
+		$object->setModelLibraryId($this->model_library_id);
+		$object->setModelName($this->model_name);
 
 		return $object;
 	}

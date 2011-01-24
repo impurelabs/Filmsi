@@ -144,8 +144,9 @@ class userActions extends sfActions
 				$forgotPassword->save();
 
 				$this->getMailer()->send(new ForgotPasswordRequestEmail(
-				$this->form->user->email_address,
-				$this->getPartial('user/send_request', array('user' => $this->form->user, 'forgot_password' => $forgotPassword))));
+                                    $this->form->user->email_address,
+                                    $this->getPartial('user/send_request', array('user' => $this->form->user, 'forgot_password' => $forgotPassword))
+                                ));
 
 				return $this->renderText(json_encode(array('status' => true)));
 			} else {

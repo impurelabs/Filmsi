@@ -252,11 +252,12 @@
 
     <div class="feedback-container">
     	<div style="position: relative">
-    	<div class="feedback-content">
+    	<div class="feedback-content" id="feedback-form-container">
         	<p class="white spacer-bottom">Ce parere ai despre FilmSi?</p>
-            <input type="input" class="inpttxt0" value="email-ul tau" onclick="$(this).val('')" /><br /><br />
-            <textarea class="txtarea0" onclick="$(this).text('')">comentariul tau</textarea><br /><br />
-            <button type="button" class="normalbutton">TRIMITE</button>
+            <input type="input" id="feedback-name" class="inpttxt0" value="numele tau" onclick="$(this).val('')" /><br /><br />
+            <input type="input" id="feedback-email" class="inpttxt0" value="email-ul tau" onclick="$(this).val('')" /><br /><br />
+            <textarea class="txtarea0" id="feedback-content" onclick="$(this).html('')">comentariul tau</textarea><br /><br />
+            <button type="button" id="feedback-send" class="normalbutton">TRIMITE</button>
         </div>
         <div class="feedback-trigger"></div>
         </div>
@@ -266,6 +267,24 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+        $('#feedback-send').click(function(){
+            $('#feedback-send').replaceWith('<img src="<?php echo image_path('indicator.gif');?>" /> se trimite');
+
+            $.ajax({
+                url: '<?php echo url_for('@default?module=default&action=sendFeedback');?>',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    name: $('#feedback-name').val(),
+                    email: $('#feedback-email').val(),
+                    content: $('#feedback-content').val()
+                },
+                success: function(){
+                    $('#feedback-form-container').html('<br /><br /><br /><p class="bigstrong">Mesajul a fost trimis cu succes.</p><br /><br /><br />');
+                }
+            });
+        });
+
 	$('#user-login-link').click(function(){
 		if ($("#user-container").is(':hidden')){
 			$('#user-container').load('<?php echo url_for('@login');?>')

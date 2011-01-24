@@ -10,13 +10,26 @@
  */
 class defaultActions extends sfActions
 {
- /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeIndex(sfWebRequest $request)
-  {
-	  
-  }
+    /**
+    * Executes index action
+    *
+    * @param sfRequest $request A request object
+    */
+    public function executeIndex(sfWebRequest $request)
+    {
+
+    }
+
+    public function executeSendFeedback(sfWebRequest $request)
+    {
+        $this->forward404If(!$request->isMethod('post'));
+
+        $this->getMailer()->send(new FeedbackEmail(
+            sfConfig::get('app_feedback_email'),
+            $this->getPartial('default/send_feedback', array('name' => $request->getParameter('name'), 'email' => $request->getParameter('email'), 'content' => $request->getParameter('content'))),
+            $request->getParameter('name')
+        ));
+
+        return $this->renderText(json_encode(array('status' => true)));
+    }
 }

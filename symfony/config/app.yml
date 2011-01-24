@@ -88,3 +88,6 @@ all:
     
   rating: 
     types: ["AG - Audienta Generala", "N15", "IM 18", "AP12", "IM 18 XXX - Interzis minorilor si proiectiei cu public", "IC 14"]
+
+  feedback:
+    email: "feedback@filmsi.ro"

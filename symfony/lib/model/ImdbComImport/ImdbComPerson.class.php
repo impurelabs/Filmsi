@@ -159,7 +159,7 @@ class ImdbComPerson
   	}
   	unset($matches);
   	
-  	preg_match('/<td id="img_primary" rowspan="4">(.*?)<\/td>/i', $html, $matches);
+  	preg_match('/<td id="img_primary" rowspan="2">(.*?)<\/td>/i', $html, $matches);
   	preg_match('/src="([^"]*)"/i', $matches[1], $matches);
   	if (isset($matches[1])){
   		$this->params['filename-source'] = trim($matches[1]);

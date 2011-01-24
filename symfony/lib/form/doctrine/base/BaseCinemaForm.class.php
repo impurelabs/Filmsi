@@ -30,7 +30,7 @@ abstract class BaseCinemaForm extends BaseFormDoctrine
       'is_type_film'        => new sfWidgetFormInputText(),
       'is_type_digital'     => new sfWidgetFormInputText(),
       'is_type_3d'          => new sfWidgetFormInputText(),
-      'ticket_price'        => new sfWidgetFormInputText(),
+      'ticket_price'        => new sfWidgetFormTextarea(),
       'filename'            => new sfWidgetFormInputText(),
       'description_teaser'  => new sfWidgetFormInputText(),
       'description_content' => new sfWidgetFormInputText(),

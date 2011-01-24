@@ -4,7 +4,7 @@ class FilmStatusForm extends FilmForm
 public function configure()
   {
   	$yearRange = array('0' => '');
-  	for ($i = (int)date('Y'); $i <= date('Y') + 10; $i++){
+  	for ($i = (int)date('Y') + 2; $i >= date('Y') - 20; $i--){
   		$yearRange[$i] =$i;
   	}
   	$monthRange = array('0' => '');

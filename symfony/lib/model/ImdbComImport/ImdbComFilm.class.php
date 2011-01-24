@@ -187,7 +187,6 @@ class ImdbComFilm
   	
   	preg_match('/<td rowspan="2" id="img_primary">(.*)<\/td>/i', $html, $matches);
   	$inWorkParagraph = $matches[1];
-  	
   	preg_match('/src="([^"]*)"/i', $inWorkParagraph, $matches);
   	if (isset($matches[1])){
   		$this->params['filename-source'] = $matches[1];

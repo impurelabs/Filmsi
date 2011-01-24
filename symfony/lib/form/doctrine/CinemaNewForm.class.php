@@ -20,7 +20,7 @@ class CinemaNewForm extends CinemaForm
 	));
   	$this->widgetSchema['seats'] = new sfWidgetFormInput();
   	$this->widgetSchema['sound'] = new sfWidgetFormInput();
-  	$this->widgetSchema['ticket_price'] = new sfWidgetFormInput();
+  	$this->widgetSchema['ticket_price'] = new sfWidgetFormTextarea();
   	$this->widgetSchema['is_type_film'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
   	$this->widgetSchema['is_type_digital'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
   	$this->widgetSchema['is_type_3d'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));

@@ -7,24 +7,33 @@
  */
 class VisitTable extends Doctrine_Table
 {
-    /**
-     * Returns an instance of this class.
-     *
-     * @return object VisitTable
-     */
-    public static function getInstance()
-    {
-        return Doctrine_Core::getTable('Visit');
-    }
+        /**
+         * Returns an instance of this class.
+         *
+         * @return object VisitTable
+         */
+        public static function getInstance()
+        {
+            return Doctrine_Core::getTable('Visit');
+        }
 
 	public function getLatestByIp($ip, $limit)
 	{
-		return Doctrine_Query::create()
-			->from('Visit v')
-			->where('v.ip = ?', $ip)
-			->orderBy('v.created_at DESC')
-			->limit($limit)
-			->groupBy('v.url')
-			->execute();
+            return Doctrine_Query::create()
+                ->from('Visit v')
+                ->where('v.ip = ?', $ip)
+                ->orderBy('v.created_at DESC')
+                ->limit($limit)
+                ->groupBy('v.url')
+                ->execute();
 	}
+
+        public function deleteOlderThan($days)
+        {
+            Doctrine_Query::create()
+                ->delete('Visit v')
+                ->where('v.created_at < date_sub(NOW(), interval ? day)', $days)
+                ->execute();
+        }
+
 }

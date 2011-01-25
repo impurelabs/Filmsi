@@ -460,7 +460,7 @@ class LibraryTable extends Doctrine_Table
 		return $q['l_counter'];
 	}
 	
-    public function getPending($offset = 0)
+        public function getPending($offset = 0)
 	{
 		return Doctrine_Query::create()
 			->from('Library l')
@@ -542,4 +542,21 @@ class LibraryTable extends Doctrine_Table
 		// Commit Transaction
     $connection->commit();
 	}
+
+        public function updateVisitCount()
+        {
+            $libraryVisits =  Doctrine_Query::create()
+                ->select('COUNT(v.id) count, v.library_id')
+                ->from('Visit v')
+                ->groupBy('v.library_id')
+                ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+            foreach ($libraryVisits as $libraryVisit){
+                Doctrine_Query::create()
+                    ->update('Library l')
+                    ->set('l.visit_count', '?', $libraryVisit['count'])
+                    ->where('l.id = ?', $libraryVisit['library_id'])
+                    ->execute();
+            }
+        }
 }

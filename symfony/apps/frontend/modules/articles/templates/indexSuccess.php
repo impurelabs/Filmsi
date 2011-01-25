@@ -25,26 +25,11 @@
             <h4>Cele mai <span class="black">bune</span></h4>
         </div>
         <div class="cell-bd">
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
+            <?php foreach($bestArticles as $bestArticle):?>
+        	<a href="<?php echo url_for('@article?id=' . $bestArticle->getId() . '&key=' . $bestArticle->getUrlKey());?>" class="important-link"><?php echo $bestArticle->getName();?></a>
             <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-s spacer-top-s" />
-        	<a href="" class="important-link">Ultimul razboinic al aerului</a>
-            <hr class="cell-separator-dotted-bottom spacer-bottom-m spacer-top-s" />
+            <?php endforeach;?>
+        	
         </div>
     </div>
 </div> <!-- left column end -->

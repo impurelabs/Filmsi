@@ -61,11 +61,28 @@ class ArticleTable extends Doctrine_Table
 
 	public function findLatestByIds($count, $articleIds)
 	{
-		return Doctrine_Query::create()
-			->from('Article a')
-			->whereIn('a.id', $articleIds)
-			->limit($count)
-			->orderBy('a.publish_date DESC')
-			->execute();
+            return Doctrine_Query::create()
+                    ->from('Article a')
+                    ->whereIn('a.id', $articleIds)
+                    ->limit($count)
+                    ->orderBy('a.publish_date DESC')
+                    ->execute();
 	}
+
+        public function getMostVisited($limit)
+        {
+            $libraryArticles = Doctrine_Query::create()
+                ->select('l.id')
+                ->from('Library l')
+                ->where('l.type = "Article"')
+                ->orderBy('l.visit_count DESC')
+                ->limit($limit)
+                ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+            $articles = array();
+            foreach($libraryArticles as $libraryArticle){
+                $articles[] = Doctrine_Core::getTable('Article')->findOneByLibraryId($libraryArticle['id']);
+            }
+            return $articles;
+        }
 }

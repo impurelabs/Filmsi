@@ -44,6 +44,8 @@ class articlesActions extends sfActions
 				$this->navEnd = $this->pageCount;
 			}
 		}
+
+                $this->bestArticles = Doctrine_Core::getTable('Article')->getMostVisited(10);
 	}
 
 	public function executeView(sfWebRequest $request)

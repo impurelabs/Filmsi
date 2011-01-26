@@ -45,4 +45,35 @@ class Stire extends BaseStire
 		$thumb->loadFile($sourceFile);
 		$thumb->save(sfConfig::get('app_stire_path') . '/ts-' . $this->getFilename());
 	}
+
+        public function getRelated($count)
+	{
+		/* Get the id of the stires related to any of the films */
+		$filmStires = Doctrine_Core::getTable('FilmStire')->getRelatedStires($this->getId());
+		/* Get the id of the Stires related to any of the persons */
+		$personStires = Doctrine_Core::getTable('PersonStire')->getRelatedStires($this->getId());
+		/* Get the id of the stires related to any of the cinemas */
+		$cinemaStires = Doctrine_Core::getTable('CinemaStire')->getRelatedStires($this->getId());
+		/* Get the id of the stires related to any of the festival editions */
+		$festivalEditionStires = Doctrine_Core::getTable('FestivalEditionStire')->getRelatedStires($this->getId());
+
+		$stireIds = array_merge($filmStires, $personStires, $cinemaStires, $festivalEditionStires);
+		return Doctrine_Core::getTable('Stire')->findLatestByIds($count, $stireIds);
+	}
+
+	public function getCountComments()
+	{
+		return Doctrine_Core::getTable('Comment')->getCountByEntity('Stire', $this->getLibraryId());
+	}
+
+        public function getFilenameIsTall()
+	{
+            $size = getimagesize(sfConfig::get('app_stire_path') . '/' . $this->getFilename());
+
+            if ($size[1] > $size[0]){
+                    return true;
+            } else {
+                    return false;
+            }
+	}
 }

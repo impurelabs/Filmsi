@@ -21,4 +21,27 @@ class CinemaStireTable extends Doctrine_Table
 			$cinemaStire->save();
 		}
 	}
+
+        public function getRelatedStires($stireId)
+	{
+		$cinemas = Doctrine_Query::create()
+			->from('CinemaStire fs')
+			->where('fs.stire_id = ?', $stireId)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		$cinemaIds = array();
+		foreach($cinemas as $cinema){
+			$cinemaIds[] = $cinema['cinema_id'];
+		}
+
+		$stires = Doctrine_Query::create()
+			->from('CinemaStire fs')
+			->whereIn('fs.cinema_id', $cinemaIds)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		$stireIds = array();
+		foreach($stires as $stire){
+			$stireIds[] = $stire['stire_id'];
+		}
+
+		return $stireIds;
+	}
 }

@@ -73,9 +73,9 @@ all:
     path_for_web: /content/stires
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 600
-    thumbnail_size: 126
-    thumbnail_small_size: 45
+    sourceimage_size: 210
+    thumbnail_size: 210
+    thumbnail_small_size: 210
     
   shop:
     path: %SF_WEB_DIR%/content/shops

@@ -5,3 +5,5 @@
 all:
   article:
     page_limit: 10
+  stire:
+    page_limit: 20

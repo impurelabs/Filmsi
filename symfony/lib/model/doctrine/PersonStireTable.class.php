@@ -21,4 +21,27 @@ class PersonStireTable extends Doctrine_Table
 			$personStire->save();
 		}
 	}
+
+        public function getRelatedStires($stireId)
+	{
+		$persons = Doctrine_Query::create()
+			->from('PersonStire fs')
+			->where('fs.stire_id = ?', $stireId)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		$personIds = array();
+		foreach($persons as $person){
+			$personIds[] = $person['person_id'];
+		}
+
+		$stires = Doctrine_Query::create()
+			->from('PersonStire fs')
+			->whereIn('fs.person_id', $personIds)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		$stireIds = array();
+		foreach($stires as $stire){
+			$stireIds[] = $stire['stire_id'];
+		}
+
+		return $stireIds;
+	}
 }

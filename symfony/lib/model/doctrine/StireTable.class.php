@@ -20,4 +20,45 @@ class StireTable extends Doctrine_Table
 	{
 		return;
 	}
+
+        public function getList($limit = null, $page = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('Stire s')
+                        ->where('s.state = 1')
+			->orderBy('s.publish_date DESC');
+
+		if (!empty ($limit)){
+			$q->limit($limit);
+		}
+
+		if (!empty ($page)){
+			$q->offset(($page - 1) * $limit );
+		}
+
+		return $q->execute();
+	}
+
+	public function getCount()
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(s.id)')
+			->from('Stire s')
+                        ->where('s.state = 1');
+
+		$count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $count['COUNT'];
+	}
+
+        public function findLatestByIds($count, $stireIds = array())
+	{
+            return Doctrine_Query::create()
+                    ->from('Stire s')
+                    ->where('s.state = 1')
+                    ->andWhereIn('s.id', $stireIds)
+                    ->limit($count)
+                    ->orderBy('s.publish_date DESC')
+                    ->execute();
+	}
 }

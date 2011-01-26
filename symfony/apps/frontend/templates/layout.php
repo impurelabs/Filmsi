@@ -35,8 +35,8 @@
                 <span><a href="" class="menu-link separated">In cinema</a></span>
                 <span><a href="" class="menu-link">Pe DVD &amp; Bluray</a></span>
                 <span><a href="" class="menu-link">La TV</a></span>
-                <span><a href="" class="menu-link">Stiri</a></span>
-                <stpan><a href="" class="menu-link">Trailere</a></span>
+                <span><a href="<?php echo url_for('@stires');?>" class="menu-link">Stiri</a></span>
+                <span><a href="" class="menu-link">Trailere</a></span>
                 <span><a href="<?php echo url_for('@articles');?>" class="menu-link">Din filme</a></span>
                 <span><a href="" class="menu-link">Actori &amp; Regizori</a></span>
                 <span class="last"><a href="" class="menu-link">Cinematografe</a></span>

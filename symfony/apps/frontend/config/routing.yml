@@ -26,6 +26,18 @@ article:
   url: /articol/:id/:key
   param: { module: articles, action: view }
 
+stires:
+  url: /stiri
+  param: { module: stires, action: index }
+
+stire:
+  url: /stire/:id/:key
+  param: { module: stires, action: view }
+
+stire_publish:
+  url: /publica-stire
+  param: { module: stires, action: publish }
+
 persons:
   url: /persoane
   param: { module: persons, action: index }

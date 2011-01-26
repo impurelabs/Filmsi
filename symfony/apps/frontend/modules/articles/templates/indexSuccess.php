@@ -101,10 +101,10 @@
 					<div class="clear"></div>
 
 					<div class="cell-separator-dotted-top innerspacer-top spacer-top">
-						<span class="st_email" st_title="<?php echo urlencode($article->getName());?>" ></span>
-					<span class="st_facebook" st_title="<?php echo urlencode('testare mare');?>"></span>
-					<span class="st_twitter" st_title="<?php echo urlencode($article->getName());?>"></span>
-					<div class="inline-block"><a href="<?php echo url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey());?><?php echo $currentCategory != '' ? '?c=' . $currentCategory : '';?>#comments">16 comentarii</a></div>
+                                            <span class="st_email" st_title="<?php echo urlencode($article->getName());?>" ></span>
+                                            <span class="st_facebook" st_title="<?php echo urlencode('testare mare');?>"></span>
+                                            <span class="st_twitter" st_title="<?php echo urlencode($article->getName());?>"></span>
+                                            <div class="inline-block"><a href="<?php echo url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey());?><?php echo $currentCategory != '' ? '?c=' . $currentCategory : '';?>#comments">16 comentarii</a></div>
 					</div>
 				</div>
 			</div> <!-- article item -->

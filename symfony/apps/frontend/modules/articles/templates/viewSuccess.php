@@ -99,7 +99,9 @@
       </div>
       <div class="cell-bd"> 
 		<?php foreach($relatedArticles as $relatedArticle):?>
+                    <?php if ($relatedArticle->getId() != $article->getId()):?>
 			<a href="<?php echo url_for('@article?id=' . $relatedArticle->getId() . '&key=' . $relatedArticle->getUrlKey());?>" class="important-link"><?php echo $relatedArticle->getName();?></a><br /><br />
+                    <?php endif; ?>
 		<?php endforeach;?>
       </div>
     </div>

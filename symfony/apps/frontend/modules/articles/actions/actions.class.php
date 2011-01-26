@@ -22,11 +22,11 @@ class articlesActions extends sfActions
 		$this->currentPage = (int)$request->getParameter('p', 1);
 		$this->currentCategory = $request->getParameter('c', null);
 		$this->categories = Doctrine_Core::getTable('ArticleCategory')->getList();
-		$this->articles = Doctrine_Core::getTable('Article')->getList($this->currentCategory, sfConfig::get('app_article_page_limit'), $this->currentPage - 1);
+		$this->articles = Doctrine_Core::getTable('Article')->getList($this->currentCategory, sfConfig::get('app_article_page_limit'), $this->currentPage);
 		$this->articleCount = Doctrine_Core::getTable('Article')->countByCategory($this->currentCategory);
 		$this->pageCount = ceil($this->articleCount / sfConfig::get('app_article_page_limit'));
 		$this->firstArticleCount = sfConfig::get('app_article_page_limit') * ($this->currentPage - 1) + 1;
-		$this->lastArticleCount = $this->firstArticleCount + $this->articles->count();
+		$this->lastArticleCount = $this->firstArticleCount + $this->articles->count() - 1;
 		if ($this->pageCount <= 5) {
 			$this->navStart = 1;
 			$this->navEnd = $this->pageCount;

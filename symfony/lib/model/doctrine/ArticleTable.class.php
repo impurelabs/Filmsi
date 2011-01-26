@@ -21,23 +21,24 @@ class ArticleTable extends Doctrine_Table
 		return;
 	}
 
-	public function getList($categoryId = null, $limit = null, $offset = null)
+	public function getList($categoryId = null, $limit = null, $page = null)
 	{
 		$q = Doctrine_Query::create()
 			->from('Article a')
+                        ->where('a.state = 1')
 			->orderBy('a.publish_date DESC');
 
 		if (!empty($categoryId)){
 			$q->innerJoin('a.ArticleCategory ac')
-				->where('ac.category_id = ?', $categoryId);
+                          ->addWhere('ac.category_id = ?', $categoryId);
 		}
 
 		if (!empty ($limit)){
 			$q->limit($limit);
 		}
 
-		if (!empty ($offset)){
-			$q->offset($offset);
+		if (!empty ($page)){
+			$q->offset(($page - 1) * $limit );
 		}
 
 		return $q->execute();
@@ -47,11 +48,12 @@ class ArticleTable extends Doctrine_Table
 	{
 		$q = Doctrine_Query::create()
 			->select('COUNT(a.id)')
-			->from('Article a');
+			->from('Article a')
+                        ->where('a.state = 1');
 
 		if (!empty($categoryId)){
 			$q->innerJoin('a.ArticleCategory ac')
-				->where('ac.category_id = ?', $categoryId);
+				->addWhere('ac.category_id = ?', $categoryId);
 		}
 
 		$count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
@@ -63,7 +65,8 @@ class ArticleTable extends Doctrine_Table
 	{
             return Doctrine_Query::create()
                     ->from('Article a')
-                    ->whereIn('a.id', $articleIds)
+                    ->where('a.state = 1')
+                    ->andWhereIn('a.id', $articleIds)
                     ->limit($count)
                     ->orderBy('a.publish_date DESC')
                     ->execute();
@@ -74,7 +77,7 @@ class ArticleTable extends Doctrine_Table
             $libraryArticles = Doctrine_Query::create()
                 ->select('l.id')
                 ->from('Library l')
-                ->where('l.type = "Article"')
+                ->where('l.type = "Article" AND l.state = 1')
                 ->orderBy('l.visit_count DESC')
                 ->limit($limit)
                 ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);

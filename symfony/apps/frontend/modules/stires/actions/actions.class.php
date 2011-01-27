@@ -92,6 +92,20 @@ class stiresActions extends sfActions
 
         public function executePublish(sfWebRequest $request)
         {
-            
+            if (!$this->getUser()->isAuthenticated()){
+                $this->setTemplate('publishNotLoggedIn');
+            }
+
+            $this->form = new StirePublishForm();
+
+            if ($request->isMethod('post')){
+                $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+
+                if ($this->form->isValid()){
+                    $this->form->save();
+
+                    $this->setTemplate('publishOk');
+                }
+            }
         }
 }

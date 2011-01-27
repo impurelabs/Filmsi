@@ -25,7 +25,7 @@ class PersonEditForm extends PersonForm
   	$this->widgetSchema['video_album_id'] = new sfWidgetFormInputHidden();
   	
   	$this->validatorSchema['filename'] = new sfValidatorFile(array('required' => false));
-	$this->validatorSchema['url_key'] = new sfValidatorRegex(array('pattern' => '/^[0-9a-z\-\_]+$/', 'required' => false));
+	$this->validatorSchema['url_key'] = new sfValidatorRegex(array('pattern' => '/^[0-9a-z\-\_]+$/', 'required' => true));
 	$this->validatorSchema['url_key']->setMessage('invalid', 'Caracterele admise sunt literele, cifrele, "-", "_"');
   }
   

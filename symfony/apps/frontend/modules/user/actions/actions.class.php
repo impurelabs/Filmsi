@@ -157,7 +157,12 @@ class userActions extends sfActions
 
 	public function executeChangePassword($request)
 	{
-		$this->forgotPassword = Doctrine_Core::getTable('sfGuardForgotPassword')->findOneByUniqueKey($request->getParameter('unique_key'));
+		if (false === $this->forgotPassword = Doctrine_Core::getTable('sfGuardForgotPassword')->findOneByUniqueKey($request->getParameter('unique_key'))){
+                    $this->setTemplate('changePasswordExpired');
+
+                    return sfView::SUCCESS;
+                }
+
 		$this->user = $this->forgotPassword->getUser();
 		$this->form = new sfGuardChangeUserPasswordForm($this->user);
 

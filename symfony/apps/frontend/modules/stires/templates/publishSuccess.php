@@ -43,9 +43,9 @@
             <?php echo $form['content_content']->renderError();?><br /><br />
 
             <strong>Upload imagine </strong> <span class="explanation">(maxim 1 MB)</span><br />
-            <?php echo $form['file']->render();?><br >
+            <?php echo $form['filename']->render();?><br >
 
-            <?php echo $form['file']->renderError();?><br /><br />
+            <?php echo $form['filename']->renderError();?><br /><br />
 
             <button type="submit" class="normalbutton">Sunt de acord cu conditiile si vreau sa public stirea</button>
             <br /><br />

@@ -33,14 +33,16 @@ class CinemaStireTable extends Doctrine_Table
 			$cinemaIds[] = $cinema['cinema_id'];
 		}
 
-		$stires = Doctrine_Query::create()
-			->from('CinemaStire fs')
-			->whereIn('fs.cinema_id', $cinemaIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		$stireIds = array();
-		foreach($stires as $stire){
-			$stireIds[] = $stire['stire_id'];
-		}
+                if (count($cinemaIds) > 0){
+                    $stires = Doctrine_Query::create()
+                            ->from('CinemaStire fs')
+                            ->whereIn('fs.cinema_id', $cinemaIds)
+                            ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                    foreach($stires as $stire){
+                            $stireIds[] = $stire['stire_id'];
+                    }
+                }
 
 		return $stireIds;
 	}

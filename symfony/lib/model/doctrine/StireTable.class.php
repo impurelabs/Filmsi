@@ -53,6 +53,10 @@ class StireTable extends Doctrine_Table
 
         public function findLatestByIds($count, $stireIds = array())
 	{
+            if (count($stireIds) == 0){
+                return array();
+            }
+
             return Doctrine_Query::create()
                     ->from('Stire s')
                     ->where('s.state = 1')

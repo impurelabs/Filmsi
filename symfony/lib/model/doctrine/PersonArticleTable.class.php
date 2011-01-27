@@ -32,15 +32,17 @@ class PersonArticleTable extends Doctrine_Table
 		foreach($persons as $person){
 			$personIds[] = $person['person_id'];
 		}
-
-		$articles = Doctrine_Query::create()
-			->from('PersonArticle fa')
-			->whereIn('fa.person_id', $personIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                
 		$articleIds = array();
-		foreach($articles as $article){
-			$articleIds[] = $article['article_id'];
-		}
+                if (count($personIds) > 0){
+                    $articles = Doctrine_Query::create()
+                            ->from('PersonArticle pa')
+                            ->whereIn('pa.person_id', $personIds)
+                            ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                    foreach($articles as $article){
+                            $articleIds[] = $article['article_id'];
+                    }
+                }
 
 		return $articleIds;
 	}

@@ -24,24 +24,26 @@ class FilmArticleTable extends Doctrine_Table
 
 	public function getRelatedArticles($articleId)
 	{
-		$films = Doctrine_Query::create()
-			->from('FilmArticle fa')
-			->where('fa.article_id = ?', $articleId)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-		$filmIds = array();
-		foreach($films as $film){
-			$filmIds[] = $film['film_id'];
-		}
+            $films = Doctrine_Query::create()
+                    ->from('FilmArticle fa')
+                    ->where('fa.article_id = ?', $articleId)
+                    ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+            $filmIds = array();
+            foreach($films as $film){
+                    $filmIds[] = $film['film_id'];
+            }
 
-		$articles = Doctrine_Query::create()
-			->from('FilmArticle fa')
-			->whereIn('fa.film_id', $filmIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-		$articleIds = array();
-		foreach($articles as $article){
-			$articleIds[] = $article['article_id'];
-		}
+            $articleIds = array();
+            if (count($filmIds) > 0){
+                $articles = Doctrine_Query::create()
+                        ->from('FilmArticle fa')
+                        ->whereIn('fa.film_id', $filmIds)
+                        ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                foreach($articles as $article){
+                        $articleIds[] = $article['article_id'];
+                }
+            }
 
-		return $articleIds;
+            return $articleIds;
 	}
 }

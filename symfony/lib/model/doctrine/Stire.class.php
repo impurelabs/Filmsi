@@ -48,17 +48,18 @@ class Stire extends BaseStire
 
         public function getRelated($count)
 	{
-		/* Get the id of the stires related to any of the films */
-		$filmStires = Doctrine_Core::getTable('FilmStire')->getRelatedStires($this->getId());
-		/* Get the id of the Stires related to any of the persons */
-		$personStires = Doctrine_Core::getTable('PersonStire')->getRelatedStires($this->getId());
-		/* Get the id of the stires related to any of the cinemas */
-		$cinemaStires = Doctrine_Core::getTable('CinemaStire')->getRelatedStires($this->getId());
-		/* Get the id of the stires related to any of the festival editions */
-		$festivalEditionStires = Doctrine_Core::getTable('FestivalEditionStire')->getRelatedStires($this->getId());
+            /* Get the id of the stires related to any of the films */
+            $filmStires = Doctrine_Core::getTable('FilmStire')->getRelatedStires($this->getId());
+            /* Get the id of the Stires related to any of the persons */
+            $personStires = Doctrine_Core::getTable('PersonStire')->getRelatedStires($this->getId());
+            /* Get the id of the stires related to any of the cinemas */
+            $cinemaStires = Doctrine_Core::getTable('CinemaStire')->getRelatedStires($this->getId());
+            /* Get the id of the stires related to any of the festival editions */
+            $festivalEditionStires = Doctrine_Core::getTable('FestivalEditionStire')->getRelatedStires($this->getId());
 
-		$stireIds = array_merge($filmStires, $personStires, $cinemaStires, $festivalEditionStires);
-		return Doctrine_Core::getTable('Stire')->findLatestByIds($count, $stireIds);
+            $stireIds = array_merge($filmStires, $personStires, $cinemaStires, $festivalEditionStires);
+
+            return Doctrine_Core::getTable('Stire')->findLatestByIds($count, $stireIds);
 	}
 
 	public function getCountComments()

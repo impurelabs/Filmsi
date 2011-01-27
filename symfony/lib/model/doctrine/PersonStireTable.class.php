@@ -33,14 +33,16 @@ class PersonStireTable extends Doctrine_Table
 			$personIds[] = $person['person_id'];
 		}
 
-		$stires = Doctrine_Query::create()
-			->from('PersonStire fs')
-			->whereIn('fs.person_id', $personIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		$stireIds = array();
-		foreach($stires as $stire){
-			$stireIds[] = $stire['stire_id'];
-		}
+                if (count($personIds) > 0){
+                    $stires = Doctrine_Query::create()
+                            ->from('PersonStire fs')
+                            ->whereIn('fs.person_id', $personIds)
+                            ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                    foreach($stires as $stire){
+                            $stireIds[] = $stire['stire_id'];
+                    }
+                }
 
 		return $stireIds;
 	}

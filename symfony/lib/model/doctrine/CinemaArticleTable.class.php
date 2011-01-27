@@ -33,14 +33,16 @@ class CinemaArticleTable extends Doctrine_Table
 			$cinemaIds[] = $cinema['cinema_id'];
 		}
 
-		$articles = Doctrine_Query::create()
-			->from('CinemaArticle fa')
-			->whereIn('fa.cinema_id', $cinemaIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		$articleIds = array();
-		foreach($articles as $article){
-			$articleIds[] = $article['article_id'];
-		}
+                if (count($cinemaIds) > 0){
+                    $articles = Doctrine_Query::create()
+                            ->from('CinemaArticle ca')
+                            ->whereIn('ca.cinema_id', $cinemaIds)
+                            ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                    foreach($articles as $article){
+                            $articleIds[] = $article['article_id'];
+                    }
+                }
 
 		return $articleIds;
 	}

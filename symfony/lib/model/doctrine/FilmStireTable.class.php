@@ -24,24 +24,26 @@ class FilmStireTable extends Doctrine_Table
 
         public function getRelatedStires($stireId)
 	{
-		$films = Doctrine_Query::create()
-			->from('FilmStire fs')
-			->where('fs.stire_id = ?', $stireId)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-		$filmIds = array();
-		foreach($films as $film){
-			$filmIds[] = $film['film_id'];
-		}
+            $films = Doctrine_Query::create()
+                    ->from('FilmStire fs')
+                    ->where('fs.stire_id = ?', $stireId)
+                    ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+            $filmIds = array();
+            foreach($films as $film){
+                    $filmIds[] = $film['film_id'];
+            }
 
-		$stires = Doctrine_Query::create()
-			->from('FilmStire fs')
-			->whereIn('fs.film_id', $filmIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-		$stireIds = array();
-		foreach($stires as $stire){
-			$stireIds[] = $stire['stire_id'];
-		}
+            $stireIds = array();
+            if (count($filmIds) > 0){
+                $stires = Doctrine_Query::create()
+                        ->from('FilmStire fs')
+                        ->whereIn('fs.film_id', $filmIds)
+                        ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                foreach($stires as $stire){
+                        $stireIds[] = $stire['stire_id'];
+                }
+            }
 
-		return $stireIds;
+            return $stireIds;
 	}
 }

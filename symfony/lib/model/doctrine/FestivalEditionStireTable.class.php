@@ -33,14 +33,16 @@ class FestivalEditionStireTable extends Doctrine_Table
 			$festivalEditionIds[] = $festivalEdition['festival_edition_id'];
 		}
 
-		$stires = Doctrine_Query::create()
-			->from('FestivalEditionStire fs')
-			->whereIn('fs.festival_edition_id', $festivalEditionIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		$stireIds = array();
-		foreach($stires as $stire){
-			$stireIds[] = $stire['stire_id'];
-		}
+                if (count($festivalEditionIds) > 0){
+                    $stires = Doctrine_Query::create()
+                            ->from('FestivalEditionStire fs')
+                            ->whereIn('fs.festival_edition_id', $festivalEditionIds)
+                            ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                    foreach($stires as $stire){
+                            $stireIds[] = $stire['stire_id'];
+                    }
+                }
 
 		return $stireIds;
 	}

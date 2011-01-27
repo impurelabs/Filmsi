@@ -33,14 +33,16 @@ class FestivalEditionArticleTable extends Doctrine_Table
 			$festivalEditionIds[] = $festivalEdition['festival_edition_id'];
 		}
 
-		$articles = Doctrine_Query::create()
-			->from('FestivalEditionArticle fa')
-			->whereIn('fa.festival_edition_id', $festivalEditionIds)
-			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		$articleIds = array();
-		foreach($articles as $article){
-			$articleIds[] = $article['article_id'];
-		}
+                if (count($festivalEditionIds) > 0){
+                    $articles = Doctrine_Query::create()
+                            ->from('FestivalEditionArticle fea')
+                            ->whereIn('fea.festival_edition_id', $festivalEditionIds)
+                            ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+                    foreach($articles as $article){
+                            $articleIds[] = $article['article_id'];
+                    }
+                }
 
 		return $articleIds;
 	}

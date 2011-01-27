@@ -63,6 +63,10 @@ class ArticleTable extends Doctrine_Table
 
 	public function findLatestByIds($count, $articleIds)
 	{
+            if (count($articleIds) == 0){
+                return array();
+            }
+
             return Doctrine_Query::create()
                     ->from('Article a')
                     ->where('a.state = 1')

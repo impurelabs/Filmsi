@@ -38,7 +38,7 @@ class filmsiVisitsTask extends sfBaseTask
     protected function countVisits()
     {
         $this->logSection('counting', 'Counting started');
-        $this->dbConnection->getTable('Library')->updateVisitCount();
+        $this->dbConnection->getTable('Visit')->updateVisitCount();
     }
 
     protected function resetVisits()

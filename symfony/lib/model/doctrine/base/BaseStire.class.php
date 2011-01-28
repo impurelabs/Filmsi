@@ -95,6 +95,9 @@ abstract class BaseStire extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('stire');
+        $this->hasColumn('visit_count', 'integer', null, array(
+             'type' => 'integer'
+             ));
         $this->hasColumn('name', 'string', 250, array(
              'type' => 'string',
              'length' => 250,

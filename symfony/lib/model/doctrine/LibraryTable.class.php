@@ -543,20 +543,5 @@ class LibraryTable extends Doctrine_Table
     $connection->commit();
 	}
 
-        public function updateVisitCount()
-        {
-            $libraryVisits =  Doctrine_Query::create()
-                ->select('COUNT(v.id) count, v.library_id')
-                ->from('Visit v')
-                ->groupBy('v.library_id')
-                ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-
-            foreach ($libraryVisits as $libraryVisit){
-                Doctrine_Query::create()
-                    ->update('Library l')
-                    ->set('l.visit_count', '?', $libraryVisit['count'])
-                    ->where('l.id = ?', $libraryVisit['library_id'])
-                    ->execute();
-            }
-        }
+        
 }

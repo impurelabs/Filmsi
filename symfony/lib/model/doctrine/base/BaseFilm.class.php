@@ -188,6 +188,9 @@ abstract class BaseFilm extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('film');
+        $this->hasColumn('visit_count', 'integer', null, array(
+             'type' => 'integer'
+             ));
         $this->hasColumn('imdb', 'string', 250, array(
              'type' => 'string',
              'length' => 250,

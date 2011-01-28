@@ -22,7 +22,7 @@ public function configure()
   	
   	$this->validatorSchema['edition'] = new sfValidatorNumber(array('required' => false, 'min' => 0, 'max' => 3000));
   	$this->validatorSchema['filename'] = new sfValidatorFile(array('required' => false));
-	$this->validatorSchema['url_key'] = new sfValidatorRegex(array('pattern' => '/^[0-9a-z\-\_]+$/', 'required' => true));
+	$this->validatorSchema['url_key'] = new sfValidatorRegex(array('pattern' => '/^[0-9a-z\-\_]+$/', 'required' => false));
 	$this->validatorSchema['url_key']->setMessage('invalid', 'Caracterele admise sunt literele, cifrele, "-", "_"');
 	$this->validatorSchema->setPostValidator(new sfValidatorDoctrineUnique(array(
 		'model' => 'FestivalEdition',

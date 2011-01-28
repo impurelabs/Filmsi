@@ -41,7 +41,7 @@ class CinemaNewForm extends CinemaForm
   	$this->validatorSchema['location'] = new sfValidatorString();
   	$this->validatorSchema['lat'] = new sfValidatorString(array('max_length' => 250, 'required' => true));
   	$this->validatorSchema['lng'] = new sfValidatorString(array('max_length' => 250, 'required' => true));
-	$this->validatorSchema['url_key'] = new sfValidatorRegex(array('pattern' => '/^[0-9a-z\-\_]+$/', 'required' => true));
+	$this->validatorSchema['url_key'] = new sfValidatorRegex(array('pattern' => '/^[0-9a-z\-\_]+$/', 'required' => false));
 	$this->validatorSchema['url_key']->setMessage('invalid', 'Caracterele admise sunt literele, cifrele, "-", "_"');
 
 	$this->setDefault('map_zoom', '6');

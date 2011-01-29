@@ -94,4 +94,117 @@ class PersonTable extends Doctrine_Table
 
 		return $persons;
 	}
+
+        public function getBestAlphabetically($type = array())
+        {
+            if (!is_array($type)){
+                $type = array($type);
+            }
+
+            $persons = array();
+
+            $q = Doctrine_Query::create()
+                ->from('Person p')
+                ->where('p.last_name LIKE ? AND p.state = 1')
+                ->orderBy('p.visit_count DESC')
+                ->limit(10);
+
+            
+            $queryString = '';
+            for ($i = 0; $i <= count($type) - 1; $i++){
+                $queryString .= 'is_' . $type[$i];
+                
+                if ($i < count($type) - 1){
+                    $queryString .= ' OR ';
+                }
+            }
+            if ($queryString != ''){
+                $q->addWhere('is_actor = 1 OR is_director = 1');
+            }
+
+            //die($queryString);
+
+            
+            $letter = 'a'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'b'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'c'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'd'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'e'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'f'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'g'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'h'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'i'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'j'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'k'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'l'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'm'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'n'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'o'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'p'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'q'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'r'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 's'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 't'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'u'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'v'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'w'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'x'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'y'; $persons [$letter] = $q->execute(array($letter . '%'));
+            $letter = 'z'; $persons [$letter] = $q->execute(array($letter . '%'));
+
+            return $persons;
+        }
+
+        public function getAllByLetter($limit, $page, $letter, $type = null)
+        {
+            $q = Doctrine_Query::create()
+                ->from('Person p')
+                ->where('p.last_name LIKE ? AND p.state = 1', $letter . '%')
+                ->orderBy('p.first_name ASC');
+            
+            switch ($type){
+                case 'actor':
+                    $q->addWhere('is_actor = 1');
+                    break;
+                case 'director':
+                    $q->addWhere('is_director = 1');
+                    break;
+            }
+
+            if (!empty ($limit)){
+                    $q->limit($limit);
+            }
+
+            if (!empty ($page)){
+                    $q->offset(($page - 1) * $limit );
+            }
+
+            return $q->execute();
+
+        }
+
+        public function getCount($letter = null, $type = null)
+	{
+            $q = Doctrine_Query::create()
+                    ->select('COUNT(p.id)')
+                    ->from('Person p')
+                    ->where('p.state = 1');
+
+            switch ($type){
+                case 'actor':
+                    $q->addWhere('is_actor = 1');
+                    break;
+                case 'director':
+                    $q->addWhere('is_director = 1');
+                    break;
+            }
+
+            if (isset($letter)){
+                $q->addWhere('p.last_name LIKE ?', $letter . '%');
+            }
+
+            $count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+            return $count['COUNT'];
+    }
 }

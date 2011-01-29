@@ -23,20 +23,20 @@ class StireTable extends Doctrine_Table
 
         public function getList($limit = null, $page = null)
 	{
-		$q = Doctrine_Query::create()
-			->from('Stire s')
-                        ->where('s.state = 1')
-			->orderBy('s.publish_date DESC');
+            $q = Doctrine_Query::create()
+                    ->from('Stire s')
+                    ->where('s.state = 1')
+                    ->orderBy('s.publish_date DESC');
 
-		if (!empty ($limit)){
-			$q->limit($limit);
-		}
+            if (!empty ($limit)){
+                    $q->limit($limit);
+            }
 
-		if (!empty ($page)){
-			$q->offset(($page - 1) * $limit );
-		}
+            if (!empty ($page)){
+                    $q->offset(($page - 1) * $limit );
+            }
 
-		return $q->execute();
+            return $q->execute();
 	}
 
 	public function getCount()

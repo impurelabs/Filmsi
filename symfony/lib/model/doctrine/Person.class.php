@@ -51,4 +51,56 @@ class Person extends BasePerson
 		$thumb->save(sfConfig::get('app_person_path') . '/ts-' . $this->getFilename());
 	}
 
+        public function getRelatedStires($limit = null, $page = null, $returnArray = true)
+        {
+            $q = Doctrine_Query::create()
+                ->from('Stire s')
+                ->innerJoin('s.PersonStire ps')
+                ->where('ps.person_id = ? AND s.state = 1', $this->getId())
+                ->orderBy('s.publish_date DESC');
+
+            if (!empty ($limit)){
+                    $q->limit($limit);
+            }
+
+            if (!empty ($page)){
+                    $q->offset(($page - 1) * $limit );
+            }
+
+            if ($returnArray){
+                return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+            } else {
+                return $q->execute();
+            }
+        }
+
+
+
+        public function getRelatedStiresCount()
+        {
+            $q = Doctrine_Query::create()
+                ->select('COUNT(s.id) count')
+                ->from('Stire s')
+                ->innerJoin('s.PersonStire ps')
+                ->where('ps.person_id = ? AND s.state = 1', $this->getId())
+                ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+            return $q['count'];
+        }
+
+        public function getMostViewedFilms($limit = null)
+        {
+            $q = Doctrine_Query::create()
+                ->from('Film f')
+                ->innerJoin('f.FilmPerson fp')
+                ->where('fp.person_id = ? AND f.state = 1 AND fp.is_actor = 1', $this->getId())
+                ->orderBy('f.visit_count DESC');
+
+            if (isset($limit)){
+                $q->limit($limit);
+            }
+
+            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+        }
+
 }

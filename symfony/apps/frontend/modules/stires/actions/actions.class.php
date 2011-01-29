@@ -17,31 +17,31 @@ class stiresActions extends sfActions
 	*/
 	public function executeIndex(sfWebRequest $request)
 	{
-		$this->getResponse()->setTitle('Filmsi.ro - Din Filme');
+            $this->getResponse()->setTitle('Filmsi.ro - Din Filme');
 
-		$this->currentPage = (int)$request->getParameter('p', 1);
-		$this->stires = Doctrine_Core::getTable('Stire')->getList(sfConfig::get('app_stire_page_limit'), $this->currentPage);
-		$this->stireCount = Doctrine_Core::getTable('Stire')->getCount();
-		$this->pageCount = ceil($this->stireCount / sfConfig::get('app_stire_page_limit'));
-		$this->firstStireCount = sfConfig::get('app_stire_page_limit') * ($this->currentPage - 1) + 1;
-		$this->lastStireCount = $this->firstStireCount + $this->stires->count() - 1;
-		if ($this->pageCount <= 5) {
-			$this->navStart = 1;
-			$this->navEnd = $this->pageCount;
-		} else {
-			$this->navStart = $this->currentPage - 2;
-			$this->navEnd = $this->currentPage - 2;
+            $this->currentPage = (int)$request->getParameter('p', 1);
+            $this->stires = Doctrine_Core::getTable('Stire')->getList(sfConfig::get('app_stire_page_limit'), $this->currentPage);
+            $this->stireCount = Doctrine_Core::getTable('Stire')->getCount();
+            $this->pageCount = ceil($this->stireCount / sfConfig::get('app_stire_page_limit'));
+            $this->firstStireCount = sfConfig::get('app_stire_page_limit') * ($this->currentPage - 1) + 1;
+            $this->lastStireCount = $this->firstStireCount + $this->stires->count() - 1;
+            if ($this->pageCount <= 5) {
+                    $this->navStart = 1;
+                    $this->navEnd = $this->pageCount;
+            } else {
+                    $this->navStart = $this->currentPage - 2;
+                    $this->navEnd = $this->currentPage - 2;
 
-			if ($this->navStart <= 0){
-				$this->navStart = 1;
-				$this->navEnd = 5;
-			}
+                    if ($this->navStart <= 0){
+                            $this->navStart = 1;
+                            $this->navEnd = 5;
+                    }
 
-			if ($this->navEnd >= $this->pageCount){
-				$this->navStart = $this->pageCount - 4;
-				$this->navEnd = $this->pageCount;
-			}
-		}
+                    if ($this->navEnd >= $this->pageCount){
+                            $this->navStart = $this->pageCount - 4;
+                            $this->navEnd = $this->pageCount;
+                    }
+            }
 	}
 
 	public function executeView(sfWebRequest $request)

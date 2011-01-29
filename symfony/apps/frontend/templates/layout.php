@@ -11,7 +11,7 @@
     <?php use_stylesheet('jquery-ui-1.8.6.custom.css');?>
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
-	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher:'63eaa96b-48e9-4de4-bb58-61dc7a91b1ad'});</script>
+	<!-- <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher:'63eaa96b-48e9-4de4-bb58-61dc7a91b1ad'});</script> -->
   </head>
 <body>
 	<div id="wrapper">
@@ -38,7 +38,7 @@
                 <span><a href="<?php echo url_for('@stires');?>" class="menu-link">Stiri</a></span>
                 <span><a href="" class="menu-link">Trailere</a></span>
                 <span><a href="<?php echo url_for('@articles');?>" class="menu-link">Din filme</a></span>
-                <span><a href="" class="menu-link">Actori &amp; Regizori</a></span>
+                <span><a href="<?php echo url_for('@persons');?>" class="menu-link">Actori &amp; Regizori</a></span>
                 <span class="last"><a href="" class="menu-link">Cinematografe</a></span>
             </div> <!-- menu end -->
 

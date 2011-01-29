@@ -1,30 +1,26 @@
-<h2>Din filme</h2>
+<h2><?php echo $person->getName();?></h2>
 
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
-	<a href="<?php echo url_for('@articles');?>" class="black-link">Din filme</a> &raquo;
-	<a href="<?php echo url_for('@articles');?><?php echo isset($currentCategory) ? '?c=' . $currentCategory->getId() : '';?>" class="black-link"><?php echo isset($currentCategory) ? $currentCategory->getName() . ' &raquo;' : '';?></a>
-	<?php echo $article->getName();?>
+	<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link"><?php echo $person->getName();?></a>
 </div>
 
+
 <div class="cell-container6"> <!-- left column start -->
-	<div class="cell spacer-bottom-m">
+    <div class="cell spacer-bottom-m">
         <div class="cell-hd">
-            <h4>Din <span class="black">filme</span></h4>
+            <h5>Detalii</h5>
         </div>
         <div class="cell-bd" style="padding:0">
-        	<ul class="filterlist spacer-bottom-m">
-				<?php foreach($categories as $category):?>
-					<li <?php if(isset($currentCategory) && $currentCategory->getId() == $category->getId()) echo 'class="active"';?> onclick="location.href='<?php echo isset($currentCategory) && $currentCategory->getId() == $category->getId() ? url_for('@articles') : url_for('@articles') . '?c=' . $category->getId();?>'">
-						<?php echo $category->getName();?>
-						<span class="filter-cioc"></span>
-					</li>
-				<?php endforeach;?>
+            <ul class="filterlist spacer-bottom-m">
+                <li onclick="location.href='<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Biografie<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Premii<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@person_films?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_films?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Filmografie<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@person_stiri?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_stiri?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Stiri<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@person_photos?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_photos?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Fotografii<span class="filter-cioc"></span></a></li>
             </ul>
         </div>
     </div>
-
-
 </div> <!-- left column end -->
 
 
@@ -32,91 +28,153 @@
 
 <div class="cell-container5 spacer-left"> <!-- content column start -->
 
-	<div class="cell spacer-bottom">
-		<div class="cell-hd">
-			<p class="explanation-xs"><?php echo format_date($article->getPublishDate(), 'D', 'ro');?></p>
-			<div class="cell-separator-dotted-bottom innerspacer-bottom-s">
-				<a href="<?php echo url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey());?>" class="bigblue-link"><?php echo $article->getName();?></a>
-			</div>
+    <?php if (count($person->getRelatedStires(3)) > 0):?>
+	<div class="normalcell spacer-bottom">
+            <div class="left" style="width: 40px"><h5>Buzz</h5></div>
+            <ul class="list2 left spacer-left-m" style="width: 390px">
+                <?php foreach($person->getRelatedStires(3) as $relatedStire):?>
+                    <li><a href="<?php echo url_for('@stire?id=' . $relatedStire['id'] . '&key=' . $relatedStire['url_key']);?>" class="black-link"><?php echo $relatedStire['name'];?></a></li>
+                <?php endforeach;?>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    <?php endif;?>
 
-			<div class="inline-block spacer-bottom innerspacer-top-s spacer-right innerspacer-right cell-separator-dotted-right">
-				<span class="explanation-xs">Autor: <?php echo $article->getAuthor()->getName();?></span>
-			</div>
 
-			<span class="explanation-xs">Categorii:
-				<?php foreach ($article->getCategory() as $articleCategory):?>
-					<a href="<?php echo url_for('@articles');?>?c=<?php echo $articleCategory->getId();?>" class="xs-link"><?php echo $articleCategory->getName();?></a>,
-				<?php endforeach;?></span>
-		</div>
-		
+	<div class="left" style="width:150px">
+    	<div class="normalcell spacer-bottom-m align-center">
+            <a href="#"><img src="<?php echo filmsiPersonPhoto($person->getFilename());?>" class="spacer-bottom" /></a>
+            <div class="more-cell"><a href="" class="smallwhite-link">mai multe poze &raquo;</a></div>
+        </div>
 
-		<div class="cell-bd" style="padding: 7px;">
-			<?php if ($article->getFilenameIsTall()):?>
-				<div class="right spacer-left"><a href="<?php echo url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey());?>"><img src="<?php echo filmsiArticlePhotoThumb($article->getFilename());?>" /></a></div>
-			<?php else: ?>
-				<div class="align-center spacer-bottom-s"><a href="<?php echo url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey());?>"><img src="<?php echo filmsiArticlePhotoThumb($article->getFilename());?>" /></a></div>
-			<?php endif;?>
-
-			
-			<div class="innerspacer-bottom spacer-bottom">
-				<?php echo $sf_data->getRaw('article')->getContentContent();?>
-
-			</div>
-
-			<div>
-				<?php foreach ($article->getPerson() as $articlePerson): ?>
-					<a href="<?php echo url_for('@person?id=' . $articlePerson->getId() . '&key=' . $articlePerson->getUrlKey());?>"
-					   class="xs-link"><?php echo $articlePerson->getName();?></a>,
-				<?php endforeach;?>
-				<?php foreach ($article->getFilm() as $articleFilm): ?>
-					<a href="<?php echo url_for('@film?id=' . $articleFilm->getId() . '&key=' . $articleFilm->getUrlKey());?>"
-					   class="xs-link"><?php echo $articleFilm->getNameRo();?></a>,
-				<?php endforeach;?>
-				<?php foreach ($article->getCinema() as $articleCinema): ?>
-					<a href="<?php echo url_for('@cinema?id=' . $articleCinema->getId() . '&key=' . $articleCinema->getUrlKey());?>"
-					   class="xs-link"><?php echo $articleCinema->getName();?></a>,
-				<?php endforeach;?>
-				<?php foreach ($article->getFestivalEdition() as $articleFestivalEdition): ?>
-					<a href="<?php echo url_for('@festivaledition?id=' . $articleFestivalEdition->getId() . '&key=' . $articleFestivalEdition->getUrlKey());?>"
-					   class="xs-link"><?php echo $articleFestivalEdition->getName();?></a>,
-				<?php endforeach;?>
-			</div>
-
-			<div class="clear"></div>
-
-			<div class="cell-separator-dotted-top innerspacer-top spacer-top">
-				<span class="st_email" st_title="<?php echo urlencode($article->getName());?>" ></span>
-				<span class="st_facebook" st_title="<?php echo urlencode('testare mare');?>"></span>
-				<span class="st_twitter" st_title="<?php echo urlencode($article->getName());?>"></span>
-				<div class="inline-block"><a href="<?php echo url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey());?>#comments"><?php echo $article->getCountComments();?> comentarii</a></div>
-			</div>
-		</div>
-	</div> <!-- article item -->
-	
-	<div class="cell spacer-bottom">
-      <div class="cell-hd">
-        <h4>Filmsi <span class="black">a gasit pentru tine</span></h4>
-      </div>
-      <div class="cell-bd"> 
-		<?php foreach($relatedArticles as $relatedArticle):?>
-                    <?php if ($relatedArticle->getId() != $article->getId()):?>
-			<a href="<?php echo url_for('@article?id=' . $relatedArticle->getId() . '&key=' . $relatedArticle->getUrlKey());?>" class="important-link"><?php echo $relatedArticle->getName();?></a><br /><br />
-                    <?php endif; ?>
-		<?php endforeach;?>
-      </div>
+        <div class="normalcell">
+        	<p class="spacer-bottom"><a href="" class="greenbutton-l-link"><span class="icon-bulletarrow-white"></span> Anunta-ma</a></p>
+            <p class="spacer-bottom-s"><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand apare pe DVD</a></p>
+            <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand apare pe Bluray</a></p>
+        </div>
     </div>
 
 
 
-	<?php include_partial('comments/formAndList', array(
-		'form' => $commentForm,
-		'comments' => $comments,
-		'action' => url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey())
-	));?>
 
-	
-	
+    <div class="normalcell left spacer-left" style="width:305px; padding:10px 5px">
+    	<h4 class="spacer-bottom-s"><?php echo $person->getName();?></h4>
+    	<div class="cell-separator-double spacer-bottom"></div>
+
+        <p class="explanation-small">Nascut: <?php echo format_date($person->getDateOfBirth(), 'D', 'ro');?>, <?php echo $person->getPlaceOfBirth();?></p>
+
+
+        <div class="cell-separator-double spacer-bottom spacer-top"></div>
+        <strong>Biografie</strong><br />
+        <?php echo $person->getBiographyTeaser();?>
+
+        <div class="more-cell"><a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="smallwhite-link">afla mai multe &raquo;</a></div>
+
+    </div>
+
+
+
+
+
+    <div class="clear"></div>
+
+
+
+
+
+
+    <div class="normalcell spacer-top spacer-bottom">
+
+    	<a href="" class="inline-block align-center" style="width: 112px; height:42px; border:1px solid #e7e7e7; border-bottom:0; position: absolute; background-color:#fff; top: -42px; left: 160px"><h3>Actor</h3></a>
+        <a href="" class="inline-block align-center" style="width: 112px; height:40px; border:1px solid #e7e7e7; position: absolute; background-color:#fff; top: -42px; left: 290px"><h3 class="grey">Regizor</h3></a>
+
+    	<table class="spacer-bottom">
+        	<tr><td><h5 class="black spacer-right" style="white-space:nowrap">Premii</h5></td><td width="100%"><div class="cell-separator-double"></div></td></tr>
+        </table>
+
+        <p class="bigstronggreen spacer-bottom">Globurile de aur</p>
+
+
+        <table>
+        	<tr>
+            	<td style="width:60px;"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Anul</p></td>
+            	<td style="width:90px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Status</p></td>
+            	<td style="width:150px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Premiu</p></td>
+            	<td style="width:150px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Nume film</p></td>
+            </tr>
+
+        	<tr>
+            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">2001</p></td>
+            	<td style="width:90px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">nominalizat</p></td>
+            	<td style="width:150px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">Best Performance</p></td>
+            	<td style="width:150px"><a href="" class="important-link spacer-right spacer-bottom-s spacer-top-s">Meet the parents</a></td>
+            </tr>
+
+        	<tr class="odd-row">
+            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">1980</p></td>
+            	<td style="width:90px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s red">a castigat</p></td>
+            	<td style="width:150px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">Best Performance</p></td>
+            	<td style="width:150px"><a href="" class="important-link spacer-right spacer-bottom-s spacer-top-s">Meet the parents</a></td>
+            </tr>
+
+        	<tr>
+            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">1977</p></td>
+            	<td style="width:90px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s red">a castigat</p></td>
+            	<td style="width:150px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">Best Performance</p></td>
+            	<td style="width:150px"><a href="" class="important-link spacer-right spacer-bottom-s spacer-top-s">Meet the parents</a></td>
+            </tr>
+        </table>
+
+        <br />
+        <div class="align-right"><a href="<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="small-link">vezi toate premiile &raquo;</a></div>
+
+
+
+
+
+
+
+
+
+
+
+        <table class="spacer-bottom">
+        	<tr><td><h5 class="black spacer-right" style="white-space:nowrap">Filme</h5></td><td width="100%"><div class="cell-separator-double"></div></td></tr>
+        </table>
+
+        <p class="bigstronggreen spacer-bottom">A jucat in</p>
+
+
+        <table>
+        	<tr>
+            	<td style="width:60px;"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Anul</p></td>
+            	<td style="width:270px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Numele filmului</p></td>
+            	<td style="width:70px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Disponibil</p></td>
+            </tr>
+            <?php foreach($person->getMostViewedFilms(4) as $key => $film):?>
+        	<tr<?php if ($key % 2 == 0) echo 'class="off-row"';?>>
+            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s"><?php echo $film['year'];?></p></td>
+            	<td style="width:270px"><p class="spacer-top-s spacer-bottom-s"><a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>" class="important-link spacer-right spacer-bottom-s spacer-top-s"><?php echo $film['name_en'];?></a><br /><em>(<?php echo $film['name_ro'];?>)</em></p></td>
+            	<td style="width:70px"><p class="spacer-bottom-s spacer-top-s"><a href="" class="small-link">Dvd</a>, <a href="" class="small-link">Bluray</a></p></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+
+        <br />
+        <div class="align-right"><a href="<?php echo url_for('@person_films?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="small-link">vezi toate filmele &raquo;</a></div>
+
+    </div>
+
+
+
+
+
+
 </div> <!-- content column end -->
+
+
+
+
 
 <div class="cell-container7 spacer-left"> <!-- right column start -->
 	this is the right column

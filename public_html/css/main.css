@@ -207,9 +207,13 @@ ul.list5 li{ list-style:disc; color: #4db35b; list-style-position:inside; margin
 ul.list5 li span.normal{ color: #333333}
 
 ul.filterlist li { padding: 5px 10px 5px 20px; font-size: 14px; position: relative; cursor: pointer }
+ul.filterlist li a { font-size: 14px; color: #000 }
 ul.filterlist li:hover, ul.filterlist li.active  { padding: 5px 10px 5px 20px; font-size: 14px; color: #ffffff; background-color: #2b7b35 }
+ul.filterlist li:hover a, ul.filterlist li.active a { color: #ffffff; }
 span.filter-cioc { display:none; position: absolute; top: 9px; left:-1px; width:7px; height:9px; background-image:url('../images/elements.png'); background-position: -34px -613px }
 ul.filterlist li:hover span.filter-cioc, ul.filterlist li.active span.filter-cioc  { display: block }
+
+
 
 
 
@@ -392,7 +396,11 @@ tfoot {font-style:italic;}
 .yearpicker-year:hover, .yearpicker-year-active { width: 43px; height: 20px; padding-top: 2px; text-align:center; border-right:1px solid #4db35b; background-color: #4db35b; background-image: url('../images/elements.png'); background-position: 21px -660px; color: #ffffff; font-size: 11px }
 
 
-ul.letterpicker li { display: inline; margin-right: 5px; }
+ul.letterpicker li { float: left; text-align: center; width: 17px; padding: 3px 0px 7px 0px; margin-left: 1px; font-size: 14px; position: relative; cursor: pointer }
+ul.letterpicker li:hover, ul.letterpicker li.active  { color: #ffffff; background-color: #2b7b35 }
+ul.letterpicker li:hover a, ul.letterpicker li.active a  { color: #ffffff; background-color: #2b7b35 }
+span.letterpicker-cioc { display:none; position: absolute; bottom: 0px; left:5px; width:9px; height:7px; background-image:url('../images/elements.png'); background-position: 0px -647px }
+ul.letterpicker li:hover span.letterpicker-cioc, ul.letterpicker li.active span.letterpicker-cioc  { display: block }
 
 /*************************************************************************************************************
  * ICONS *****************************************************************************************************

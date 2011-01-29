@@ -26,6 +26,10 @@ article:
   url: /articol/:id/:key
   param: { module: articles, action: view }
 
+article_no_key:
+  url: /articol/:id/
+  param: { module: articles, action: view }
+
 stires:
   url: /stiri
   param: { module: stires, action: index }
@@ -34,16 +38,84 @@ stire:
   url: /stire/:id/:key
   param: { module: stires, action: view }
 
+stire_no_key:
+  url: /stire/:id/
+  param: { module: stires, action: view }
+
 stire_publish:
   url: /publica-stire
   param: { module: stires, action: publish }
 
+directors:
+  url: /regizori
+  param: { module: persons, action: directors }
+
+directors_by_letter:
+  url: /regizori/:letter
+  param: { module: persons, action: directorsByLetter }
+
+actors:
+  url: /actori
+  param: { module: persons, action: actors }
+
+actors_by_letter:
+  url: /actori/:letter
+  param: { module: persons, action: actorsByLetter }
+
 persons:
-  url: /persoane
+  url: /actori-si-regizori
   param: { module: persons, action: index }
+
+persons_by_letter:
+  url: /actori-si-regizori/:letter
+  param: { module: persons, action: indexByLetter }
+
+person_biography:
+  url: /biografie/:id/:key
+  param: { module: persons, action: biography }
+
+person_biography_no_key:
+  url: /biografie/:id/
+  param: { module: persons, action: biography }
+
+person_films:
+  url: /filmografie/:id/:key
+  param: { module: persons, action: films }
+
+person_films_no_key:
+  url: /filmografie/:id/
+  param: { module: persons, action: films }
+
+person_awards:
+  url: /premii-castigate-de/:id/:key
+  param: { module: persons, action: awards }
+
+person_awards_no_key:
+  url: /premii-castigate-de/:id/
+  param: { module: persons, action: awards }
+
+person_stiri:
+  url: /stiri-despre/:id/:key
+  param: { module: persons, action: stiri }
+
+person_stiri_no_key:
+  url: /stiri-despre/:id/
+  param: { module: persons, action: stiri }
+
+person_photos:
+  url: /premii-castigate-de/:id/:key
+  param: { module: persons, action: photos }
+
+person_photos_no_key:
+  url: /premii-castigate-de/:id/
+  param: { module: persons, action: photos }
 
 person:
   url: /persoana/:id/:key
+  param: { module: persons, action: view }
+
+person_no_key:
+  url: /persoana/:id/
   param: { module: persons, action: view }
 
 films:

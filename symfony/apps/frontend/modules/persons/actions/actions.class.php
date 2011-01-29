@@ -19,56 +19,156 @@ class personsActions extends sfActions
 	{
             $this->getResponse()->setTitle('Filmsi.ro - Actori & Regizori');
 
-            
+            $this->persons = Doctrine_Core::getTable('Person')->getBestAlphabetically(array('actor', 'director'));
+	}
+
+	public function executeIndexByLetter(sfWebRequest $request)
+	{
+            $this->getResponse()->setTitle('Filmsi.ro - Actori & Regizori');
+
+            $this->currentPage = (int)$request->getParameter('p', 1);
+            $this->persons = Doctrine_Core::getTable('Person')->getAllByLetter(sfConfig::get('app_persons_page_limit'), $this->currentPage, $request->getParameter('letter'));
+            $this->personCount = Doctrine_Core::getTable('Person')->getCount($request->getParameter('letter'));
+            $this->pageCount = ceil($this->personCount / sfConfig::get('app_persons_page_limit'));
+            $this->firstPersonCount = sfConfig::get('app_persons_page_limit') * ($this->currentPage - 1) + 1;
+            $this->lastPersonCount = $this->firstPersonCount + $this->persons->count() - 1;
+            if ($this->pageCount <= 5) {
+                    $this->navStart = 1;
+                    $this->navEnd = $this->pageCount;
+            } else {
+                    $this->navStart = $this->currentPage - 2;
+                    $this->navEnd = $this->currentPage - 2;
+
+                    if ($this->navStart <= 0){
+                            $this->navStart = 1;
+                            $this->navEnd = 5;
+                    }
+
+                    if ($this->navEnd >= $this->pageCount){
+                            $this->navStart = $this->pageCount - 4;
+                            $this->navEnd = $this->pageCount;
+                    }
+            }
+	}
+
+        public function executeActors(sfWebRequest $request)
+	{
+            $this->getResponse()->setTitle('Filmsi.ro - Actori');
+
+            $this->persons = Doctrine_Core::getTable('Person')->getBestAlphabetically('actor');
+	}
+
+	public function executeActorsByLetter(sfWebRequest $request)
+	{
+            $this->getResponse()->setTitle('Filmsi.ro - Actori');
+
+
+            $this->currentPage = (int)$request->getParameter('p', 1);
+            $this->persons = Doctrine_Core::getTable('Person')->getAllByLetter(sfConfig::get('app_persons_page_limit'), $this->currentPage, $request->getParameter('letter'), 'actor');
+            $this->personCount = Doctrine_Core::getTable('Person')->getCount($request->getParameter('letter'));
+            $this->pageCount = ceil($this->personCount / sfConfig::get('app_persons_page_limit'));
+            $this->firstPersonCount = sfConfig::get('app_persons_page_limit') * ($this->currentPage - 1) + 1;
+            $this->lastPersonCount = $this->firstPersonCount + $this->persons->count() - 1;
+            if ($this->pageCount <= 5) {
+                    $this->navStart = 1;
+                    $this->navEnd = $this->pageCount;
+            } else {
+                    $this->navStart = $this->currentPage - 2;
+                    $this->navEnd = $this->currentPage - 2;
+
+                    if ($this->navStart <= 0){
+                            $this->navStart = 1;
+                            $this->navEnd = 5;
+                    }
+
+                    if ($this->navEnd >= $this->pageCount){
+                            $this->navStart = $this->pageCount - 4;
+                            $this->navEnd = $this->pageCount;
+                    }
+            }
+	}
+
+        public function executeDirectors(sfWebRequest $request)
+	{
+            $this->getResponse()->setTitle('Filmsi.ro - Regizori');
+
+            $this->persons = Doctrine_Core::getTable('Person')->getBestAlphabetically('director');
+	}
+
+	public function executeDirectorsByLetter(sfWebRequest $request)
+	{
+            $this->getResponse()->setTitle('Filmsi.ro - Regizori');
+
+            $this->currentPage = (int)$request->getParameter('p', 1);
+            $this->persons = Doctrine_Core::getTable('Person')->getAllByLetter(sfConfig::get('app_persons_page_limit'), $this->currentPage, $request->getParameter('letter'), 'director');
+            $this->personCount = Doctrine_Core::getTable('Person')->getCount($request->getParameter('letter'));
+            $this->pageCount = ceil($this->personCount / sfConfig::get('app_persons_page_limit'));
+            $this->firstPersonCount = sfConfig::get('app_persons_page_limit') * ($this->currentPage - 1) + 1;
+            $this->lastPersonCount = $this->firstPersonCount + $this->persons->count() - 1;
+            if ($this->pageCount <= 5) {
+                    $this->navStart = 1;
+                    $this->navEnd = $this->pageCount;
+            } else {
+                    $this->navStart = $this->currentPage - 2;
+                    $this->navEnd = $this->currentPage - 2;
+
+                    if ($this->navStart <= 0){
+                            $this->navStart = 1;
+                            $this->navEnd = 5;
+                    }
+
+                    if ($this->navEnd >= $this->pageCount){
+                            $this->navStart = $this->pageCount - 4;
+                            $this->navEnd = $this->pageCount;
+                    }
+            }
 	}
 
 	public function executeView(sfWebRequest $request)
 	{
-		$this->person = Doctrine_Core::getTable('Article')->findOneById($request->getParameter('id'));
-		$this->categories = Doctrine_Core::getTable('ArticleCategory')->getList();
-		if ($request->hasParameter('c')){
-			$this->currentCategory = Doctrine_Core::getTable('Category')->findOneById($request->getParameter('c'));
-		}
+            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
 
-		$this->relatedArticles = $this->person->getRelated(5);
-
-		$this->getResponse()->setTitle($this->person->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
-		$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
-
-		$this->commentForm = new CommentForm(null, array(
-			'state' => 1,
-			'ip' => $_SERVER['REMOTE_ADDR'],
-			'model' => 'Article',
-                        'model_library_id' => $this->person->getLibraryId(),
-                        'model_name' => $this->person->getName()
-		));
-		if ($this->getUser()->isAuthenticated()){
-			$user = $this->getUser()->getGuardUser();
-			$this->commentForm->setDefaults(array(
-				'name' => $user->getName(),
-				'email' => $user->getEmailAddress()
-			));
-		}
-		if ($request->isMethod('post')){
-			$this->commentForm->bind($request->getParameter($this->commentForm->getName()));
-
-			if ($this->commentForm->isValid()){
-				$this->commentForm->save();
-
-                                $this->redirect($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())) . '#comments');
-			}
-		}
-
-                $this->comments = Doctrine_Core::getTable('Comment')->getActiveByModel('Article', $this->person->getLibraryId(), $_SERVER['REMOTE_ADDR']);
-
-
-		/* Add the visit */
-		$visit = new Visit();
-		$visit->setLibraryId($this->person->getLibraryId());
-		$visit->setUrl($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())));
-		$visit->setName($this->person->getName());
-		$visit->setIp($_SERVER['REMOTE_ADDR']);
-		$visit->save();
+            /* Add the visit */
+            $visit = new Visit();
+            $visit->setLibraryId($this->person->getLibraryId());
+            $visit->setUrl($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())));
+            $visit->setName($this->person->getName());
+            $visit->setIp($_SERVER['REMOTE_ADDR']);
+            $visit->save();
 	}
+
+        public function executeBiography(sfWebRequest $request)
+        {
+            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+        }
+
+        public function executeStiri(sfWebRequest $request)
+        {
+            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+
+            $this->currentPage = (int)$request->getParameter('p', 1);
+            $this->stires = $this->person->getRelatedStires(sfConfig::get('app_stire_page_limit'), $this->currentPage, false);
+            
+            $this->stireCount = $this->person->getRelatedStiresCount();
+            $this->pageCount = ceil($this->stireCount / sfConfig::get('app_stire_page_limit'));
+            $this->firstStireCount = sfConfig::get('app_stire_page_limit') * ($this->currentPage - 1) + 1;
+            $this->lastStireCount = $this->firstStireCount + $this->stires->count() - 1;
+            if ($this->pageCount <= 5) {
+                    $this->navStart = 1;
+                    $this->navEnd = $this->pageCount;
+            } else {
+                    $this->navStart = $this->currentPage - 2;
+                    $this->navEnd = $this->currentPage - 2;
+
+                    if ($this->navStart <= 0){
+                            $this->navStart = 1;
+                            $this->navEnd = 5;
+                    }
+
+                    if ($this->navEnd >= $this->pageCount){
+                            $this->navStart = $this->pageCount - 4;
+                            $this->navEnd = $this->pageCount;
+                    }
+            }
+        }
 }

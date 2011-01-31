@@ -81,89 +81,138 @@
 
 
 
-
+<br /><br />
 
     <div class="normalcell spacer-top spacer-bottom">
+        <?php if($person->getIsActor() == '1'):?>
+    	<a href="<?php echo url_for('@actor?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
+           class="inline-block align-center"
+           style="width: 80px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'actor' ? '33px; border-bottom:0; ' : '32px;';?> position: absolute; background-color:#fff; top: -34px; left: 10px"><h5<?php if($personRole != 'actor') echo ' class="grey"';?>>Actor</h5></a>
+        <?php endif;?>
+        <?php if($person->getIsDirector() == '1'):?>
+        <a href="<?php echo url_for('@director?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
+           class="inline-block align-center"
+           style="width: 100px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'director' ? '33px; border-bottom:0; ' : '32px;';?>px; position: absolute; background-color:#fff; top: -34px; left: 110px"><h5<?php if($personRole != 'director') echo ' class="grey"';?>>Regizor</h5></a>
+        <?php endif;?>
+        <?php if($person->getIsScriptwriter() == '1'):?>
+    	<a href="<?php echo url_for('@scriptwriter?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
+           class="inline-block align-center"
+           style="width: 112px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'scriptwriter' ? '33px; border-bottom:0; ' : '32px;';?>px; border-bottom:0; position: absolute; background-color:#fff; top: -34px; left: 230px"><h5<?php if($personRole != 'scriptwriter') echo ' class="grey"';?>>Scenarist</h5></a>
+        <?php endif;?>
+        <?php if($person->getIsProducer() == '1'):?>
+        <a href="<?php echo url_for('@producer?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
+           class="inline-block align-center"
+           style="width: 112px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'producer' ? '33px; border-bottom:0; ' : '32px;';?>px; position: absolute; background-color:#fff; top: -34px; left: 355px"><h5<?php if($personRole != 'producer') echo ' class="grey"';?>>Producator</h5></a>
+        <?php endif;?>
 
-    	<a href="" class="inline-block align-center" style="width: 112px; height:42px; border:1px solid #e7e7e7; border-bottom:0; position: absolute; background-color:#fff; top: -42px; left: 160px"><h3>Actor</h3></a>
-        <a href="" class="inline-block align-center" style="width: 112px; height:40px; border:1px solid #e7e7e7; position: absolute; background-color:#fff; top: -42px; left: 290px"><h3 class="grey">Regizor</h3></a>
-
-    	<table class="spacer-bottom">
-        	<tr><td><h5 class="black spacer-right" style="white-space:nowrap">Premii</h5></td><td width="100%"><div class="cell-separator-double"></div></td></tr>
-        </table>
-
-        <p class="bigstronggreen spacer-bottom">Globurile de aur</p>
-
-
-        <table>
-        	<tr>
-            	<td style="width:60px;"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Anul</p></td>
-            	<td style="width:90px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Status</p></td>
-            	<td style="width:150px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Premiu</p></td>
-            	<td style="width:150px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Nume film</p></td>
-            </tr>
-
-        	<tr>
-            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">2001</p></td>
-            	<td style="width:90px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">nominalizat</p></td>
-            	<td style="width:150px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">Best Performance</p></td>
-            	<td style="width:150px"><a href="" class="important-link spacer-right spacer-bottom-s spacer-top-s">Meet the parents</a></td>
-            </tr>
-
-        	<tr class="odd-row">
-            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">1980</p></td>
-            	<td style="width:90px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s red">a castigat</p></td>
-            	<td style="width:150px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">Best Performance</p></td>
-            	<td style="width:150px"><a href="" class="important-link spacer-right spacer-bottom-s spacer-top-s">Meet the parents</a></td>
-            </tr>
-
-        	<tr>
-            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">1977</p></td>
-            	<td style="width:90px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s red">a castigat</p></td>
-            	<td style="width:150px"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s">Best Performance</p></td>
-            	<td style="width:150px"><a href="" class="important-link spacer-right spacer-bottom-s spacer-top-s">Meet the parents</a></td>
-            </tr>
-        </table>
-
-        <br />
-        <div class="align-right"><a href="<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="small-link">vezi toate premiile &raquo;</a></div>
-
-
-
-
-
-
-
-
-
-
-
+    	
         <table class="spacer-bottom">
         	<tr><td><h5 class="black spacer-right" style="white-space:nowrap">Filme</h5></td><td width="100%"><div class="cell-separator-double"></div></td></tr>
         </table>
 
-        <p class="bigstronggreen spacer-bottom">A jucat in</p>
+        <?php if (isset($films[0])):?>
+        <div class="left align-center">
+            <a href="<?php echo url_for('@film?id=' . $films[0]['id'] . '&key=' . $films[0]['url_key']);?>" class="important-link">
+                <img src="<?php echo filmsiFilmPhotoThumb($films[0]['filename']);?>" style="width: 100px" /><br /><?php echo $films[0]['name_en'];?>
+            </a><br />
+            <em>( <?php echo $films[0]['name_ro'];?>)</em>
+        </div>
+        <?php endif;?>
 
+        <?php if (isset($films[1])):?>
+        <div class="left ml-2 align-center">
+            <a href="<?php echo url_for('@film?id=' . $films[1]['id'] . '&key=' . $films[1]['url_key']);?>" class="important-link">
+                <img src="<?php echo filmsiFilmPhotoThumb($films[1]['filename']);?>" style="width: 100px" /><br /><?php echo $films[1]['name_en'];?>
+            </a><br />
+            <em>( <?php echo $films[1]['name_ro'];?>)</em>
+        </div>
+        <?php endif;?>
 
-        <table>
-        	<tr>
-            	<td style="width:60px;"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Anul</p></td>
-            	<td style="width:270px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Numele filmului</p></td>
-            	<td style="width:70px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Disponibil</p></td>
-            </tr>
-            <?php foreach($person->getMostViewedFilms(4) as $key => $film):?>
-        	<tr<?php if ($key % 2 == 0) echo 'class="off-row"';?>>
-            	<td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s"><?php echo $film['year'];?></p></td>
-            	<td style="width:270px"><p class="spacer-top-s spacer-bottom-s"><a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>" class="important-link spacer-right spacer-bottom-s spacer-top-s"><?php echo $film['name_en'];?></a><br /><em>(<?php echo $film['name_ro'];?>)</em></p></td>
-            	<td style="width:70px"><p class="spacer-bottom-s spacer-top-s"><a href="" class="small-link">Dvd</a>, <a href="" class="small-link">Bluray</a></p></td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
+        <?php if (isset($films[2])):?>
+        <div class="left ml-2 align-center">
+            <a href="<?php echo url_for('@film?id=' . $films[2]['id'] . '&key=' . $films[2]['url_key']);?>" class="important-link">
+                <img src="<?php echo filmsiFilmPhotoThumb($films[2]['filename']);?>" style="width: 100px" /><br /><?php echo $films[2]['name_en'];?>
+            </a><br />
+            <em>( <?php echo $films[2]['name_ro'];?>)</em>
+        </div>
+        <?php endif;?>
+
+        <?php if (isset($films[3])):?>
+        <div class="left ml-2 align-center">
+            <a href="<?php echo url_for('@film?id=' . $films[3]['id'] . '&key=' . $films[3]['url_key']);?>" class="important-link">
+                <img src="<?php echo filmsiFilmPhotoThumb($films[3]['filename']);?>" style="width: 100px" /><br /><?php echo $films[3]['name_en'];?>
+            </a><br />
+            <em>( <?php echo $films[3]['name_ro'];?>)</em>
+        </div>
+        <?php endif;?>
+
+        <div class="clear"></div>
+
+        <br /><br />
+
+        <?php if (isset($films[4])):?>
+            <p class="bigstronggreen spacer-bottom">A mai jucat in</p>
+            <table>
+                    <tr>
+                    <td style="width:60px;"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Anul</p></td>
+                    <td style="width:270px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Numele filmului</p></td>
+                    <td style="width:70px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Disponibil</p></td>
+                </tr>
+                <?php for($i = 4; $i <= 7; $i++):?>
+                    <?php if (isset($films[$i])):?>
+                        <tr<?php if ($i % 2 == 0) echo 'class="off-row"';?>>
+                        <td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s"><?php echo $films[$i]['year'];?></p></td>
+                        <td style="width:270px"><p class="spacer-top-s spacer-bottom-s"><a href="<?php echo url_for('@film?id=' . $films[$i]['id'] . '&key=' . $films[$i]['url_key']);?>" class="important-link spacer-right spacer-bottom-s spacer-top-s"><?php echo $films[$i]['name_en'];?></a><br /><em>(<?php echo $films[$i]['name_ro'];?>)</em></p></td>
+                        <td style="width:70px"><p class="spacer-bottom-s spacer-top-s"><a href="<?php echo url_for('@film_buy?id=' . $films[$i]['id'] . '&key=' . $films[$i]['url_key']);?>#dvd" class="small-link">Dvd</a>, <a href="<?php echo url_for('@film_buy?id=' . $fim[$i]['id'] . '&key=' . $films[$i]['url_key']);?>#dvd" class="small-link">Bluray</a></p></td>
+                    <?php endif;?>
+                </tr>
+                <?php endfor; ?>
+            </table>
 
         <br />
         <div class="align-right"><a href="<?php echo url_for('@person_films?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="small-link">vezi toate filmele &raquo;</a></div>
+        <?php endif;?>
 
     </div>
+
+    <?php if (count($awards) > 0):?>
+        <div class="normalcell spacer-top spacer-bottom">
+
+            <table class="spacer-bottom">
+                    <tr><td><h5 class="black spacer-right" style="white-space:nowrap">Premii</h5></td><td width="100%"><div class="cell-separator-double"></div></td></tr>
+            </table>
+
+
+            <table>
+                <tr>
+                    <td><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Festival</p></td>
+                    <td><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Status</p></td>
+                    <td><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Film</p></td>
+                </tr>
+                <?php foreach($awards as $award):?>
+                <tr>
+                    <td>
+                        <p class="smalltext spacer-right spacer-bottom-s spacer-top-s">
+                            <span class="strong"><?php echo $award['f_name'] . '-' . $award['fe_edition'];?></span><br /><?php echo $award['fs_name'];?>
+                        </p>
+                    </td>
+                    <td>
+                        <p class="smalltext spacer-right spacer-bottom-s spacer-top-s">
+                            <?php echo $award['fsp_is_winner'] == '1' ? '<span class="red">castigator</span>' : 'nominalizat';?>
+                        </p>
+                    </td>
+                    <td>
+                        <a href="<?php echo url_for('@film?id=' . $award['film']['id'] . '&key=' . $award['film']['url_key']);?>" class="important-link spacer-right spacer-bottom-s spacer-top-s"><?php echo $award['film']['name_en'];?></a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </table>
+
+            <br />
+            <div class="align-right"><a href="<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="small-link">vezi toate premiile &raquo;</a></div>
+
+        </div>
+        <?php endif;?>
 
 
 

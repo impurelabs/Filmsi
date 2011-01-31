@@ -12,95 +12,105 @@
  */
 class Person extends BasePerson
 {
-	public function getName()
-	{
-		return $this->getFirstName() . ' ' . $this->getLastName();
-	}
-	
-	public function preDelete($event)
-	{
-		// Delete the big file and the thumbnail
-		unlink(sfConfig::get('app_person_path') . '/' . $event->getInvoker()->getFilename());
-		unlink(sfConfig::get('app_person_path') . '/t-' . $event->getInvoker()->getFilename());
-		unlink(sfConfig::get('app_person_path') . '/ts-' . $event->getInvoker()->getFilename());
+    public function getName()
+    {
+            return $this->getFirstName() . ' ' . $this->getLastName();
+    }
 
-		return parent::preDelete($event);
-	}
-	
-	public function createFile()
-	{
-		$sourceFile = sfConfig::get('app_person_path') . '/' . $this->getFilename();
-		
-		if (!file_exists($sourceFile)){
-			throw new sfException('Source file not available: ' . $sourceFile);
-		}
+    public function preDelete($event)
+    {
+            // Delete the big file and the thumbnail
+            unlink(sfConfig::get('app_person_path') . '/' . $event->getInvoker()->getFilename());
+            unlink(sfConfig::get('app_person_path') . '/t-' . $event->getInvoker()->getFilename());
+            unlink(sfConfig::get('app_person_path') . '/ts-' . $event->getInvoker()->getFilename());
 
-		/* Create the big file */
-		$photo = new sfThumbnail(sfConfig::get('app_person_sourceimage_size'), sfConfig::get('app_person_sourceimage_size'));
-		$photo->loadFile($sourceFile);
-		$photo->save(sfConfig::get('app_person_path') . '/' . $this->getFilename());
+            return parent::preDelete($event);
+    }
 
-		/* Create the thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_size'), sfConfig::get('app_person_thumbnail_size'));
-		$thumb->loadFile($sourceFile);
-		$thumb->save(sfConfig::get('app_person_path') . '/t-' . $this->getFilename());
+    public function createFile()
+    {
+            $sourceFile = sfConfig::get('app_person_path') . '/' . $this->getFilename();
 
-		/* Create the small thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_small_size'), sfConfig::get('app_person_thumbnail_small_size'));
-		$thumb->loadFile($sourceFile);
-		$thumb->save(sfConfig::get('app_person_path') . '/ts-' . $this->getFilename());
-	}
-
-        public function getRelatedStires($limit = null, $page = null, $returnArray = true)
-        {
-            $q = Doctrine_Query::create()
-                ->from('Stire s')
-                ->innerJoin('s.PersonStire ps')
-                ->where('ps.person_id = ? AND s.state = 1', $this->getId())
-                ->orderBy('s.publish_date DESC');
-
-            if (!empty ($limit)){
-                    $q->limit($limit);
+            if (!file_exists($sourceFile)){
+                    throw new sfException('Source file not available: ' . $sourceFile);
             }
 
-            if (!empty ($page)){
-                    $q->offset(($page - 1) * $limit );
-            }
+            /* Create the big file */
+            $photo = new sfThumbnail(sfConfig::get('app_person_sourceimage_size'), sfConfig::get('app_person_sourceimage_size'));
+            $photo->loadFile($sourceFile);
+            $photo->save(sfConfig::get('app_person_path') . '/' . $this->getFilename());
 
-            if ($returnArray){
-                return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-            } else {
-                return $q->execute();
-            }
-        }
+            /* Create the thumbnail */
+            $thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_size'), sfConfig::get('app_person_thumbnail_size'));
+            $thumb->loadFile($sourceFile);
+            $thumb->save(sfConfig::get('app_person_path') . '/t-' . $this->getFilename());
 
+            /* Create the small thumbnail */
+            $thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_small_size'), sfConfig::get('app_person_thumbnail_small_size'));
+            $thumb->loadFile($sourceFile);
+            $thumb->save(sfConfig::get('app_person_path') . '/ts-' . $this->getFilename());
+    }
 
+    public function getRelatedStires($limit = null, $page = null, $returnArray = true)
+    {
+        $q = Doctrine_Query::create()
+            ->from('Stire s')
+            ->innerJoin('s.PersonStire ps')
+            ->where('ps.person_id = ? AND s.state = 1', $this->getId())
+            ->orderBy('s.publish_date DESC');
 
-        public function getRelatedStiresCount()
-        {
-            $q = Doctrine_Query::create()
-                ->select('COUNT(s.id) count')
-                ->from('Stire s')
-                ->innerJoin('s.PersonStire ps')
-                ->where('ps.person_id = ? AND s.state = 1', $this->getId())
-                ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
-
-            return $q['count'];
-        }
-
-        public function getMostViewedFilms($limit = null)
-        {
-            $q = Doctrine_Query::create()
-                ->from('Film f')
-                ->innerJoin('f.FilmPerson fp')
-                ->where('fp.person_id = ? AND f.state = 1 AND fp.is_actor = 1', $this->getId())
-                ->orderBy('f.visit_count DESC');
-
-            if (isset($limit)){
+        if (!empty ($limit)){
                 $q->limit($limit);
-            }
-
-            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
         }
+
+        if (!empty ($page)){
+                $q->offset(($page - 1) * $limit );
+        }
+
+        if ($returnArray){
+            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+        } else {
+            return $q->execute();
+        }
+    }
+
+
+
+    public function getRelatedStiresCount()
+    {
+        $q = Doctrine_Query::create()
+            ->select('COUNT(s.id) count')
+            ->from('Stire s')
+            ->innerJoin('s.PersonStire ps')
+            ->where('ps.person_id = ? AND s.state = 1', $this->getId())
+            ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+        return $q['count'];
+    }
+
+    public function getMostViewedFilmsByRole($limit = null, $role = null)
+    {
+        $q = Doctrine_Query::create()
+            ->from('Film f')
+            ->innerJoin('f.FilmPerson fp')
+            ->where('fp.person_id = ? AND f.state = 1', $this->getId())
+            ->orderBy('f.visit_count DESC');
+
+        if (isset($role)){
+            $q->andWhere('fp.is_' . $role . ' = 1');
+        }
+
+        if (isset($limit)){
+            $q->limit($limit);
+        }
+
+        return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+    }
+
+
+    public function getRecentAwardsDetailed($limit = 5)
+    {
+        return Doctrine_Core::getTable('FestivalSectionParticipant')->getDetailedByPerson($this->getImdb(), $limit);
+    }
 
 }

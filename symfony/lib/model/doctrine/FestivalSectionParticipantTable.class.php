@@ -22,4 +22,30 @@ class FestivalSectionParticipantTable extends Doctrine_Table
 			->where('fsp.festival_section_id = ? AND fsp.film_imdb = ? AND fsp.person_imdb IS NULL', array($festivalSectionId, $filmImdb))
 			->fetchOne();
 	}
+
+        public function getDetailedByPerson($personImdb, $limit = 5)
+        {
+            $awards = Doctrine_Query::create()
+                ->select('fsp.id, fsp.film_imdb, fsp.is_winner is_winner, fs.id, fs.name, fe.id, fe.edition, f.id, f.name')
+                ->from('FestivalSectionParticipant fsp')
+                ->innerJoin('fsp.FestivalSection fs')
+                ->innerJoin('fs.FestivalEdition fe')
+                ->innerJoin('fe.Festival f')
+                ->where('fsp.person_imdb = ?', $personImdb)
+                ->limit($limit)
+                ->execute(array(), Doctrine_Core::HYDRATE_SCALAR);
+
+            foreach ($awards as $key => $award){
+                $q = Doctrine_Query::create()
+                    ->select('f.library_id, f.id, f.name_en, f.name_ro, f.url_key')
+                    ->from('Film f')
+                    ->where('f.imdb = ?', $award['fsp_film_imdb'])
+                    ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+                $awards[$key]['film'] = $q;
+                unset($awards[$key]['fsp_film_imdb']);
+            }
+
+            return $awards;
+        }
 }

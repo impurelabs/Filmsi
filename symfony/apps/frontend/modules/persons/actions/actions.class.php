@@ -128,18 +128,49 @@ class personsActions extends sfActions
 	{
             $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
 
+            $routeParameters = $this->getRoute()->getParameters();
+            $this->personRole = $routeParameters['person_role'];
+
+            $this->films = $this->person->getMostViewedFilmsByRole(8, $this->personRole);
+
+            //$this->awards = Doctrine_Core::getTable('FestivalSectionParticipant')->getDetailedByPerson($this->person->getImdb());
+            $this->awards = $this->person->getRecentAwardsDetailed(5);
+
             /* Add the visit */
-            $visit = new Visit();
-            $visit->setLibraryId($this->person->getLibraryId());
-            $visit->setUrl($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())));
-            $visit->setName($this->person->getName());
-            $visit->setIp($_SERVER['REMOTE_ADDR']);
-            $visit->save();
+            if ($routeParameters['person_role'] == 'actor'){
+                $visit = new Visit();
+                $visit->setLibraryId($this->person->getLibraryId());
+                $visit->setUrl($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())));
+                $visit->setName($this->person->getName());
+                $visit->setIp($_SERVER['REMOTE_ADDR']);
+                $visit->save();
+            }
 	}
 
         public function executeBiography(sfWebRequest $request)
         {
             $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+        }
+
+        public function executeAwards(sfWebRequest $request)
+        {
+            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+            $this->awards = $this->person->getRecentAwardsDetailed(0);
+        }
+
+        public function executeFilms(sfWebRequest $request)
+        {
+            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+            $this->films = $this->person->getMostViewedFilmsByRole(0);
+        }
+
+        public function executePhotos(sfWebRequest $request)
+        {
+            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+            $this->photos = $this->person->getPhotoAlbum()->getPhotos();
+            $this->photoCount = $this->photos->count();
+
+            $this->currentPhoto = $request->getParameter('pid', 1);
         }
 
         public function executeStiri(sfWebRequest $request)

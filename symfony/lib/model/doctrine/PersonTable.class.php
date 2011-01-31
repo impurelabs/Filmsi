@@ -112,17 +112,15 @@ class PersonTable extends Doctrine_Table
             
             $queryString = '';
             for ($i = 0; $i <= count($type) - 1; $i++){
-                $queryString .= 'is_' . $type[$i];
+                $queryString .= 'is_' . $type[$i] . ' = 1';
                 
                 if ($i < count($type) - 1){
                     $queryString .= ' OR ';
                 }
             }
             if ($queryString != ''){
-                $q->addWhere('is_actor = 1 OR is_director = 1');
+                $q->addWhere($queryString);
             }
-
-            //die($queryString);
 
             
             $letter = 'a'; $persons [$letter] = $q->execute(array($letter . '%'));

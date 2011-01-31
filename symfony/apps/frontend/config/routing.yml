@@ -103,20 +103,63 @@ person_stiri_no_key:
   param: { module: persons, action: stiri }
 
 person_photos:
-  url: /premii-castigate-de/:id/:key
+  url: /fotografii-persoana/:id/:key
   param: { module: persons, action: photos }
 
 person_photos_no_key:
-  url: /premii-castigate-de/:id/
+  url: /fotografii-persoana/:id/
   param: { module: persons, action: photos }
 
 person:
   url: /persoana/:id/:key
-  param: { module: persons, action: view }
+  param: { module: persons, action: view, person_role: 'actor' }
 
 person_no_key:
   url: /persoana/:id/
-  param: { module: persons, action: view }
+  param: { module: persons, action: view, person_role: 'actor' }
+
+actor:
+  url: /actor/:id/:key
+  param: { module: persons, action: view, person_role: 'actor' }
+
+actor_no_key:
+  url: /actor/:id/
+  param: { module: persons, action: view, person_role: 'actor' }
+
+director:
+  url: /regizor/:id/:key
+  param: { module: persons, action: view, person_role: 'director' }
+
+director_no_key:
+  url: /regizor/:id/
+  param: { module: persons, action: view, person_role: 'director' }
+
+scriptwriter:
+  url: /scenarist/:id/:key
+  param: { module: persons, action: view, person_role: 'scriptwriter' }
+
+scriptwriter_no_key:
+  url: /scenarist/:id/
+  param: { module: persons, action: view, person_role: 'scriptwriter' }
+
+producer:
+  url: /producator/:id/:key
+  param: { module: persons, action: view, person_role: 'producer' }
+
+producer_no_key:
+  url: /producator/:id/
+  param: { module: persons, action: view, person_role: 'producer' }
+
+
+
+
+
+
+
+
+
+
+
 
 films:
   url: /films
@@ -125,6 +168,34 @@ films:
 film:
   url: /film/:id/:key
   param: { module: films, action: view }
+
+film_buy:
+  url: /cumpara-film/:id/:key
+  param: { module: films, action: buy }
+
+film_buy_no_key:
+  url: /cumpara-film/:id/
+  param: { module: films, action: buy }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 cinemas:
   url: /cinematografe

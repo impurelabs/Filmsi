@@ -24,4 +24,7 @@ all:
     width_1: 200
     width_2: 300
     width_3: 400
+
+  provideo:
+    url: %SF_WEB_DIR%/provideo.xml
     

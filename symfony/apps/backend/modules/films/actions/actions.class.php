@@ -311,44 +311,45 @@ class filmsActions extends sfActions
   	
   	set_time_limit(10000);
 		
-		$produse = simplexml_load_file('http://www.provideo.ro/tools/export.aspx');
+        $produse = simplexml_load_file(sfConfig::get('app_provideo_url'));
 
 	$this->imported = false;
   	foreach ($produse->produs as $produs)
-		{
-			if ($produs['imdb'] == $this->film->getImdb()){
-				$this->film->setDescriptionContent($produs['sinopsis']);
-				$this->film->setRating($produs['rating_cnc']);
-				if ($this->film->getNameRo() == ''){
-					$this->film->setNameRo($produs['titlu_romana']);
-				}
-				
-				$this->film->save();
+        {
+            if ($produs['imdb'] == $this->film->getImdb()){
+                $this->film->setDescriptionContent($produs['sinopsis']);
+                $this->film->setRating($produs['rating_cnc']);
+                $this->film->setDuration($produs['durata']);
+                if ($this->film->getNameRo() == ''){
+                    $this->film->setNameRo($produs['titlu_romana']);
+                }
 
-				/* Add the photo to the album */
-				if ($this->film->getPhotoAlbumId() != ''){
-					$sourcefile = str_replace('_thumb', '', $produs['coperta']);
-					
-					$photo = new Photo();
-					$photo->setAlbumId($this->film->getPhotoAlbumId());
+                $this->film->save();
 
-					/* Creating the filename */
-					$pieces = explode('.', $sourcefile);
-					$extension = array_pop($pieces);
+                /* Add the photo to the album */
+                if ($this->film->getPhotoAlbumId() != ''){
+                    $sourcefile = str_replace('_thumb', '', $produs['coperta']);
 
-					$filename = md5(rand(0, 9000000) . $this->film->getFilename()) . '.' . $extension;
-					copy($sourcefile, sfConfig::get('app_photos_path').'/'.$filename);
+                    $photo = new Photo();
+                    $photo->setAlbumId($this->film->getPhotoAlbumId());
 
-						// Set the filename for the object
-					$photo->setFilename($filename);
-					$photo->createFile(sfConfig::get('app_photos_path').'/'.$filename, $filename);
+                    /* Creating the filename */
+                    $pieces = explode('.', $sourcefile);
+                    $extension = array_pop($pieces);
 
-					$photo->save();
-				}
+                    $filename = md5(rand(0, 9000000) . $this->film->getFilename()) . '.' . $extension;
+                    copy($sourcefile, sfConfig::get('app_photos_path').'/'.$filename);
 
-				$this->imported = true;
-			}
-		}	
+                            // Set the filename for the object
+                    $photo->setFilename($filename);
+                    $photo->createFile(sfConfig::get('app_photos_path').'/'.$filename, $filename);
+
+                    $photo->save();
+                }
+
+                $this->imported = true;
+            }
+        }
   }  
   
 	public function executeEdit(sfWebRequest $request)

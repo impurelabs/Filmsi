@@ -11,7 +11,7 @@ Acest obiect este Pending! <button type="button" class="right" onclick="location
 <table>
 	<?php foreach ($photos as $photo): ?>
 	<tr>
-    	<td><img src="<?php echo filmsiPhotoThumb($photo->getFilename());?>" /></td>
+    	<td><a href="<?php echo filmsiPhoto($photo->getFilename());?>" target="_blank"><img src="<?php echo filmsiPhotoThumb($photo->getFilename());?>" /></a></td>
         <td><?php echo $photo->getDescription();?>
         <td><img src="<?php echo image_path('state-' . $photo->getState() . '.png');?>" /></td>
         <td><a href="<?php echo url_for('@default?module=photos&action=editPhoto');?>?pid=<?php echo $photo->getId();?>" class="small-link">editeaza</a></td>

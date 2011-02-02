@@ -7,97 +7,102 @@
  */
 class FilmTable extends Doctrine_Table
 {
-	public function allow($libraryId)
-	{
-		$album = Doctrine_Core::getTable('Film')->findOneByLibraryId($libraryId);
-		
-		/* Update album state*/
-		$album->setState(Library::STATE_ACTIVE);
-		$album->save();
-	}
+    public static function getInstance()
+    {
+        return Doctrine_Core::getTable('Film');
+    }
+    
+    public function allow($libraryId)
+    {
+        $album = Doctrine_Core::getTable('Film')->findOneByLibraryId($libraryId);
 
-	public function cloneObject($libraryId)
-	{
-		$film = Doctrine_Core::getTable('Film')->findOneByLibraryId($libraryId);
-		
-		/* Cloning the album */
-		$newFilm = new Film();
-		$newFilm->setImdb($film->getImdb());
-		$newFilm->setNameRo($film->getNameRo() . ' - clone');
-		$newFilm->setNameEn($film->getNameEn() . ' - clone');
-		$newFilm->setYear($film->getYear());
-		$newFilm->setRating($film->getRating());
-		$newFilm->setMetaDescription($film->getMetaDescription());
-		$newFilm->setMetaKeywords($film->getMetaKeywords());
-		$newFilm->setDuration($film->getDuration());
-		$newFilm->setIsTypeFilm($film->getIsTypeFilm());
-		$newFilm->setIsTypeDigital($film->getIsTypeDigital());
-		$newFilm->setIsType_3d($film->getIsType_3d());
-		$newFilm->setDistribuitor($film->getDistribuitor());
-		$newFilm->setDescriptionTeaser($film->getDescriptionTeaser());
-		$newFilm->setDescriptionContent($film->getDescriptionContent());
-		$newFilm->setPublishDate($film->getPublishDate());
-		$newFilm->setState($film->getState());
-		$newFilm->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
-		$newFilm->setPhotoAlbumId($film->getPhotoAlbumId());
-		$newFilm->setVideoAlbumId($film->getVideoAlbumId());
-		
-		
-		$pieces = explode('.', $film->getFilename());
-		$extension = $pieces[1];
-		$newFilename = md5(time() . rand(0, 999999)) . '.' . $extension;
-			
-		/* Copying the photo files */
-		copy(sfConfig::get('app_film_path') . '/' . $film->getFilename(), sfConfig::get('app_film_path') . '/' . $newFilename);
-		copy(sfConfig::get('app_film_path') . '/t-' . $film->getFilename(), sfConfig::get('app_film_path') . '/t-' . $newFilename);
-		copy(sfConfig::get('app_film_path') . '/ts-' . $film->getFilename(), sfConfig::get('app_film_path') . '/ts-' . $newFilename);
-		
-		$newFilm->setFilename($newFilename);
-		$newFilm->save();
-		
-		/* Duplicating the relations to the genres */
-		$filmGenres = Doctrine_Core::getTable('FilmGenre')->findByFilmId($film->getId());
-		foreach ($filmGenres as $filmGenre){
-			$newFilmGenre = new FilmGenre();
-			$newFilmGenre->setFilmId($newFilm->getId());
-			$newFilmGenre->setGenreId($filmGenre->getGenreId());
-			$newFilmGenre->save();
-		}
-		
-		/* Duplicating the relations to the persons */
-	  $filmPersons = Doctrine_Core::getTable('FilmPerson')->findByFilmId($film->getId());
-		foreach ($filmPersons as $filmPerson){
-			$newPerson = new FilmPerson();
-			$newPerson->setFilmId($newFilm->getId());
-			$newPerson->setPersonId($filmPerson->getPersonId());
-			$newPerson->setIsActor($filmPerson->getIsActor());
-			$newPerson->setIsDirector($filmPerson->getIsDirector());
-			$newPerson->setIsScriptwriter($filmPerson->getIsScriptwriter());
-			$newPerson->setIsProducer($filmPerson->getIsProducer());
-			$newPerson->save();
-		}
-	}
+        /* Update album state*/
+        $album->setState(Library::STATE_ACTIVE);
+        $album->save();
+    }
 
-	public function getForApi($term)
-	{
-		$term = '(^| |-)' . $term ;
-		
-		$bruteFilms = Doctrine_Query::create()
-			->from('Film f')
-			->andWhere('f.state = 1')
-			->andWhere('f.name_ro REGEXP ? OR f.name_en REGEXP ?', array($term, $term))
-			->orderBy('f.name_ro ASC')
-			->limit(50)
-			->execute();
+    public function cloneObject($libraryId)
+    {
+        $film = Doctrine_Core::getTable('Film')->findOneByLibraryId($libraryId);
 
-		$films = array();
-		foreach ($bruteFilms as $key => $bruteFilm){
-			$films[$key]['value'] = $bruteFilm->getId();
-			$films[$key]['label'] = $bruteFilm->getNameRo() . '(' . $bruteFilm->getNameEn() . ')';
-		}
-		
-		return $films;
-	}
+        /* Cloning the album */
+        $newFilm = new Film();
+        $newFilm->setImdb($film->getImdb());
+        $newFilm->setNameRo($film->getNameRo() . ' - clone');
+        $newFilm->setNameEn($film->getNameEn() . ' - clone');
+        $newFilm->setYear($film->getYear());
+        $newFilm->setRating($film->getRating());
+        $newFilm->setMetaDescription($film->getMetaDescription());
+        $newFilm->setMetaKeywords($film->getMetaKeywords());
+        $newFilm->setDuration($film->getDuration());
+        $newFilm->setIsTypeFilm($film->getIsTypeFilm());
+        $newFilm->setIsTypeDigital($film->getIsTypeDigital());
+        $newFilm->setIsType_3d($film->getIsType_3d());
+        $newFilm->setDistribuitor($film->getDistribuitor());
+        $newFilm->setDescriptionTeaser($film->getDescriptionTeaser());
+        $newFilm->setDescriptionContent($film->getDescriptionContent());
+        $newFilm->setPublishDate($film->getPublishDate());
+        $newFilm->setState($film->getState());
+        $newFilm->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        $newFilm->setPhotoAlbumId($film->getPhotoAlbumId());
+        $newFilm->setVideoAlbumId($film->getVideoAlbumId());
+
+
+        $pieces = explode('.', $film->getFilename());
+        $extension = $pieces[1];
+        $newFilename = md5(time() . rand(0, 999999)) . '.' . $extension;
+
+        /* Copying the photo files */
+        copy(sfConfig::get('app_film_path') . '/' . $film->getFilename(), sfConfig::get('app_film_path') . '/' . $newFilename);
+        copy(sfConfig::get('app_film_path') . '/t-' . $film->getFilename(), sfConfig::get('app_film_path') . '/t-' . $newFilename);
+        copy(sfConfig::get('app_film_path') . '/ts-' . $film->getFilename(), sfConfig::get('app_film_path') . '/ts-' . $newFilename);
+
+        $newFilm->setFilename($newFilename);
+        $newFilm->save();
+
+        /* Duplicating the relations to the genres */
+        $filmGenres = Doctrine_Core::getTable('FilmGenre')->findByFilmId($film->getId());
+        foreach ($filmGenres as $filmGenre){
+            $newFilmGenre = new FilmGenre();
+            $newFilmGenre->setFilmId($newFilm->getId());
+            $newFilmGenre->setGenreId($filmGenre->getGenreId());
+            $newFilmGenre->save();
+        }
+
+        /* Duplicating the relations to the persons */
+        $filmPersons = Doctrine_Core::getTable('FilmPerson')->findByFilmId($film->getId());
+        foreach ($filmPersons as $filmPerson){
+            $newPerson = new FilmPerson();
+            $newPerson->setFilmId($newFilm->getId());
+            $newPerson->setPersonId($filmPerson->getPersonId());
+            $newPerson->setIsActor($filmPerson->getIsActor());
+            $newPerson->setIsDirector($filmPerson->getIsDirector());
+            $newPerson->setIsScriptwriter($filmPerson->getIsScriptwriter());
+            $newPerson->setIsProducer($filmPerson->getIsProducer());
+            $newPerson->save();
+        }
+    }
+
+    public function getForApi($term)
+    {
+        $term = '(^| |-)' . $term ;
+
+        $bruteFilms = Doctrine_Query::create()
+            ->from('Film f')
+            ->andWhere('f.state = 1')
+            ->andWhere('f.name_ro REGEXP ? OR f.name_en REGEXP ?', array($term, $term))
+            ->orderBy('f.name_ro ASC')
+            ->limit(50)
+            ->execute();
+
+        $films = array();
+        foreach ($bruteFilms as $key => $bruteFilm){
+            $films[$key]['value'] = $bruteFilm->getId();
+            $films[$key]['label'] = $bruteFilm->getNameRo() . '(' . $bruteFilm->getNameEn() . ')';
+        }
+
+        return $films;
+    }
 
 	public function getForApiImdb($term)
 	{
@@ -127,7 +132,7 @@ class FilmTable extends Doctrine_Table
 			->from('Film f')
 			->where('f.imdb = ?', $imdb)
 			->fetchOne(array(), Doctrine_Core::HYDRATE_SCALAR);
-			
+
 		return $q['f_counter'];
 	}
 
@@ -137,43 +142,43 @@ class FilmTable extends Doctrine_Table
 			->from('Film f')
 			->orderBy('f.id DESC')
 			->addWhere('f.state = 1');
-			
+
 		if (isset($limit)){
 			$q->limit($limit);
 		}
-			
+
 		if (isset($filters['in_production'])){
 			$q->addWhere('f.status_in_production = 1');
 		}
-			
+
 		if (isset($filters['in_cinema'])){
 			$q->addWhere('f.status_cinema= 1');
 		}
-			
+
 		if (isset($filters['in_dvd'])){
 			$q->addWhere('f.status_dvd = 1');
 		}
-			
+
 		if (isset($filters['in_bluray'])){
 			$q->addWhere('f.status_bluray = 1');
 		}
-			
+
 		if (isset($filters['in_online'])){
 			$q->addWhere('f.status_online = 1');
 		}
-			
+
 		if (isset($filters['imdb'])){
 			$q->addWhere('f.imdb = ?', $filters['imdb']);
 		}
-		
+
 		if (isset($filters['offset'])){
 			$q->offset($filters['offset']);
 		}
-			
+
 		return $q->execute();
-			
+
 	}
-	
+
 	public function countFilteredByStatus($filters)
 	{
 		$q = Doctrine_Query::create()
@@ -181,30 +186,30 @@ class FilmTable extends Doctrine_Table
 			->from('Film f')
 			->orderBy('f.id DESC')
 			->addWhere('f.state = 1');
-			
+
 		if (isset($filters['in_production']) && $filters['in_production'] == '1'){
 			$q->addWhere('f.status_in_production = 1');
 		}
-			
+
 		if (isset($filters['in_cinema']) && $filters['in_cinema'] == '1'){
 			$q->addWhere('f.status_cinema= 1');
 		}
-			
+
 		if (isset($filters['in_dvd']) && $filters['in_dvd'] == '1'){
 			$q->addWhere('f.status_dvd = 1');
 		}
-			
+
 		if (isset($filters['in_bluray']) && $filters['in_bluray'] == '1'){
 			$q->addWhere('f.status_bluray = 1');
 		}
-			
+
 		if (isset($filters['in_online']) && $filters['in_online'] == '1'){
 			$q->addWhere('f.status_online = 1');
 		}
-			
+
 		$q = $q->fetchOne(array(), Doctrine_Core::HYDRATE_SCALAR);
-		
+
 		return $q['f_counter'];
-			
-	}
+
+    }
 }

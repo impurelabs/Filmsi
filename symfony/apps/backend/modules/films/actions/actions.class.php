@@ -364,25 +364,6 @@ class filmsActions extends sfActions
   		if ($this->form->isValid()){
   			$this->form->save();
   			
-  			/* Save the persons in film */
-  			$personIdArray = $request->getParameter('person_id');
-  			$personIsActorArray = $request->getParameter('person_is_actor');
-  			$personIsDirectorArray = $request->getParameter('person_is_director');
-  			$personIsScriptwriterArray = $request->getParameter('person_is_scriptwriter');
-  			$personIsProducerArray = $request->getParameter('person_is_producer');
-  			
-  			$personInFilmDetails = array();
-  			foreach ($personIdArray as $key => $id){
-					$personInFilmDetails[] = array(
-						'id' => $id,
-						'is_actor' => (isset($personIsActorArray[$key]) && $personIsActorArray[$key] == '1' ? '1' : '0'),
-						'is_director' => (isset($personIsDirectorArray[$key]) && $personIsDirectorArray[$key] == '1' ? '1' : '0'),
-						'is_scriptwriter' => (isset($personIsScriptwriterArray[$key]) && $personIsScriptwriterArray[$key] == '1' ? '1' : '0'),
-						'is_producer' => (isset($personIsProducerArray[$key]) && $personIsProducerArray[$key] == '1' ? '1' : '0'),
-					);
-  			}
-  			Doctrine_Core::getTable('FilmPerson')->update($personInFilmDetails, $film->getId());
-  			
   			$this->redirect($this->generateUrl('default', array('module' => 'films', 'action' => 'view')) . '?lid=' . $this->form->getObject()->getLibraryId());
   		}
   	}

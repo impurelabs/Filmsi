@@ -7,6 +7,11 @@
  */
 class PersonTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Person');
+	}
+
 	public function allow($libraryId)
 	{
 		$album = Doctrine_Core::getTable('Person')->findOneByLibraryId($libraryId);

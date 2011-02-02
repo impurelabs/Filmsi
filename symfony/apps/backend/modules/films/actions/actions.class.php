@@ -318,7 +318,9 @@ class filmsActions extends sfActions
         {
             if ($produs['imdb'] == $this->film->getImdb()){
                 $this->film->setDescriptionContent($produs['sinopsis']);
-                $this->film->setRating($produs['rating_cnc']);
+				if ($produs['rating_cnc'] != ''){
+					$this->film->setRating($produs['rating_cnc']);
+				}
                 $this->film->setDuration($produs['durata']);
                 if ($this->film->getNameRo() == ''){
                     $this->film->setNameRo($produs['titlu_romana']);

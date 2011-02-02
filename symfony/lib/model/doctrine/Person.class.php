@@ -74,8 +74,6 @@ class Person extends BasePerson
         }
     }
 
-
-
     public function getRelatedStiresCount()
     {
         $q = Doctrine_Query::create()
@@ -106,7 +104,6 @@ class Person extends BasePerson
 
         return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
     }
-
 
     public function getRecentAwardsDetailed($limit = 5)
     {

@@ -128,6 +128,10 @@ class personsActions extends sfActions
 	{
             $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
 
+			$this->getResponse()->setTitle($this->person->getName() . ' - Filmsi.ro');
+			$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
+			$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
+
             $routeParameters = $this->getRoute()->getParameters();
             $this->personRole = $routeParameters['person_role'];
 

@@ -10,88 +10,121 @@
  */
 class filmsActions extends sfActions
 {
-	/**
-	* Executes index action
-	*
-	* @param sfRequest $request A request object
-	*/
-	public function executeIndex(sfWebRequest $request)
+
+	public function executeView(sfWebRequest $request)
 	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle($this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+
+		$this->getContext()->getConfiguration()->loadHelpers('Date');
+		$this->statuses = array();
+		$this->isInCinema = false;
+
+		if ($this->film->getStatusInProduction() == '1'){
+			$this->statuses[] = 'IN PRODUCTIE';
+		} else {
+			/* Set the cinema status */
+			if ($this->film->getStatusCinema() == '1'){
+				if ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0' && $this->film->getStatusCinemaDay() != '0'){
+					if(strtotime($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01') < time()){
+						$this->statuses[] = 'ACUM in cinema';
+						$this->isInCinema = true;
+					} else {
+						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-' . $this->film->getStatusCinemaDay(),'D', 'ro')) . ' in cinema';
+					}
+				} elseif ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0') {
+					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01', 'M', 'ro')) . ' in cinema';
+				} else {
+					$this->statuses[] = 'IN CURAND in cinema';
+				}
+			}
+
+			/* Set the DVD status */
+			if ($this->film->getStatusDvd() == '1'){
+				if ($this->film->getStatusDvdYear() != '0' && $this->film->getStatusDvdMonth() != '0' && $this->film->getStatusDvdDay() != '0'){
+					if(strtotime($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01') < time()){
+						$this->statuses[] = 'ACUM pe DVD';
+					} else {
+						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-' . $this->film->getStatusDvdDay(),'D', 'ro')) . ' pe DVD';
+					}
+				} elseif ($this->film->getStatusDvdYear() != '0' && $this->film->getStatusDvdMonth() != '0') {
+					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01', 'M', 'ro')) . ' pe DVD';
+				} else {
+					$this->statuses[] = 'IN CURAND pe DVD';
+				}
+			}
+
+			/* Set the Bluray status */
+			if ($this->film->getStatusBluray() == '1'){
+				if ($this->film->getStatusBlurayYear() != '0' && $this->film->getStatusBlurayMonth() != '0' && $this->film->getStatusBlurayDay() != '0'){
+					if(strtotime($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-01') < time()){
+						$this->statuses[] = 'ACUM pe Blu-ray';
+					} else {
+						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-' . $this->film->getStatusBlurayDay(),'D', 'ro')) . ' pe Blu-ray';
+					}
+				} elseif ($this->film->getStatusBlurayYear() != '0' && $this->film->getStatusBlurayMonth() != '0') {
+					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-01', 'M', 'ro')) . ' pe Blu-ray';
+				} else {
+					$this->statuses[] = 'IN CURAND pe Blu-ray';
+				}
+			}
+
+			/* Set the Online status */
+			if ($this->film->getStatusOnline() == '1'){
+				if ($this->film->getStatusOnlineYear() != '0' && $this->film->getStatusOnlineMonth() != '0' && $this->film->getStatusOnlineDay() != '0'){
+					if(strtotime($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-01') < time()){
+						$this->statuses[] = 'ACUM online';
+					} else {
+						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-' . $this->film->getStatusOnlineDay(),'D', 'ro')) . ' online';
+					}
+				} elseif ($this->film->getStatusOnlineYear() != '0' && $this->film->getStatusOnlineMonth() != '0') {
+					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-01', 'M', 'ro')) . ' online';
+				} else {
+					$this->statuses[] = 'IN CURAND online';
+				}
+			}
+		}
+
+
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+
+
+		$this->commentForm = new CommentForm(null, array(
+			'state' => 1,
+			'ip' => $_SERVER['REMOTE_ADDR'],
+			'model' => 'Film',
+                        'model_library_id' => $this->film->getLibraryId(),
+                        'model_name' => $this->film->getName()
+		));
+		if ($this->getUser()->isAuthenticated()){
+			$user = $this->getUser()->getGuardUser();
+			$this->commentForm->setDefaults(array(
+				'name' => $user->getName(),
+				'email' => $user->getEmailAddress()
+			));
+		}
+		if ($request->isMethod('post')){
+			$this->commentForm->bind($request->getParameter($this->commentForm->getName()));
+
+			if ($this->commentForm->isValid()){
+				$this->commentForm->save();
+
+                                $this->redirect($this->generateUrl('film', array('id' => $this->film->getId(), 'key' => $this->film->getUrlKey())) . '#comments');
+			}
+		}
+
+		$this->comments = Doctrine_Core::getTable('Comment')->getActiveByModel('film', $this->film->getLibraryId(), $_SERVER['REMOTE_ADDR']);
+
+		/* Add the visit */
+		$visit = new Visit();
+		$visit->setLibraryId($this->film->getLibraryId());
+		$visit->setUrl($this->generateUrl('film', array('id' => $this->film->getId(), 'key' => $this->film->getUrlKey())));
+		$visit->setName($this->film->getNameRo());
+		$visit->setIp($_SERVER['REMOTE_ADDR']);
+		$visit->save();
 	}
-
-        public function executeView(sfWebRequest $request)
-	{
-            $this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
-
-            $this->films = $this->person->getMostViewedFilmsByRole(8, $this->personRole);
-
-            //$this->awards = Doctrine_Core::getTable('FestivalSectionParticipant')->getDetailedByPerson($this->person->getImdb());
-            $this->awards = $this->person->getRecentAwardsDetailed(5);
-
-            /* Add the visit */
-            if ($routeParameters['person_role'] == 'actor'){
-                $visit = new Visit();
-                $visit->setLibraryId($this->person->getLibraryId());
-                $visit->setUrl($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())));
-                $visit->setName($this->person->getName());
-                $visit->setIp($_SERVER['REMOTE_ADDR']);
-                $visit->save();
-            }
-	}
-
-        public function executeBiography(sfWebRequest $request)
-        {
-            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
-        }
-
-        public function executeAwards(sfWebRequest $request)
-        {
-            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
-            $this->awards = $this->person->getRecentAwardsDetailed(0);
-        }
-
-        public function executeFilms(sfWebRequest $request)
-        {
-            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
-            $this->films = $this->person->getMostViewedFilmsByRole(0);
-        }
-
-        public function executePhotos(sfWebRequest $request)
-        {
-            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
-            $this->photos = $this->person->getPhotoAlbum()->getPhotos();
-            $this->photoCount = $this->photos->count();
-
-            $this->currentPhoto = $request->getParameter('pid', 1);
-        }
-
-        public function executeStiri(sfWebRequest $request)
-        {
-            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
-
-            $this->currentPage = (int)$request->getParameter('p', 1);
-            $this->stires = $this->person->getRelatedStires(sfConfig::get('app_stire_page_limit'), $this->currentPage, false);
-            
-            $this->stireCount = $this->person->getRelatedStiresCount();
-            $this->pageCount = ceil($this->stireCount / sfConfig::get('app_stire_page_limit'));
-            $this->firstStireCount = sfConfig::get('app_stire_page_limit') * ($this->currentPage - 1) + 1;
-            $this->lastStireCount = $this->firstStireCount + $this->stires->count() - 1;
-            if ($this->pageCount <= 5) {
-                    $this->navStart = 1;
-                    $this->navEnd = $this->pageCount;
-            } else {
-                    $this->navStart = $this->currentPage - 2;
-                    $this->navEnd = $this->currentPage - 2;
-
-                    if ($this->navStart <= 0){
-                            $this->navStart = 1;
-                            $this->navEnd = 5;
-                    }
-
-                    if ($this->navEnd >= $this->pageCount){
-                            $this->navStart = $this->pageCount - 4;
-                            $this->navEnd = $this->pageCount;
-                    }
-            }
-        }
 }

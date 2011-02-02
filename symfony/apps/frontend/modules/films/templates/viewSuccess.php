@@ -1,26 +1,36 @@
-<h2><?php echo $person->getName();?></h2>
+<h2><?php echo $film->getNameRo();?> <?php if ($film->getNameEn() != ''):?><span class="black">(<?php echo $film->getNameEn();?>)</span><?php endif;?></h2>
 
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
-	<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link"><?php echo $person->getName();?></a>
+	<a href="<?php echo url_for('@film?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="black-link"><?php echo $film->getName();?></a>
 </div>
 
 
+
+
 <div class="cell-container6"> <!-- left column start -->
+
+
     <div class="cell spacer-bottom-m">
         <div class="cell-hd">
-            <h5>Detalii</h5>
+            <h5>Detalii <span class="black">film</span></h5>
         </div>
         <div class="cell-bd" style="padding:0">
-            <ul class="filterlist spacer-bottom-m">
-                <li onclick="location.href='<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Biografie<span class="filter-cioc"></span></a></li>
-                <li onclick="location.href='<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Premii<span class="filter-cioc"></span></a></li>
-                <li onclick="location.href='<?php echo url_for('@person_films?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_films?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Filmografie<span class="filter-cioc"></span></a></li>
-                <li onclick="location.href='<?php echo url_for('@person_stiri?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_stiri?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Stiri<span class="filter-cioc"></span></a></li>
-                <li onclick="location.href='<?php echo url_for('@person_photos?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>'"><a href="<?php echo url_for('@person_photos?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Fotografii<span class="filter-cioc"></span></a></li>
+        	<ul class="filterlist spacer-bottom-m">
+            	<li onclick="location.href='<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Cumpara DVD & Bluray<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_cast?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_cast?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Actori & echipa<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_sinopsis?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_sinopsis?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Sinopsis<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_awards?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_awards?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Premii<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_articles?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_articles?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Articole despre film<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_comments?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_comments?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Comentariile publicului<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Fotografii din film<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_videos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_videos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Trailere si clipuri<span class="filter-cioc"></span></a></li>
+                <li onclick="location.href='<?php echo url_for('@film_stiri?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><a href="<?php echo url_for('@film_stiri?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Stiri<span class="filter-cioc"></span></a></li>
             </ul>
         </div>
     </div>
+
+
 </div> <!-- left column end -->
 
 
@@ -28,194 +38,215 @@
 
 <div class="cell-container5 spacer-left"> <!-- content column start -->
 
-    <?php if (count($person->getRelatedStires(3)) > 0):?>
-	<div class="normalcell spacer-bottom">
-            <div class="left" style="width: 40px"><h5>Buzz</h5></div>
-            <ul class="list2 left spacer-left-m" style="width: 390px">
-                <?php foreach($person->getRelatedStires(3) as $relatedStire):?>
-                    <li><a href="<?php echo url_for('@stire?id=' . $relatedStire['id'] . '&key=' . $relatedStire['url_key']);?>" class="black-link"><?php echo $relatedStire['name'];?></a></li>
-                <?php endforeach;?>
-            </ul>
-            <div class="clear"></div>
-        </div>
-    <?php endif;?>
-
-
-	<div class="left" style="width:150px">
-    	<div class="normalcell spacer-bottom-m align-center">
-            <a href="#"><img src="<?php echo filmsiPersonPhoto($person->getFilename());?>" class="spacer-bottom" /></a>
-            <div class="more-cell"><a href="" class="smallwhite-link">mai multe poze &raquo;</a></div>
-        </div>
+	<div class="left" style="width:185px">
+    	<img src="<?php echo filmsiFilmPhoto($film->getFilename());?>" class="spacer-bottom" />
 
         <div class="normalcell">
-        	<p class="spacer-bottom"><a href="" class="greenbutton-l-link"><span class="icon-bulletarrow-white"></span> Anunta-ma</a></p>
-            <p class="spacer-bottom-s"><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand apare pe DVD</a></p>
-            <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand apare pe Bluray</a></p>
+        	<button class="announcement spacer-bottom"></button><br />
+            <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza in cinema</a></p>
+            <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza pe DVD</a></p>
+            <p><span class="icon-checkbox"></span> <a href="" class="explanation-link">Cand apar stiri noi</a></p>
+            <p><span class="icon-checkbox"></span> <a href="" class="explanation-link">Cand vine la TV</a></p>
         </div>
     </div>
 
 
-
-
-    <div class="normalcell left spacer-left" style="width:305px; padding:10px 5px">
-    	<h4 class="spacer-bottom-s"><?php echo $person->getName();?></h4>
+    <div class="normalcell left spacer-left" style="width:273px; padding:10px 5px">
+    	<p class="incinema spacer-bottom-s">
+			<?php foreach($statuses as $status):?>
+			<?php echo $status;?><br />
+			<?php endforeach;?>
+		</p>
     	<div class="cell-separator-double spacer-bottom"></div>
 
-        <p class="explanation-small">Nascut: <?php echo format_date($person->getDateOfBirth(), 'D', 'ro');?>, <?php echo $person->getPlaceOfBirth();?></p>
+        <div class="left" style="width: 190px">
+        	<p class="spacer-bottom-s"><strong>Voteaza acest film</strong></p>
 
+            <a href="" class="icon-votestar-s votetrigger" id="votestar-1"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-2"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-3"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-4"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-5"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-6"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-7"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-8"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-9"></a>
+        	<a href="" class="icon-votestar-s votetrigger" id="votestar-10"></a>
 
-        <div class="cell-separator-double spacer-bottom spacer-top"></div>
-        <strong>Biografie</strong><br />
-        <?php echo $person->getBiographyTeaser();?>
+            <script type="text/javascript">
+				$(document).ready(function(){
+					$('.votetrigger').mouseover(function(){
+						id = parseInt($(this).attr('id').substr(9));
 
-        <div class="more-cell"><a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="smallwhite-link">afla mai multe &raquo;</a></div>
+						for (i = 1; i <= id; i++){
+							$('#votestar-' + i).removeClass('icon-votestar-s').addClass('icon-votestar-s-active');
+						}
+					});
 
-    </div>
-
-
-
-
-
-    <div class="clear"></div>
-
-
-
-
-<br /><br />
-
-    <div class="normalcell spacer-top spacer-bottom">
-        <?php if($person->getIsActor() == '1'):?>
-    	<a href="<?php echo url_for('@actor?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
-           class="inline-block align-center"
-           style="width: 80px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'actor' ? '33px; border-bottom:0; ' : '32px;';?> position: absolute; background-color:#fff; top: -34px; left: 10px"><h5<?php if($personRole != 'actor') echo ' class="grey"';?>>Actor</h5></a>
-        <?php endif;?>
-        <?php if($person->getIsDirector() == '1'):?>
-        <a href="<?php echo url_for('@director?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
-           class="inline-block align-center"
-           style="width: 100px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'director' ? '33px; border-bottom:0; ' : '32px;';?>px; position: absolute; background-color:#fff; top: -34px; left: 110px"><h5<?php if($personRole != 'director') echo ' class="grey"';?>>Regizor</h5></a>
-        <?php endif;?>
-        <?php if($person->getIsScriptwriter() == '1'):?>
-    	<a href="<?php echo url_for('@scriptwriter?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
-           class="inline-block align-center"
-           style="width: 112px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'scriptwriter' ? '33px; border-bottom:0; ' : '32px;';?>px; border-bottom:0; position: absolute; background-color:#fff; top: -34px; left: 230px"><h5<?php if($personRole != 'scriptwriter') echo ' class="grey"';?>>Scenarist</h5></a>
-        <?php endif;?>
-        <?php if($person->getIsProducer() == '1'):?>
-        <a href="<?php echo url_for('@producer?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"
-           class="inline-block align-center"
-           style="width: 112px; border:1px solid #e7e7e7; height:<?php echo $personRole == 'producer' ? '33px; border-bottom:0; ' : '32px;';?>px; position: absolute; background-color:#fff; top: -34px; left: 355px"><h5<?php if($personRole != 'producer') echo ' class="grey"';?>>Producator</h5></a>
-        <?php endif;?>
-
-    	
-        <table class="spacer-bottom">
-        	<tr><td><h5 class="black spacer-right" style="white-space:nowrap">Filme</h5></td><td width="100%"><div class="cell-separator-double"></div></td></tr>
-        </table>
-
-        <?php if (isset($films[0])):?>
-        <div class="left align-center">
-            <a href="<?php echo url_for('@film?id=' . $films[0]['id'] . '&key=' . $films[0]['url_key']);?>" class="important-link">
-                <img src="<?php echo filmsiFilmPhotoThumb($films[0]['filename']);?>" style="width: 100px" /><br /><?php echo $films[0]['name_en'];?>
-            </a><br />
-            <em>( <?php echo $films[0]['name_ro'];?>)</em>
+					$('.votetrigger').mouseout(function(){
+						$('.votetrigger').removeClass('icon-votestar-s-active').addClass('icon-votestar-s');
+					});
+				});
+			</script>
         </div>
-        <?php endif;?>
 
-        <?php if (isset($films[1])):?>
-        <div class="left ml-2 align-center">
-            <a href="<?php echo url_for('@film?id=' . $films[1]['id'] . '&key=' . $films[1]['url_key']);?>" class="important-link">
-                <img src="<?php echo filmsiFilmPhotoThumb($films[1]['filename']);?>" style="width: 100px" /><br /><?php echo $films[1]['name_en'];?>
-            </a><br />
-            <em>( <?php echo $films[1]['name_ro'];?>)</em>
+        <div class="left cell-separator-dotted-left" style="width: 70px; padding-left:5px; margin-left:5px">
+        	<span class="hugegreen">2,98</span><br />
+            <span class="smalltext">3679 voturi</span>
         </div>
-        <?php endif;?>
-
-        <?php if (isset($films[2])):?>
-        <div class="left ml-2 align-center">
-            <a href="<?php echo url_for('@film?id=' . $films[2]['id'] . '&key=' . $films[2]['url_key']);?>" class="important-link">
-                <img src="<?php echo filmsiFilmPhotoThumb($films[2]['filename']);?>" style="width: 100px" /><br /><?php echo $films[2]['name_en'];?>
-            </a><br />
-            <em>( <?php echo $films[2]['name_ro'];?>)</em>
-        </div>
-        <?php endif;?>
-
-        <?php if (isset($films[3])):?>
-        <div class="left ml-2 align-center">
-            <a href="<?php echo url_for('@film?id=' . $films[3]['id'] . '&key=' . $films[3]['url_key']);?>" class="important-link">
-                <img src="<?php echo filmsiFilmPhotoThumb($films[3]['filename']);?>" style="width: 100px" /><br /><?php echo $films[3]['name_en'];?>
-            </a><br />
-            <em>( <?php echo $films[3]['name_ro'];?>)</em>
-        </div>
-        <?php endif;?>
 
         <div class="clear"></div>
 
-        <br /><br />
+        <div class="cell-separator-double spacer-bottom spacer-top"></div>
+        <strong>Sinopsis</strong><br />
+        <?php echo $film->getDescriptionTeaser();?>
 
-        <?php if (isset($films[4])):?>
-            <p class="bigstronggreen spacer-bottom">A mai jucat in</p>
-            <table>
-                    <tr>
-                    <td style="width:60px;"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Anul</p></td>
-                    <td style="width:270px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Numele filmului</p></td>
-                    <td style="width:70px"><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Disponibil</p></td>
-                </tr>
-                <?php for($i = 4; $i <= 7; $i++):?>
-                    <?php if (isset($films[$i])):?>
-                        <tr<?php if ($i % 2 == 0) echo 'class="off-row"';?>>
-                        <td style="width:60px;"><p class="smalltext spacer-right spacer-bottom-s spacer-top-s"><?php echo $films[$i]['year'];?></p></td>
-                        <td style="width:270px"><p class="spacer-top-s spacer-bottom-s"><a href="<?php echo url_for('@film?id=' . $films[$i]['id'] . '&key=' . $films[$i]['url_key']);?>" class="important-link spacer-right spacer-bottom-s spacer-top-s"><?php echo $films[$i]['name_en'];?></a><br /><em>(<?php echo $films[$i]['name_ro'];?>)</em></p></td>
-                        <td style="width:70px"><p class="spacer-bottom-s spacer-top-s"><a href="<?php echo url_for('@film_buy?id=' . $films[$i]['id'] . '&key=' . $films[$i]['url_key']);?>#dvd" class="small-link">Dvd</a>, <a href="<?php echo url_for('@film_buy?id=' . $fim[$i]['id'] . '&key=' . $films[$i]['url_key']);?>#dvd" class="small-link">Bluray</a></p></td>
-                    <?php endif;?>
-                </tr>
-                <?php endfor; ?>
-            </table>
-
+        <div class="align-right"><a href="<?php echo url_for('@film_sinopsis?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="small-link">citeste intreg sinopsisul &raquo;</a></div>
         <br />
-        <div class="align-right"><a href="<?php echo url_for('@person_films?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="small-link">vezi toate filmele &raquo;</a></div>
-        <?php endif;?>
+        <div class="cell-separator-double spacer-bottom"></div>
+
+        <strong>Cu</strong><br />
+
+        <p class="spacer-left">
+			<?php foreach($actors as $actor):?>
+			<a href="<?php echo url_for('@person?id=' . $actor->getId() . '&key=' . $actor->getUrlKey());?>" class="small-link"><?php echo $actor->getName();?></a>,
+			<?php endforeach;?>
+		</p>
+        <div class="align-right spacer-bottom"><a href="<?php echo url_for('@film_cast?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="small-link">vezi toti actorii &raquo;</a></div>
+
+        <div class="cell-separator-double spacer-bottom"></div>
+
+        <div class="inline-block spacer-bottom" style="width:130px">
+        	<strong>Regia</strong><br />
+            <div class="spacer-left">
+				<?php foreach($directors as $director):?>
+				<a href="<?php echo url_for('@person?id=' . $director->getId() . '&key=' . $director->getUrlKey());?>" class="small-link"><?php echo $director->getName();?></a>,
+				<?php endforeach;?>
+			</div>
+        </div>
+
+        <div class="inline-block spacer-bottom" style="width:130px">
+        	<strong>Distribuitor</strong><br />
+            <div class="spacer-left"><?php echo $film->getDistribuitor();?></div>
+        </div>
+
+        <div class="inline-block spacer-bottom" style="width:130px">
+        	<strong>Gen</strong><br />
+            <div class="spacer-left">
+				<?php foreach($film->getGenres() as $genre):?>
+				<a href="" class="small-link"><?php echo $genre->getName();?></a>,
+				<?php endforeach;?>
+			</div>
+        </div>
+
+        <div class="inline-block spacer-bottom" style="width:130px">
+        	<strong>An</strong><br />
+            <div class="spacer-left smalltext"><?php echo $film->getYear();?></div>
+        </div>
+
+        <div class="inline-block spacer-bottom" style="width:130px">
+        	<strong>Rating</strong><br />
+            <div class="spacer-left"><a href="" class="small-link"><?php echo $film->getRating();?></a></div>
+        </div>
+
+        <div class="inline-block spacer-bottom" style="width:130px">
+        	<strong>Durata</strong><br />
+            <div class="spacer-left smalltext"><?php echo $film->getDuration();?></div>
+        </div>
 
     </div>
 
-    <?php if (count($awards) > 0):?>
-        <div class="normalcell spacer-top spacer-bottom">
+    <div class="clear"></div>
 
-            <table class="spacer-bottom">
-                    <tr><td><h5 class="black spacer-right" style="white-space:nowrap">Premii</h5></td><td width="100%"><div class="cell-separator-double"></div></td></tr>
-            </table>
+    <div class="normalcell spacer-top spacer-bottom">
+    	<div>
+            <div class="right innerspacer-right spacer-right-m"><span class="st_email_large" st_title="" ></span></div>
+            <div class="right innerspacer-right spacer-right-m"><span class="st_facebook_large" st_title=""></span></div>
+            <div class="right innerspacer-right spacer-right-m"><span class="st_twitter_large" st_title=""></span></div>
 
+            <div class="inline-block spacer-right-l">Spune si prietenilor tai pe</div>
 
-            <table>
-                <tr>
-                    <td><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Festival</p></td>
-                    <td><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Status</p></td>
-                    <td><p class="explanation-small cell-separator-dotted-bottom spacer-right spacer-bottom-s">Film</p></td>
-                </tr>
-                <?php foreach($awards as $award):?>
-                <tr>
-                    <td>
-                        <p class="smalltext spacer-right spacer-bottom-s spacer-top-s">
-                            <span class="strong"><?php echo $award['f_name'] . '-' . $award['fe_edition'];?></span><br /><?php echo $award['fs_name'];?>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="smalltext spacer-right spacer-bottom-s spacer-top-s">
-                            <?php echo $award['fsp_is_winner'] == '1' ? '<span class="red">castigator</span>' : 'nominalizat';?>
-                        </p>
-                    </td>
-                    <td>
-                        <a href="<?php echo url_for('@film?id=' . $award['film']['id'] . '&key=' . $award['film']['url_key']);?>" class="important-link spacer-right spacer-bottom-s spacer-top-s"><?php echo $award['film']['name_en'];?></a>
-                    </td>
-                </tr>
-                <?php endforeach;?>
-            </table>
-
-            <br />
-            <div class="align-right"><a href="<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="small-link">vezi toate premiile &raquo;</a></div>
-
+            <div class="clear"></div>
         </div>
-        <?php endif;?>
+    </div>
+
+
+	<?php if($isInCinema):?>
+    <div class="cell innerspacer-bottom spacer-bottom-m">
+        <h5 class="innerspacer cell-separator2 spacer-bottom">Cauta cinema unde ruleaza filmul <span class="black">in orasul tau</span></h5>
+
+        <select class="cinema-city spacer-left" style="width: 350px"><option>Selecteaza orasul tau</option></select><button class="cinema-searchbutton spacer-left"></button>
+    </div>
+	<?php endif;?>
+
+    <!--
+    <div class="greencell spacer-bottom-m">
+    	<div class="left" style="width: 200px"><span class="hugewhite">CUMPARA</span><br /><span class="bigstrong">Intalnire exploziva</span></div>
+        <div class="left innerspacer-top">
+            <button class="normalbutton spacer-right-m"><span class="icon-buttonbullet-green"></span> Pe DVD</button>
+            <button class="normalbutton "><span class="icon-buttonbullet-green"></span> Pe Bluray</button>
+		</div>
+
+        <div class="clear"></div>
+    </div>
+    -->
+
+	<div class="cell spacer-bottom-m">
+        <div class="cell-hd"><h5>Fotografii</h5></div>
+        <div class="cell-bd innerspacer-bottom-m">
+            <?php foreach($film->getFirstPhotos(3) as $photo):?>
+            <div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: middle">
+                <a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>"><img src="<?php echo filmsiPhotoThumbS($photo->getFilename());?>" /></a> <br />
+                <a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>" class="black-link"><?php echo $photo->getDescription();?></a> <br />
+            </div>
+            <?php endforeach;?>
+        </div>
+
+		<span class="more-cell"><a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="smallwhite-link">vezi mai multe &raquo;</a></span>
+    </div>
+
+	<div class="cell spacer-bottom-m">
+        <h5>Trailere <span class="black">si clipuri video</span></h5>
+        <div class="cell-bd innerspacer-bottom-m">
+            <?php foreach($film->getFirstVideos(3) as $video):?>
+            <div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: middle">
+                <a href="<?php echo url_for('@film_videos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?vid=<?php echo $video->getPosition();?>"><img src="<?php echo filmsiVideoThumb($video->getCode());?>" /></a> <br />
+                <a href="<?php echo url_for('@film_videos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?vid=<?php echo $video->getPosition();?>" class="black-link"><?php echo $video->getName();?></a> <br />
+            </div>
+            <?php endforeach;?>
+        </div>
+
+		<span class="more-cell"><a href="<?php echo url_for('@film_videos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="smallwhite-link">vezi mai multe &raquo;</a></span>
+    </div>
 
 
 
+
+    <div class="cell spacer-bottom-m">
+        <div class="cell-hd">
+            <h4>Cele mai noi <span class="black">articole</span></h4>
+        </div>
+
+        <div class="cell-bd">
+        	<ul class="spacer-bottom-m">
+				<?php foreach($film->getNewestArticles(3) as $article):?>
+            	<li class="cell-separator-dotted-bottom innerspacer-bottom-s spacer-bottom-s">
+                    <p class="explanation spacer-bottom-s"><a href="<?php echo url_for('@article?id=' . $article->getId() . '&key=' . $article->getUrlKey());?>" class="important-link"><?php echo $article->getName();?></a></p>
+                    <p class="spacer-left-m"><?php echo $article->getContentTeaser();?></p>
+                </li>
+				<?php endforeach;?>
+            </ul>
+        </div>
+
+        <div class="more-cell"><a href="<?php echo url_for('@film_articles?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="smallwhite-link">afla mai multe &raquo;</a></div>
+    </div>
+
+
+    <?php include_partial('comments/formAndList', array(
+		'form' => $commentForm,
+		'comments' => $comments,
+		'action' => url_for('@film?id=' . $film->getId() . '&key=' . $film->getUrlKey())
+	));?>
 
 
 

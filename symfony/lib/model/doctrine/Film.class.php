@@ -63,4 +63,41 @@ class Film extends BaseFilm
 		$this->setBackgroundFilename(NULL);
 		$this->save();
 	}
+
+	public function getFirstPhotos($limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->limit($limit)
+			->where('p.album_id = ?', $this->getPhotoAlbumId())
+			->orderBy('p.position')
+			->execute();
+	}
+
+	public function getFirstVideos($limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Video v')
+			->limit($limit)
+			->where('v.album_id = ?', $this->getVideoAlbumId())
+			->orderBy('v.position')
+			->execute();
+	}
+
+	public function getNewestArticles($limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Article a')
+			->innerJoin('a.FilmArticle fa')
+			->limit($limit)
+			->where('fa.film_id = ?', $this->getId())
+			->andWhere('a.state = 1 AND (expiration_date IS NULL OR expiration_date > NOW())')
+			->orderBy('a.publish_date DESC')
+			->execute();
+	}
+
+	public function getCheckIfVoted()
+	{
+
+	}
 }

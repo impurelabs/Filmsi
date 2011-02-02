@@ -336,6 +336,8 @@ class sfDateFormat
         return 'yyyy-MM-dd HH:mm:ss';
         break;
       case 'M':
+		  return 'MMMM';
+		  break;
       case 'm':
         return 'MMMM dd';
         break;

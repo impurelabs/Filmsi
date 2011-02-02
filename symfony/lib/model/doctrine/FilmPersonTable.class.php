@@ -7,6 +7,11 @@
  */
 class FilmPersonTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('FilmPerson');
+	}
+
 	public function getDetailedByFilm($filmId)
 	{
 		return Doctrine_Query::create()
@@ -43,4 +48,51 @@ class FilmPersonTable extends Doctrine_Table
 			->where('fp.film_id = ? AND fp.person_id = ?', array($filmId, $personId))
 			->fetchOne();
 	}
+
+	public function getBestActorsByFilm($filmId, $limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('FilmPerson fp')
+			->innerJoin('fp.Person p')
+			->where('fp.film_id = ?', $filmId)
+			->andWhere('fp.is_actor = 1')
+			->orderBy('p.visit_count DESC');
+
+		if (isset ($limit)){
+			$q->limit($limit);
+		}
+
+		$filmPersons = $q->execute();
+
+		$actors = array();
+		foreach($filmPersons as $filmPerson){
+			$actors[] = $filmPerson->getPerson();
+		}
+
+		return $actors;
+	}
+
+	public function getBestDirectorsByFilm($filmId, $limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('FilmPerson fp')
+			->innerJoin('fp.Person p')
+			->where('fp.film_id = ?', $filmId)
+			->andWhere('fp.is_director = 1')
+			->orderBy('p.visit_count DESC');
+
+		if (isset ($limit)){
+			$q->limit($limit);
+		}
+
+		$filmPersons = $q->execute();
+
+		$actors = array();
+		foreach($filmPersons as $filmPerson){
+			$actors[] = $filmPerson->getPerson();
+		}
+
+		return $actors;
+	}
+
 }

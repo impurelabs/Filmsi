@@ -100,4 +100,40 @@ class Film extends BaseFilm
 	{
 
 	}
+
+	public function getVoteScore()
+	{
+		$q = Doctrine_Query::create()
+			->select('AVG(v.grade) score')
+			->from('FilmVote v')
+			->where('v.film_id = ?', $this->getId())
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $q['score'];
+
+	}
+
+	public function getVoteCount()
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(v.id) count')
+			->from('FilmVote v')
+			->where('v.film_id = ?', $this->getId())
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $q['count'];
+	}
+
+	public function checkIfIpVotedToday($ip)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(v.id) count')
+			->from('FilmVote v')
+			->where('v.film_id = ?', $this->getId())
+			->andWhere('v.ip = ?', $ip)
+			->andWhere('DATE(v.created_at) = DATE(NOW())')
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return (int)$q['count'] === 0 ? false : true;
+	}
 }

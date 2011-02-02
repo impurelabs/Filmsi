@@ -16,5 +16,13 @@ class FilmVoteTable extends Doctrine_Table
         {
             return Doctrine_Core::getTable('FilmVote');
         }
+
+		public function deleteOlderThan($days)
+        {
+            Doctrine_Query::create()
+                ->delete('FilmVote v')
+                ->where('v.created_at < date_sub(NOW(), interval ? day)', $days)
+                ->execute();
+        }
         
 }

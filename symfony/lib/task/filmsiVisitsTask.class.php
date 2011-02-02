@@ -32,7 +32,7 @@ class filmsiVisitsTask extends sfBaseTask
             $this->countVisits();
         }
 
-        $this->logBlock('filmsi:visits task completed succesfully!');
+        $this->logBlock('filmsi:visits task completed succesfully!', 'INFO');
     }
 
     protected function countVisits()

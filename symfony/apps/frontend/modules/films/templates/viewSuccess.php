@@ -60,39 +60,52 @@
     	<div class="cell-separator-double spacer-bottom"></div>
 
         <div class="left" style="width: 190px">
-        	<p class="spacer-bottom-s"><strong>Voteaza acest film</strong></p>
+			<?php if ($film->checkIfIpVotedToday($_SERVER['REMOTE_ADDR'])):?>
+				<br />
+				<p class="spacer-bottom-s"><strong>Ai votat deja azi pentru acest film!</strong></p>
+			<?php else:?>
+				<p class="spacer-bottom-s"><strong>Voteaza acest film</strong></p>
 
-            <a href="" class="icon-votestar-s votetrigger" id="votestar-1"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-2"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-3"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-4"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-5"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-6"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-7"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-8"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-9"></a>
-        	<a href="" class="icon-votestar-s votetrigger" id="votestar-10"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-1"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-2"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-3"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-4"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-5"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-6"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-7"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-8"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-9"></a>
+				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-10"></a>
+				<form id="vote_form" method="post" action="<?php echo url_for('@film_vote');?>">
+					<input type="hidden" name="film_id" value="<?php echo $film->getId();?>" />
+					<input type="hidden" id="vote_grade" name="grade" value="" />
+				</form>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('.votetrigger').mouseover(function(){
+							id = parseInt($(this).attr('id').substr(9));
 
-            <script type="text/javascript">
-				$(document).ready(function(){
-					$('.votetrigger').mouseover(function(){
-						id = parseInt($(this).attr('id').substr(9));
+							for (i = 1; i <= id; i++){
+								$('#votestar-' + i).removeClass('icon-votestar-s').addClass('icon-votestar-s-active');
+							}
+						});
 
-						for (i = 1; i <= id; i++){
-							$('#votestar-' + i).removeClass('icon-votestar-s').addClass('icon-votestar-s-active');
-						}
+						$('.votetrigger').mouseout(function(){
+							$('.votetrigger').removeClass('icon-votestar-s-active').addClass('icon-votestar-s');
+						});
+
+						$('.votetrigger').click(function(){
+							$('#vote_grade').val($(this).attr('id').substr(9));
+							$('#vote_form').submit();
+						});
 					});
-
-					$('.votetrigger').mouseout(function(){
-						$('.votetrigger').removeClass('icon-votestar-s-active').addClass('icon-votestar-s');
-					});
-				});
-			</script>
+				</script>
+			<?php endif;?>
         </div>
 
         <div class="left cell-separator-dotted-left" style="width: 70px; padding-left:5px; margin-left:5px">
-        	<span class="hugegreen">2,98</span><br />
-            <span class="smalltext">3679 voturi</span>
+			<span class="hugegreen"><?php echo format_number(number_format($film->getVoteScore(), 2), 'ro');?></span><br />
+            <span class="smalltext"><?php echo $film->getVoteCount();?> voturi</span>
         </div>
 
         <div class="clear"></div>

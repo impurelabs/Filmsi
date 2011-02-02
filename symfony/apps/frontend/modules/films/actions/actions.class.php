@@ -127,4 +127,17 @@ class filmsActions extends sfActions
 		$visit->setIp($_SERVER['REMOTE_ADDR']);
 		$visit->save();
 	}
+
+	public function executeVote(sfWebRequest $request)
+	{
+		$this->forward404If(!$request->isMethod('post'));
+
+		$vote = new FilmVote();
+		$vote->setFilmId($request->getParameter('film_id'));
+		$vote->setGrade($request->getParameter('grade'));
+		$vote->setIp($_SERVER['REMOTE_ADDR']);
+		$vote->save();
+
+		$this->redirect($request->getReferer());
+	}
 }

@@ -13,7 +13,7 @@ abstract class BaseFilmVote extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('film_vote');
-        $this->hasColumn('library_id', 'integer', null, array(
+        $this->hasColumn('film_id', 'integer', null, array(
              'type' => 'integer',
              ));
         $this->hasColumn('grade', 'enum', null, array(

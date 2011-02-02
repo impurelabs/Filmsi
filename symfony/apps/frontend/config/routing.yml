@@ -245,6 +245,10 @@ film_stiri_no_key:
   url: /stiri-film/:id/
   param: { module: films, action: stiri }
 
+film_vote:
+  url: /film-vote/
+  param: { module: films, action: vote }
+
 
 
 

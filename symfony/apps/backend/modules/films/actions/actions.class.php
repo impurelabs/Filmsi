@@ -72,8 +72,8 @@ class filmsActions extends sfActions
   		$film->setDescriptionContent($imdbComFilm->getSinopsis());
   		$film->setUserId($this->getUser()->getGuardUser()->getId());
   		$film->setPublishDate(date('Y-m-d'), time());
-  		
-  		$filenameSource = $imdbComFilm->getFilenameSource() == false ? sfConfig::get('app_film_nophoto_image_path') : $imdbComFilm->getFilenameSource();
+
+  		$filenameSource = ( $imdbComFilm->getFilenameSource() == false || strpos($imdbComFilm->getFilenameSource(),'nopicture') !== false ) ? sfConfig::get('app_film_nophoto_image_path') : $imdbComFilm->getFilenameSource();
 	  	$pieces = explode('.', $filenameSource);
 	  	$extension = array_pop($pieces);
   		

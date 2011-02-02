@@ -489,7 +489,9 @@ class LibraryTable extends Doctrine_Table
 			
 		foreach ($libraryObjects as $libraryObject){
 			$object = Doctrine_Core::getTable($libraryObject->getType())->findOneByLibraryId($libraryObject->getId());
-			$object->delete();
+			if ($object !== false) {
+				$object->delete();
+			}
 		}
 		
 		

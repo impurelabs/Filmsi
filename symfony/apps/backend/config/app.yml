@@ -26,5 +26,5 @@ all:
     width_3: 400
 
   provideo:
-    url: %SF_WEB_DIR%/provideo.xml
+    url: http://www.filmsi.ro/provideo.xml
     

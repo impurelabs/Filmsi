@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : feed1.xml
+    Created on : December 16, 2010, 2:35 PM
+    Author     : Iulian Manea
+    Description:
+        Purpose of the document follows.
+-->
+
+<products>
+	<product name="The Chronicles of Narnia: The Voyage of the Dawn Treader" imdb="tt0980970" is_dvd="1" dvd_url="http://www.urlnarnia-dvd.com" is_bluray="0" bluray_url="http://www.urlnarnia-bluray.com" is_online="1" online_url="http://www.urlnarnia-online.com"></product>
+	<product name="Tacerea mieilor" imdb="tt0102926" is_dvd="0" dvd_url="http://tacarea-dvd" is_bluray="1" bluray_url="http://tacarea-bluray" is_online="1" online_url="http://tacarea-online.com"></product>
+	<product name="Eroi de sacrificiu" imdb="tt1320253" is_dvd="1" dvd_url="http://eroi-dvd.com" is_bluray="0" bluray_url="http://eroi-bluray.com" is_online="0" online_url="http://eroi-online.com"></product>
+	<product name="Harry Potter si Talismanele Mortii: Partea I" imdb="tt0926084" is_dvd="1" dvd_url="http://harrypotter-dvd.com" is_bluray="1" bluray_url="http://harrypotter-bluray.com" is_online="0" online_url="http://harrypotter-online.com"></product>
+	<product name="De neoprit" imdb="tt0477080" is_dvd="1" dvd_url="http://neoprit-dvd.com" is_bluray="1" bluray_url="http://neoprit-bluray.com" is_online="1" online_url="http://neoprit-online.com"></product>
+</products>

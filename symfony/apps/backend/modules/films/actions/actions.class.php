@@ -67,7 +67,9 @@ class filmsActions extends sfActions
   		$film->setImdb($imdbComFilm->getImdb());
   		$film->setNameRo($imdbComFilm->getNameRo());
   		$film->setNameEn($imdbComFilm->getNameEn());
-  		$film->setYear($imdbComFilm->getYear());
+		if ($imdbComFilm->getYear() != ''){
+			$film->setYear($imdbComFilm->getYear());
+		}
   		$film->setDuration($imdbComFilm->getDuration());
   		$film->setDescriptionContent($imdbComFilm->getSinopsis());
   		$film->setUserId($this->getUser()->getGuardUser()->getId());
@@ -321,9 +323,17 @@ class filmsActions extends sfActions
 				if ($produs['rating_cnc'] != ''){
 					$this->film->setRating($produs['rating_cnc']);
 				}
-                $this->film->setDuration($produs['durata']);
-                if ($this->film->getNameRo() == ''){
+                if ($produs['durata'] != ''){
+                    $this->film->setDuration($produs['durata']);
+                }
+                if ($produs['titlu_romana'] != ''){
                     $this->film->setNameRo($produs['titlu_romana']);
+                }
+				if ($produs['titlu_engleza'] != ''){
+                    $this->film->setNameEn($produs['titlu_engleza']);
+                }
+				if ($produs['an'] != ''){
+                    $this->film->setYear($produs['an']);
                 }
 
                 $this->film->save();

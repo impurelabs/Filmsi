@@ -4,27 +4,36 @@ all:
     path_for_web: /content/photos
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 479
-    thumbnail_size: 126
-    thumbnail_small_size: 114
+    sourceimage_width: 479
+    sourceimage_height: 479
+    thumbnail_width: 126
+    thumbnail_height: 126
+    thumbnail_small_width: 114
+    thumbnail_small_height: 114
     
   person:
     path: %SF_WEB_DIR%/content/persons
     path_for_web: /content/persons
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 175
-    thumbnail_size: 114
-    thumbnail_small_size: 45
+    sourceimage_width: 175
+    sourceimage_height: 175
+    thumbnail_width: 114
+    thumbnail_height: 114
+    thumbnail_small_width: 45
+    thumbnail_small_height: 45
     
   film:
     path: %SF_WEB_DIR%/content/films
     path_for_web: /content/films
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 269
-    thumbnail_size: 201
-    thumbnail_small_size: 73
+    sourceimage_width: 269
+    sourceimage_height: 269
+    thumbnail_width: 201
+    thumbnail_height: 201
+    thumbnail_small_width: 73
+    thumbnail_small_height: 73
     background_path: %SF_WEB_DIR%/content/promovare/film_backgrounds
     background_path_for_web: /content/promovare/film_backgrounds
 
@@ -37,54 +46,72 @@ all:
     path_for_web: /content/festival_editions
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 600
-    thumbnail_size: 126
-    thumbnail_small_size: 45
+    sourceimage_width: 600
+    sourceimage_height: 600
+    thumbnail_width: 126
+    thumbnail_height: 126
+    thumbnail_small_width: 45
+    thumbnail_small_height: 45
     
   cinema:
     path: %SF_WEB_DIR%/content/cinemas
     path_for_web: /content/cinemas
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 600
-    thumbnail_size: 126
-    thumbnail_small_size: 45
+    sourceimage_width: 600
+    sourceimage_height: 600
+    thumbnail_width: 126
+    thumbnail_height: 126
+    thumbnail_small_width: 45
+    thumbnail_small_height: 45
     
   cinemapromotion:
     path: %SF_WEB_DIR%/content/cinemapromotions
     path_for_web: /content/cinemapromotions
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 600
-    thumbnail_size: 126
-    thumbnail_small_size: 45
+    sourceimage_width: 600
+    sourceimage_height: 600
+    thumbnail_width: 126
+    thumbnail_height: 126
+    thumbnail_small_width: 45
+    thumbnail_small_height: 45
     
   article:
     path: %SF_WEB_DIR%/content/articles
     path_for_web: /content/articles
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 210
-    thumbnail_size: 210
-    thumbnail_small_size: 210
+    sourceimage_width: 210
+    sourceimage_height: 210
+    thumbnail_width: 210
+    thumbnail_height: 210
+    thumbnail_small_width: 210
+    thumbnail_small_height: 210
     
   stire:
     path: %SF_WEB_DIR%/content/stires
     path_for_web: /content/stires
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 210
-    thumbnail_size: 210
-    thumbnail_small_size: 210
+    sourceimage_width: 210
+    sourceimage_height: 210
+    thumbnail_width: 210
+    thumbnail_height: 210
+    thumbnail_small_width: 210
+    thumbnail_small_height: 210
     
   shop:
     path: %SF_WEB_DIR%/content/shops
     path_for_web: /content/shops
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_size: 600
-    thumbnail_size: 100
-    thumbnail_small_size: 45
+    sourceimage_width: 600
+    sourceimage_height: 600
+    thumbnail_width: 100
+    thumbnail_height: 100
+    thumbnail_small_width: 45
+    thumbnail_small_height: 45
     
   rating: 
     types: ["AG - Audienta Generala", "N15", "IM 18", "AP12", "IM 18 XXX - Interzis minorilor si proiectiei cu public", "IC 14"]

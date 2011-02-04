@@ -38,17 +38,17 @@ class Photo extends BasePhoto
 		}
 
 		/* Create the big file */
-		$photo = new sfThumbnail(sfConfig::get('app_photos_sourceimage_size'), sfConfig::get('app_photos_sourceimage_size'));
+		$photo = new sfThumbnail(sfConfig::get('app_photos_sourceimage_width'), sfConfig::get('app_photos_sourceimage_height'), true, false, 100);
 		$photo->loadFile($sourceFile);
 		$photo->save(sfConfig::get('app_photos_path') . '/' . $filename);
 
 		/* Create the thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_photos_thumbnail_size'), sfConfig::get('app_photos_thumbnail_size'));
+		$thumb = new sfThumbnail(sfConfig::get('app_photos_thumbnail_width'), sfConfig::get('app_photos_thumbnail_height'), true, false, 100);
 		$thumb->loadFile($sourceFile);
 		$thumb->save(sfConfig::get('app_photos_path') . '/t-' . $filename);
 
 		/* Create the small thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_photos_thumbnail_small_size'), sfConfig::get('app_photos_thumbnail_small_size'));
+		$thumb = new sfThumbnail(sfConfig::get('app_photos_thumbnail_small_width'), sfConfig::get('app_photos_thumbnail_small_height'), true, false, 100);
 		$thumb->loadFile($sourceFile);
 		$thumb->save(sfConfig::get('app_photos_path') . '/ts-' . $filename);
 	}

@@ -31,17 +31,17 @@ class Stire extends BaseStire
 		}
 
 		/* Create the big file */
-		$photo = new sfThumbnail(sfConfig::get('app_stire_sourceimage_size'), sfConfig::get('app_stire_sourceimage_size'));
+		$photo = new sfThumbnail(sfConfig::get('app_stire_sourceimage_width'), sfConfig::get('app_stire_sourceimage_height'), true, false, 100);
 		$photo->loadFile($sourceFile);
 		$photo->save(sfConfig::get('app_stire_path') . '/' . $this->getFilename());
 
 		/* Create the thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_stire_thumbnail_size'), sfConfig::get('app_stire_thumbnail_size'));
+		$thumb = new sfThumbnail(sfConfig::get('app_stire_thumbnail_width'), sfConfig::get('app_stire_thumbnail_height'), true, false, 100);
 		$thumb->loadFile($sourceFile);
 		$thumb->save(sfConfig::get('app_stire_path') . '/t-' . $this->getFilename());
 
 		/* Create the small thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_stire_thumbnail_small_size'), sfConfig::get('app_stire_thumbnail_small_size'));
+		$thumb = new sfThumbnail(sfConfig::get('app_stire_thumbnail_small_width'), sfConfig::get('app_stire_thumbnail_small_height'), true, false, 100);
 		$thumb->loadFile($sourceFile);
 		$thumb->save(sfConfig::get('app_stire_path') . '/ts-' . $this->getFilename());
 	}

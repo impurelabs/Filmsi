@@ -86,14 +86,7 @@ class Film extends BaseFilm
 
 	public function getNewestArticles($limit = null)
 	{
-		return Doctrine_Query::create()
-			->from('Article a')
-			->innerJoin('a.FilmArticle fa')
-			->limit($limit)
-			->where('fa.film_id = ?', $this->getId())
-			->andWhere('a.state = 1 AND (expiration_date IS NULL OR expiration_date > NOW())')
-			->orderBy('a.publish_date DESC')
-			->execute();
+		return ArticleTable::getInstance()->getNewestByFilm($this->getId(), $limit);
 	}
 
 	public function getCheckIfVoted()
@@ -136,4 +129,24 @@ class Film extends BaseFilm
 
 		return (int)$q['count'] === 0 ? false : true;
 	}
+
+	public function getRelatedStires($limit = null, $page = null, $returnArray = true)
+    {
+		return StireTable::getInstance()->getRelatedByFilm($this->getId(), $limit, $page, $returnArray);
+    }
+
+	public function getRelatedStiresCount()
+    {
+		return StireTable::getInstance()->getRelatedByFilmCount($this->getId());
+    }
+
+	public function getShopUrls()
+	{
+		return ShopTable::getInstance()->getFormattedByFilm($this->getId());
+	}
+
+	public function getRecentAwardsDetailed($limit = 5)
+    {
+        return FestivalSectionParticipantTable::getInstance()->getDetailedByFilm($this->getImdb(), $limit);
+    }
 }

@@ -3,7 +3,7 @@
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link"><?php echo $person->getName();?></a> &raquo;
-        <a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link">Biografie</a>
+        <a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link">Fotografii</a>
 </div>
 
 
@@ -45,7 +45,9 @@
         <img src="<?php echo filmsiPhoto($photos[$currentPhoto - 1]->getFilename());?>" />
     </div>
 
-    <div class="normalcell">Aceasta este locuita de o rasa umanoida, Na'vi, o veche civilizatie deloc incantata</div>
+    <?php if ($photos[$currentPhoto - 1]->getDescription() != ''):?>
+		<div class="normalcell"><?php echo $photos[$currentPhoto - 1]->getDescription();?></div>
+	<?php endif;?>
 
     <div class="spacer-bottom spacer-top">
     	<?php if ($currentPhoto < $photoCount):?>

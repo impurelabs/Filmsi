@@ -7,6 +7,11 @@
  */
 class ShopTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Shop');
+	}
+
 	public function getAllDetailed()
 	{
 		return Doctrine_Query::create()
@@ -15,5 +20,36 @@ class ShopTable extends Doctrine_Table
 			->groupBy('s.id, f.id')
 			->leftJoin('s.Films f')
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
+
+	public function getFormattedByFilm($filmId)
+	{
+		$bruteShops =  Doctrine_Query::create()
+			->from('Shop s')
+			->innerJoin('s.ShopFilm sf')
+			->where('sf.film_id = ?', $filmId)
+			->orderBy('s.name ASC')
+			->execute(array(), Doctrine_Core::HYDRATE_SCALAR);
+
+		$shops = array(
+			'dvd' => array(),
+			'bluray' => array(),
+			'online' => array()
+		);
+
+		foreach ($bruteShops as $bruteShop){
+			$shops[$bruteShop['sf_format']][] = array(
+				'id' => $bruteShop['s_id'],
+				'name' => $bruteShop['s_name'],
+				'email' => $bruteShop['s_email'],
+				'phone' => $bruteShop['s_phone'],
+				'url' => $bruteShop['s_url'],
+				'filename' => $bruteShop['s_filename'],
+				'description' => $bruteShop['s_description'],
+				'film_url' => $bruteShop['sf_url'],
+			);
+		}
+
+		return $shops;
 	}
 }

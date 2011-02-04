@@ -4,7 +4,7 @@
  * films actions.
  *
  * @package    filmsi
- * @subpackage persons
+ * @subpackage films
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
@@ -139,5 +139,182 @@ class filmsActions extends sfActions
 		$vote->save();
 
 		$this->redirect($request->getReferer());
+	}
+
+	public function executeArticles(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Articole: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+		$this->currentPage = (int)$request->getParameter('p', 1);
+		$this->articles = ArticleTable::getInstance()->getListByFilm($this->film->getId(), sfConfig::get('app_article_page_limit'), $this->currentPage);
+		$this->articleCount = ArticleTable::getInstance()->countByFilm($this->film->getId());
+		$this->pageCount = ceil($this->articleCount / sfConfig::get('app_article_page_limit'));
+		$this->firstArticleCount = sfConfig::get('app_article_page_limit') * ($this->currentPage - 1) + 1;
+		$this->lastArticleCount = $this->firstArticleCount + $this->articles->count() - 1;
+		if ($this->pageCount <= 5) {
+			$this->navStart = 1;
+			$this->navEnd = $this->pageCount;
+		} else {
+			$this->navStart = $this->currentPage - 2;
+			$this->navEnd = $this->currentPage - 2;
+
+			if ($this->navStart <= 0){
+				$this->navStart = 1;
+				$this->navEnd = 5;
+			}
+
+			if ($this->navEnd >= $this->pageCount){
+				$this->navStart = $this->pageCount - 4;
+				$this->navEnd = $this->pageCount;
+			}
+		}
+	}
+
+	public function executeComments(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Comentarii: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+
+
+		$this->commentForm = new CommentForm(null, array(
+			'state' => 1,
+			'ip' => $_SERVER['REMOTE_ADDR'],
+			'model' => 'Film',
+                        'model_library_id' => $this->film->getLibraryId(),
+                        'model_name' => $this->film->getName()
+		));
+		if ($this->getUser()->isAuthenticated()){
+			$user = $this->getUser()->getGuardUser();
+			$this->commentForm->setDefaults(array(
+				'name' => $user->getName(),
+				'email' => $user->getEmailAddress()
+			));
+		}
+		if ($request->isMethod('post')){
+			$this->commentForm->bind($request->getParameter($this->commentForm->getName()));
+
+			if ($this->commentForm->isValid()){
+				$this->commentForm->save();
+
+                                $this->redirect($this->generateUrl('film', array('id' => $this->film->getId(), 'key' => $this->film->getUrlKey())) . '#comments');
+			}
+		}
+
+		$this->comments = Doctrine_Core::getTable('Comment')->getActiveByModel('film', $this->film->getLibraryId(), $_SERVER['REMOTE_ADDR']);
+	}
+
+	public function executePhotos(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Fotografii: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+		$this->photos = $this->film->getPhotoAlbum()->getPhotos();
+		$this->photoCount = $this->photos->count();
+
+		$this->currentPhoto = $request->getParameter('pid', 1);
+	}
+
+	public function executeStiri(sfWebRequest $request)
+	{
+		$this->film = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Stiri: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+		$this->currentPage = (int)$request->getParameter('p', 1);
+		$this->stires = $this->film->getRelatedStires(sfConfig::get('app_stire_page_limit'), $this->currentPage, false);
+
+		$this->stireCount = $this->film->getRelatedStiresCount();
+		$this->pageCount = ceil($this->stireCount / sfConfig::get('app_stire_page_limit'));
+		$this->firstStireCount = sfConfig::get('app_stire_page_limit') * ($this->currentPage - 1) + 1;
+		$this->lastStireCount = $this->firstStireCount + $this->stires->count() - 1;
+		if ($this->pageCount <= 5) {
+				$this->navStart = 1;
+				$this->navEnd = $this->pageCount;
+		} else {
+				$this->navStart = $this->currentPage - 2;
+				$this->navEnd = $this->currentPage - 2;
+
+				if ($this->navStart <= 0){
+						$this->navStart = 1;
+						$this->navEnd = 5;
+				}
+
+				if ($this->navEnd >= $this->pageCount){
+						$this->navStart = $this->pageCount - 4;
+						$this->navEnd = $this->pageCount;
+				}
+		}
+	}
+
+	public function executeSinopsis(sfWebRequest $request)
+	{
+		$this->film = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Sinopsis: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+	}
+
+	public function executeCast(sfWebRequest $request)
+	{
+		$this->film = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Actori & echipa: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+		$this->actors        = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId());
+		$this->directors     = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->scriptwriters = FilmPersonTable::getInstance()->getBestScriptwritersByFilm($this->film->getId(), 3);
+		$this->producers     = FilmPersonTable::getInstance()->getBestProducersByFilm($this->film->getId());
+	}
+
+	public function executeBuy(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Cumpara pe DVD & Bluray: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+		$this->shops = $this->film->getShopUrls();
+	}
+
+	public function executeAwards(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Premii: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+		$this->awards = $this->film->getRecentAwardsDetailed(0);
+	}
+
+	public function executeVideos(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->getResponse()->setTitle('Trailere si clipuri: ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->addMeta('keywords', '');
+		$this->getResponse()->addMeta('description', '');
+
+		$this->videos = $this->film->getVideoAlbum()->getVideos();
+		$this->videoCount = $this->videos->count();
+
+		$this->currentVideo = $request->getParameter('vid', 1);
 	}
 }

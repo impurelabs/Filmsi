@@ -83,7 +83,7 @@ all:
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
     sourceimage_size: 600
-    thumbnail_size: 126
+    thumbnail_size: 100
     thumbnail_small_size: 45
     
   rating: 

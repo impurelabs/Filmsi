@@ -67,7 +67,7 @@ class Stire extends BaseStire
 		return Doctrine_Core::getTable('Comment')->getCountByEntity('Stire', $this->getLibraryId());
 	}
 
-        public function getFilenameIsTall()
+	public function getFilenameIsTall()
 	{
             $size = getimagesize(sfConfig::get('app_stire_path') . '/' . $this->getFilename());
 

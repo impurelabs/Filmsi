@@ -215,7 +215,7 @@ film_articles_no_key:
 
 film_comments:
   url: /comentarii-film/:id/:key
-  param: { module: films, action: buy }
+  param: { module: films, action: comments }
 
 film_comments_no_key:
   url: /comentarii-film/:id/

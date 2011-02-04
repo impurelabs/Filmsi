@@ -7,6 +7,11 @@
  */
 class StireTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Stire');
+	}
+
 	public function allow($libraryId)
 	{
 		$album = Doctrine_Core::getTable('Stire')->findOneByLibraryId($libraryId);
@@ -21,11 +26,11 @@ class StireTable extends Doctrine_Table
 		return;
 	}
 
-        public function getList($limit = null, $page = null)
+	public function getList($limit = null, $page = null)
 	{
             $q = Doctrine_Query::create()
                     ->from('Stire s')
-                    ->where('s.state = 1')
+                    ->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
                     ->orderBy('s.publish_date DESC');
 
             if (!empty ($limit)){
@@ -44,14 +49,14 @@ class StireTable extends Doctrine_Table
 		$q = Doctrine_Query::create()
 			->select('COUNT(s.id)')
 			->from('Stire s')
-                        ->where('s.state = 1');
+			->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())');
 
 		$count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 
 		return $count['COUNT'];
 	}
 
-        public function findLatestByIds($count, $stireIds = array())
+	public function findLatestByIds($count, $stireIds = array())
 	{
             if (count($stireIds) == 0){
                 return array();
@@ -59,10 +64,84 @@ class StireTable extends Doctrine_Table
 
             return Doctrine_Query::create()
                     ->from('Stire s')
-                    ->where('s.state = 1')
+					->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
                     ->andWhereIn('s.id', $stireIds)
                     ->limit($count)
                     ->orderBy('s.publish_date DESC')
                     ->execute();
 	}
+
+	public function getRelatedByFilmCount($filmId)
+    {
+        $q = Doctrine_Query::create()
+            ->select('COUNT(s.id) count')
+            ->from('Stire s')
+            ->innerJoin('s.FilmStire fs')
+            ->where('fs.film_id = ? AND s.state = 1', $filmId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+        return $q['count'];
+    }
+
+	public function getRelatedByPersonCount($personId)
+    {
+        $q = Doctrine_Query::create()
+            ->select('COUNT(s.id) count')
+            ->from('Stire s')
+            ->innerJoin('s.PersonStire fs')
+            ->where('fs.person_id = ? AND s.state = 1', $personId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+        return $q['count'];
+    }
+
+	public function getRelatedByFilm($filmId, $limit = null, $page = null, $returnArray = true)
+    {
+        $q = Doctrine_Query::create()
+            ->from('Stire s')
+            ->innerJoin('s.FilmStire fs')
+            ->where('fs.film_id = ? AND s.state = 1', $filmId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->orderBy('s.publish_date DESC');
+
+        if (!empty ($limit)){
+                $q->limit($limit);
+        }
+
+        if (!empty ($page)){
+                $q->offset(($page - 1) * $limit );
+        }
+
+        if ($returnArray){
+            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+        } else {
+            return $q->execute();
+        }
+    }
+
+	public function getRelatedByPerson($personId, $limit = null, $page = null, $returnArray = true)
+    {
+        $q = Doctrine_Query::create()
+            ->from('Stire s')
+            ->innerJoin('s.PersonStire fs')
+            ->where('fs.person_id = ? AND s.state = 1', $personId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->orderBy('s.publish_date DESC');
+
+        if (!empty ($limit)){
+                $q->limit($limit);
+        }
+
+        if (!empty ($page)){
+                $q->offset(($page - 1) * $limit );
+        }
+
+        if ($returnArray){
+            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+        } else {
+            return $q->execute();
+        }
+    }
 }

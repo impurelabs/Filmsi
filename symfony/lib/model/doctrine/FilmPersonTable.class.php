@@ -95,4 +95,54 @@ class FilmPersonTable extends Doctrine_Table
 		return $actors;
 	}
 
+
+
+	public function getBestScriptwritersByFilm($filmId, $limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('FilmPerson fp')
+			->innerJoin('fp.Person p')
+			->where('fp.film_id = ?', $filmId)
+			->andWhere('fp.is_scriptwriter = 1')
+			->orderBy('p.visit_count DESC');
+
+		if (isset ($limit)){
+			$q->limit($limit);
+		}
+
+		$filmPersons = $q->execute();
+
+		$scriptwriters = array();
+		foreach($filmPersons as $filmPerson){
+			$scriptwriters[] = $filmPerson->getPerson();
+		}
+
+		return $scriptwriters;
+	}
+
+
+
+	public function getBestProducersByFilm($filmId, $limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('FilmPerson fp')
+			->innerJoin('fp.Person p')
+			->where('fp.film_id = ?', $filmId)
+			->andWhere('fp.is_producer = 1')
+			->orderBy('p.visit_count DESC');
+
+		if (isset ($limit)){
+			$q->limit($limit);
+		}
+
+		$filmPersons = $q->execute();
+
+		$producers = array();
+		foreach($filmPersons as $filmPerson){
+			$producers[] = $filmPerson->getPerson();
+		}
+
+		return $producers;
+	}
+
 }

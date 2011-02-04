@@ -35,15 +35,6 @@
 
         <?php echo $sf_data->getRaw('person')->getBiographyContent();?>
     </div>
-    
-
-
-	
-
-
-
-
-
 
 </div> <!-- content column end -->
 

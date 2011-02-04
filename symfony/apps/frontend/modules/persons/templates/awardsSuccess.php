@@ -3,7 +3,7 @@
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link"><?php echo $person->getName();?></a> &raquo;
-        <a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link">Biografie</a>
+        <a href="<?php echo url_for('@person_awards?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="black-link">Premii</a>
 </div>
 
 
@@ -58,15 +58,6 @@
                 <?php endforeach;?>
             </table>
     </div>
-    
-
-
-	
-
-
-
-
-
 
 </div> <!-- content column end -->
 

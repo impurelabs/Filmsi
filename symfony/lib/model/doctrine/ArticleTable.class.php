@@ -7,6 +7,11 @@
  */
 class ArticleTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Article');
+	}
+
 	public function allow($libraryId)
 	{
 		$album = Doctrine_Core::getTable('Article')->findOneByLibraryId($libraryId);
@@ -25,7 +30,7 @@ class ArticleTable extends Doctrine_Table
 	{
 		$q = Doctrine_Query::create()
 			->from('Article a')
-                        ->where('a.state = 1')
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
 			->orderBy('a.publish_date DESC');
 
 		if (!empty($categoryId)){
@@ -44,17 +49,52 @@ class ArticleTable extends Doctrine_Table
 		return $q->execute();
 	}
 
+	public function getListByFilm($filmId, $limit = null, $page = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('Article a')
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->orderBy('a.publish_date DESC')
+			->innerJoin('a.FilmArticle fa')
+			->addWhere('fa.film_id = ?', $filmId);
+
+		if (!empty ($limit)){
+			$q->limit($limit);
+		}
+
+		if (!empty ($page)){
+			$q->offset(($page - 1) * $limit );
+		}
+
+		return $q->execute();
+	}
+
 	public function countByCategory($categoryId = null)
 	{
 		$q = Doctrine_Query::create()
 			->select('COUNT(a.id)')
 			->from('Article a')
-                        ->where('a.state = 1');
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())');
 
 		if (!empty($categoryId)){
 			$q->innerJoin('a.ArticleCategory ac')
 				->addWhere('ac.category_id = ?', $categoryId);
 		}
+
+		$count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $count['COUNT'];
+	}
+
+	public function countByFilm($filmId)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(a.id)')
+			->from('Article a')
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->innerJoin('a.FilmArticle fa')
+			->addWhere('fa.film_id = ?', $filmId);
+		
 
 		$count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 
@@ -69,27 +109,32 @@ class ArticleTable extends Doctrine_Table
 
             return Doctrine_Query::create()
                     ->from('Article a')
-                    ->where('a.state = 1')
+                    ->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
                     ->andWhereIn('a.id', $articleIds)
                     ->limit($count)
                     ->orderBy('a.publish_date DESC')
                     ->execute();
 	}
 
-        public function getMostVisited($limit)
-        {
-            $libraryArticles = Doctrine_Query::create()
-                ->select('l.id')
-                ->from('Library l')
-                ->where('l.type = "Article" AND l.state = 1')
-                ->orderBy('l.visit_count DESC')
-                ->limit($limit)
-                ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	public function getMostVisited($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Article a')
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->orderBy('a.visit_count DESC')
+			->limit($limit)
+			->execute();
+	}
 
-            $articles = array();
-            foreach($libraryArticles as $libraryArticle){
-                $articles[] = Doctrine_Core::getTable('Article')->findOneByLibraryId($libraryArticle['id']);
-            }
-            return $articles;
-        }
+	public function getNewestByFilm($filmId, $limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Article a')
+			->innerJoin('a.FilmArticle fa')
+			->limit($limit)
+			->where('fa.film_id = ?', $filmId)
+			->andWhere('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->orderBy('a.publish_date DESC')
+			->execute();
+	}
 }

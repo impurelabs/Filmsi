@@ -53,37 +53,12 @@ class Person extends BasePerson
 
     public function getRelatedStires($limit = null, $page = null, $returnArray = true)
     {
-        $q = Doctrine_Query::create()
-            ->from('Stire s')
-            ->innerJoin('s.PersonStire ps')
-            ->where('ps.person_id = ? AND s.state = 1', $this->getId())
-            ->orderBy('s.publish_date DESC');
-
-        if (!empty ($limit)){
-                $q->limit($limit);
-        }
-
-        if (!empty ($page)){
-                $q->offset(($page - 1) * $limit );
-        }
-
-        if ($returnArray){
-            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-        } else {
-            return $q->execute();
-        }
+		return StireTable::getInstance()->getRelatedByPerson($this->getId(), $limit, $page, $returnArray);
     }
 
-    public function getRelatedStiresCount()
+	public function getRelatedStiresCount()
     {
-        $q = Doctrine_Query::create()
-            ->select('COUNT(s.id) count')
-            ->from('Stire s')
-            ->innerJoin('s.PersonStire ps')
-            ->where('ps.person_id = ? AND s.state = 1', $this->getId())
-            ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
-
-        return $q['count'];
+		return StireTable::getInstance()->getRelatedByPersonCount($this->getId());
     }
 
     public function getMostViewedFilmsByRole($limit = null, $role = null)
@@ -107,7 +82,7 @@ class Person extends BasePerson
 
     public function getRecentAwardsDetailed($limit = 5)
     {
-        return Doctrine_Core::getTable('FestivalSectionParticipant')->getDetailedByPerson($this->getImdb(), $limit);
+        return FestivalSectionParticipantTable::getInstance()->getDetailedByPerson($this->getImdb(), $limit);
     }
 
 }

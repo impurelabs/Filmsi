@@ -31,11 +31,11 @@ class ArticleTable extends Doctrine_Table
 		$q = Doctrine_Query::create()
 			->from('Article a')
 			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
-			->orderBy('a.publish_date DESC');
+			->orderBy('a.publish_date, a.id DESC');
 
 		if (!empty($categoryId)){
 			$q->innerJoin('a.ArticleCategory ac')
-                          ->addWhere('ac.category_id = ?', $categoryId);
+				->addWhere('ac.category_id = ?', $categoryId);
 		}
 
 		if (!empty ($limit)){
@@ -54,7 +54,7 @@ class ArticleTable extends Doctrine_Table
 		$q = Doctrine_Query::create()
 			->from('Article a')
 			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
-			->orderBy('a.publish_date DESC')
+			->orderBy('a.publish_date, a.id DESC')
 			->innerJoin('a.FilmArticle fa')
 			->addWhere('fa.film_id = ?', $filmId);
 
@@ -112,7 +112,7 @@ class ArticleTable extends Doctrine_Table
                     ->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
                     ->andWhereIn('a.id', $articleIds)
                     ->limit($count)
-                    ->orderBy('a.publish_date DESC')
+                    ->orderBy('a.publish_date, a.id DESC')
                     ->execute();
 	}
 
@@ -134,7 +134,7 @@ class ArticleTable extends Doctrine_Table
 			->limit($limit)
 			->where('fa.film_id = ?', $filmId)
 			->andWhere('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
-			->orderBy('a.publish_date DESC')
+			->orderBy('a.publish_date, a.id DESC')
 			->execute();
 	}
 }

@@ -31,7 +31,7 @@ class StireTable extends Doctrine_Table
             $q = Doctrine_Query::create()
                     ->from('Stire s')
                     ->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
-                    ->orderBy('s.publish_date DESC');
+                    ->orderBy('s.publish_date, s.id DESC');
 
             if (!empty ($limit)){
                     $q->limit($limit);
@@ -63,12 +63,12 @@ class StireTable extends Doctrine_Table
             }
 
             return Doctrine_Query::create()
-                    ->from('Stire s')
-					->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
-                    ->andWhereIn('s.id', $stireIds)
-                    ->limit($count)
-                    ->orderBy('s.publish_date DESC')
-                    ->execute();
+				->from('Stire s')
+				->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+				->andWhereIn('s.id', $stireIds)
+				->limit($count)
+				->orderBy('s.publish_date, s.id DESC')
+				->execute();
 	}
 
 	public function getRelatedByFilmCount($filmId)
@@ -104,7 +104,7 @@ class StireTable extends Doctrine_Table
             ->innerJoin('s.FilmStire fs')
             ->where('fs.film_id = ? AND s.state = 1', $filmId)
 			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
-            ->orderBy('s.publish_date DESC');
+            ->orderBy('s.publish_date, s.id DESC');
 
         if (!empty ($limit)){
                 $q->limit($limit);
@@ -128,7 +128,7 @@ class StireTable extends Doctrine_Table
             ->innerJoin('s.PersonStire fs')
             ->where('fs.person_id = ? AND s.state = 1', $personId)
 			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
-            ->orderBy('s.publish_date DESC');
+            ->orderBy('s.publish_date, s.id DESC');
 
         if (!empty ($limit)){
                 $q->limit($limit);

@@ -167,6 +167,10 @@ class FilmTable extends Doctrine_Table
 			$q->addWhere('f.status_online = 1');
 		}
 
+		if (isset($filters['in_tv'])){
+			$q->addWhere('f.status_tv = 1');
+		}
+
 		if (isset($filters['imdb'])){
 			$q->addWhere('f.imdb = ?', $filters['imdb']);
 		}
@@ -205,6 +209,10 @@ class FilmTable extends Doctrine_Table
 
 		if (isset($filters['in_online']) && $filters['in_online'] == '1'){
 			$q->addWhere('f.status_online = 1');
+		}
+
+		if (isset($filters['in_tv']) && $filters['in_tv'] == '1'){
+			$q->addWhere('f.status_tv = 1');
 		}
 
 		$q = $q->fetchOne(array(), Doctrine_Core::HYDRATE_SCALAR);

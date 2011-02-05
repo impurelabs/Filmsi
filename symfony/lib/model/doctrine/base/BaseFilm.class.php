@@ -328,6 +328,18 @@ abstract class BaseFilm extends sfDoctrineRecord
         $this->hasColumn('status_online_day', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('status_tv', 'bool', null, array(
+             'type' => 'bool',
+             ));
+        $this->hasColumn('status_tv_year', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('status_tv_month', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('status_tv_day', 'integer', null, array(
+             'type' => 'integer',
+             ));
         $this->hasColumn('background_filename', 'string', 250, array(
              'type' => 'string',
              'length' => 250,

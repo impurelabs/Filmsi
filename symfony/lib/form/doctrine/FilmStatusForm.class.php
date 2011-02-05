@@ -21,7 +21,8 @@ public function configure()
   		'status_cinema', 'status_cinema_year', 'status_cinema_month', 'status_cinema_day',
   		'status_dvd', 'status_dvd_year', 'status_dvd_month', 'status_dvd_day',
   		'status_bluray', 'status_bluray_year', 'status_bluray_month', 'status_bluray_day',
-  		'status_online', 'status_online_year', 'status_online_month', 'status_online_day',      
+  		'status_online', 'status_online_year', 'status_online_month', 'status_online_day',
+  		'status_tv', 'status_tv_year', 'status_tv_month', 'status_tv_day',
   	));
   	
   	$this->widgetSchema['status_in_production'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => '1'));
@@ -86,6 +87,22 @@ public function configure()
   		'expanded' => false
   	));
   	$this->widgetSchema['status_online_day'] = new sfWidgetFormChoice(array(
+  		'choices' => $dayRange,
+  		'multiple' => false,
+  		'expanded' => false
+  	));
+  	$this->widgetSchema['status_tv'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => '1'));
+  	$this->widgetSchema['status_tv_year'] = new sfWidgetFormChoice(array(
+  		'choices' => $yearRange,
+  		'multiple' => false,
+  		'expanded' => false
+  	));
+  	$this->widgetSchema['status_tv_month'] = new sfWidgetFormChoice(array(
+  		'choices' => $monthRange,
+  		'multiple' => false,
+  		'expanded' => false
+  	));
+  	$this->widgetSchema['status_tv_day'] = new sfWidgetFormChoice(array(
   		'choices' => $dayRange,
   		'multiple' => false,
   		'expanded' => false

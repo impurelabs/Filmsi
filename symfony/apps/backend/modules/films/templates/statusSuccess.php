@@ -45,6 +45,10 @@
     	<th>Online</th>
         <td><?php echo filmsiStatusOnlineExplained($film); ?></td>
     </tr>
+	<tr>
+    	<th>Tv</th>
+        <td><?php echo filmsiStatusTvExplained($film); ?></td>
+    </tr>
 </table>
 
 <div class="clear"></div>

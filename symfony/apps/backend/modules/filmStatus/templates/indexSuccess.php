@@ -10,6 +10,7 @@
     	<td class="pr-2"><input type="checkbox" name="filter_in_dvd"<?php echo $filterInDvd ? 'checked="checked"' : '';?> /> pe DVD</td>
     	<td class="pr-2"><input type="checkbox" name="filter_in_bluray"<?php echo $filterInBluray ? 'checked="checked"' : '';?> /> pe bluray</td>
     	<td class="pr-2"><input type="checkbox" name="filter_in_online"<?php echo $filterInOnline ? 'checked="checked"' : '';?> /> online</td>
+    	<td class="pr-2"><input type="checkbox" name="filter_in_tv"<?php echo $filterInTv ? 'checked="checked"' : '';?> /> tv</td>
         <td class="pr-2"><button type="submit" id="button-filter">Filtreaza</button></td>
         <td class="pr-2"><button type="reset" onclick="location.href='<?php echo url_for('@default_index?module=filmStatus');?>'">Reseteaza filtre</button></td>
         <td class="pr-2"><button type="button" id="button-export">Exporta</button></td>
@@ -44,6 +45,7 @@ Pagina
         <th>Pe DVD</th>
         <th>Pe Bluray</th>
         <th>Online</th>
+        <th>Tv</th>
         <th></th>
     </tr>
 <?php foreach($films as $film): ?>
@@ -56,6 +58,7 @@ Pagina
         <td><?php echo filmsiStatusDvdExplained($film); ?></td>
         <td><?php echo filmsiStatusBlurayExplained($film); ?></td>
         <td><?php echo filmsiStatusOnlineExplained($film); ?></td>
+        <td><?php echo filmsiStatusTvExplained($film); ?></td>
         <td><a href="<?php echo url_for('@default?module=films&action=view');?>?lid=<?php echo $film->getLibraryId();?>" target="_blank" class="small-link">vezi</a></td>
     </tr>
 <?php endforeach ?>

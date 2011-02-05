@@ -73,10 +73,22 @@ ziua <?php echo $form['status_bluray_day']->render();?>
 <?php echo $form['status_online']->renderError();?>
 <br />
 <div id="online-details"<?php if (!$film->getStatusOnline()) echo 'class="display-none"';?>>
-din 
-anul <?php echo $form['status_online_year']->render();?> 
+din
+anul <?php echo $form['status_online_year']->render();?>
 luna <?php echo $form['status_online_month']->render();?>
 ziua <?php echo $form['status_online_day']->render();?>
+</div>
+
+<div class="mt-2 mb-2 cell-separator-double clear"></div>
+
+<?php echo $form['status_tv']->render();?> <strong>Tv </strong><br />
+<?php echo $form['status_tv']->renderError();?>
+<br />
+<div id="tv-details"<?php if (!$film->getStatusTv()) echo 'class="display-none"';?>>
+din
+anul <?php echo $form['status_tv_year']->render();?>
+luna <?php echo $form['status_tv_month']->render();?>
+ziua <?php echo $form['status_tv_day']->render();?>
 </div>
 
 
@@ -119,13 +131,22 @@ ziua <?php echo $form['status_online_day']->render();?>
 				$('#bluray-details').slideUp();	
 			}
 		});
-		
-		
+
+
 		$('#film_status_online').change(function(){
 			if ($(this).is(':checked')){
-				$('#online-details').slideDown();	
+				$('#online-details').slideDown();
 			} else {
-				$('#online-details').slideUp();	
+				$('#online-details').slideUp();
+			}
+		});
+
+
+		$('#film_status_tv').change(function(){
+			if ($(this).is(':checked')){
+				$('#tv-details').slideDown();
+			} else {
+				$('#tv-details').slideUp();
 			}
 		});
 	});

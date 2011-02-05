@@ -55,6 +55,12 @@ class filmStatusActions extends sfActions
   	} else {
   		$this->filterInOnline = false;
   	}
+  	if ($request->hasParameter('filter_in_tv')){
+  		$filters['in_tv'] = $request->getParameter('filter_in_tv');
+  		$this->filterInTv = true;
+  	} else {
+  		$this->filterInTv = false;
+  	}
   	
   	if ($request->hasParameter('filter_page')) {
   		$this->filterPage = $request->getParameter('filter_page');
@@ -64,9 +70,9 @@ class filmStatusActions extends sfActions
   		$this->filterPage = 1;
   	}
   	
-  	$this->films = Doctrine_Core::getTable('Film')->getFilteredByStatus($filters, sfConfig::get('app_film_status_list_limit'));
+  	$this->films = FilmTable::getInstance()->getFilteredByStatus($filters, sfConfig::get('app_film_status_list_limit'));
   	
-  	$this->totalCount = Doctrine_Core::getTable('Film')->countFilteredByStatus($filters);
+  	$this->totalCount = FilmTable::getInstance()->countFilteredByStatus($filters);
   	
   	$this->pageCount = ceil($this->totalCount / sfConfig::get('app_film_status_list_limit'));
   	
@@ -119,6 +125,12 @@ class filmStatusActions extends sfActions
   		$this->filterInOnline = true;
   	} else {
   		$this->filterInOnline = false;
+  	}
+  	if ($request->hasParameter('filter_in_tv')){
+  		$filters['in_tv'] = $request->getParameter('filter_in_tv');
+  		$this->filterInTv = true;
+  	} else {
+  		$this->filterInTv = false;
   	}
   	
   	$this->films = Doctrine_Core::getTable('Film')->getFilteredByStatus($filters);

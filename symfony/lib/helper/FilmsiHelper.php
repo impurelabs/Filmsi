@@ -218,15 +218,32 @@ function filmsiStatusOnlineExplained($film)
 	if (!$film->getStatusOnline()){
 		return 'nu';
 	}
-	
+
 	if ($film->getStatusOnlineYear() != '0' && $film->getStatusOnlineMonth() != '0' && $film->getStatusOnlineDay() != '0'){
 		return 'din ' . format_date($film->getStatusOnlineYear() . '-' . $film->getStatusOnlineMonth() . '-' . $film->getStatusOnlineDay(), 'D', 'ro');
 	}
-	
+
 	if ($film->getStatusOnlineYear() != '0' && $film->getStatusOnlineMonth() != '0'){
 		return 'din ' .  format_date($film->getStatusOnlineYear() . '-' . $film->getStatusOnlineMonth(), 'Y', 'ro');
 	}
-	
+
+	return 'in curand';
+}
+
+function filmsiStatusTvExplained($film)
+{
+	if (!$film->getStatusTv()){
+		return 'nu';
+	}
+
+	if ($film->getStatusTvYear() != '0' && $film->getStatusTvMonth() != '0' && $film->getStatusTvDay() != '0'){
+		return 'din ' . format_date($film->getStatusTvYear() . '-' . $film->getStatusTvMonth() . '-' . $film->getStatusTvDay(), 'D', 'ro');
+	}
+
+	if ($film->getStatusTvYear() != '0' && $film->getStatusTvMonth() != '0'){
+		return 'din ' .  format_date($film->getStatusTvYear() . '-' . $film->getStatusTvMonth(), 'Y', 'ro');
+	}
+
 	return 'in curand';
 }
 

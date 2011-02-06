@@ -253,7 +253,22 @@ film_vote:
 
 
 
+trailers:
+  url: /trailere
+  param: { module: trailers, action: index }
 
+trailer:
+  url: /trailere/:id
+  param: { module: trailers, action: index }
+
+
+
+
+
+
+festivals:
+  url: /festivaluri
+  param: { module: festivals, action: index }
 
 
 

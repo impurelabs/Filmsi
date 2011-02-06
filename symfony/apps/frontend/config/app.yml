@@ -9,3 +9,5 @@ all:
     page_limit: 20
   persons:
     page_limit: 20
+  trailer:
+    page_limit: 20

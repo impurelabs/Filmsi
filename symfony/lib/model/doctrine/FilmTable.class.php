@@ -89,7 +89,7 @@ class FilmTable extends Doctrine_Table
 
         $bruteFilms = Doctrine_Query::create()
             ->from('Film f')
-            ->andWhere('f.state = 1')
+            ->andWhere('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
             ->andWhere('f.name_ro REGEXP ? OR f.name_en REGEXP ?', array($term, $term))
             ->orderBy('f.name_ro ASC')
             ->limit(50)
@@ -110,7 +110,7 @@ class FilmTable extends Doctrine_Table
 
 		$bruteFilms = Doctrine_Query::create()
 			->from('Film f')
-			->andWhere('f.state = 1')
+			->andWhere('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
 			->andWhere('f.name_ro REGEXP ? OR f.name_en REGEXP ?', array($term, $term))
 			->orderBy('f.name_ro ASC')
 			->limit(50)
@@ -141,7 +141,7 @@ class FilmTable extends Doctrine_Table
 		$q = Doctrine_Query::create()
 			->from('Film f')
 			->orderBy('f.id DESC')
-			->addWhere('f.state = 1');
+			->addWhere('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()');
 
 		if (isset($limit)){
 			$q->limit($limit);
@@ -189,7 +189,7 @@ class FilmTable extends Doctrine_Table
 			->select('COUNT(f.id) counter')
 			->from('Film f')
 			->orderBy('f.id DESC')
-			->addWhere('f.state = 1');
+			->addWhere('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()');
 
 		if (isset($filters['in_production']) && $filters['in_production'] == '1'){
 			$q->addWhere('f.status_in_production = 1');
@@ -220,4 +220,45 @@ class FilmTable extends Doctrine_Table
 		return $q['f_counter'];
 
     }
+
+	public function getTrailersQuery($limit = null, $page = null)
+	{
+		$q = Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.name_en, f.url_key, v.id video_id, v.code video_code, v.name video_name')
+			->from('Film f')
+			->innerJoin('f.Videos v')
+			->where('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
+			->andWhere('v.position = 1')
+			->orderBy('f.visit_count DESC');
+		
+		if (!empty ($limit)){
+				$q->limit($limit);
+		}
+
+		if (!empty ($page)){
+				$q->offset(($page - 1) * $limit );
+		}
+
+		return $q;
+	}
+
+	public function countTrailersQuery()
+	{
+		return Doctrine_Query::create()
+			->select('COUNT(f.id) count')
+			->from('Film f')
+			->where('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
+			->andWhere('f.video_album_id IS NOT NULL');
+	}
+
+	public function getTrailerByVideoId($videoId)
+	{
+		return Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.year, f.name_en, f.url_key, v.id video_id, v.code video_code, v.name video_name')
+			->from('Film f')
+			->innerJoin('f.Videos v')
+			->where('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
+			->andWhere('v.id = ?', $videoId)
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
 }

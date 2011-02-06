@@ -369,6 +369,10 @@ abstract class BaseFilm extends sfDoctrineRecord
              'local' => 'film_id',
              'foreign' => 'genre_id'));
 
+        $this->hasMany('Video as Videos', array(
+             'local' => 'video_album_id',
+             'foreign' => 'album_id'));
+
         $this->hasMany('Person as Persons', array(
              'refClass' => 'FilmPerson',
              'local' => 'film_id',

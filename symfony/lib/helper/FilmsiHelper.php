@@ -33,7 +33,15 @@ function filmsiVideo($code)
 {
 	return <<<FILMSI
 <object width="458" height="282><param name="movie" value="http://www.youtube.com/v/$code?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/$code?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="458" height="282"></embed></object>
-	
+
+FILMSI;
+}
+
+function filmsiVideoBig($code)
+{
+	return <<<FILMSI
+<object width="676" height="405><param name="movie" value="http://www.youtube.com/v/$code?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/$code?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="676" height="405"></embed></object>
+
 FILMSI;
 }
 

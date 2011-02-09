@@ -144,4 +144,52 @@ class StireTable extends Doctrine_Table
             return $q->execute();
         }
     }
+
+	public function getLatestRelatedToFestivalEditions($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Stire s')
+			->innerJoin('s.FestivalEditionStire fes')
+			->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+			->orderBy('s.publish_date, s.id DESC')
+			->limit($limit)
+			->execute();
+	}
+
+	public function getRelatedByFestivalEdition($festivalEditionId, $limit = null, $page = null, $returnArray = true)
+    {
+        $q = Doctrine_Query::create()
+            ->from('Stire s')
+            ->innerJoin('s.FestivalEditionStire fs')
+            ->where('fs.festival_edition_id = ? AND s.state = 1', $festivalEditionId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->orderBy('s.publish_date, s.id DESC');
+
+        if (!empty ($limit)){
+                $q->limit($limit);
+        }
+
+        if (!empty ($page)){
+                $q->offset(($page - 1) * $limit );
+        }
+
+        if ($returnArray){
+            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+        } else {
+            return $q->execute();
+        }
+    }
+
+	public function getRelatedByFestivalEditionCount($festivalEditionId)
+    {
+        $q = Doctrine_Query::create()
+            ->select('COUNT(s.id) count')
+            ->from('Stire s')
+            ->innerJoin('s.FestivalEditionStire fs')
+            ->where('fs.festival_edition_id = ? AND s.state = 1', $festivalEditionId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+        return $q['count'];
+    }
 }

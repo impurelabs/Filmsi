@@ -5,7 +5,6 @@
     <?php include_metas() ?>
     <?php include_title() ?>
     <?php use_javascript('jquery-1.4.2.min.js') ?>
-    <?php use_javascript('jquery.jcarousel.min.js') ?>
     <?php use_javascript('jquery-ui-1.8.5.custom.min.js') ?>
     <?php use_javascript('general.js') ?>
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -13,11 +12,6 @@
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher:'63eaa96b-48e9-4de4-bb58-61dc7a91b1ad'});</script>
-
-	<?php if(has_slot('festivals_layout')):?>
-		<?php include_slot('festivals_layout');?>
-	<?php endif;?>
-
   </head>
 <body>
 	<div id="wrapper">

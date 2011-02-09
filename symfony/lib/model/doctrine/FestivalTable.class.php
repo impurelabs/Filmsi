@@ -7,6 +7,11 @@
  */
 class FestivalTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Festival');
+	}
+
 	public function getAllOrdered()
 	{
 		return Doctrine_Query::create()	

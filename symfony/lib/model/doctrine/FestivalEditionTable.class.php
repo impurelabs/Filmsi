@@ -7,6 +7,11 @@
  */
 class FestivalEditionTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('FestivalEdition');
+	}
+
 	public function unsetFestival($festivalId)
 	{
 		return Doctrine_Query::create()
@@ -58,5 +63,53 @@ class FestivalEditionTable extends Doctrine_Table
 			->from('FestivalEdition fe')
 			->where('fe.edition = ? AND fe.festival_id = ?', array($edition, $festivalId))
 			->fetchOne();
+	}
+
+	public function getList($festivalId = null, $limit = null, $page = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('FestivalEdition e')
+			->where('e.state = 1 AND e.publish_date IS NOT NULL AND e.publish_date <= NOW()')
+			->orderBy('e.edition DESC');
+
+		if (!empty($festivalId)){
+			$q->addWhere('e.festival_id = ?', $festivalId);
+		}
+
+		if (!empty ($limit)){
+			$q->limit($limit);
+		}
+
+		if (!empty ($page)){
+			$q->offset(($page - 1) * $limit );
+		}
+
+		return $q->execute();
+	}
+
+	public function countByFestival($festivalId = null)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(e.id)')
+			->from('FestivalEdition e')
+			->where('e.state = 1 AND e.publish_date IS NOT NULL AND e.publish_date <= NOW()');
+
+		if (!empty($festivalId)){
+			$q->addWhere('e.festival_id = ?', $festivalId);
+		}
+
+		$count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $count['COUNT'];
+	}
+
+	public function getEditionsIdsByFestival($festivalId)
+	{
+		return Doctrine_Query::create()
+			->from('FestivalEdition e')
+			->where('e.state = 1 AND e.publish_date IS NOT NULL AND e.publish_date <= NOW()')
+			->addWhere('e.festival_id = ?', $festivalId)
+			->orderBy('e.edition DESC')
+			->execute();
 	}
 }

@@ -85,4 +85,72 @@ class FestivalSectionParticipantTable extends Doctrine_Table
 		//echo '<pre>'; var_dump($awards); exit;
 		return $awards;
 	}
+
+	public function getWinnersBySection($sectionId)
+	{
+		$participants =  Doctrine_Query::create()
+			->from('FestivalSectionParticipant p')
+			->where('p.is_winner = 1 and p.festival_section_id = ?', $sectionId)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$results = array();
+
+		foreach ($participants as $participant){
+			/* Check if there is already an entry in the results with the same film imdb */
+			if (array_key_exists($participant['film_imdb'], $results) && $participant['person_imdb'] != '' && false !== $person = PersonTable::getInstance()->findOneByImdb($participant['person_imdb'], Doctrine_Core::HYDRATE_ARRAY)){
+				$results[$participant['film_imdb']]['persons'][] = $person;
+			} else {
+				if ($participant['person_imdb'] == '' || false === $person = PersonTable::getInstance()->findOneByImdb($participant['person_imdb'], Doctrine_Core::HYDRATE_ARRAY)){
+					$results[$participant['film_imdb']] = array(
+						'film' => FilmTable::getInstance()->findOneByImdb($participant['film_imdb'], Doctrine_Core::HYDRATE_ARRAY),
+						'is_winner' => $participant['is_winner']
+					);
+				} else {
+					$results[$participant['film_imdb']] = array(
+						'film' => FilmTable::getInstance()->findOneByImdb($participant['film_imdb'], Doctrine_Core::HYDRATE_ARRAY),
+						'persons' => array(
+							$person
+						),
+						'is_winner' => $participant['is_winner']
+					);
+				}
+			}
+		}
+
+		return $results;
+	}
+
+	public function getParticipantsBySection($sectionId)
+	{
+		$participants =  Doctrine_Query::create()
+			->from('FestivalSectionParticipant p')
+			->where('p.festival_section_id = ?', $sectionId)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$results = array();
+		
+		foreach ($participants as $participant){
+			/* Check if there is already an entry in the results with the same film imdb */
+			if (array_key_exists($participant['film_imdb'], $results) && $participant['person_imdb'] != '' && false !== $person = PersonTable::getInstance()->findOneByImdb($participant['person_imdb'], Doctrine_Core::HYDRATE_ARRAY)){
+				$results[$participant['film_imdb']]['persons'][] = $person;
+			} else {
+				if ($participant['person_imdb'] == '' || false === $person = PersonTable::getInstance()->findOneByImdb($participant['person_imdb'], Doctrine_Core::HYDRATE_ARRAY)){
+					$results[$participant['film_imdb']] = array(
+						'film' => FilmTable::getInstance()->findOneByImdb($participant['film_imdb'], Doctrine_Core::HYDRATE_ARRAY),
+						'is_winner' => $participant['is_winner']
+					);
+				} else {
+					$results[$participant['film_imdb']] = array(
+						'film' => FilmTable::getInstance()->findOneByImdb($participant['film_imdb'], Doctrine_Core::HYDRATE_ARRAY),
+						'persons' => array(
+							$person
+						),
+						'is_winner' => $participant['is_winner']
+					);
+				}
+			}
+		}
+
+		return $results;
+	}
 }

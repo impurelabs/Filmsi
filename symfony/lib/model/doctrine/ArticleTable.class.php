@@ -137,4 +137,51 @@ class ArticleTable extends Doctrine_Table
 			->orderBy('a.publish_date, a.id DESC')
 			->execute();
 	}
+
+	public function getNewestByFestivalEdition($festivalEditionId, $limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Article a')
+			->innerJoin('a.FestivalEditionArticle fa')
+			->limit($limit)
+			->where('fa.festival_edition_id = ?', $festivalEditionId)
+			->andWhere('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->orderBy('a.publish_date, a.id DESC')
+			->execute();
+	}
+
+	public function countByFestivalEdition($festivalEditionId)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(a.id)')
+			->from('Article a')
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->innerJoin('a.FestivalEditionArticle fa')
+			->addWhere('fa.festival_edition_id = ?', $festivalEditionId);
+
+
+		$count = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $count['COUNT'];
+	}
+
+	public function getListByFestivalEdition($festivalEditionId, $limit = null, $page = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('Article a')
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->orderBy('a.publish_date, a.id DESC')
+			->innerJoin('a.FestivalEditionArticle fa')
+			->addWhere('fa.festival_edition_id = ?', $festivalEditionId);
+
+		if (!empty ($limit)){
+			$q->limit($limit);
+		}
+
+		if (!empty ($page)){
+			$q->offset(($page - 1) * $limit );
+		}
+
+		return $q->execute();
+	}
 }

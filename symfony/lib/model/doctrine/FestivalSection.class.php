@@ -16,4 +16,14 @@ class FestivalSection extends BaseFestivalSection
 	{
 		return Doctrine_Core::getTable('FestivalSectionPerson')->getDetailedByFestivalSection($this->getId);
 	}
+
+	public function getWinners()
+	{
+		return FestivalSectionParticipantTable::getInstance()->getWinnersBySection($this->getId());
+	}
+
+	public function getParticipants()
+	{
+		return FestivalSectionParticipantTable::getInstance()->getParticipantsBySection($this->getId());
+	}
 }

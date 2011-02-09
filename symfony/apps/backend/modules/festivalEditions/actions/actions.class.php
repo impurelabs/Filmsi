@@ -53,6 +53,36 @@ class festivalEditionsActions extends sfActions
 		$this->sections = Doctrine_Core::getTable('FestivalSection')->findByFestivalEditionId($this->festivalEdition->getId());
 	}
 
+	public function executeJudges(sfWebRequest $request)
+	{
+		$this->festivalEdition = Doctrine_Core::getTable('FestivalEdition')->findOneByLibraryId($request->getParameter('lid'));
+		$this->judges = $this->festivalEdition->getPersons();
+	}
+
+	public function executeJudgeAdd(sfWebRequest $request)
+	{
+		$this->festivalEdition = Doctrine_Core::getTable('FestivalEdition')->findOneById($request->getParameter('id'));
+
+		if ($request->isMethod('post')){
+			$festivalJudge = new FestivalJudge();
+			$festivalJudge->setPersonId($request->getParameter('person_id'));
+			$festivalJudge->setFestivalEditionId($request->getParameter('id'));
+			$festivalJudge->save();
+
+			$this->redirect($this->generateUrl('default', array('module' => 'festivalEditions', 'action' => 'judges')) . '?lid=' . $this->festivalEdition->getLibraryId());
+		}
+	}
+
+	public function executeJudgeDelete(sfWebRequest $request)
+	{
+		if ($request->isMethod('post')){
+			$this->festivalEdition = Doctrine_Core::getTable('FestivalEdition')->findOneById($request->getParameter('id'));
+			Doctrine_Core::getTable('FestivalJudge')->deleteByEditionAndPerson($this->festivalEdition->getId(), $request->getParameter('person_id'));
+
+			$this->redirect($this->generateUrl('default', array('module' => 'festivalEditions', 'action' => 'judges')) . '?lid=' . $this->festivalEdition->getLibraryId());
+		}
+	}
+
 	public function executeSectionAdd(sfWebRequest $request)
 	{
 		$this->forward404If(false == $this->festivalEdition = Doctrine_Core::getTable('FestivalEdition')->findOneById($request->getParameter('id')));

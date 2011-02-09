@@ -12,6 +12,11 @@
  */
 class FestivalEdition extends BaseFestivalEdition
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('FestivalEdition');
+	}
+
 	public function getName()
 	{
 		return $this->getFestival()->getName() . ' - ' . $this->getEdition();
@@ -49,5 +54,50 @@ class FestivalEdition extends BaseFestivalEdition
 		$thumb = new sfThumbnail(sfConfig::get('app_festival_edition_thumbnail_small_width'), sfConfig::get('app_festival_edition_thumbnail_small_height'), true, false, 100);
 		$thumb->loadFile($sourceFile);
 		$thumb->save(sfConfig::get('app_festival_edition_path') . '/ts-' . $this->getFilename());
+	}
+
+	public function getCountComments()
+	{
+		return Doctrine_Core::getTable('Comment')->getCountByEntity('FestivalEdition', $this->getLibraryId());
+	}
+
+	public function getFirstPhotos($limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->limit($limit)
+			->where('p.album_id = ?', $this->getPhotoAlbumId())
+			->orderBy('p.position')
+			->execute();
+	}
+
+	public function getFirstVideos($limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Video v')
+			->limit($limit)
+			->where('v.album_id = ?', $this->getVideoAlbumId())
+			->orderBy('v.position')
+			->execute();
+	}
+
+	public function getNewestArticles($limit = null)
+	{
+		return ArticleTable::getInstance()->getNewestByFestivalEdition($this->getId(), $limit);
+	}
+
+	public function getRelatedStires($limit = null, $page = null, $returnArray = true)
+    {
+		return StireTable::getInstance()->getRelatedByFestivalEdition($this->getId(), $limit, $page, $returnArray);
+    }
+
+	public function getRelatedStiresCount()
+    {
+		return StireTable::getInstance()->getRelatedByFestivalEditionCount($this->getId());
+    }
+
+	public function getJudges()
+	{
+
 	}
 }

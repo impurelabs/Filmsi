@@ -268,7 +268,67 @@ trailer:
 
 festivals:
   url: /festivaluri
-  param: { module: festivals, action: index }
+  param: { module: awards, action: index }
+
+festival:
+  url: /festivaluri/:id
+  param: { module: awards, action: index }
+  
+festival_edition:
+  url: /festival/:id/:key
+  param: { module: awards, action: view }
+
+festival_edition_no_key:
+  url: /festival/:id/
+  param: { module: awards, action: view }
+
+festival_edition_judges:
+  url: /juriu-festival/:id/:key
+  param: { module: awards, action: judges }
+
+festival_edition_judges_no_key:
+  url: /juriu-festival/:id/
+  param: { module: awards, action: judges }
+
+festival_edition_articles:
+  url: /articole-festival/:id/:key
+  param: { module: awards, action: articles }
+
+festival_edition_articles_no_key:
+  url: /articole-festival/:id/
+  param: { module: awards, action: articles }
+
+festival_edition_winners:
+  url: /castigatori-si-nominalizati-festival/:id/:key
+  param: { module: awards, action: winners }
+
+festival_edition_winners_no_key:
+  url: /castigatori-si-nominalizati-festival/:id/
+  param: { module: awards, action: winners }
+
+festival_edition_photos:
+  url: /fotografii-festival/:id/:key
+  param: { module: awards, action: photos }
+
+festival_edition_photos_no_key:
+  url: /fotografii-festival/:id/
+  param: { module: awards, action: photos }
+
+festival_edition_videos:
+  url: /video-festival/:id/:key
+  param: { module: awards, action: videos }
+
+festival_edition_videos_no_key:
+  url: /video-festival/:id/
+  param: { module: awards, action: videos }
+
+festival_edition_stiri:
+  url: /stiri-festival/:id/:key
+  param: { module: awards, action: stiri }
+
+festival_edition_stiri_no_key:
+  url: /stiri-festival/:id/
+  param: { module: awards, action: stiri }
 
 
 

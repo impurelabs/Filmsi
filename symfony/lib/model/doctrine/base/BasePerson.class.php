@@ -240,6 +240,15 @@ abstract class BasePerson extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'person_id'));
 
+        $this->hasMany('FestivalJudge', array(
+             'local' => 'id',
+             'foreign' => 'person_id'));
+
+        $this->hasMany('FestivalEdition as FestivalEditions', array(
+             'refClass' => 'FestivalJudge',
+             'local' => 'person_id',
+             'foreign' => 'festival_edition_id'));
+
         $this->hasMany('FestivalSection', array(
              'refClass' => 'FestivalSectionPerson',
              'local' => 'person_id',

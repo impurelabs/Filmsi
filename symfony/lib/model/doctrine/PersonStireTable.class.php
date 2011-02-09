@@ -22,7 +22,7 @@ class PersonStireTable extends Doctrine_Table
 		}
 	}
 
-        public function getRelatedStires($stireId)
+    public function getRelatedStires($stireId)
 	{
 		$persons = Doctrine_Query::create()
 			->from('PersonStire fs')

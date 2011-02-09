@@ -9,22 +9,22 @@
 			<table class="normal-table">
 				<tr>
 					<td class="innerspacer-bottom" width="70"><strong>Nume</strong></td>
-					<td class="innerspacer-bottom" width="370">
-						<?php echo $form['name']->render(array('class' => 'inpttxt0', 'style' => 'width: 370px'));?><br />
+					<td class="innerspacer-bottom" width="360">
+						<?php echo $form['name']->render(array('class' => 'inpttxt0', 'style' => 'width: 360px'));?><br />
 						<?php echo $form['name']->renderError();?>
 					</td>
 				</tr>
 				<tr>
 					<td class="innerspacer-bottom" width="70"><strong>Email</strong></td>
-					<td class="innerspacer-bottom" width="370">
-						<?php echo $form['email']->render(array('class' => 'inpttxt0', 'style' => 'width: 370px'));?><br />
+					<td class="innerspacer-bottom" width="360">
+						<?php echo $form['email']->render(array('class' => 'inpttxt0', 'style' => 'width: 360px'));?><br />
 						<?php echo $form['email']->renderError();?>
 					</td>
 				</tr>
 				<tr>
 					<td class="innerspacer-bottom" width="70"><strong>Comentariu</strong></td>
-					<td class="innerspacer-bottom" width="370">
-						<?php echo $form['content']->render(array('class' => 'txtarea0', 'style' => 'width:370px; height: 109px'));?><br />
+					<td class="innerspacer-bottom" width="360">
+						<?php echo $form['content']->render(array('class' => 'txtarea0', 'style' => 'width:360px; height: 109px'));?><br />
 						<?php echo $form['content']->renderError();?>
 					</td>
 				</tr>

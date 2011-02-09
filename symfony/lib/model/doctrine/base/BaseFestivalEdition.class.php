@@ -192,6 +192,11 @@ abstract class BaseFestivalEdition extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'festival_edition_id'));
 
+        $this->hasMany('Person as Persons', array(
+             'refClass' => 'FestivalJudge',
+             'local' => 'festival_edition_id',
+             'foreign' => 'person_id'));
+
         $inlibrary0 = new inLibrary(array(
              'type_key' => 'FestivalEdition',
              'has_imdb' => false,
@@ -199,6 +204,8 @@ abstract class BaseFestivalEdition extends sfDoctrineRecord
              'has_photo' => true,
              'has_video' => true,
              ));
+
+
         $this->actAs($inlibrary0);
     }
 }

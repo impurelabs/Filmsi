@@ -348,9 +348,23 @@ cinemas:
   url: /cinematografe
   param: { module: cinemas, action: index }
 
+cinemas_by_region:
+  url: /cinematografe/:region
+  param: { module: cinemas, action: index }
+
 cinema:
   url: /cinematograf/:id/:key
   param: { module: cinemas, action: view }
+
+
+
+
+
+
+
+
+
+
 
 festivaleditions:
   url: /festivaluri

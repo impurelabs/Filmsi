@@ -7,6 +7,11 @@
  */
 class CinemaTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Cinema');
+	}
+
 	public function allow($libraryId)
 	{
 		$album = Doctrine_Core::getTable('Cinema')->findOneByLibraryId($libraryId);
@@ -87,5 +92,31 @@ class CinemaTable extends Doctrine_Table
 		}
 		
 		return $cinemas;
+	}
+
+	public function countByRegion()
+	{
+		$cinemas = Doctrine_Query::create()
+			->select('count(c.id), c.id, l.region')
+			->from('Location l')
+			->leftJoin('l.Cinema c')
+			->groupBy('l.region')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$resultCinemas = array();
+		foreach ($cinemas as $cinema){
+			$resultCinemas[strtolower(str_replace(array('-', ' '), '', $cinema['region']))] = $cinema['Cinema']['count'];
+		}
+
+		return $resultCinemas;
+	}
+
+	public function getByRegionKey($region)
+	{
+		return Doctrine_Query::create()
+			->from('Cinema c')
+			->innerJoin('c.Location l')
+			->where('LOWER(REPLACE(REPLACE(l.region, " ", ""), "-", "")) = ?', $region)
+			->execute();
 	}
 }

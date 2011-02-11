@@ -46,7 +46,7 @@
                 <span><a href="<?php echo url_for('@festivals');?>" class="menu-link">Festivaluri</a></span>
                 <span><a href="<?php echo url_for('@articles');?>" class="menu-link">Din filme</a></span>
                 <span><a href="<?php echo url_for('@persons');?>" class="menu-link">Actori &amp; Regizori</a></span>
-                <span class="last"><a href="" class="menu-link">Cinematografe</a></span>
+                <span class="last"><a href="<?php echo url_for('@cinemas');?>" class="menu-link">Cinematografe</a></span>
             </div> <!-- menu end -->
 
             <div class="clear"></div>

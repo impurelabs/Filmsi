@@ -1,5 +1,10 @@
 <h2>Stiri din filme</h2>
 
+<div class="spacer-bottom-m">
+	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
+	<a href="<?php echo url_for('@stires');?>" class="black-link">Stiri din filme</a>
+</div>
+
 
 <div class="cell-container8 spacer-top-m"> <!-- content column start -->
 

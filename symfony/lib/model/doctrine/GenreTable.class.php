@@ -7,6 +7,11 @@
  */
 class GenreTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Genre');
+	}
+
 	public function getAllOrdered()
 	{
 		return Doctrine_Query::create()	

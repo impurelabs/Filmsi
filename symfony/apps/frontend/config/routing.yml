@@ -249,6 +249,17 @@ film_vote:
   url: /film-vote/
   param: { module: films, action: vote }
 
+film_now_in_cinema:
+  url: /filme-acum-in-cinema
+  param: { module: films, action: nowInCinema }
+
+film_soon_in_cinema:
+  url: /filme-in-curand-in-cinema
+  param: { module: films, action: soonInCinema }
+
+film_day_in_cinema:
+  url: /filme-in-cinema-in-data-de/:day
+  param: { module: films, action: dayInCinema }
 
 
 

@@ -317,4 +317,261 @@ class filmsActions extends sfActions
 
 		$this->currentVideo = $request->getParameter('vid', 1);
 	}
+
+	public function executeNowInCinema(sfWebRequest $request)
+	{
+		$this->selectedGenres = $request->getParameter('genres', array());
+		$this->selectedRatings = $request->getParameter('ratings', array());
+		$this->selectedLocations = $request->getParameter('locations', array());
+
+		$this->locations = CinemaTable::getInstance()->getLocations();
+
+		$this->genres = GenreTable::getInstance()->getAllOrdered();
+		$this->ratings = sfConfig::get('app_rating_types');
+
+		$selectedRatingNames = array();
+		foreach ($this->selectedRatings as $ratingId){
+			$selectedRatingNames[] = $this->ratings[$ratingId];
+		}
+
+		$this->days = array();
+		$today = (int)date('N');
+		$todayTime = time();
+		for($i = 1; $i <= 7; $i++){
+			$this->days[$i] = date('Y-m-d', ( $i - $today ) * 86400 + $todayTime);
+		}
+
+		$this->currentPage = (int)$request->getParameter('p', 1);
+		$this->films = FilmTable::getInstance()->getInCinemaNow($this->days, sfConfig::get('app_film_in_cinema_page_limit'), $this->currentPage, $this->selectedGenres, $selectedRatingNames, $this->selectedLocations);
+
+		$this->filmCount = FilmTable::getInstance()->getInCinemaNowCount($this->days, $this->selectedGenres, $selectedRatingNames, $this->selectedLocations);
+		$this->pageCount = ceil($this->filmCount / sfConfig::get('app_film_in_cinema_page_limit'));
+		$this->firstFilmCount = sfConfig::get('app_film_in_cinema_page_limit') * ($this->currentPage - 1) + 1;
+		$this->lastFilmCount = $this->firstFilmCount + count($this->films) - 1;
+		if ($this->pageCount <= 5) {
+				$this->navStart = 1;
+				$this->navEnd = $this->pageCount;
+		} else {
+				$this->navStart = $this->currentPage - 2;
+				$this->navEnd = $this->currentPage - 2;
+
+				if ($this->navStart <= 0){
+						$this->navStart = 1;
+						$this->navEnd = 5;
+				}
+
+				if ($this->navEnd >= $this->pageCount){
+						$this->navStart = $this->pageCount - 4;
+						$this->navEnd = $this->pageCount;
+				}
+		}
+
+		$filmIds = array();
+		foreach($this->films as $film){
+			$filmIds[] = $film['id'];
+		}
+		$this->stires = StireTable::getInstance()->getRelatedByFilm($filmIds, 3);
+
+
+
+
+		$this->parameterQuery = '';
+		$isFirst = true;
+		if ($request->hasParameter('genres')){
+			foreach ($request->getParameter('genres') as $key => $genre){
+				if ($isFirst){
+					$this->parameterQuery .= 'genres[]=' . $genre;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&genres[]=' . $genre;
+				}
+			}
+		}
+		if ($request->hasParameter('ratings')){
+			foreach ($request->getParameter('ratings') as $key => $rating){
+				if ($isFirst){
+					$this->parameterQuery .= 'ratings[]=' . $rating;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&ratings[]=' . $rating;
+				}
+			}
+		}
+		if ($request->hasParameter('locations')){
+			foreach ($request->getParameter('locations') as $key => $location){
+				if ($isFirst){
+					$this->parameterQuery .= 'locations[]=' . $location;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&locations[]=' . $location;
+				}
+			}
+		}
+	}
+
+	public function executeDayInCinema(sfWebRequest $request)
+	{
+		$this->selectedGenres = $request->getParameter('genres', array());
+		$this->selectedRatings = $request->getParameter('ratings', array());
+		$this->selectedLocations = $request->getParameter('locations', array());
+
+		$this->locations = CinemaTable::getInstance()->getLocations();
+
+		$this->genres = GenreTable::getInstance()->getAllOrdered();
+		$this->ratings = sfConfig::get('app_rating_types');
+
+		$selectedRatingNames = array();
+		foreach ($this->selectedRatings as $ratingId){
+			$selectedRatingNames[] = $this->ratings[$ratingId];
+		}
+
+		$this->days = array();
+		$today = (int)date('N');
+		$todayTime = time();
+		for($i = 1; $i <= 7; $i++){
+			$this->days[$i] = date('Y-m-d', ( $i - $today ) * 86400 + $todayTime);
+		}
+
+		$this->currentPage = (int)$request->getParameter('p', 1);
+		$this->films = FilmTable::getInstance()->getInCinemaNow($request->getParameter('day'), sfConfig::get('app_film_in_cinema_page_limit'), $this->currentPage, $this->selectedGenres, $selectedRatingNames, $this->selectedLocations);
+
+		$this->filmCount = FilmTable::getInstance()->getInCinemaNowCount($request->getParameter('day'), $this->selectedGenres, $selectedRatingNames, $this->selectedLocations);
+		$this->pageCount = ceil($this->filmCount / sfConfig::get('app_film_in_cinema_page_limit'));
+		$this->firstFilmCount = sfConfig::get('app_film_in_cinema_page_limit') * ($this->currentPage - 1) + 1;
+		$this->lastFilmCount = $this->firstFilmCount + count($this->films) - 1;
+		if ($this->pageCount <= 5) {
+				$this->navStart = 1;
+				$this->navEnd = $this->pageCount;
+		} else {
+				$this->navStart = $this->currentPage - 2;
+				$this->navEnd = $this->currentPage - 2;
+
+				if ($this->navStart <= 0){
+						$this->navStart = 1;
+						$this->navEnd = 5;
+				}
+
+				if ($this->navEnd >= $this->pageCount){
+						$this->navStart = $this->pageCount - 4;
+						$this->navEnd = $this->pageCount;
+				}
+		}
+
+		$filmIds = array();
+		foreach($this->films as $film){
+			$filmIds[] = $film['id'];
+		}
+		$this->stires = StireTable::getInstance()->getRelatedByFilm($filmIds, 3);
+
+
+
+		$this->parameterQuery = '';
+		$isFirst = true;
+		if ($request->hasParameter('genres')){
+			foreach ($request->getParameter('genres') as $key => $genre){
+				if ($isFirst){
+					$this->parameterQuery .= 'genres[]=' . $genre;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&genres[]=' . $genre;
+				}
+			}
+		}
+		if ($request->hasParameter('ratings')){
+			foreach ($request->getParameter('ratings') as $key => $rating){
+				if ($isFirst){
+					$this->parameterQuery .= 'ratings[]=' . $rating;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&ratings[]=' . $rating;
+				}
+			}
+		}
+		if ($request->hasParameter('locations')){
+			foreach ($request->getParameter('locations') as $key => $location){
+				if ($isFirst){
+					$this->parameterQuery .= 'locations[]=' . $location;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&locations[]=' . $location;
+				}
+			}
+		}
+	}
+
+	public function executeSoonInCinema(sfWebRequest $request)
+	{
+		$this->selectedGenres = $request->getParameter('genres', array());
+		$this->selectedRatings = $request->getParameter('ratings', array());
+
+		$this->genres = GenreTable::getInstance()->getAllOrdered();
+		$this->ratings = sfConfig::get('app_rating_types');
+
+		$selectedRatingNames = array();
+		foreach ($this->selectedRatings as $ratingId){
+			$selectedRatingNames[] = $this->ratings[$ratingId];
+		}
+
+		$this->days = array();
+		$today = (int)date('N');
+		$todayTime = time();
+		for($i = 1; $i <= 7; $i++){
+			$this->days[$i] = date('Y-m-d', ( $i - $today ) * 86400 + $todayTime);
+		}
+
+		$this->currentPage = (int)$request->getParameter('p', 1);
+		$this->films = FilmTable::getInstance()->getInCinemaSoon(sfConfig::get('app_film_in_cinema_page_limit'), $this->currentPage, $this->selectedGenres, $selectedRatingNames);
+
+		$this->filmCount = FilmTable::getInstance()->getInCinemaSoonCount($this->selectedGenres, $selectedRatingNames);
+		$this->pageCount = ceil($this->filmCount / sfConfig::get('app_film_in_cinema_page_limit'));
+		$this->firstFilmCount = sfConfig::get('app_film_in_cinema_page_limit') * ($this->currentPage - 1) + 1;
+		$this->lastFilmCount = $this->firstFilmCount + count($this->films) - 1;
+		if ($this->pageCount <= 5) {
+				$this->navStart = 1;
+				$this->navEnd = $this->pageCount;
+		} else {
+				$this->navStart = $this->currentPage - 2;
+				$this->navEnd = $this->currentPage - 2;
+
+				if ($this->navStart <= 0){
+						$this->navStart = 1;
+						$this->navEnd = 5;
+				}
+
+				if ($this->navEnd >= $this->pageCount){
+						$this->navStart = $this->pageCount - 4;
+						$this->navEnd = $this->pageCount;
+				}
+		}
+
+		$filmIds = array();
+		foreach($this->films as $film){
+			$filmIds[] = $film['id'];
+		}
+		$this->stires = StireTable::getInstance()->getRelatedByFilm($filmIds, 3);
+
+		$this->parameterQuery = '';
+		$isFirst = true;
+		if ($request->hasParameter('genres')){
+			foreach ($request->getParameter('genres') as $key => $genre){
+				if ($isFirst){
+					$this->parameterQuery .= 'genres[]=' . $genre;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&genres[]=' . $genre;
+				}
+			}
+		}
+		if ($request->hasParameter('ratings')){
+			foreach ($request->getParameter('ratings') as $key => $rating){
+				if ($isFirst){
+					$this->parameterQuery .= 'ratings[]=' . $rating;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&ratings[]=' . $rating;
+				}
+			}
+		}
+
+	}
 }

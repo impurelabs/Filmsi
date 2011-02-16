@@ -13,3 +13,5 @@ all:
     page_limit: 20
   festival:
     page_limit: 20
+  film_in_cinema:
+    page_limit: 20

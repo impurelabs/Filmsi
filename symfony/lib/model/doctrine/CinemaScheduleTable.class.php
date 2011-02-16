@@ -7,6 +7,11 @@
  */
 class CinemaScheduleTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('CinemaSchedule');
+	}
+
 	public function getDetailedByCinema($cinemaId)
 	{
 		$scheduleBrutes = Doctrine_Query::create()

@@ -119,4 +119,22 @@ class CinemaTable extends Doctrine_Table
 			->where('LOWER(REPLACE(REPLACE(l.region, " ", ""), "-", "")) = ?', $region)
 			->execute();
 	}
+
+	public function getLocations()
+	{
+		$q = Doctrine_Query::create()
+			->select('c.id, l.city')
+			->from('Cinema c')
+			->innerJoin('c.Location l')
+			->orderBy('l.city ASC')
+			->groupBy('c.location_id')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$locations = array();
+		foreach($q as $location){
+			$locations[$location['Location']['id']] = $location['Location']['city'];
+		}
+
+		return $locations;
+	}
 }

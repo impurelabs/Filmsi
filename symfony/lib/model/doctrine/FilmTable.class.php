@@ -261,4 +261,119 @@ class FilmTable extends Doctrine_Table
 			->andWhere('v.id = ?', $videoId)
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
+
+	public function getInCinemaNow($when = null, $limit = null, $page = null, $genres = array(), $ratings = array(), $locations = array())
+	{
+		$q = Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
+			->from('Film f')
+			->innerJoin('f.Schedule s')
+			->where('f.state = 1')
+			->andWhereIn('s.day', $when)
+			->orderBy('f.visit_count DESC');
+
+		if (isset($limit)){
+			$q->limit($limit);
+		}
+
+		if (isset($page)){
+			$q->offset($page - 1);
+		}
+
+		if (count($locations) > 0){
+			$q->innerJoin('s.Cinema c')
+				->andWhereIn('c.location_id', $locations);
+		}
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+	}
+
+	public function getInCinemaNowCount($when = null, $genres = array(), $ratings = array(), $locations = array())
+	{
+		$q = Doctrine_Query::create()
+			->select('count(DISTINCT f.id)')
+			->from('Film f')
+			->innerJoin('f.Schedule s')
+			->where('f.state = 1')
+			->whereIn('s.day', $when)
+			->orderBy('f.visit_count DESC');
+
+		if (count($locations) > 0){
+			$q->innerJoin('s.Cinema c')
+				->andWhereIn('c.location_id', $locations);
+		}
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		$count =  $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		return $count['count'];
+	}
+
+	public function getInCinemaSoon($limit = null, $page = null, $genres = array(), $ratings = array())
+	{
+		$q = Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
+			->from('Film f')
+			->where('f.state = 1 AND f.status_cinema = 1 AND f.status_cinema_day = 0')
+			->orderBy('f.visit_count DESC');
+
+		if (isset($limit)){
+			$q->limit($limit);
+		}
+
+		if (isset($page)){
+			$q->offset($page - 1);
+		}
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+	}
+
+	public function getInCinemaSoonCount($genres = array(), $ratings = array())
+	{
+		$q = Doctrine_Query::create()
+			->select('count(DISTINCT f.id)')
+			->from('Film f')
+			->where('f.state = 1 AND f.status_cinema = 1 AND f.status_cinema_day = 0');
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		$count =  $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $count['count'];
+	}
 }

@@ -99,10 +99,15 @@ class StireTable extends Doctrine_Table
 
 	public function getRelatedByFilm($filmId, $limit = null, $page = null, $returnArray = true)
     {
+		if (!is_array($filmId)){
+			$filmId = array($filmId);
+		}
+
         $q = Doctrine_Query::create()
             ->from('Stire s')
             ->innerJoin('s.FilmStire fs')
-            ->where('fs.film_id = ? AND s.state = 1', $filmId)
+            ->where('s.state = 1')
+			->andWhereIn('fs.film_id', $filmId)
 			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
             ->orderBy('s.publish_date, s.id DESC');
 

@@ -163,7 +163,7 @@ class PersonTable extends Doctrine_Table
             $q = Doctrine_Query::create()
                 ->from('Person p')
                 ->where('p.last_name LIKE ? AND p.state = 1', $letter . '%')
-                ->orderBy('p.first_name ASC');
+                ->orderBy('p.last_name, p.first_name ASC');
             
             switch ($type){
                 case 'actor':

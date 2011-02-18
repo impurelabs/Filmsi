@@ -27,8 +27,8 @@ class personsActions extends sfActions
             $this->getResponse()->setTitle('Filmsi.ro - Actori & Regizori');
 
             $this->currentPage = (int)$request->getParameter('p', 1);
-            $this->persons = Doctrine_Core::getTable('Person')->getAllByLetter(sfConfig::get('app_persons_page_limit'), $this->currentPage, $request->getParameter('letter'));
-            $this->personCount = Doctrine_Core::getTable('Person')->getCount($request->getParameter('letter'));
+            $this->persons = PersonTable::getInstance()->getAllByLetter(sfConfig::get('app_persons_page_limit'), $this->currentPage, $request->getParameter('letter'));
+            $this->personCount = PersonTable::getInstance()->getCount($request->getParameter('letter'));
             $this->pageCount = ceil($this->personCount / sfConfig::get('app_persons_page_limit'));
             $this->firstPersonCount = sfConfig::get('app_persons_page_limit') * ($this->currentPage - 1) + 1;
             $this->lastPersonCount = $this->firstPersonCount + $this->persons->count() - 1;

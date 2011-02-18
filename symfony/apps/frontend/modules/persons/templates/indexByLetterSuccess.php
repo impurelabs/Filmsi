@@ -80,13 +80,13 @@
 		<div class="inline-block spacer-left-m spacer-right-l">Persoanele <?php echo $firstPersonCount;?>-<?php echo $lastPersonCount;?></div>
 
         <?php if($currentPage > 1):?>
-			<a href="<?php echo url_for('@persons_by_letter?letter=' . $sf_request->getParameter('letter'));?>&p=<?php echo $currentPage - 1;?>"><span class="pagenav-back"></span></a>
+			<a href="<?php echo url_for('@persons_by_letter?letter=' . $sf_request->getParameter('letter'));?>?p=<?php echo $currentPage - 1;?>"><span class="pagenav-back"></span></a>
 		<?php endif;?>
 		<?php for ($i = 1; $i <= $pageCount; $i++):?>
-			<a href="<?php echo url_for('@persons_by_letter?letter=' . $sf_request->getParameter('letter'));?>&p=<?php echo $i;?>"><span class="<?php echo $i == $currentPage ? 'pagenav-active' : 'pagenav';?>"><?php echo $i;?></span></a>
+			<a href="<?php echo url_for('@persons_by_letter?letter=' . $sf_request->getParameter('letter'));?>?p=<?php echo $i;?>"><span class="<?php echo $i == $currentPage ? 'pagenav-active' : 'pagenav';?>"><?php echo $i;?></span></a>
 		<?php endfor;?>
 		<?php if($currentPage < $pageCount):?>
-		<a href="<?php echo url_for('@persons_by_letter?letter=' . $sf_request->getParameter('letter'));?>&p=<?php echo $currentPage + 1;?>"><span class="pagenav-forward"></span></a>
+		<a href="<?php echo url_for('@persons_by_letter?letter=' . $sf_request->getParameter('letter'));?>?p=<?php echo $currentPage + 1;?>"><span class="pagenav-forward"></span></a>
 		<?php endif;?>
 
 

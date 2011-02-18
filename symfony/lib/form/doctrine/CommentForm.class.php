@@ -48,7 +48,9 @@ class CommentForm extends BaseCommentForm
 
 	public function  updateObject($values = null) {
 		$object = parent::updateObject($values);
-		$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		if (sfContext::getInstance()->getUser()->isAuthenticated()){
+			$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+		}
 		$object->setState($this->state);
 		$object->setIp($this->ip);
 		$object->setModel($this->model);

@@ -64,7 +64,7 @@
     </tr>
 	<tr>
     	<th>Pret bilete</th>
-        <td><?php echo $form['ticket_price']->render(array('class' => 'span-13'));?><br /><?php echo $form['ticket_price']->renderError();?></td>
+        <td><?php echo $form['ticket_price']->render(array('class' => 'mceEditor'));?><br /><?php echo $form['ticket_price']->renderError();?></td>
     </tr>
     <tr>
     	<th>Format film</th>
@@ -213,3 +213,5 @@ function moveMarker(lat, lng, bounds)
 }
 
 </script>
+
+<?php include_partial('default/wysiwygEditor', array('width' => 600, 'height' => 400));?>

@@ -59,7 +59,7 @@ Acest obiect este Pending!  <button type="button" onclick="location.href='<?php 
     </tr>
 	<tr>
     	<th>Pret bilete</th>
-        <td><?php echo $cinema->getTicketPrice();?></td>
+        <td><?php echo $sf_data->getRaw('cinema')->getTicketPrice();?></td>
     </tr>
 	<tr>
     	<th>Facilitati</th>

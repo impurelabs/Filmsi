@@ -44,6 +44,9 @@ abstract class BaseCinemaForm extends BaseFormDoctrine
       'service_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Service')),
       'article_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Article')),
       'stires_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Stire')),
+      'reservation_url'     => new sfWidgetFormInputText(),
+      'photo_album_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PhotoAlbum'), 'add_empty' => true)),
+      'admin_user_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Admin'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -76,6 +79,9 @@ abstract class BaseCinemaForm extends BaseFormDoctrine
       'service_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Service', 'required' => false)),
       'article_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Article', 'required' => false)),
       'stires_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Stire', 'required' => false)),
+      'reservation_url'             => new sfValidatorString(array('max_length' => 250, 'required' => false)),
+      'photo_album_id'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PhotoAlbum'), 'required' => false)),
+      'admin_user_id'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Admin'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('cinema[%s]');

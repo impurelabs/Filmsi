@@ -1,6 +1,18 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-<h4 class="mb-3">Editeaza detalii cinema</h4>
+<h4>Cinematograf</h4>
+
+<a href="<?php echo url_for('@default?module=cinemas&action=view');?>?lid=<?php echo $form->getObject()->getLibraryId();?>" class="selected">Detalii</a>
+ | <a href="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $form->getObject()->getLibraryId();?>">Program</a>
+ | <a href="<?php echo url_for('@default?module=cinemas&action=admin');?>?lid=<?php echo $form->getObject()->getLibraryId();?>">Administrator</a>
+<?php if($sf_user->hasCredential('Moderator') && $form->getObject()->getState() == Library::STATE_PENDING): ?>
+ | Acest obiect este Pending!  <button type="button" onclick="location.href='<?php echo url_for('@default?module=default&action=allow');?>?lid=<?php echo $form->getObject()->getLibraryId();?>'">Aproba</button>
+<?php endif; ?>
+
+ <div class="mt-2 mb-2 cell-separator-double"></div>
+
+<h5>Editeaza detalii</h5>
+<div class="clear"></div>
 
 <div id="test"></div>
 <form id="the-form" action="<?php echo url_for('@default?module=cinemas&action=edit');?>?lid=<?php echo $form->getObject()->getLibraryId();?>" method="post" enctype="multipart/form-data">
@@ -99,6 +111,14 @@
     	<th>Publicat la</th>
         <td><?php echo $form['publish_date']->render();?><br /><?php echo $form['publish_date']->renderError();?></td>
     </tr>
+	<tr>
+    	<th>URL Rezervari</th>
+        <td><?php echo $form['reservation_url']->render(array('class' => 'span-13'));?><br /><?php echo $form['reservation_url']->renderError();?></td>
+    </tr>
+    <tr>
+    	<th>Album Foto</th>
+        <td><input type="text" id="photo-album-selector" value="<?php echo $form->getObject()->getPhotoAlbum()->getName();?>" class="span-13" /> </td>
+    </tr>
 </table>
 
 
@@ -118,7 +138,31 @@
 
 	$(document).ready(function(){
 		$('#cinema_publish_date').datepicker({dateFormat: 'yy-mm-dd'});
-		
+
+
+		/* Photo album selector functionality */
+		$("#photo-album-selector").autocomplete({
+	      source: function(request, response) {
+	        $.ajax({
+	          url: "<?php echo url_for('@default?module=photos&action=api')?>",
+	          dataType: "json",
+	          data: {
+	            term: request.term
+	          },
+	          success: function(data) {
+	            response(data);
+	          }
+	        })
+	      },
+		  select: function(event, ui){
+			  $('#cinema_photo_album_id').val(ui.item.value);
+			  $('#photo-album-selector').val(ui.item.label);
+			  return false;
+		  },
+	      minLength: 2
+	    });
+
+
 		
 		/* Field autocomplete functionality */
 		$("#cinema_location").autocomplete({

@@ -26,21 +26,44 @@ class cinemasActions extends sfActions
   }
   
 	public function executeEdit(sfWebRequest $request)
-  {
-  	$cinema = Doctrine_Core::getTable('Cinema')->findOneByLibraryId($request->getParameter('lid'));
-  	
-  	$this->form = new CinemaEditForm($cinema);
-  	
-  	if ($request->isMethod('post')){
-  		$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
-  		
-  		if ($this->form->isValid()){
-  			$this->form->save();
-  			
-  			$this->redirect($this->generateUrl('default', array('module' => 'cinemas', 'action' => 'view')) . '?lid=' . $this->form->getObject()->getLibraryId());
-  		}
-  	}
-  }
+	{
+		$cinema = Doctrine_Core::getTable('Cinema')->findOneByLibraryId($request->getParameter('lid'));
+
+		$this->form = new CinemaEditForm($cinema);
+
+		if ($request->isMethod('post')){
+			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+
+			if ($this->form->isValid()){
+				$this->form->save();
+
+				$this->redirect($this->generateUrl('default', array('module' => 'cinemas', 'action' => 'view')) . '?lid=' . $this->form->getObject()->getLibraryId());
+			}
+		}
+	}
+
+	public function executeAdmin(sfWebRequest $request)
+	{
+		$this->cinema = Doctrine_Core::getTable('Cinema')->findOneByLibraryId($request->getParameter('lid'));
+		$this->admin = $this->cinema->getAdmin();
+	}
+
+	public function executeEditAdmin(sfWebRequest $request)
+	{
+		$cinema = Doctrine_Core::getTable('Cinema')->findOneByLibraryId($request->getParameter('lid'));
+
+		$this->form = new CinemaAdminForm($cinema);
+		
+		if ($request->isMethod('post')){
+			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+
+			if ($this->form->isValid()){
+				$this->form->save();
+
+				$this->redirect($this->generateUrl('default', array('module' => 'cinemas', 'action' => 'admin')) . '?lid=' . $this->form->getObject()->getLibraryId());
+			}
+		}
+	}
   
 	public function executeView(sfWebRequest $request)
   {

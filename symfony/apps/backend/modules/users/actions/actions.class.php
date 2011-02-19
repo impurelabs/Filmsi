@@ -108,4 +108,12 @@ class usersActions extends sfActions
   	
   	$this->redirect($request->getReferer());
   }
+
+	public function executeApi(sfWebRequest $request)
+	{
+		$this->setLayout(false);
+		$this->getResponse()->setContentType('application/json');
+
+		return $this->renderText(json_encode(Doctrine_Core::getTable('sfGuardUser')->getForApi($request->getParameter('term'))));
+	}
 }

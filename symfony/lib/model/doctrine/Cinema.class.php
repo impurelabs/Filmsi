@@ -46,4 +46,55 @@ class Cinema extends BaseCinema
 		$thumb->save(sfConfig::get('app_cinema_path') . '/ts-' . $this->getFilename());
 	}
 
+	public function getRelatedStires($limit = null, $page = null, $returnArray = true)
+    {
+		return StireTable::getInstance()->getRelatedByCinema($this->getId(), $limit, $page, $returnArray);
+    }
+
+	public function getRelatedStiresCount()
+    {
+		return StireTable::getInstance()->getRelatedByCinemaCount($this->getId());
+    }
+
+	public function getCheckIfVoted()
+	{
+
+	}
+
+	public function getVoteScore()
+	{
+		$q = Doctrine_Query::create()
+			->select('AVG(v.grade) score')
+			->from('CinemaVote v')
+			->where('v.cinema_id = ?', $this->getId())
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $q['score'];
+
+	}
+
+	public function getVoteCount()
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(v.id) count')
+			->from('CinemaVote v')
+			->where('v.cinema_id = ?', $this->getId())
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $q['count'];
+	}
+
+	public function checkIfIpVotedToday($ip)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(v.id) count')
+			->from('CinemaVote v')
+			->where('v.cinema_id = ?', $this->getId())
+			->andWhere('v.ip = ?', $ip)
+			->andWhere('DATE(v.created_at) = DATE(NOW())')
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return (int)$q['count'] === 0 ? false : true;
+	}
+
 }

@@ -6,7 +6,7 @@ public function configure()
   	$this->useFields(array(
   		'name', 'location_id', 'address', 'phone', 'website', 'room_count', 'lat', 'lng', 'seats', 'sound', 'ticket_price',
 		'is_type_film', 'is_type_digital', 'is_type_3d', 'url_key', 'filename', 'description_teaser', 'description_content',  'meta_description', 'meta_keywords',
-		'publish_date', 'service_list', 'lat', 'lng', 'map_zoom'
+		'publish_date', 'service_list', 'lat', 'lng', 'map_zoom', 'reservation_url', 'photo_album_id'
   	));
   	
   	$this->widgetSchema['name'] = new sfWidgetFormInput();
@@ -36,6 +36,7 @@ public function configure()
   		'model' => 'Service'
   	));
 	$this->widgetSchema['map_zoom'] = new sfWidgetFormInputHidden();
+  	$this->widgetSchema['photo_album_id'] = new sfWidgetFormInputHidden();
   	
   	$this->validatorSchema['location'] = new sfValidatorString();
   	$this->validatorSchema['filename'] = new sfValidatorFile(array('required' => false));

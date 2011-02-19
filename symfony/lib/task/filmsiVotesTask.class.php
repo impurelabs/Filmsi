@@ -38,8 +38,11 @@ class filmsiVotesTask extends sfBaseTask
 			return false;
 		}
 
-        $this->logSection('resetting', 'Deleting votes older then ' . $days . ' days.');
+        $this->logSection('resetting', 'Deleting film votes older then ' . $days . ' days.');
         $this->dbConnection->getTable('FilmVote')->deleteOlderThan($days);
+
+        $this->logSection('resetting', 'Deleting cinema votes older then ' . $days . ' days.');
+        $this->dbConnection->getTable('CinemaVote')->deleteOlderThan($days);
 
 		return true;
     }

@@ -269,3 +269,15 @@ function filmsiHomepageBackground($sourceimage)
 {
 	return sfConfig::get('app_homepage_background_path_for_web') . '/' . $sourceimage;
 }
+
+function filmsiDayOfWeek($dayNo){
+	switch ($dayNo){
+		case '1': return 'L'; break;
+		case '2': return 'Ma'; break;
+		case '3': return 'Mi'; break;
+		case '4': return 'J'; break;
+		case '5': return 'V'; break;
+		case '6': return 'S'; break;
+		case '7': return 'D'; break;
+	}
+}

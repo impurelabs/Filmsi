@@ -367,6 +367,74 @@ cinema:
   url: /cinematograf/:id/:key
   param: { module: cinemas, action: view }
 
+cinema_no_key:
+  url: /cinematograf/:id/
+  param: { module: cinemas, action: view }
+
+cinema_schedule:
+  url: /program-cinema/:id/:key
+  param: { module: cinemas, action: schedule }
+
+cinema_schedule_no_key:
+  url: /program-cinema/:id/
+  param: { module: cinemas, action: schedule }
+
+cinema_description:
+  url: /prezentare-cinema/:id/:key
+  param: { module: cinemas, action: description }
+
+cinema_description_no_key:
+  url: /prezentare-cinema/:id/
+  param: { module: cinemas, action: description }
+
+cinema_tickets:
+  url: /pret-bilete-cinema/:id/:key
+  param: { module: cinemas, action: tickets }
+
+cinema_tickets_no_key:
+  url: /pret-bilete-cinema/:id/
+  param: { module: cinemas, action: tickets }
+
+cinema_promotions:
+  url: /promotii-cinema/:id/:key
+  param: { module: cinemas, action: promotions }
+
+cinema_promotions_no_key:
+  url: /promotii-cinema/:id/
+  param: { module: cinemas, action: promotions }
+
+cinema_promotion_edit:
+  url: /editeaza-promotie/:id
+  param: { module: cinemas, action: promotionEdit }
+
+cinema_comments:
+  url: /comentarii-cinema/:id/:key
+  param: { module: cinemas, action: comments }
+
+cinema_comments_no_key:
+  url: /comentarii-cinema/:id/
+  param: { module: cinemas, action: comments }
+
+cinema_photos:
+  url: /fotografii-cinema/:id/:key
+  param: { module: cinemas, action: photos }
+
+cinema_photos_no_key:
+  url: /fotografii-cinema/:id/
+  param: { module: cinemas, action: photos }
+
+cinema_stiri:
+  url: /stiri-cinema/:id/:key
+  param: { module: cinemas, action: stiri }
+
+cinema_stiri_no_key:
+  url: /stiri-cinema/:id/
+  param: { module: cinemas, action: stiri }
+
+cinema_vote:
+  url: /cinema-vote/
+  param: { module: cinemas, action: vote }
+
 
 
 

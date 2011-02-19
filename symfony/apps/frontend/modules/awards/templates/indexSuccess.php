@@ -57,7 +57,7 @@
 
         <div class="cell-bd">
         	<div class="align-center spacer-bottom-s">
-				<a href="<?php echo url_for('@festival_edition?id=' . $edition->getId() . '&key=' . $edition->getUrlKey());?>"><img src="<?php echo image_path(filmsiFestivalEditionPhoto($edition->getFilename()));?>" /></a>
+				<a href="<?php echo url_for('@festival_edition?id=' . $edition->getId() . '&key=' . $edition->getUrlKey());?>"><img src="<?php echo image_path(filmsiFestivalEditionPhotoThumb($edition->getFilename()));?>" /></a>
             </div>
 
             <div class="cell-separator-dotted-top innerspacer-top innerspacer-left spacer-top">

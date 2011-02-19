@@ -221,6 +221,16 @@ abstract class BaseCinema extends sfDoctrineRecord
         $this->hasColumn('library_id', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('reservation_url', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
+             ));
+        $this->hasColumn('photo_album_id', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('admin_user_id', 'integer', null, array(
+             'type' => 'integer',
+             ));
 
         $this->option('symfony', array(
              'filter' => false,
@@ -231,6 +241,15 @@ abstract class BaseCinema extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('PhotoAlbum', array(
+             'local' => 'photo_album_id',
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
+        $this->hasOne('sfGuardUser as Admin', array(
+             'local' => 'admin_user_id',
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
+		
         $this->hasMany('Service', array(
              'refClass' => 'CinemaService',
              'local' => 'cinema_id',

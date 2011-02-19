@@ -84,6 +84,19 @@ class StireTable extends Doctrine_Table
         return $q['count'];
     }
 
+	public function getRelatedByCinemaCount($cinemaId)
+    {
+        $q = Doctrine_Query::create()
+            ->select('COUNT(s.id) count')
+            ->from('Stire s')
+            ->innerJoin('s.CinemaStire fs')
+            ->where('fs.cinema_id = ? AND s.state = 1', $cinemaId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+        return $q['count'];
+    }
+
 	public function getRelatedByPersonCount($personId)
     {
         $q = Doctrine_Query::create()
@@ -196,5 +209,34 @@ class StireTable extends Doctrine_Table
             ->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 
         return $q['count'];
+    }
+
+	public function getRelatedByCinema($cinemaId, $limit = null, $page = null, $returnArray = true)
+    {
+		if (!is_array($cinemaId)){
+			$cinemaId = array($cinemaId);
+		}
+
+        $q = Doctrine_Query::create()
+            ->from('Stire s')
+            ->innerJoin('s.CinemaStire fs')
+            ->where('s.state = 1')
+			->andWhereIn('fs.cinema_id', $cinemaId)
+			->andWhere('s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+            ->orderBy('s.publish_date, s.id DESC');
+
+        if (!empty ($limit)){
+                $q->limit($limit);
+        }
+
+        if (!empty ($page)){
+                $q->offset(($page - 1) * $limit );
+        }
+
+        if ($returnArray){
+            return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+        } else {
+            return $q->execute();
+        }
     }
 }

@@ -102,6 +102,14 @@
     	<th>Publicat la</th>
         <td><?php echo $form['publish_date']->render();?><br /><?php echo $form['publish_date']->renderError();?></td>
     </tr>
+	<tr>
+    	<th>URL Rezervari</th>
+        <td><?php echo $form['reservation_url']->render(array('class' => 'span-13'));?><br /><?php echo $form['reservation_url']->renderError();?></td>
+    </tr>
+    <tr>
+    	<th>Album Foto</th>
+        <td><input type="text" id="photo-album-selector" class="span-13" /> </td>
+    </tr>
 </table>
 
 
@@ -121,6 +129,29 @@
 
 	$(document).ready(function(){
 		$('#cinema_publish_date').datepicker({dateFormat: 'yy-mm-dd'});
+
+
+		/* Photo album selector functionality */
+		$("#photo-album-selector").autocomplete({
+	      source: function(request, response) {
+	        $.ajax({
+	          url: "<?php echo url_for('@default?module=photos&action=api')?>",
+	          dataType: "json",
+	          data: {
+	            term: request.term
+	          },
+	          success: function(data) {
+	            response(data);
+	          }
+	        })
+	      },
+		  select: function(event, ui){
+			  $('#cinema_photo_album_id').val(ui.item.value);
+			  $('#photo-album-selector').val(ui.item.label);
+			  return false;
+		  },
+	      minLength: 2
+	    });
 		
 		
 		/* Field autocomplete functionality */

@@ -1,14 +1,20 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-<h4>Detalii Cinematograf</h4>
-<div class="mb-3">
+<h4>Cinematograf</h4>
+
+<a href="<?php echo url_for('@default?module=cinemas&action=view');?>?lid=<?php echo $cinema->getLibraryId();?>" class="selected">Detalii</a>
+ | <a href="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $cinema->getLibraryId();?>">Program</a>
+ | <a href="<?php echo url_for('@default?module=cinemas&action=admin');?>?lid=<?php echo $cinema->getLibraryId();?>">Administrator</a>
 <?php if($sf_user->hasCredential('Moderator') && $cinema->getState() == Library::STATE_PENDING): ?>
-Acest obiect este Pending!  <button type="button" onclick="location.href='<?php echo url_for('@default?module=default&action=allow');?>?lid=<?php echo $cinema->getLibraryId();?>'">Aproba</button>
+ | Acest obiect este Pending!  <button type="button" onclick="location.href='<?php echo url_for('@default?module=default&action=allow');?>?lid=<?php echo $cinema->getLibraryId();?>'">Aproba</button>
 <?php endif; ?>
-<button type="button" onclick="location.href='<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $cinema->getLibraryId();?>'">Program cinema</button>
+
+ <div class="mt-2 mb-2 cell-separator-double"></div>
+
+<h5>Detalii</h5>
+<div class="mb-3">
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=cinemas&action=edit');?>?lid=<?php echo $cinema->getLibraryId();?>'">Editeaza detalii</button>
 </div>
-
 <div class="clear"></div>
 
 <table class="span-19">
@@ -100,6 +106,21 @@ Acest obiect este Pending!  <button type="button" onclick="location.href='<?php 
 	<tr>
     	<th>Publicat la</th>
         <td><?php echo $cinema->getPublishDate();?></td>
+    </tr>
+	<tr>
+    	<th>URL Rezervari</th>
+        <td><?php echo $cinema->getReservationUrl();?></td>
+    </tr>
+    <tr>
+    	<th>Album Foto</th>
+        <td><?php echo $cinema->getPhotoAlbum();?></td>
+    </tr>
+    <tr>
+    	<td colspan="2">
+        <?php foreach ($cinema->getPhotoAlbum()->getPhotos() as $photo): ?>
+        	<img src="<?php echo filmsiPhotoThumb($photo->getFilename());?>" />
+        <?php endforeach;?>
+        </td>
     </tr>
 </table>
 

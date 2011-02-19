@@ -1,5 +1,15 @@
-<h4>Editeaza program cinema "<?php echo $cinema->getName();?>"</h4>
-<a class="mb-3" href="<?php echo url_for('@default?module=cinemas&action=view');?>?lid=<?php echo $cinema->getLibraryId();?>">Intoarce-te inapoi</a>
+<h4>Cinematograf</h4>
+
+<a href="<?php echo url_for('@default?module=cinemas&action=view');?>?lid=<?php echo $cinema->getLibraryId();?>">Detalii</a>
+ | <a href="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $cinema->getLibraryId();?>" class="selected">Program</a>
+ | <a href="<?php echo url_for('@default?module=cinemas&action=admin');?>?lid=<?php echo $cinema->getLibraryId();?>">Administrator</a>
+<?php if($sf_user->hasCredential('Moderator') && $cinema->getState() == Library::STATE_PENDING): ?>
+ | Acest obiect este Pending!  <button type="button" onclick="location.href='<?php echo url_for('@default?module=default&action=allow');?>?lid=<?php echo $cinema->getLibraryId();?>'">Aproba</button>
+<?php endif; ?>
+
+ <div class="mt-2 mb-2 cell-separator-double"></div>
+
+<h5>Program</h5>
 
 <div id="test"></div>
 <form id="the-form" action="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $cinema->getLibraryId();?>" method="post">

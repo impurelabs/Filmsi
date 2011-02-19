@@ -184,4 +184,24 @@ public function countFiltered($filters)
 		
 		return $admins;
 	}
+
+	public function getForApi($term)
+	{
+		$term = '(^| |-)' . $term ;
+
+		$bruteUsers = Doctrine_Query::create()
+			->from('sfGuardUser u')
+			->andWhere('u.username REGEXP ?', $term)
+			->orderBy('u.username ASC')
+			->limit(50)
+			->execute();
+
+		$users = array();
+		foreach ($bruteUsers as $key => $bruteUser){
+			$users[$key]['value'] = $bruteUser->getId();
+			$users[$key]['label'] = $bruteUser->getUsername();
+		}
+
+		return $users;
+	}
 }

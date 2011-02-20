@@ -25,6 +25,31 @@ class cinemasActions extends sfActions
 		}
 	}
 
+	public function executeSearch(sfWebRequest $request)
+	{
+		$this->currentWeekDays = array();
+		$today = (int)date('N');
+		$todayTime = time();
+		for($i = 1; $i <= 7; $i++){
+			$this->currentWeekDays[$i] = date('Y-m-d', ( $i - $today ) * 86400 + $todayTime);
+		}
+
+		$this->filmsInCinema = CinemaScheduleTable::getInstance()->getAllFilmListByDays($this->currentWeekDays);
+		$this->locations = CinemaTable::getInstance()->getLocations();
+		
+		$this->currentDay = $request->getParameter('d', date('Y-m-d'));
+		$this->currentLocation = $request->getParameter('l', null);
+		if ($this->currentLocation == ''){
+			$this->currentLocation = null;
+		}
+		$this->currentFilm = $request->getParameter('f', null);
+		if ($this->currentFilm == ''){
+			$this->currentFilm = null;
+		}
+
+		$this->films = CinemaScheduleTable::getInstance()->getFilmsAndCinemasByDayAndLocationAndFilm($this->currentDay, $this->currentLocation, $this->currentFilm);
+	}
+
 	public function executeView(sfWebRequest $request)
 	{
 		$this->cinema = CinemaTable::getInstance()->findOneById($request->getParameter('id'));

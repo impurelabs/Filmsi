@@ -13,12 +13,13 @@ class CinemaPromotionEditForm extends CinemaPromotionForm
   	$this->widgetSchema['cinema_id'] = new sfWidgetFormInputHidden();
   	
   	$this->validatorSchema['filename'] = new sfValidatorFile();
+	$this->validatorSchema['filename']->setOption('required', false);
   }
   
 	public function updateObject($values = null)
   {
   	$file = $this->getValue('filename');
-  	if(!isset($file)){
+  	if(get_class($file) != 'sfValidatedFile'){
   		return parent::updateObject($values);
   	}
     

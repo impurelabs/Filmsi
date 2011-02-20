@@ -435,6 +435,10 @@ cinema_vote:
   url: /cinema-vote/
   param: { module: cinemas, action: vote }
 
+cinema_search:
+  url: /cinema-cauta-film
+  param: { module: cinemas, action: search }
+
 
 
 

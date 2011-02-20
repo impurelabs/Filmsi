@@ -123,4 +123,52 @@ class CinemaScheduleTable extends Doctrine_Table
 			return $films;
 		}
 	}
+
+	public function getAllFilmListByDays($days)
+	{
+		$q = Doctrine_Query::create()
+			->from('CinemaSchedule s')
+			->innerJoin('s.Film f')
+			->groupBy('s.film_id')
+			->where('f.state = 1')
+			->andWhereIn('s.day', $days)
+			->orderBy('f.name_ro ASC')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$films = array();
+		foreach($q as $film){
+			$films[] = $film['Film'];
+		}
+		return $films;
+	}
+	
+	public function getFilmsAndCinemasByDayAndLocationAndFilm($days, $locationId = null, $filmId = null, $limit = null)
+	{
+		$schedules = Doctrine_Query::create()
+			//->select('s.id, s.film_id, c.id, c.name, f.id, f.name_ro')
+			->from('CinemaSchedule s')
+			->innerJoin('s.Cinema c')
+			->innerJoin('s.Film f')
+			->whereIn('s.day', $days);
+		if (isset($locationId)){
+			$schedules = $schedules->andWhere('c.location_id = ?', $locationId);
+		}
+		if (isset($filmId)){
+			$schedules->andWhere('s.film_id = ?', $filmId);
+		}
+		$schedules = $schedules->execute();
+
+		$films = array();
+		foreach($schedules as $schedule){
+			$films[$schedule->getFilm()->getId()]['film'] = $schedule->getFilm();
+			$films[$schedule->getFilm()->getId()]['cinemas'][] = $schedule->getCinema();
+		}
+
+		if (isset($limit)){
+			return array_splice($films, 0, $limit);
+		} else {
+			return $films;
+		}
+
+	}
 }

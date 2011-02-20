@@ -149,4 +149,14 @@ class Film extends BaseFilm
     {
         return FestivalSectionParticipantTable::getInstance()->getDetailedByFilm($this->getImdb(), $limit);
     }
+
+	public function getBestActors($limit)
+	{
+		return FilmPersonTable::getInstance()->getBestActorsByFilm($this->getId(), $limit);
+	}
+
+	public function getBestDirectors()
+	{
+		return FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->getId());
+	}
 }

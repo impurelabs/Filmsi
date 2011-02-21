@@ -7,6 +7,11 @@
  */
 class LibraryTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Library');
+	}
+	
 	public function getByIds($ids)
 	{
 		return Doctrine_Query::create()
@@ -460,7 +465,7 @@ class LibraryTable extends Doctrine_Table
 		return $q['l_counter'];
 	}
 	
-        public function getPending($offset = 0)
+    public function getPending($offset = 0)
 	{
 		return Doctrine_Query::create()
 			->from('Library l')
@@ -545,5 +550,25 @@ class LibraryTable extends Doctrine_Table
     $connection->commit();
 	}
 
+	public function getForSearch($term)
+	{
+		$term = '(^| |-)' . $term ;
+
+		$bruteItems = Doctrine_Query::create()
+			->from('Library l')
+			->where('l.state = 1 and ( type = "Person" or type = "Film" )')
+			->andWhere('l.name REGEXP ?', array($term))
+			->orderBy('l.name ASC')
+			->limit(20)
+			->execute();
+
+		$items = array();
+		foreach ($bruteItems as $key => $bruteItem){
+			$items[$key]['value'] = $bruteItem->getId();
+			$items[$key]['label'] = $bruteItem->getName();
+		}
+
+		return $items;
+	}
         
 }

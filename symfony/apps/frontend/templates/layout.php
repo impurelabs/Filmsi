@@ -60,10 +60,11 @@
         	<a href="http://www.filmsi.ro" class="header-logo"></a>
 
             <div class="mainsearch-container">
-	            <input type="text" class="searchmain-field" />
-                <button class="searchmain-button" /></button>
-                <a href="" class="spacer-left-l">Program cinema &raquo;</a>
+	            <?php include_partial('default/search', array('searchId' => '1'));?>
             </div> <!-- mainsearch-container end -->
+			<div style="margin-top: 15px">
+				<a href="" class="spacer-left-l">Program cinema &raquo;</a>
+			</div>
 
 			<div class="clear"></div>
 

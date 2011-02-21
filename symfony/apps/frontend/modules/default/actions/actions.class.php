@@ -32,4 +32,25 @@ class defaultActions extends sfActions
 
         return $this->renderText(json_encode(array('status' => true)));
     }
+
+	public function executeSearch(sfWebRequest $request)
+	{
+		$this->setLayout(false);
+		$this->getResponse()->setContentType('application/json');
+
+		return $this->renderText(json_encode(Doctrine_Core::getTable('Library')->getForSearch($request->getParameter('term'))));
+	}
+
+	public function executeSearchResults(sfWebRequest $request)
+	{
+		$item = LibraryTable::getInstance()->findOneById($request->getParameter('lid'));
+
+		if ($item->getType() == 'Person'){
+			$this->person = PersonTable::getInstance()->findOneByLibraryId($item->getId());
+			$this->redirect('@person?id=' . $this->person->getId() . '&key=' . $this->person->getUrlKey());
+		} elseif ($item->getType() == 'Film'){
+			$this->film = FilmTable::getInstance()->findOneByLibraryId($item->getId());
+			$this->redirect('@film?id=' . $this->film->getId() . '&key=' . $this->film->getUrlKey());
+		}
+	}
 }

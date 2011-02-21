@@ -574,4 +574,210 @@ class filmsActions extends sfActions
 		}
 
 	}
+
+	public function executeSoonOnDvd(sfWebRequest $request)
+	{
+		$this->selectedGenres = $request->getParameter('genres', array());
+		$this->selectedRatings = $request->getParameter('ratings', array());
+		$this->selectedAwards = $request->getParameter('awards', array());
+		if (in_array($request->getParameter('format'), array('dvd', 'bluray'))){
+			if ($request->getParameter('format') == 'dvd'){
+				$this->selectedFormatDvd = true;
+			} elseif ($request->getParameter('format') == 'bluray') {
+				$this->selectedFormatBluray = true;
+			}
+		} else {
+			$this->selectedFormatDvd = true;
+			$this->selectedFormatBluray = true;
+		}
+
+		/* Put here, as parameters the ids of the festivals you want to show up in the filterlist */
+		$this->awards = FestivalTable::getInstance()->getByIds(array(1, 2, 3, 4, 5, 6));
+		$this->genres = GenreTable::getInstance()->getAllOrdered();
+		$this->ratings = sfConfig::get('app_rating_types');
+
+		$selectedRatingNames = array();
+		foreach ($this->selectedRatings as $ratingId){
+			$selectedRatingNames[] = $this->ratings[$ratingId];
+		}
+
+		$this->currentPage = (int)$request->getParameter('p', 1);
+		$this->films = FilmTable::getInstance()->getOnDvdAndBluraySoon(sfConfig::get('app_film_in_cinema_page_limit'), $this->currentPage, $this->selectedGenres, $selectedRatingNames, $this->selectedAwards, $this->selectedFormatDvd, $this->selectedFormatBluray);
+
+		$this->filmCount = FilmTable::getInstance()->getOnDvdAndBluraySoonCount($this->selectedGenres, $selectedRatingNames, $this->selectedAwards, $this->selectedFormatDvd, $this->selectedFormatBluray);
+		
+		$this->pageCount = ceil($this->filmCount / sfConfig::get('app_film_in_cinema_page_limit'));
+		$this->firstFilmCount = sfConfig::get('app_film_in_cinema_page_limit') * ($this->currentPage - 1) + 1;
+		$this->lastFilmCount = $this->firstFilmCount + count($this->films) - 1;
+		if ($this->pageCount <= 5) {
+				$this->navStart = 1;
+				$this->navEnd = $this->pageCount;
+		} else {
+				$this->navStart = $this->currentPage - 2;
+				$this->navEnd = $this->currentPage - 2;
+
+				if ($this->navStart <= 0){
+						$this->navStart = 1;
+						$this->navEnd = 5;
+				}
+
+				if ($this->navEnd >= $this->pageCount){
+						$this->navStart = $this->pageCount - 4;
+						$this->navEnd = $this->pageCount;
+				}
+		}
+
+		$filmIds = array();
+		foreach($this->films as $film){
+			$filmIds[] = $film['id'];
+		}
+		$this->stires = StireTable::getInstance()->getRelatedByFilm($filmIds, 3);
+
+
+
+
+		$this->parameterQuery = '';
+		$isFirst = true;
+		if ($request->hasParameter('genres')){
+			foreach ($request->getParameter('genres') as $key => $genre){
+				if ($isFirst){
+					$this->parameterQuery .= 'genres[]=' . $genre;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&genres[]=' . $genre;
+				}
+			}
+		}
+		if ($request->hasParameter('ratings')){
+			foreach ($request->getParameter('ratings') as $key => $rating){
+				if ($isFirst){
+					$this->parameterQuery .= 'ratings[]=' . $rating;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&ratings[]=' . $rating;
+				}
+			}
+		}
+		if ($request->hasParameter('awards')){
+			foreach ($request->getParameter('awards') as $key => $location){
+				if ($isFirst){
+					$this->parameterQuery .= 'awards[]=' . $location;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&awards[]=' . $location;
+				}
+			}
+		}
+		if (in_array($request->getParameter('format'), array('dvd', 'bluray'))){
+			if ($isFirst){
+				$this->parameterQuery .= 'format=' . $request->getParameter('format');
+				$isFirst = false;
+			} else {
+				$this->parameterQuery .= '&format=' . $request->getParameter('format');
+			}
+		}
+	}
+
+	public function executeNowOnDvd(sfWebRequest $request)
+	{
+		$this->selectedGenres = $request->getParameter('genres', array());
+		$this->selectedRatings = $request->getParameter('ratings', array());
+		$this->selectedAwards = $request->getParameter('awards', array());
+		if (in_array($request->getParameter('format'), array('dvd', 'bluray'))){
+			if ($request->getParameter('format') == 'dvd'){
+				$this->selectedFormatDvd = true;
+			} elseif ($request->getParameter('format') == 'bluray') {
+				$this->selectedFormatBluray = true;
+			}
+		} else {
+			$this->selectedFormatDvd = true;
+			$this->selectedFormatBluray = true;
+		}
+
+		/* Put here, as parameters the ids of the festivals you want to show up in the filterlist */
+		$this->awards = FestivalTable::getInstance()->getByIds(array(1, 2, 3, 4, 5, 6));
+		$this->genres = GenreTable::getInstance()->getAllOrdered();
+		$this->ratings = sfConfig::get('app_rating_types');
+
+		$selectedRatingNames = array();
+		foreach ($this->selectedRatings as $ratingId){
+			$selectedRatingNames[] = $this->ratings[$ratingId];
+		}
+
+		$this->currentPage = (int)$request->getParameter('p', 1);
+		$this->films = FilmTable::getInstance()->getOnDvdAndBlurayNow(sfConfig::get('app_film_in_cinema_page_limit'), $this->currentPage, $this->selectedGenres, $selectedRatingNames, $this->selectedAwards, $this->selectedFormatDvd, $this->selectedFormatBluray);
+
+		$this->filmCount = FilmTable::getInstance()->getOnDvdAndBlurayNowCount($this->selectedGenres, $selectedRatingNames, $this->selectedAwards, $this->selectedFormatDvd, $this->selectedFormatBluray);
+
+		$this->pageCount = ceil($this->filmCount / sfConfig::get('app_film_in_cinema_page_limit'));
+		$this->firstFilmCount = sfConfig::get('app_film_in_cinema_page_limit') * ($this->currentPage - 1) + 1;
+		$this->lastFilmCount = $this->firstFilmCount + count($this->films) - 1;
+		if ($this->pageCount <= 5) {
+				$this->navStart = 1;
+				$this->navEnd = $this->pageCount;
+		} else {
+				$this->navStart = $this->currentPage - 2;
+				$this->navEnd = $this->currentPage - 2;
+
+				if ($this->navStart <= 0){
+						$this->navStart = 1;
+						$this->navEnd = 5;
+				}
+
+				if ($this->navEnd >= $this->pageCount){
+						$this->navStart = $this->pageCount - 4;
+						$this->navEnd = $this->pageCount;
+				}
+		}
+
+		$filmIds = array();
+		foreach($this->films as $film){
+			$filmIds[] = $film['id'];
+		}
+		$this->stires = StireTable::getInstance()->getRelatedByFilm($filmIds, 3);
+
+
+
+
+		$this->parameterQuery = '';
+		$isFirst = true;
+		if ($request->hasParameter('genres')){
+			foreach ($request->getParameter('genres') as $key => $genre){
+				if ($isFirst){
+					$this->parameterQuery .= 'genres[]=' . $genre;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&genres[]=' . $genre;
+				}
+			}
+		}
+		if ($request->hasParameter('ratings')){
+			foreach ($request->getParameter('ratings') as $key => $rating){
+				if ($isFirst){
+					$this->parameterQuery .= 'ratings[]=' . $rating;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&ratings[]=' . $rating;
+				}
+			}
+		}
+		if ($request->hasParameter('awards')){
+			foreach ($request->getParameter('awards') as $key => $location){
+				if ($isFirst){
+					$this->parameterQuery .= 'awards[]=' . $location;
+					$isFirst = false;
+				} else {
+					$this->parameterQuery .= '&awards[]=' . $location;
+				}
+			}
+		}
+		if (in_array($request->getParameter('format'), array('dvd', 'bluray'))){
+			if ($isFirst){
+				$this->parameterQuery .= 'format=' . $request->getParameter('format');
+				$isFirst = false;
+			} else {
+				$this->parameterQuery .= '&format=' . $request->getParameter('format');
+			}
+		}
+	}
 }

@@ -39,7 +39,7 @@
             <div class="menu">
   	            <span><a href="" class="menu-link-active">Home</a></span>
                 <span><a href="<?php echo url_for('@film_now_in_cinema');?>" class="menu-link separated">In cinema</a></span>
-                <span><a href="" class="menu-link">Pe DVD &amp; Bluray</a></span>
+                <span><a href="<?php echo url_for('@film_now_on_dvd');?>" class="menu-link">Pe DVD &amp; Bluray</a></span>
                 <span><a href="" class="menu-link">La TV</a></span>
                 <span><a href="<?php echo url_for('@stires');?>" class="menu-link">Stiri</a></span>
                 <span><a href="<?php echo url_for('@trailers');?>" class="menu-link">Trailere</a></span>

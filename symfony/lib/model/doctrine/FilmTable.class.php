@@ -277,7 +277,7 @@ class FilmTable extends Doctrine_Table
 		}
 
 		if (isset($page)){
-			$q->offset($page - 1);
+			$q->offset(($page - 1) * $limit );
 		}
 
 		if (count($locations) > 0){
@@ -340,7 +340,7 @@ class FilmTable extends Doctrine_Table
 		}
 
 		if (isset($page)){
-			$q->offset($page - 1);
+			$q->offset(($page - 1) * $limit );
 		}
 
 		if (count($ratings) > 0){
@@ -362,6 +362,262 @@ class FilmTable extends Doctrine_Table
 			->select('count(DISTINCT f.id)')
 			->from('Film f')
 			->where('f.state = 1 AND f.status_cinema = 1 AND f.status_cinema_day = 0');
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		$count =  $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $count['count'];
+	}
+
+	public function getOnDvdAndBlurayNow($limit = null, $page = null, $genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)
+	{
+		$qStringForDvd = <<<text
+	f.status_dvd = 1 AND 
+	f.status_dvd_year IS NOT NULL AND f.status_dvd_year != 0 AND
+	f.status_dvd_month IS NOT NULL AND f.status_dvd_month != 0 AND
+	f.status_dvd_day IS NOT NULL AND f.status_dvd_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_dvd_year, '-', f.status_dvd_month, '-', f.status_dvd_day),'%Y-%m-%d') <= NOW()
+text;
+		$qStringForBluray = <<<text
+	f.status_bluray = 1 AND 
+	f.status_bluray_year IS NOT NULL AND f.status_bluray_year != 0 AND
+	f.status_bluray_month IS NOT NULL AND f.status_bluray_month != 0 AND
+	f.status_bluray_day IS NOT NULL AND f.status_bluray_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_bluray_year, '-', f.status_bluray_month, '-', f.status_bluray_day),'%Y-%m-%d') <= NOW()
+text;
+		if ($onDvd and $onBluray){
+			$qString = '(' . $qStringForDvd . ') OR (' . $qStringForBluray . ')';
+		} elseif ($onDvd) {
+			$qString = $qStringForDvd;
+		}  elseif ($onBluray) {
+			$qString = $qStringForBluray;
+		}
+
+		$q = Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
+			->from('Film f')
+			->where('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
+			->andWhere($qString)
+			->orderBy('f.visit_count DESC');
+
+		if (isset($limit)){
+			$q->limit($limit);
+		}
+
+		if (isset($page)){
+			$q->offset(($page - 1) * $limit );
+		}
+
+		if (count($awards) > 0){
+			/* Get all the imdbcodes for all the film partiipants for the selectted festivals */
+			$participantImdbCodes = FestivalTable::getInstance()->getWinnerFilmCodesByFestivals($awards);
+			if (count($participantImdbCodes) > 0){
+				$q->andWhereIn('f.imdb', $participantImdbCodes);
+			}
+		}
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+	}
+
+	public function getOnDvdAndBlurayNowCount($genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)
+	{
+		$qStringForDvd = <<<text
+	f.status_dvd = 1 AND 
+	f.status_dvd_year IS NOT NULL AND f.status_dvd_year != 0 AND
+	f.status_dvd_month IS NOT NULL AND f.status_dvd_month != 0 AND
+	f.status_dvd_day IS NOT NULL AND f.status_dvd_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_dvd_year, '-', f.status_dvd_month, '-', f.status_dvd_day),'%Y-%m-%d') <= NOW()
+text;
+		$qStringForBluray = <<<text
+	f.status_bluray = 1 AND 
+	f.status_bluray_year IS NOT NULL AND f.status_bluray_year != 0 AND
+	f.status_bluray_month IS NOT NULL AND f.status_bluray_month != 0 AND
+	f.status_bluray_day IS NOT NULL AND f.status_bluray_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_bluray_year, '-', f.status_bluray_month, '-', f.status_bluray_day),'%Y-%m-%d') <= NOW()
+text;
+		if ($onDvd and $onBluray){
+			$qString = '(' . $qStringForDvd . ') OR (' . $qStringForBluray . ')';
+		} elseif ($onDvd) {
+			$qString = $qStringForDvd;
+		}  elseif ($onBluray) {
+			$qString = $qStringForBluray;
+		}
+
+		$q = Doctrine_Query::create()
+			->select('count(DISTINCT f.id)')
+			->from('Film f')
+			->where('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
+			->andWhere($qString);
+
+		if (count($awards) > 0){
+			/* Get all the imdbcodes for all the film partiipants for the selectted festivals */
+			$participantImdbCodes = FestivalTable::getInstance()->getWinnerFilmCodesByFestivals($awards);
+			if (count($participantImdbCodes) > 0){
+				$q->andWhereIn('f.imdb', $participantImdbCodes);
+			}
+		}
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		$count =  $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		return $count['count'];
+	}
+
+	public function getOnDvdAndBluraySoon($limit = null, $page = null, $genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)
+	{
+		$qStringForDvd = <<<text
+(
+	f.status_dvd = 1 AND
+	f.status_dvd_year IS NOT NULL AND f.status_dvd_year != 0 AND
+	f.status_dvd_month IS NOT NULL AND f.status_dvd_month != 0 AND
+	f.status_dvd_day IS NOT NULL AND f.status_dvd_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_dvd_year, '-', f.status_dvd_month, '-', f.status_dvd_day),'%Y-%m-%d') > NOW()
+) OR (
+	f.status_dvd = 1 AND 
+	f.status_dvd_year IS NOT NULL AND f.status_dvd_year != 0 AND
+	f.status_dvd_month IS NOT NULL AND f.status_dvd_month != 0 AND
+	(f.status_dvd_day IS NULL OR f.status_dvd_day = 0) AND
+	STR_TO_DATE(CONCAT(f.status_dvd_year, '-', f.status_dvd_month, '-01'),'%Y-%m') > NOW()
+)
+text;
+		$qStringForBluray = <<<text
+(
+	f.status_bluray = 1 AND 
+	f.status_bluray_year IS NOT NULL AND f.status_bluray_year != 0 AND
+	f.status_bluray_month IS NOT NULL AND f.status_bluray_month != 0 AND
+	f.status_bluray_day IS NOT NULL AND f.status_bluray_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_bluray_year, '-', f.status_bluray_month, '-', f.status_bluray_day),'%Y-%m-%d') > NOW()
+) OR (
+	f.status_bluray = 1 AND 
+	f.status_bluray_year IS NOT NULL AND f.status_bluray_year != 0 AND
+	f.status_bluray_month IS NOT NULL AND f.status_bluray_month != 0 AND
+	(f.status_bluray_day IS NULL OR f.status_bluray_day = 0) AND
+	STR_TO_DATE(CONCAT(f.status_bluray_year, '-', f.status_bluray_month, '-01'),'%Y-%m') > NOW()
+)
+text;
+		if ($onDvd and $onBluray){
+			$qString = '(' . $qStringForDvd . ') OR (' . $qStringForBluray . ')';
+		} elseif ($onDvd) {
+			$qString = $qStringForDvd;
+		}  elseif ($onBluray) {
+			$qString = $qStringForBluray;
+		}
+
+		$q = Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
+			->from('Film f')
+			->where('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
+			->andWhere($qString)
+			->orderBy('f.visit_count DESC');
+
+		if (isset($limit)){
+			$q->limit($limit);
+		}
+
+		if (isset($page)){
+			$q->offset(($page - 1) * $limit );
+		}
+
+		if (count($awards) > 0){
+			/* Get all the imdbcodes for all the film partiipants for the selectted festivals */
+			$participantImdbCodes = FestivalTable::getInstance()->getWinnerFilmCodesByFestivals($awards);
+			if (count($participantImdbCodes) > 0){
+				$q->andWhereIn('f.imdb', $participantImdbCodes);
+			}
+		}
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+	}
+
+	public function getOnDvdAndBluraySoonCount($genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)
+	{
+		$qStringForDvd = <<<text
+(
+	f.status_dvd = 1 AND 
+	f.status_dvd_year IS NOT NULL AND f.status_dvd_year != 0 AND
+	f.status_dvd_month IS NOT NULL AND f.status_dvd_month != 0 AND
+	f.status_dvd_day IS NOT NULL AND f.status_dvd_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_dvd_year, '-', f.status_dvd_month, '-', f.status_dvd_day),'%Y-%m-%d') > NOW()
+) OR (
+	f.status_dvd = 1 AND f.status_dvd_year IS NOT NULL AND
+	f.status_dvd_year IS NOT NULL AND f.status_dvd_year != 0 AND
+	f.status_dvd_month IS NOT NULL AND f.status_dvd_month != 0 AND
+	(f.status_dvd_day IS NULL OR f.status_dvd_day = 0) AND
+	STR_TO_DATE(CONCAT(f.status_dvd_year, '-', f.status_dvd_month, '-01'),'%Y-%m') > NOW()
+)
+text;
+		$qStringForBluray = <<<text
+(
+	f.status_bluray = 1 AND 
+	f.status_bluray_year IS NOT NULL AND f.status_bluray_year != 0 AND
+	f.status_bluray_month IS NOT NULL AND f.status_bluray_month != 0 AND
+	f.status_bluray_day IS NOT NULL AND f.status_bluray_day != 0 AND
+	STR_TO_DATE(CONCAT(f.status_bluray_year, '-', f.status_bluray_month, '-', f.status_bluray_day),'%Y-%m-%d') > NOW()
+) OR (
+	f.status_bluray = 1 AND 
+	f.status_bluray_year IS NOT NULL AND f.status_bluray_year != 0 AND
+	f.status_bluray_month IS NOT NULL AND f.status_bluray_month != 0 AND
+	(f.status_bluray_day IS NULL OR f.status_bluray_day = 0) AND
+	STR_TO_DATE(CONCAT(f.status_bluray_year, '-', f.status_bluray_month, '-01'),'%Y-%m') > NOW()
+)
+text;
+		if ($onDvd and $onBluray){
+			$qString = '(' . $qStringForDvd . ') OR (' . $qStringForBluray . ')';
+		} elseif ($onDvd) {
+			$qString = $qStringForDvd;
+		}  elseif ($onBluray) {
+			$qString = $qStringForBluray;
+		}
+
+		$q = Doctrine_Query::create()
+			->select('count(DISTINCT f.id)')
+			->from('Film f')
+			->where('f.state = 1 AND f.publish_date IS NOT NULL AND f.publish_date <= NOW()')
+			->andWhere($qString);
+
+		if (count($awards) > 0){
+			/* Get all the imdbcodes for all the film partiipants for the selectted festivals */
+			$participantImdbCodes = FestivalTable::getInstance()->getWinnerFilmCodesByFestivals($awards);
+			if (count($participantImdbCodes) > 0){
+				$q->andWhereIn('f.imdb', $participantImdbCodes);
+			}
+		}
 
 		if (count($ratings) > 0){
 			$q->andWhereIn('f.rating', $ratings);

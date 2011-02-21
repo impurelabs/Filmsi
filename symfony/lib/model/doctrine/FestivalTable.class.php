@@ -14,9 +14,38 @@ class FestivalTable extends Doctrine_Table
 
 	public function getAllOrdered()
 	{
-		return Doctrine_Query::create()	
+		return Doctrine_Query::create()
 			->from('Festival f')
 			->orderBy('f.name ASC')
 			->execute();
+	}
+
+	public function getByIds($ids = array())
+	{
+		return Doctrine_Query::create()
+			->from('Festival f')
+			->orderBy('f.name ASC')
+			->whereIn('f.id', $ids)
+			->execute();
+	}
+
+	public function getWinnerFilmCodesByFestivals($festivalIds)
+	{
+		$participants = Doctrine_Query::create()
+			->select('f.id, e.id, s.id, p.film_imdb')
+			->from('Festival f')
+			->innerJoin('f.FestivalEdition e')
+			->innerJoin('e.FestivalSections s')
+			->innerJoin('s.FestivalSectionParticipant p')
+			->whereIn('f.id', $festivalIds)
+			->andWhere('p.is_winner = 1 AND p.film_imdb IS NOT NULL')
+			->execute(array(), Doctrine_Core::HYDRATE_SCALAR);
+
+		$participantCodes = array();
+		foreach ($participants as $participant){
+			$participantCodes[] = $participant['p_film_imdb'];
+		}
+
+		return $participantCodes;
 	}
 }

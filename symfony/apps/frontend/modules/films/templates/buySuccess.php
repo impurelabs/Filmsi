@@ -52,8 +52,8 @@
 		<?php endif;?>
 
 		<?php if (count($shops['bluray']) > 0):?>
-			<h6 class="mb-2">Pe DVD</h6>
-			<?php foreach ($shops['dvd'] as $shop):?>
+			<h6 class="mb-2">Pe Bluray</h6>
+			<?php foreach ($shops['bluray'] as $shop):?>
 				<div class="left spacer-bottom-m align-center ml-2 mr-2" style="width: 100px">
 					<div style="display: table-cell; height: 100px; width: 100px; vertical-align: middle">
 						<a href="<?php echo $shop['film_url'];?>" target="_blank"><img src="<?php echo filmsiShopPhotoThumb($shop['filename']);?>"  /></a>
@@ -65,7 +65,7 @@
 		<?php endif;?>
 
 		<?php if (count($shops['online']) > 0):?>
-			<h6 class="mb-2">Pe DVD</h6>
+			<h6 class="mb-2">Online</h6>
 			<?php foreach ($shops['online'] as $shop):?>
 				<div class="left spacer-bottom-m align-center ml-2 mr-2" style="width: 100px">
 					<div style="display: table-cell; height: 100px; width: 100px; vertical-align: middle">

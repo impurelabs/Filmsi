@@ -261,6 +261,14 @@ film_day_in_cinema:
   url: /filme-in-cinema-in-data-de/:day
   param: { module: films, action: dayInCinema }
 
+film_now_on_dvd:
+  url: /filme-acum-pe-dvd-si-bluray
+  param: { module: films, action: nowOnDvd }
+
+film_soon_on_dvd:
+  url: /filme-in-curand-pe-dvd-si-bluray
+  param: { module: films, action: soonOnDvd }
+
 
 
 

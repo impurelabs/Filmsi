@@ -558,7 +558,7 @@ class LibraryTable extends Doctrine_Table
 			->from('Library l')
 			->where('l.state = 1 and ( type = "Person" or type = "Film" )')
 			->andWhere('l.name REGEXP ?', array($term))
-			->orderBy('l.name ASC')
+			->orderBy('l.visit_count desc')
 			->limit(20)
 			->execute();
 

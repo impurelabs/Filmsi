@@ -36,6 +36,9 @@
             <?php if ($sf_user->hasCredential('Status')):?>
             <a href="<?php echo url_for('@default_index?module=filmStatus');?>" <?php if ($sf_params->get('module') == 'filmStatus') echo 'class="selected"';?>>Status Filme</a> |
             <?php endif; ?>
+            <?php if ($sf_user->hasCredential('Tv')):?>
+            <a href="<?php echo url_for('@default_index?module=channels');?>" <?php if ($sf_params->get('module') == 'channels') echo 'class="selected"';?>>Program Tv</a> |
+            <?php endif; ?>
             <?php if ($sf_user->isSuperAdmin()):?>
             <a href="<?php echo url_for('@default_index?module=users');?>" <?php if ($sf_params->get('module') == 'users') echo 'class="selected"';?>>Useri</a> |
             <?php endif;?>

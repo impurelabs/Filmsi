@@ -281,3 +281,18 @@ function filmsiDayOfWeek($dayNo){
 		case '7': return 'D'; break;
 	}
 }
+
+function filmsiChannelPhoto($sourceimage)
+{
+	return sfConfig::get('app_channel_path_for_web') . '/' . $sourceimage;
+}
+
+function filmsiChannelPhotoThumb($sourceimage)
+{
+  return sfConfig::get('app_channel_path_for_web') . '/t-' . $sourceimage;
+}
+
+function filmsiChannelPhotoThumbS($sourceimage)
+{
+  return sfConfig::get('app_channel_path_for_web') . '/ts-' . $sourceimage;
+}

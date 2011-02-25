@@ -119,4 +119,16 @@ all:
   feedback:
     email: "feedback@filmsi.ro"
 
+  channel:
+    path: %SF_WEB_DIR%/content/cinemas
+    path_for_web: /content/cinemas
+    nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
+    maxfilesize: 5000000
+    sourceimage_width: 465
+    sourceimage_height: null
+    thumbnail_width: 75
+    thumbnail_height: null
+    thumbnail_small_width: 75
+    thumbnail_small_height: null
+
   

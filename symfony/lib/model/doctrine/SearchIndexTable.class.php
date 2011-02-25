@@ -312,17 +312,6 @@ class SearchIndexTable extends Doctrine_Table
 			return 'Person:' . $q['id'];
 		}
 
-		/* Search cinemas */
-		$q = Doctrine_Query::create()
-			->select('c.id')
-			->from('Cinema c')
-			->where('video_album_id = ?', $albumId)
-			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
-
-		if (false !== $q) {
-			return 'Cinema:' . $q['id'];
-		}
-
 		/* Search festival editions */
 		$q = Doctrine_Query::create()
 			->select('fe.id')

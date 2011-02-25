@@ -269,6 +269,10 @@ film_soon_on_dvd:
   url: /filme-in-curand-pe-dvd-si-bluray
   param: { module: films, action: soonOnDvd }
 
+film_on_tv:
+  url: /filme-la-tv
+  param: { module: films, action: onTv }
+
 
 
 

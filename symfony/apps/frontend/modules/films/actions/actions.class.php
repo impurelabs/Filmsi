@@ -780,4 +780,9 @@ class filmsActions extends sfActions
 			}
 		}
 	}
+
+	public function executeOnTv(sfWebRequest $request)
+	{
+
+	}
 }

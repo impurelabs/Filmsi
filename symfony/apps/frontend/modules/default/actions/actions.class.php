@@ -43,11 +43,16 @@ class defaultActions extends sfActions
 
 	public function executeSearchResults(sfWebRequest $request)
 	{
-		$this->films = SearchIndexTable::getInstance()->searchFilms($request->getParameter('q'), 5);
-		$this->persons = SearchIndexTable::getInstance()->searchPersons($request->getParameter('q'), 5);
-		$this->articles = SearchIndexTable::getInstance()->searchArticles($request->getParameter('q'), 5);
-		$this->stires = SearchIndexTable::getInstance()->searchStires($request->getParameter('q'), 5);
-		$this->photos = SearchIndexTable::getInstance()->searchPhotos($request->getParameter('q'), 4);
-		$this->videos = SearchIndexTable::getInstance()->searchVideos($request->getParameter('q'), 4);
+		$term = $request->getParameter('q');
+		$pattern = '/\b[^\b]{1,2}\b/';
+		$replacement = ' ';
+		$term = str_replace(' ', ' +', rtrim(str_replace('  ', ' ', preg_replace($pattern, $replacement, ' ' . $term . ' '))));
+
+		$this->films = SearchIndexTable::getInstance()->searchFilms($term, 5);
+		$this->persons = SearchIndexTable::getInstance()->searchPersons($term, 5);
+		$this->articles = SearchIndexTable::getInstance()->searchArticles($term, 5);
+		$this->stires = SearchIndexTable::getInstance()->searchStires($term, 5);
+		$this->photos = SearchIndexTable::getInstance()->searchPhotos($term, 4);
+		$this->videos = SearchIndexTable::getInstance()->searchVideos($term, 4);
 	}
 }

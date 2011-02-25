@@ -50,7 +50,7 @@ class SearchIndexTable extends Doctrine_Table
 
 			foreach ($q as $film){
 				$index = new SearchIndex();
-				$index->setContent($film['name_en'] . ' ' . $film['name_ro'] . ' ' . $film['meta_keywords'] . ' ' . strip_tags($film['description_content']));
+				$index->setContent($film['name_en'] . ' ' . $film['name_ro'] . ' ' . $film['meta_keywords']);
 				$index->setModel('Film');
 				$index->setModelId($film['id']);
 				$index->save();
@@ -81,7 +81,7 @@ class SearchIndexTable extends Doctrine_Table
 
 			foreach ($q as $person){
 				$index = new SearchIndex();
-				$index->setContent($person['first_name'] . ' ' . $person['last_name'] . ' ' . $person['meta_keywords'] . ' ' . strip_tags($person['biography_content']));
+				$index->setContent($person['first_name'] . ' ' . $person['last_name'] . ' ' . $person['meta_keywords']);
 				$index->setModel('Person');
 				$index->setModelId($person['id']);
 				$index->save();
@@ -110,7 +110,7 @@ class SearchIndexTable extends Doctrine_Table
 
 			foreach ($q as $article){
 				$index = new SearchIndex();
-				$index->setContent($article['name'] . ' ' . strip_tags($article['content_content']) . ' ' . $article['meta_keywords']);
+				$index->setContent($article['name'] . ' ' . $article['meta_keywords']);
 				$index->setModel('Article');
 				$index->setModelId($article['id']);
 				$index->save();
@@ -139,7 +139,7 @@ class SearchIndexTable extends Doctrine_Table
 
 			foreach ($q as $stire){
 				$index = new SearchIndex();
-				$index->setContent($stire['name'] . ' ' . strip_tags($stire['content_content']) . ' ' . $stire['meta_keywords']);
+				$index->setContent($stire['name'] . ' ' . $stire['meta_keywords']);
 				$index->setModel('Stire');
 				$index->setModelId($stire['id']);
 				$index->save();

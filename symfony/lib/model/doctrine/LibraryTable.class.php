@@ -570,5 +570,26 @@ class LibraryTable extends Doctrine_Table
 
 		return $items;
 	}
+
+	public function searchByType($term, $type, $limit)
+	{
+		$items = Doctrine_Query::create()
+			->select('l.id')
+			->from('Library l')
+			->where('MATCH(l.name) AGAINST(?)', $term)
+			->andWhere('l.type = ?', $type)
+			->limit($limit)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$itemIds = array();
+		foreach($items as $item){
+			$itemIds[] = $item['id'];
+		}
+
+		return Doctrine_Query::create()
+			->from($type)
+			->whereIn('t.id', $itemIds)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
         
 }

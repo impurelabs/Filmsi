@@ -64,7 +64,7 @@ class articlesActions extends sfActions
   
 	public function executeView(sfWebRequest $request)
   {
-  	$this->article = Doctrine_Core::getTable('Article')->findOneByLibraryId($request->getParameter('lid'));
+  	$this->forward404If(false == $this->article = Doctrine_Core::getTable('Article')->findOneByLibraryId($request->getParameter('lid')));
   }
 
 }

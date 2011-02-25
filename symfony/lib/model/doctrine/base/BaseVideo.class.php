@@ -76,5 +76,9 @@ abstract class BaseVideo extends sfDoctrineRecord
              ),
              ));
         $this->actAs($sortable0);
+
+		$timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

@@ -43,14 +43,11 @@ class defaultActions extends sfActions
 
 	public function executeSearchResults(sfWebRequest $request)
 	{
-		$item = LibraryTable::getInstance()->findOneById($request->getParameter('lid'));
-
-		if ($item->getType() == 'Person'){
-			$this->person = PersonTable::getInstance()->findOneByLibraryId($item->getId());
-			$this->redirect('@person?id=' . $this->person->getId() . '&key=' . $this->person->getUrlKey());
-		} elseif ($item->getType() == 'Film'){
-			$this->film = FilmTable::getInstance()->findOneByLibraryId($item->getId());
-			$this->redirect('@film?id=' . $this->film->getId() . '&key=' . $this->film->getUrlKey());
-		}
+		$this->films = SearchIndexTable::getInstance()->searchFilms($request->getParameter('q'), 5);
+		$this->persons = SearchIndexTable::getInstance()->searchPersons($request->getParameter('q'), 5);
+		$this->articles = SearchIndexTable::getInstance()->searchArticles($request->getParameter('q'), 5);
+		$this->stires = SearchIndexTable::getInstance()->searchStires($request->getParameter('q'), 5);
+		$this->photos = SearchIndexTable::getInstance()->searchPhotos($request->getParameter('q'), 4);
+		$this->videos = SearchIndexTable::getInstance()->searchVideos($request->getParameter('q'), 4);
 	}
 }

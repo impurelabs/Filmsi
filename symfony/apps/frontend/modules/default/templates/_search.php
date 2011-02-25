@@ -1,6 +1,5 @@
 <form method="get" id="search-form-<?php echo $searchId;?>" action="<?php echo url_for('@default?module=default&action=searchResults');?>">
-<input type="text" class="searchmain-field" id="search-field-<?php echo $searchId;?>" />
-<input type="hidden" id="search-hidden-<?php echo $searchId;?>" name="lid" />
+<input type="text" class="searchmain-field" id="search-field-<?php echo $searchId;?>" name="q" />
 <button class="searchmain-button" type="submit"></button>
 </form>
 
@@ -21,16 +20,12 @@ $(document).ready(function(){
 	        })
 	      },
 		  focus: function(event, ui){
-			  return false;
+			$("#search-field-<?php echo $searchId;?>").attr('value', ui.item.label);
+			return false;
 		  },
 		  select: function(event, ui){
 			  $("#search-field-<?php echo $searchId;?>").attr('value', ui.item.label);
-			  $("#search-hidden-<?php echo $searchId;?>").attr('value', ui.item.value);
-			  $('#search-form-<?php echo $searchId;?>').submit();
 				return false;
-		  },
-		  close: function(event, ui){
-			  
 		  },
 	      minLength: 2
 	    });

@@ -438,5 +438,9 @@ abstract class BaseFilm extends sfDoctrineRecord
              'has_video' => true,
              ));
         $this->actAs($inlibrary0);
+
+		$timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

@@ -49,6 +49,9 @@ h6 { font-family: Arial, "Times New Roman", Times, serif; font-size: 14px; font-
 .hugegreen {font-family: Arial, "Times New Roman", Times, serif; font-size: 30px; font-style: normal; font-weight: bold; text-decoration: none; color: #51b15c }
 .hugewhite {font-family: Arial, "Times New Roman", Times, serif; font-size: 25px; font-style: normal; font-weight: bold; text-decoration: none; color: #ffffff}
 
+.green { color: #51b15c !important}
+.orange { color: #e3a345 !important }
+
 em { font-style:italic }
 strong, .strong { font-weight:bold }
 
@@ -105,6 +108,10 @@ a.white-link:link, a.white-link:active, a.white-link:visited, a.white-link:hover
 	font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-style: normal; font-weight: normal; text-decoration: none; color: #ffffff }
 a.white-link:hover{
 	font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-style: normal; font-weight: normal; text-decoration: underline; color: #ffffff }
+a.green:link, a.green:active, a.green:visited, a.green:hover{
+	color: #51b15c }
+a.orange:link, a.orange:active, a.orange:visited, a.orange:hover{
+	color: #51b15c }
 a.smallwhite-link:link, a.smallwhite-link:active, a.smallwhite-link:visited, a.smallwhite-link:hover{
 	font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-style: normal; font-weight: normal; text-decoration: none; color: #ffffff }
 a.smallwhite-link:hover{
@@ -366,9 +373,9 @@ tfoot {font-style:italic;}
 
 
 .pagenav-back { display: inline-block; width: 26px; height: 26px; background-image:url('../images/elements.png'); background-position: -92px -612px; vertical-align:middle; margin-right: 10px; }
-.pagenav-back:hover { display: inline-block; width: 26px; height: 26px; background-image:url('../images/elements.png'); background-position: -124px -612px; vertical-align:middle; margin-right: 10px; }
+.pagenav-back:hover { display: inline-block; width: 26px; height: 26px; background-image:url('../images/elements.png'); background-position: -124px -612px; vertical-align:middle; }
 .pagenav-forward { display: inline-block; width: 26px; height: 26px; background-image:url('../images/elements.png'); background-position: -158px -612px; vertical-align:middle; margin-left: 10px; }
-.pagenav-forward:hover { display: inline-block; width: 26px; height: 26px; background-image:url('../images/elements.png'); background-position: -191px -612px; vertical-align:middle; margin-left: 10px; }
+.pagenav-forward:hover { display: inline-block; width: 26px; height: 26px; background-image:url('../images/elements.png'); background-position: -191px -612px; vertical-align:middle; }
 .pagenav-white { display: inline-block; width: 26px; height: 21px; padding-top: 5px; vertical-align:middle; text-align:center; font-weight:bold !important; color: #ffffff }
 .pagenav { display: inline-block; width: 26px; height: 21px; padding-top: 5px; vertical-align:middle; text-align:center; font-weight:bold !important }
 .pagenav-active { display: inline-block; width: 26px; height: 21px; padding-top: 5px; background-image:url('../images/elements.png'); background-position: -58px -612px; vertical-align:middle; text-align:center; color: #ffffff !important; font-weight: bold !important; }
@@ -401,6 +408,12 @@ ul.letterpicker li:hover, ul.letterpicker li.active  { color: #ffffff; backgroun
 ul.letterpicker li:hover a, ul.letterpicker li.active a  { color: #ffffff; background-color: #2b7b35 }
 span.letterpicker-cioc { display:none; position: absolute; bottom: 0px; left:5px; width:9px; height:7px; background-image:url('../images/elements.png'); background-position: 0px -647px }
 ul.letterpicker li:hover span.letterpicker-cioc, ul.letterpicker li.active span.letterpicker-cioc  { display: block }
+
+.picker { background: url('../images/picker-bg.png') repeat-x; position: relative; height: 12px; font-size: 16px; color: #000000; cursor: pointer; padding: 7px 10px 18px 10px}
+.picker-active, .picker:hover { background: url('../images/picker-active-bg.png') repeat-x; position: relative; height: 12px; font-size: 16px; color: #fff !important; cursor: pointer; padding: 7px 10px 18px 10px}
+.picker-cioc { display: none; position: absolute; top: -1px; left: 50%; width: 11px; height: 8px; background: url('../images/picker-cioc.png') no-repeat; }
+.picker-active .picker-cioc, .picker:hover .picker-cioc { display: block;}
+.picker select, .picker-active select { font-size: 14px !important }
 
 /*************************************************************************************************************
  * ICONS *****************************************************************************************************

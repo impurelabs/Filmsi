@@ -783,6 +783,22 @@ class filmsActions extends sfActions
 
 	public function executeOnTv(sfWebRequest $request)
 	{
+		$this->selectedDay = $request->getParameter('d', date('Y-m-d'));
+		$this->selectedHour = $request->getParameter('h', date('H'));
+		$this->selectedChannel = $request->getParameter('c', null);
+		$this->selectedType = $request->getParameter('t', null);
 
+		$this->schedules = ChannelScheduleTable::getInstance()->getFiltered($this->selectedDay, $this->selectedHour, $this->selectedChannel, $this->selectedType);
+		$this->channels = ChannelTable::getInstance()->getAll();
+
+
+		$this->days = array();
+		$today = (int)date('N');
+		$todayTime = time();
+		for($i = 1; $i <= 7; $i++){
+			$this->days[$i] = date('Y-m-d', ( $i - $today ) * 86400 + $todayTime);
+		}
+		$this->today = date('Y-m-d', time());
+		$this->tomorrow = date('Y-m-d', time() + 86400);
 	}
 }

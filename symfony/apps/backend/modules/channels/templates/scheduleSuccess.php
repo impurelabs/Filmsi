@@ -16,13 +16,15 @@
 	<tr>
     	<td>Film: <input type="text" id="film-finder" class="span-10" /></td>
         <td>Data: <?php echo $form['day']->render();?></td>
-        <td>Intre orele: <?php echo $form['time_from']->render();?> - <?php echo $form['time_to']->render();?></td>
+        <td>Ora: <?php echo $form['time_hour']->render();?></td>
+        <td>Minutul: <?php echo $form['time_min']->render();?></td>
         <td><button type="submit">Adauga</button></td>
     </tr>
 	<tr>
     	<td></td>
         <td><?php echo $form['day']->renderError();?></td>
-        <td><?php echo $form['time_from']->renderError() . $form['time_to']->renderError();?></td>
+        <td><?php echo $form['time_hour']->renderError();?></td>
+        <td><?php echo $form['time_min']->renderError();?></td>
         <td></td>
     </tr>
 </table>
@@ -39,8 +41,7 @@
         <?php foreach ($schedule as $scheduleDetail):?>
     	<tr>
         	<td><?php echo $scheduleDetail['film'];?></td>
-        	<td><?php echo $scheduleDetail['time_from'];?> - <?php echo $scheduleDetail['time_to'];?></td>
-            <td><a href="<?php echo url_for('@default?module=channels&action=scheduleEdit');?>?id=<?php echo $scheduleDetail['id'];?>" class="small-link">editeaza</a></td>
+        	<td><?php echo sprintf("%02s",$scheduleDetail['time_hour']) . ':' . sprintf("%02s",$scheduleDetail['time_min']);?></td>
             <td><a href="<?php echo url_for('@default?module=channels&action=scheduleDelete');?>?id=<?php echo $scheduleDetail['id'];?>" class="small-link">sterge</a></td>
         </tr>
         <?php endforeach;?>

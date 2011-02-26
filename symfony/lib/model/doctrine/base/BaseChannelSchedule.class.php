@@ -20,13 +20,11 @@ abstract class BaseChannelSchedule extends sfDoctrineRecord
              'type' => 'date',
              'notnull' => true,
              ));
-        $this->hasColumn('time_from', 'string', 250, array(
-             'type' => 'string',
-             'length' => 250,
+        $this->hasColumn('time_hour', 'integer', null, array(
+             'type' => 'integer',
              ));
-        $this->hasColumn('time_to', 'string', 250, array(
-             'type' => 'string',
-             'length' => 250,
+        $this->hasColumn('time_min', 'integer', null, array(
+             'type' => 'integer',
              ));
 
         $this->option('symfony', array(

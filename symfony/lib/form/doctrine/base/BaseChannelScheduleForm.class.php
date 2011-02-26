@@ -19,8 +19,8 @@ abstract class BaseChannelScheduleForm extends BaseFormDoctrine
       'channel_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Channel'), 'add_empty' => true)),
       'film_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Film'), 'add_empty' => true)),
       'day'       => new sfWidgetFormDate(),
-      'time_from'  => new sfWidgetFormInputText(),
-      'time_to'  => new sfWidgetFormInputText(),
+      'time_hour'  => new sfWidgetFormInputText(),
+      'time_min'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -28,8 +28,8 @@ abstract class BaseChannelScheduleForm extends BaseFormDoctrine
       'channel_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Channel'), 'required' => false)),
       'film_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Film'), 'required' => false)),
       'day'       => new sfValidatorDate(),
-      'time_from'  => new sfValidatorString(array('max_length' => 250, 'required' => true)),
-      'time_to'  => new sfValidatorString(array('max_length' => 250, 'required' => true)),
+      'time_hour'  => new sfValidatorString(array('max_length' => 250, 'required' => true)),
+      'time_min'  => new sfValidatorString(array('max_length' => 250, 'required' => true)),
     ));
 
     $this->widgetSchema->setNameFormat('channel_schedule[%s]');

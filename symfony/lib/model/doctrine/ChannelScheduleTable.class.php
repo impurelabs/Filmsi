@@ -30,7 +30,7 @@ class ChannelScheduleTable extends Doctrine_Table
 			->innerJoin('cs.Film f')
 			->innerJoin('cs.Channel c')
 			->where('cs.channel_id = ?', $channelId)
-			->orderBy('cs.day, cs.time_from ASC')
+			->orderBy('cs.day, cs.time_hour ASC')
 			->execute();
 
 		$schedules = array();
@@ -38,11 +38,57 @@ class ChannelScheduleTable extends Doctrine_Table
 			$schedules[$scheduleBrute->getDay()][] = array(
 				'id' => $scheduleBrute->getId(),
 				'film' => $scheduleBrute->getFilm()->getName(),
-				'time_from' => $scheduleBrute->getTimeFrom(),
-				'time_to' => $scheduleBrute->getTimeTo()
+				'time_hour' => $scheduleBrute->getTimeHour(),
+				'time_min' => $scheduleBrute->getTimeMin()
 			);
 		}
 
 		return $schedules;
+	}
+
+	public function getFiltered($day, $hour, $channelId, $type)
+	{
+		$q = Doctrine_Query::create()
+			->select('s.time_hour, s.time_min, c.name channel_name, c.filename channel_filename, c.id channel_id, f.name_ro film_name, f.id film_id, f.url_key film_url_key, f.is_series film_is_series')
+			->from('ChannelSchedule s')
+			->orderBy('c.name, s.time_hour, s.time_min ASC')
+			->innerJoin('s.Film f')
+			->innerJoin('s.Channel c')
+			->where('s.day = ?', $day)
+			->andWhereIn('s.time_hour', array($hour - 1, $hour, $hour + 1));
+
+		if (isset($channelId)){
+			$q = $q->andWhere('s.channel_id = ?', $channelId);
+		}
+
+		if (isset($type)){
+			if ($type == 's'){
+				$q = $q->andWhere('f.is_series = 1');
+			} elseif ($type == 'f') {
+				$q = $q->andWhere('f.is_series IS NULL');
+			}
+		}
+
+		$q = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$results = array();
+		foreach ($q as $schedule){
+			if (!isset($results[$schedule['channel_id']] )){
+				$results[$schedule['channel_id']] =	array(
+					'channel_name' => $schedule['channel_name'],
+					'channel_filename' => $schedule['channel_filename']
+				);
+			}
+
+			$results[$schedule['channel_id']]['films'][$schedule['time_hour']][] = array(
+				'time_min' => $schedule['time_min'],
+				'film_id' => $schedule['film_id'],
+				'film_name' => $schedule['film_name'],
+				'film_url_key' => $schedule['film_url_key'],
+				'film_is_series' => $schedule['film_is_series'],
+			);
+		}
+//echo '<pre>'; var_dump($results); exit;
+		return $results;
 	}
 }

@@ -57,7 +57,7 @@ class ChannelScheduleTable extends Doctrine_Table
 			->where('s.day = ?', $day)
 			->andWhereIn('s.time_hour', array($hour - 1, $hour, $hour + 1));
 
-		if (isset($channelId)){
+		if (isset($channelId) and $channelId != ''){
 			$q = $q->andWhere('s.channel_id = ?', $channelId);
 		}
 

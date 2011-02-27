@@ -89,7 +89,6 @@ class userActions extends sfActions
 
 	public function executeAlerts($request)
 	{
-
 	}
 
 	public function executeDetails($request)
@@ -185,6 +184,153 @@ class userActions extends sfActions
 					'errors' => $errors
 				)));
 			}
+		}
+	}
+
+	public function executeAlertCinemaStatusEdit(sfWebRequest $request)
+	{
+		$user = $this->getUser()->getGuardUser();
+
+		if ($user->getAlertCinema() == '1'){
+			$status = '0';
+		} else {
+			$status = '1';
+		}
+
+		$user->setAlertCinema($status);
+		$user->save();
+
+		return $this->renderText(json_encode(array('status' => $status)));
+	}
+
+	public function executeAlertDboStatusEdit(sfWebRequest $request)
+	{
+		$user = $this->getUser()->getGuardUser();
+
+		if ($user->getAlertDbo() == '1'){
+			$status = '0';
+		} else {
+			$status = '1';
+		}
+
+		$user->setAlertDbo($status);
+		$user->save();
+
+		return $this->renderText(json_encode(array('status' => $status)));
+	}
+
+	public function executeAlertTvStatusEdit(sfWebRequest $request)
+	{
+		$user = $this->getUser()->getGuardUser();
+
+		if ($user->getAlertTv() == '1'){
+			$status = '0';
+		} else {
+			$status = '1';
+		}
+
+		$user->setAlertTv($status);
+		$user->save();
+
+		return $this->renderText(json_encode(array('status' => $status)));
+	}
+
+	public function executeAlertStireStatusEdit(sfWebRequest $request)
+	{
+		$user = $this->getUser()->getGuardUser();
+
+		if ($user->getAlertStire() == '1'){
+			$status = '0';
+		} else {
+			$status = '1';
+		}
+
+		$user->setAlertStire($status);
+		$user->save();
+
+		return $this->renderText(json_encode(array('status' => $status)));
+	}
+
+	public function executeAlertCinema(sfWebRequest $request)
+	{
+		$this->cinemas = CinemaAlertTable::getInstance()->getByUser($this->getUser()->getGuardUser()->getId());
+	}
+
+	public function executeAlertCinemaEdit(sfWebRequest $request)
+	{
+		$this->cinemaLocations = CinemaTable::getInstance()->getGroupedByLocations();
+		$currentCinemas = CinemaAlertTable::getInstance()->getByUser($this->getUser()->getGuardUser()->getId());
+		if (count($currentCinemas) > 0){
+			$this->currentLocationId = $currentCinemas[0]['location_id'];
+		} else {
+			$this->currentLocationId = '';
+		}
+		$this->currentCinemaIds = array();
+		foreach ($currentCinemas as $currentCinema){
+			$this->currentCinemaIds[] = $currentCinema['cinema_id'];
+		}
+
+		$this->locations = array();
+		foreach ($this->cinemaLocations as $locationId => $cinema){
+			$this->locations[$locationId] = $cinema['location_name'];
+		}
+
+		if ($request->isMethod('post')){
+			CinemaAlertTable::getInstance()->updateCinemasForUser($this->getUser()->getGuardUser()->getId(), $request->getParameter('cid'));
+
+
+			$this->newCinemas = array();
+			if (count($request->getParameter('cid')) > 0){
+				foreach (CinemaTable::getInstance()->getMultipleByIds($request->getParameter('cid')) as $cinema){
+					$this->newCinemas[] = array(
+						'id' => $cinema['id'],
+						'name' => $cinema['name'],
+						'url_key' => $cinema['url_key']
+					);
+				}
+			}
+
+			$this->setTemplate('alertCinemaPostEdit');
+		}
+	}
+
+	public function executeAlertDbo(sfWebRequest $request)
+	{
+	}
+
+	public function executeAlertStire(sfWebRequest $request)
+	{
+	}
+
+	public function executeAlertTv(sfWebRequest $request)
+	{
+		$this->channels = ChannelAlertTable::getInstance()->getByUser($this->getUser()->getGuardUser()->getId());
+	}
+
+	public function executeAlertTvEdit(sfWebRequest $request)
+	{
+		$this->channels = ChannelTable::getInstance()->getAll();
+		$currentChannels = ChannelAlertTable::getInstance()->getByUser($this->getUser()->getGuardUser()->getId());
+		$this->currentChannelIds = array();
+		
+		foreach ($currentChannels as $currentChannel){
+			$this->currentChannelIds[] = $currentChannel['channel_id'];
+		}
+
+		if ($request->isMethod('post')){
+			ChannelAlertTable::getInstance()->updateChannelsForUser($this->getUser()->getGuardUser()->getId(), $request->getParameter('cid'));
+
+			$this->newChannels = array();
+			if (count($request->getParameter('cid')) > 0){
+				foreach (ChannelTable::getInstance()->getMultipleByIds($request->getParameter('cid')) as $channel){
+					$this->newChannels[] = array(
+						'id' => $channel['id'],
+						'name' => $channel['name']
+					);
+				}
+			}
+
+			$this->setTemplate('alertTvPostEdit');
 		}
 	}
 

@@ -137,4 +137,38 @@ class CinemaTable extends Doctrine_Table
 
 		return $locations;
 	}
+
+	public function getGroupedByLocations()
+	{
+		$q = Doctrine_Query::create()
+			->select('c.id, c.name, c.url_key, l.id, l.city')
+			->from('Cinema c')
+			->innerJoin('c.Location l')
+			->orderBy('l.city, c.name')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		$results = array();
+		foreach ($q as $item){
+			if (!isset($results[$item['Location']['id']])){
+				$results[$item['Location']['id']]['location_name'] = $item['Location']['city'];
+			} 
+
+			$results[$item['Location']['id']]['cinemas'][] = array(
+				'id' => $item['id'],
+				'name' => $item['name'],
+				'url_key' => $item['url_key']
+			);
+		}
+
+		return $results;
+	}
+
+	public function getMultipleByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->select('c.id, c.name, c.url_key')
+			->from('Cinema c')
+			->whereIn('c.id', $ids)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
 }

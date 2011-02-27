@@ -206,4 +206,28 @@ class personsActions extends sfActions
 				}
 		}
 	}
+
+	public function executeAlertAdd(sfWebRequest $request)
+	{
+		if (!$this->getUser()->isAuthenticated()){
+			$this->setTemplate('alertAddNotAuthenticated');
+			return sfView::SUCCESS;
+		}
+
+		$this->person = PersonTable::getInstance()->findOneById($request->getParameter('id'));
+
+		$this->form = new PersonAlertForm();
+		$this->form->setDefault('person_id', $this->person->getId());
+		$this->form->setDefault('user_id', $this->getUser()->getGuardUser()->getId());
+
+		if ($request->isMethod('post')){
+			$this->form->bind($request->getParameter($this->form->getName()));
+
+			if ($this->form->isValid()){
+				$this->form->save();
+
+				return $this->renderText(json_encode(array('status' => true)));
+			}
+		}
+	}
 }

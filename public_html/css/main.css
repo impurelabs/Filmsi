@@ -462,6 +462,10 @@ ul.letterpicker li:hover span.letterpicker-cioc, ul.letterpicker li.active span.
 .icon-bulletarrow-white { display:inline-block; width: 8px; height: 12px; background-image: url('../images/elements.png'); background-position: -111px -682px; vertical-align: middle }
 .icon-checkbox-checked { display:inline-block; width: 18px; height: 16px; background-image: url('../images/elements.png'); background-position: -160px -656px; vertical-align: middle }
 .icon-checkbox { display:inline-block; width: 18px; height: 16px; background-image: url('../images/elements.png'); background-position: -183px -656px; vertical-align: middle }
+.icon-bigcheckbox-checked { display:inline-block; width: 42px; height: 28px; background-image: url('../images/elements.png'); background-position: -514px -260px; vertical-align: bottom; cursor: pointer }
+.icon-bigcheckbox { display:inline-block; width: 42px; height: 28px; background-image: url('../images/elements.png'); background-position: -472px -260px; vertical-align: bottom; cursor: pointer }
+.icon-bluearrow-down { display:inline-block; width: 11px; height: 11px; background-image: url('../images/elements.png'); background-position: -262px -573px; vertical-align: bottom; cursor: pointer }
+.icon-bluearrow-right { display:inline-block; width: 11px; height: 11px; background-image: url('../images/elements.png'); background-position: -244px -570px; vertical-align: bottom; cursor: pointer }
 
 
 

@@ -19,4 +19,13 @@ class ChannelTable extends Doctrine_Table
 			->orderBy('c.name ASC')
 			->execute();
 	}
+
+	public function getMultipleByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->select('c.id, c.name')
+			->from('Channel c')
+			->whereIn('c.id', $ids)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
 }

@@ -47,11 +47,7 @@
             <div class="more-cell"><a href="" class="smallwhite-link">mai multe poze &raquo;</a></div>
         </div>
 
-        <div class="normalcell">
-        	<p class="spacer-bottom"><a href="" class="greenbutton-l-link"><span class="icon-bulletarrow-white"></span> Anunta-ma</a></p>
-            <p class="spacer-bottom-s"><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand apare pe DVD</a></p>
-            <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand apare pe Bluray</a></p>
-        </div>
+        <?php include_partial('persons/alert', array('personId' => $person->getId()));?>
     </div>
 
 
@@ -228,3 +224,4 @@
 <div class="cell-container7 spacer-left"> <!-- right column start -->
 	this is the right column
 </div> <!-- right column end -->
+

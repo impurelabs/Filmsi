@@ -41,13 +41,7 @@
 	<div class="left" style="width:185px">
     	<img src="<?php echo filmsiFilmPhoto($film->getFilename());?>" class="spacer-bottom" />
 
-        <div class="normalcell">
-        	<button class="announcement spacer-bottom"></button><br />
-            <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza in cinema</a></p>
-            <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza pe DVD</a></p>
-            <p><span class="icon-checkbox"></span> <a href="" class="explanation-link">Cand apar stiri noi</a></p>
-            <p><span class="icon-checkbox"></span> <a href="" class="explanation-link">Cand vine la TV</a></p>
-        </div>
+        <?php include_partial('films/alert', array('filmId' => $film->getId()));?>
     </div>
 
 

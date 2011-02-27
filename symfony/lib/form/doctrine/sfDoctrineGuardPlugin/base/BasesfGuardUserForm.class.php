@@ -33,6 +33,10 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'updated_at'       => new sfWidgetFormDateTime(),
       'groups_list'      => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
       'permissions_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardPermission')),
+      'alert_cinema'        => new sfWidgetFormInputCheckbox(),
+      'alert_dbo'        => new sfWidgetFormInputCheckbox(),
+      'alert_tv'        => new sfWidgetFormInputCheckbox(),
+      'alert_stire'        => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -54,6 +58,10 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'updated_at'       => new sfValidatorDateTime(),
       'groups_list'      => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardPermission', 'required' => false)),
+      'alert_cinema'        => new sfValidatorBoolean(array('required' => false)),
+      'alert_dbo'        => new sfValidatorBoolean(array('required' => false)),
+      'alert_tv'        => new sfValidatorBoolean(array('required' => false)),
+      'alert_stire'        => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

@@ -63,14 +63,14 @@ class SearchIndexTable extends Doctrine_Table
 	/* Add the persons */
 	protected function addPersons()
 	{
-		$itemCount = Doctrine_Query::create()
+		/*$itemCount = Doctrine_Query::create()
 			->select('COUNT(p.id) count')
 			->from('Person p');
 
 		$itemCount = $itemCount->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 		$itemCount = $itemCount['count'];
 
-		for ($page = 1; $page <= ceil($itemCount / 1000); $page++){
+		for ($page = 1; $page <= ceil($itemCount / 1000); $page++){*/
 			$q = Doctrine_Query::create()
 				->select('p.id, p.first_name, p.last_name, p.meta_keywords, p.biography_content')
 				->from('Person p')
@@ -86,7 +86,7 @@ class SearchIndexTable extends Doctrine_Table
 				$index->setModelId($person['id']);
 				$index->save();
 			}
-		}
+		//}
 	}
 
 	/* Add the articles */

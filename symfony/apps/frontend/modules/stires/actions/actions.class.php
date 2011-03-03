@@ -90,22 +90,25 @@ class stiresActions extends sfActions
             $visit->save();
 	}
 
-        public function executePublish(sfWebRequest $request)
-        {
-            if (!$this->getUser()->isAuthenticated()){
-                $this->setTemplate('publishNotLoggedIn');
-            }
+	public function executePublish(sfWebRequest $request)
+	{
+		if (!$this->getUser()->isAuthenticated()){
+			$this->setTemplate('publishNotLoggedIn');
+		}
 
-            $this->form = new StirePublishForm();
+		$this->contentTop = ContentTable::getInstance()->findOneById(4);
+		$this->contentRight = ContentTable::getInstance()->findOneById(5);
 
-            if ($request->isMethod('post')){
-                $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+		$this->form = new StirePublishForm();
 
-                if ($this->form->isValid()){
-                    $this->form->save();
+		if ($request->isMethod('post')){
+			$this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 
-                    $this->setTemplate('publishOk');
-                }
-            }
-        }
+			if ($this->form->isValid()){
+				$this->form->save();
+
+				$this->setTemplate('publishOk');
+			}
+		}
+	}
 }

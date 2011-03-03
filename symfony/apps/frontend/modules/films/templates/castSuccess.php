@@ -1,3 +1,7 @@
+<?php slot('backgroundTag');?>
+<div style="width: <?php echo $backgroundWidth;?>px; margin: 0 auto; background: url('<?php echo filmsiFilmBackground($film->getBackgroundFilename());?>') top no-repeat">
+<?php end_slot();?>
+
 <h2><?php echo $film->getNameRo();?> <?php if ($film->getNameEn() != ''):?><span class="black">(<?php echo $film->getNameEn();?>)</span><?php endif;?></h2>
 
 <div class="spacer-bottom-m">

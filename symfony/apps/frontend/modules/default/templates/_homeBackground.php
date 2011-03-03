@@ -1,0 +1,1 @@
+<div style="width: <?php echo $width;?>px; margin: 0 auto; background: url('<?php echo filmsiHomepageBackground($homepage->getBackgroundFilename());?>') top no-repeat">

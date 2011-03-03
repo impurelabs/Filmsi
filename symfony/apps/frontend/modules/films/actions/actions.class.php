@@ -10,10 +10,17 @@
  */
 class filmsActions extends sfActions
 {
-
 	public function executeView(sfWebRequest $request)
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
 
 		$this->getResponse()->setTitle($this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
@@ -145,6 +152,14 @@ class filmsActions extends sfActions
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
 
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
+
 		$this->getResponse()->setTitle('Articole: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
 		$this->getResponse()->addMeta('description', '');
@@ -175,8 +190,16 @@ class filmsActions extends sfActions
 	}
 
 	public function executeComments(sfWebRequest $request)
-	{
+	{		
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
 
 		$this->getResponse()->setTitle('Comentarii: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
@@ -215,6 +238,14 @@ class filmsActions extends sfActions
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
 
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
+
 		$this->getResponse()->setTitle('Fotografii: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
 		$this->getResponse()->addMeta('description', '');
@@ -228,6 +259,14 @@ class filmsActions extends sfActions
 	public function executeStiri(sfWebRequest $request)
 	{
 		$this->film = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
+
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
 
 		$this->getResponse()->setTitle('Stiri: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
@@ -263,6 +302,14 @@ class filmsActions extends sfActions
 	{
 		$this->film = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
 
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
+
 		$this->getResponse()->setTitle('Sinopsis: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
 		$this->getResponse()->addMeta('description', '');
@@ -271,6 +318,14 @@ class filmsActions extends sfActions
 	public function executeCast(sfWebRequest $request)
 	{
 		$this->film = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
+
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
 
 		$this->getResponse()->setTitle('Actori & echipa: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
@@ -286,6 +341,14 @@ class filmsActions extends sfActions
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
 
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
+
 		$this->getResponse()->setTitle('Cumpara pe DVD & Bluray: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
 		$this->getResponse()->addMeta('description', '');
@@ -297,6 +360,14 @@ class filmsActions extends sfActions
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
 
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
+
 		$this->getResponse()->setTitle('Premii: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');
 		$this->getResponse()->addMeta('description', '');
@@ -307,6 +378,14 @@ class filmsActions extends sfActions
 	public function executeVideos(sfWebRequest $request)
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		}else{
+			$this->backgroundWidth = '';
+		}
 
 		$this->getResponse()->setTitle('Trailere si clipuri: ' . $this->film->getName() . ' - Filmsi.ro');
 		$this->getResponse()->addMeta('keywords', '');

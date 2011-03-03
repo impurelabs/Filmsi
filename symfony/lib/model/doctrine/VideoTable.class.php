@@ -7,6 +7,11 @@
  */
 class VideoTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Video');
+	}
+
 	public function getListForView($albumId)
 	{
 		return Doctrine_Query::create()
@@ -58,5 +63,23 @@ class VideoTable extends Doctrine_Table
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 			
 		return $q['counter'];
+	}
+
+	public function getLatestTrailers($limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->select('v.*, f.id, a.id, f.url_key, f.name_ro, f.name_en')
+			->from('Video v')
+			->innerJoin('v.Album a')
+			->innerJoin('a.Film f')
+			->orderBy('a.publish_date DESC')
+			->where('v.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW()');
+
+		if (isset($limit)){
+			$q = $q->limit($limit);
+		}
+
+		return $q->execute();
+
 	}
 }

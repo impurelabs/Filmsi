@@ -44,6 +44,21 @@ class StireTable extends Doctrine_Table
             return $q->execute();
 	}
 
+	public function getAboutStars($limit = null)
+	{
+            $q = Doctrine_Query::create()
+                    ->from('Stire s')
+                    ->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+					->andWhere('s.about_stars = 1')
+                    ->orderBy('s.publish_date, s.id DESC');
+
+            if (!empty ($limit)){
+                    $q->limit($limit);
+            }
+
+            return $q->execute();
+	}
+
 	public function getCount()
 	{
 		$q = Doctrine_Query::create()
@@ -239,4 +254,14 @@ class StireTable extends Doctrine_Table
             return $q->execute();
         }
     }
+
+	public function getBest($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Stire s')
+			->orderBy('s.visit_count DESC')
+			->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
+			->limit($limit)
+			->execute();
+	}
 }

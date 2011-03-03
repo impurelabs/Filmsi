@@ -79,6 +79,12 @@ abstract class BaseComment extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+		$this->hasOne('Film', array(
+             'local' => 'model_library_id',
+             'foreign' => 'library_id',
+             'onDelete' => 'CASCADE'));
+
+
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              'updated' => 
              array(

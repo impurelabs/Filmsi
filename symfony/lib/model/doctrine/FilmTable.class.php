@@ -262,7 +262,7 @@ class FilmTable extends Doctrine_Table
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
 
-	public function getInCinemaNow($when = null, $limit = null, $page = null, $genres = array(), $ratings = array(), $locations = array())
+	public function getInCinemaNow($when = null, $limit = null, $page = null, $genres = array(), $ratings = array(), $locations = array(), $hydrator = Doctrine_Core::HYDRATE_ARRAY)
 	{
 		$q = Doctrine_Query::create()
 			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
@@ -294,7 +294,7 @@ class FilmTable extends Doctrine_Table
 				->andWhereIn('g.genre_id', $genres);
 		}
 
-		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		return  $q->execute(array(), $hydrator);
 		
 	}
 
@@ -327,7 +327,7 @@ class FilmTable extends Doctrine_Table
 		return $count['count'];
 	}
 
-	public function getInCinemaSoon($limit = null, $page = null, $genres = array(), $ratings = array())
+	public function getInCinemaSoon($limit = null, $page = null, $genres = array(), $ratings = array(), $hydrator = Doctrine_Core::HYDRATE_ARRAY)
 	{
 		$q = Doctrine_Query::create()
 			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
@@ -352,7 +352,7 @@ class FilmTable extends Doctrine_Table
 				->andWhereIn('g.genre_id', $genres);
 		}
 
-		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		return  $q->execute(array(), $hydrator);
 
 	}
 
@@ -377,7 +377,7 @@ class FilmTable extends Doctrine_Table
 		return $count['count'];
 	}
 
-	public function getOnDvdAndBlurayNow($limit = null, $page = null, $genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)
+	public function getOnDvdAndBlurayNow($limit = null, $page = null, $genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true, $hydrator = Doctrine_Core::HYDRATE_ARRAY)
 	{
 		$qStringForDvd = <<<text
 	f.status_dvd = 1 AND 
@@ -433,7 +433,7 @@ text;
 				->andWhereIn('g.genre_id', $genres);
 		}
 
-		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		return  $q->execute(array(), $hydrator);
 
 	}
 
@@ -489,7 +489,7 @@ text;
 		return $count['count'];
 	}
 
-	public function getOnDvdAndBluraySoon($limit = null, $page = null, $genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)
+	public function getOnDvdAndBluraySoon($limit = null, $page = null, $genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true, $hydrator = Doctrine_Core::HYDRATE_ARRAY)
 	{
 		$qStringForDvd = <<<text
 (
@@ -561,7 +561,7 @@ text;
 				->andWhereIn('g.genre_id', $genres);
 		}
 
-		return  $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		return  $q->execute(array(), $hydrator);
 
 	}
 
@@ -631,5 +631,34 @@ text;
 		$count =  $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 
 		return $count['count'];
+	}
+
+	public function getOnTvSoon($limit = null, $page = null, $genres = array(), $ratings = array(), $hydrator = Doctrine_Core::HYDRATE_ARRAY)
+	{
+		$q = Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
+			->from('Film f')
+			->where('f.state = 1 AND f.status_tv = 1 AND f.status_tv_day = 0')
+			->orderBy('f.visit_count DESC');
+
+		if (isset($limit)){
+			$q->limit($limit);
+		}
+
+		if (isset($page)){
+			$q->offset(($page - 1) * $limit );
+		}
+
+		if (count($ratings) > 0){
+			$q->andWhereIn('f.rating', $ratings);
+		}
+
+		if (count($genres) > 0){
+			$q->innerJoin('f.FilmGenre g')
+				->andWhereIn('g.genre_id', $genres);
+		}
+
+		return  $q->execute(array(), $hydrator);
+
 	}
 }

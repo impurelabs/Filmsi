@@ -11,7 +11,11 @@
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 class Film extends BaseFilm
-{	
+{
+	protected $bestActors = null;
+	protected $bestDirectors = null;
+
+
 	public function getName()
 	{
 		return $this->getNameRo() . ($this->getNameEn() != '' ? ' (' . $this->getNameEn() . ')' : '');
@@ -152,11 +156,11 @@ class Film extends BaseFilm
 
 	public function getBestActors($limit)
 	{
-		return FilmPersonTable::getInstance()->getBestActorsByFilm($this->getId(), $limit);
+		return isset($this->bestActors) ? $this->bestActors : FilmPersonTable::getInstance()->getBestActorsByFilm($this->getId(), $limit);
 	}
 
 	public function getBestDirectors()
 	{
-		return FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->getId());
+		return isset($this->bestDirectors) ? $this->bestDirectors : FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->getId());
 	}
 }

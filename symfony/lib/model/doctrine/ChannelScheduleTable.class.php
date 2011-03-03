@@ -91,4 +91,21 @@ class ChannelScheduleTable extends Doctrine_Table
 //echo '<pre>'; var_dump($results); exit;
 		return $results;
 	}
+
+	public function getFilmsByDay($day, $limit)
+	{
+		$q = Doctrine_Query::create()
+			->from('ChannelSchedule s')
+			->orderBy('f.visit_count DESC')
+			->innerJoin('s.Film f')
+			->innerJoin('s.Channel c')
+			->groupBy('f.id')
+			->where('s.day = ?', $day);
+
+		if (isset($limit)){
+			$q = $q->limit($limit);
+		}
+
+		return $q->execute();
+	}
 }

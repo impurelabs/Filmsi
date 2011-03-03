@@ -7,6 +7,11 @@
  */
 class PhotoTable extends Doctrine_Table
 {
+	public static function getInstance()
+	{
+		return Doctrine_Core::getTable('Photo');
+	}
+
 	public function getListForView($albumId)
 	{
 		return Doctrine_Query::create()
@@ -58,5 +63,42 @@ class PhotoTable extends Doctrine_Table
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 			
 		return $q['counter'];
+	}
+
+	public function getLatestForFilms($limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->select('p.*, f.id, a.id, f.url_key, f.name_ro, f.name_en')
+			->from('Photo p')
+			->innerJoin('p.Album a')
+			->innerJoin('a.Film f')
+			->orderBy('p.updated_at DESC')
+			->where('p.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW()');
+
+		if (isset($limit)){
+			$q = $q->limit($limit);
+		}
+
+		return $q->execute();
+
+	}
+
+	public function getLatestForFestivalEditions($limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->select('p.*, e.id, a.id, e.url_key, e.edition, f.name')
+			->from('Photo p')
+			->innerJoin('p.Album a')
+			->innerJoin('a.FestivalEdition e')
+			->innerJoin('e.Festival f')
+			->orderBy('p.updated_at DESC')
+			->where('p.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW()');
+
+		if (isset($limit)){
+			$q = $q->limit($limit);
+		}
+
+		return $q->execute();
+
 	}
 }

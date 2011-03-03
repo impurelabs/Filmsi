@@ -27,7 +27,7 @@
 
 
         <div class="cell-bd" style="padding: 7px;">
-                <div class="right spacer-left"><img src="<?php echo filmsiStirePhotoThumb($stire->getFilename());?>" /></div>
+                <div class="right spacer-left"><img src="<?php echo filmsiStirePhoto($stire->getFilename());?>" /></div>
 
 
                 <div class="innerspacer-bottom spacer-bottom">

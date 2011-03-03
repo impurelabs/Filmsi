@@ -16,14 +16,6 @@ all:
 
   comments:
     list_limit: 50
-    
-  content:
-    name_1: "Prima locatie"
-    name_2: "A doua locatie"
-    name_3: "A treia locatie"
-    width_1: 200
-    width_2: 300
-    width_3: 400
 
   provideo:
     url: http://www.filmsi.ro/provideo.xml

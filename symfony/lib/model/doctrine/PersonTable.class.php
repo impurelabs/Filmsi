@@ -186,7 +186,7 @@ class PersonTable extends Doctrine_Table
 
         }
 
-        public function getCount($letter = null, $type = null)
+	public function getCount($letter = null, $type = null)
 	{
             $q = Doctrine_Query::create()
                     ->select('COUNT(p.id)')
@@ -210,4 +210,24 @@ class PersonTable extends Doctrine_Table
 
             return $count['COUNT'];
     }
+
+	public function getBornToday($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Person p')
+			->where('DAY(p.date_of_birth) = DAY(NOW()) AND MONTH(p.date_of_birth) = MONTH(NOW())')
+			->limit($limit)
+			->orderBy('p.visit_count DESC')
+			->execute();
+	}
+
+	public function getBestActors($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Person p')
+			->where('p.is_actor = 1')
+			->orderBy('p.visit_count DESC')
+			->limit($limit)
+			->execute();
+	}
 }

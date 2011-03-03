@@ -40,7 +40,7 @@ class CommentTable extends Doctrine_Table
 		return $q['count'];
 	}
 
-        public function getFiltered($filters, $limit= null)
+	public function getFiltered($filters, $limit= null)
 	{
 		$q = Doctrine_Query::create()
 			->from('Comment c')
@@ -78,43 +78,55 @@ class CommentTable extends Doctrine_Table
 		return $q->execute();
 	}
 
-        public function countFiltered($filters)
-        {
-            $q = Doctrine_Query::create()
-                    ->select('COUNT(c.id) count')
-                    ->from('Comment c')
-                    ->orderBy('c.created_at DESC');
+	public function countFiltered($filters)
+	{
+		$q = Doctrine_Query::create()
+				->select('COUNT(c.id) count')
+				->from('Comment c')
+				->orderBy('c.created_at DESC');
 
-            if (isset($filters['email']) && !empty($filters['email'])){
-                    $q->addWhere('c.email = ?', $filters['email']);
-            }
+		if (isset($filters['email']) && !empty($filters['email'])){
+				$q->addWhere('c.email = ?', $filters['email']);
+		}
 
-            if (isset($filters['model']) && !empty($filters['model'])){
-                    $q->addWhere('c.model = ?', $filters['model']);
-            }
+		if (isset($filters['model']) && !empty($filters['model'])){
+				$q->addWhere('c.model = ?', $filters['model']);
+		}
 
-            if (isset($filters['model_library_id']) && !empty($filters['model_library_id'])){
-                    $q->addWhere('c.model_library_id = ?', $filters['model_library_id']);
-            }
+		if (isset($filters['model_library_id']) && !empty($filters['model_library_id'])){
+				$q->addWhere('c.model_library_id = ?', $filters['model_library_id']);
+		}
 
-            if (isset($filters['date_from']) && !empty($filters['date_from'])){
-                    $q->addWhere('c.created_at >= ?', $filters['date_from']);
-            }
+		if (isset($filters['date_from']) && !empty($filters['date_from'])){
+				$q->addWhere('c.created_at >= ?', $filters['date_from']);
+		}
 
-            if (isset($filters['date_to']) && !empty($filters['date_to'])){
-                    $q->addWhere('c.created_at <= ?', $filters['date_to']);
-            }
-            
-            $counter = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		if (isset($filters['date_to']) && !empty($filters['date_to'])){
+				$q->addWhere('c.created_at <= ?', $filters['date_to']);
+		}
 
-            return $counter['count'];
-        }
+		$counter = $q->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 
-        public function deleteByIds($ids)
-        {
-            return Doctrine_Query::create()
-                ->delete('Comment c')
-                ->whereIn('c.id', $ids)
-                ->execute();
-        }
+		return $counter['count'];
+	}
+
+	public function deleteByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->delete('Comment c')
+			->whereIn('c.id', $ids)
+			->execute();
+	}
+
+	public function getLatestForFilms($limit)
+	{
+		return Doctrine_Query::create()
+			->select('c.*, f.id, f.url_key, f.name_ro, f.name_en')
+			->from('Comment c')
+			->innerJoin('c.Film f')
+			->where('c.model= "Film"')
+			->orderBy('c.created_at DESC')
+			->limit($limit)
+			->execute();
+	}
 }

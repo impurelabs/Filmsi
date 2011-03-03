@@ -112,4 +112,19 @@ class FestivalEditionTable extends Doctrine_Table
 			->orderBy('e.edition DESC')
 			->execute();
 	}
+
+	public function getLatest($limit = null)
+	{
+		$q = Doctrine_Query::create()
+			->from('FestivalEdition e')
+			->innerJoin('e.Festival f')
+			->where('e.state = 1 AND e.publish_date IS NOT NULL AND e.publish_date <= NOW()')
+			->orderBy('e.publish_date DESC');
+
+		if (!empty ($limit)){
+			$q->limit($limit);
+		}
+
+		return $q->execute();
+	}
 }

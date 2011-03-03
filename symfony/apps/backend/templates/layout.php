@@ -48,6 +48,9 @@
             <?php if ($sf_user->hasCredential('Comentarii')):?>
             <a href="<?php echo url_for('@default_index?module=comments');?>" <?php if ($sf_params->get('module') == 'comments') echo 'class="selected"';?>>Comentarii</a> |
             <?php endif?>
+            <?php if ($sf_user->hasCredential('Comentarii')):?>
+            <a href="<?php echo url_for('@default_index?module=newsletter');?>" <?php if ($sf_params->get('module') == 'newsletter') echo 'class="selected"';?>>Newsletter</a> |
+            <?php endif?>
         </div>
         <?php endif; ?>
         <div class="span-20 last">

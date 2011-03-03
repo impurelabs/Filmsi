@@ -591,5 +591,41 @@ class LibraryTable extends Doctrine_Table
 			->whereIn('t.id', $itemIds)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
-        
+
+	public function getBestItemsWithoutStires($limit)
+	{
+		$bruteItems = Doctrine_Query::create()
+			->select('l.id, l.type')
+			->from('Library l')
+			->whereIn('l.type', array('Person', 'Film', 'Article', 'FestivalEdition'))
+			->orderBy('l.visit_count DESC')
+			->limit($limit)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+		
+		$items = array();
+		foreach ($bruteItems as $bruteItem){
+			$item = Doctrine_Core::getTable($bruteItem['type'])->findOneByLibraryId($bruteItem['id']);
+			
+			if ($bruteItem['type'] == 'Film'){
+				$items[] = array(
+					'type' => $bruteItem['type'],
+					'id' => $item->getId(),
+					'url_key' => $item->getUrlKey(),
+					'filename' => $item->getFilename(),
+					'name' => $item->getNameRo()
+				);
+			} else {
+				$items[] = array(
+					'type' => $bruteItem['type'],
+					'id' => $item->getId(),
+					'url_key' => $item->getUrlKey(),
+					'filename' => $item->getFilename(),
+					'name' => $item->getName()
+				);
+			}
+		}
+
+		return $items;
+	}
 }

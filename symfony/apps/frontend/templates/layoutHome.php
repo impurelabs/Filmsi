@@ -20,6 +20,7 @@
 
   </head>
 <body>
+	<?php include_slot('backgroundTag') ?>
 	<div id="wrapper">
     	<div id="user-container"></div><!-- user container  end -->
 
@@ -134,10 +135,82 @@
                 FilmSi - Toate drepturile rezervate
             </div>
 
-			<?php include_component('default', 'underFooter');?>
+
+
+
+            <div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">La cinema</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">In curand la cinema</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">Pe DVD & Bluray</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">In curand pe DVD & Bluray</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">La Tv Azi</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">La Tv Maine</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">Actori</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+            	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px">
+                	<p class="bigstrong spacer-bottom">Stiri</p>
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a><br />
+                    <a href="">Amor la distanta</a>
+                </div>
+
+            </div>
+
+
 
         </div><!-- footer end -->
     </div><!--wrapper end-->
+</div>
 
     <div class="feedback-container">
     	<div style="position: relative">

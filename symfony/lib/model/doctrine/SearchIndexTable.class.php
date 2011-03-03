@@ -73,9 +73,7 @@ class SearchIndexTable extends Doctrine_Table
 		for ($page = 1; $page <= ceil($itemCount / 1000); $page++){*/
 			$q = Doctrine_Query::create()
 				->select('p.id, p.first_name, p.last_name, p.meta_keywords, p.biography_content')
-				->from('Person p')
-				->limit(1000)
-				->offset(($page - 1) * 1000);
+				->from('Person p');
 
 			$q = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 

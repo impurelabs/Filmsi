@@ -336,6 +336,13 @@ class filmsActions extends sfActions
                     $this->film->setYear($produs['an']);
                 }
 
+				/* Add the DVD status on the 2010-01-01  */
+				$this->film->setStatusDvd('1');
+				$this->film->setStatusDvdYear('2010');
+				$this->film->setStatusDvdMonth('01');
+				$this->film->setStatusDvdDay('01');
+
+
                 $this->film->save();
 
                 /* Add the photo to the album */

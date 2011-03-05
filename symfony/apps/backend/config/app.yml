@@ -18,5 +18,5 @@ all:
     list_limit: 50
 
   provideo:
-    url: http://www.filmsi.ro/provideo.xml
+    url: %SF_WEB_DIR%/provideo.xml
     

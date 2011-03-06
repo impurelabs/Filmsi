@@ -5,7 +5,7 @@
 <div class="cell-container6"> <!-- left column start -->
 	<div class="cell spacer-bottom-m">
         <div class="cell-hd">
-            <h5>Alege <span class="black">genul filmului</span></h5>
+            <h5>Alege</h5>
         </div>
         <div class="cell-bd" style="padding:0">
             <ul class="filterlist spacer-bottom-m">

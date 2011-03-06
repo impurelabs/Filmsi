@@ -1,4 +1,4 @@
-<h2><?php echo $person->getName();?></h2>
+<h2><a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"><?php echo $person->getName();?></a></h2>
 
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
@@ -9,7 +9,7 @@
 <div class="cell-container6"> <!-- left column start -->
     <div class="cell spacer-bottom-m">
         <div class="cell-hd">
-            <h5>Detalii</h5>
+            <h5><a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">Detalii</a></h5>
         </div>
         <div class="cell-bd" style="padding:0">
             <ul class="filterlist spacer-bottom-m">

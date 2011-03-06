@@ -7,6 +7,11 @@
  */
 class FilmEpisodeTable extends Doctrine_Table
 {
+	static public function getInstance()
+	{
+		return Doctrine_Core::getTable('FilmEpisode');
+	}
+
     public function countByFilm($filmId)
 	{
 		$q = Doctrine_Query::create()
@@ -25,5 +30,25 @@ class FilmEpisodeTable extends Doctrine_Table
 			->orderBy('fe.season, fe.number ASC')
 			->where('fe.film_id = ?', $filmId)
 			->execute();
+	}
+
+	public function getByFilmAndSeason($filmId, $season)
+	{
+		return Doctrine_Query::create()
+			->from('FilmEpisode fe')
+			->orderBy('fe.number ASC')
+			->where('fe.film_id = ? AND fe.season = ?', array($filmId, $season))
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
+
+	public function getSeasonsByFilm($filmId)
+	{
+		return Doctrine_Query::create()
+			->select('fe.season')
+			->from('FilmEpisode fe')
+			->orderBy('fe.season ASC')
+			->where('fe.film_id = ?', array($filmId))
+			->groupBy('fe.season')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
 }

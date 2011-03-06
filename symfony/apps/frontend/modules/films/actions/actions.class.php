@@ -14,6 +14,13 @@ class filmsActions extends sfActions
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
 
+		if ($this->film->getIsSeries() == '1'){
+			$this->selectedSeason = $request->getParameter('s', 1);
+
+			$this->episodes = FilmEpisodeTable::getInstance()->getByFilmAndSeason($this->film->getId(), $this->selectedSeason);
+			$this->seasons = FilmEpisodeTable::getInstance()->getSeasonsByFilm($this->film->getId());
+		}
+
 		if ($this->film->getBackgroundFilename() != ''){
 			$this->setLayout('layoutFilm');
 			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());

@@ -202,6 +202,7 @@
     </div>
     -->
 
+	<?php if(count($film->getFirstPhotos(3)) > 0):?>
 	<div class="cell spacer-bottom-m">
         <div class="cell-hd"><h5>Fotografii</h5></div>
         <div class="cell-bd innerspacer-bottom-m">
@@ -215,7 +216,35 @@
 
 		<span class="more-cell"><a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="smallwhite-link">vezi mai multe &raquo;</a></span>
     </div>
+	<?php endif;?>
 
+	<?php if ($film->getIsSeries() == '1'):?><a name="episodes"></a>
+	<div class="cell spacer-bottom-m">
+        <div class="cell-hd"><h5>Episoade <span class="black">Sezonul <?php echo $selectedSeason;?></span></h5></div>
+        <div class="cell-bd innerspacer-bottom-m">
+            <div class="left explanation-small" style="width: 50px">Sezon</div>
+			<div class="left explanation-small" style="width: 400px">Episodul</div>
+			<div class="clear"></div>
+			<div class=" cell-separator-dotted-bottom mt-1 mb-2"></div>
+
+			<div class="left" style="width: 50px">
+				<?php foreach($seasons as $season):?>
+					<div class="picker-vert<?php if($selectedSeason == $season['season']) echo '-active';?>" onclick="location.href='<?php echo url_for('@film?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?s=<?php echo $season['season'];?>#episodes'"><?php echo $season['season'];?></div>
+				<?php endforeach;?>
+			</div>
+			<div class="left" style="width: 400px">
+				<?php foreach($episodes as $episode):?>
+					<div class="mb-2">
+						<span class="explanation">Episodul <?php echo $episode['number'];?>.</span> <strong><?php echo $episode['name'];?></strong>
+					</div>
+				<?php endforeach;?>
+			</div>
+			<div class="clear"></div>
+        </div>
+    </div>
+	<?php endif;?>
+
+	<?php if (count($film->getFirstVideos(3)) > 0):?>
 	<div class="cell spacer-bottom-m">
         <h5>Trailere <span class="black">si clipuri video</span></h5>
         <div class="cell-bd innerspacer-bottom-m">
@@ -229,10 +258,10 @@
 
 		<span class="more-cell"><a href="<?php echo url_for('@film_videos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="smallwhite-link">vezi mai multe &raquo;</a></span>
     </div>
+	<?php endif;?>
 
 
-
-
+	<?php if (count($film->getNewestArticles(3)) > 0):?>
     <div class="cell spacer-bottom-m">
         <div class="cell-hd">
             <h4>Cele mai noi <span class="black">articole</span></h4>
@@ -251,6 +280,7 @@
 
         <div class="more-cell"><a href="<?php echo url_for('@film_articles?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="smallwhite-link">afla mai multe &raquo;</a></div>
     </div>
+	<?php endif;?>
 
 
     <?php include_partial('comments/formAndList', array(

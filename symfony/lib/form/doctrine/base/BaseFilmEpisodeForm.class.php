@@ -27,8 +27,8 @@ abstract class BaseFilmEpisodeForm extends BaseFormDoctrine
       'id'      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'imdb'    => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'name'    => new sfValidatorString(array('max_length' => 250, 'required' => false)),
-      'season'  => new sfValidatorInteger(array('required' => false)),
-      'number'  => new sfValidatorInteger(array('required' => false)),
+      'season'  => new sfValidatorInteger(array('required' => true), array('invalid' => 'Valoarea trebuie sa fie un numar intreg. ex 1, 2, 3, 4 ...')),
+      'number'  => new sfValidatorInteger(array('required' => true), array('invalid' => 'Valoarea trebuie sa fie un numar intreg. ex 1, 2, 3, 4 ...')),
       'film_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Film'), 'required' => false)),
     ));
 

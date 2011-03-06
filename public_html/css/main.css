@@ -418,6 +418,9 @@ ul.letterpicker li:hover span.letterpicker-cioc, ul.letterpicker li.active span.
 .picker-active .picker-cioc, .picker:hover .picker-cioc { display: block;}
 .picker select, .picker-active select { font-size: 14px !important }
 
+.picker-vert { width: 41px; height: 24px; background: url('../images/picker-vert.png') no-repeat left; cursor: pointer; font-size: 16px; color: #000 !important; padding-top: 3px; text-align: center }
+.picker-vert:hover, .picker-vert-active { width: 41px; height: 24px; background: url('../images/picker-vert-active.png') no-repeat left; cursor: pointer; font-size: 16px; color: #fff !important; padding-top: 3px; text-align: center }
+
 /*************************************************************************************************************
  * ICONS *****************************************************************************************************
  *************************************************************************************************************

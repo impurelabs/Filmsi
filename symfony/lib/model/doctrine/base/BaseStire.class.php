@@ -216,6 +216,10 @@ abstract class BaseStire extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'stire_id'));
 
+        $this->hasMany('Comment', array(
+             'local' => 'library_id',
+             'foreign' => 'model_library_id'));
+
         $inlibrary0 = new inLibrary(array(
              'type_key' => 'Stire',
              'has_imdb' => false,

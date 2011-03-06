@@ -52,4 +52,13 @@ class ShopTable extends Doctrine_Table
 
 		return $shops;
 	}
+
+	public function getForGadget($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Shop s')
+			->orderBy('RAND()')
+			->limit($limit)
+			->execute();
+	}
 }

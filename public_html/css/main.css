@@ -154,7 +154,7 @@ input.searchmain-field   { height: 22px; padding: 10px; vertical-align:middle; w
 button.searchmain-button { margin-left: 10px; vertical-align:middle; width: 97px; height:43px; border:0; background-image:url('../images/elements.png'); background-position: 0 -56px; background-color:transparent;  cursor: pointer;  }
 button.searchmain-button:active { margin-left: 10px; cursor: pointer; width: 97px; height:43px; border:0; background-image:url('../images/elements.png'); background-position: -108px -56px }
 
-select.cinema-city { border: 1px solid #d5d5d5; vertical-align:middle; width: 350px; height: 30px; padding: 4px 5px; font-size: 15px; font-weight:bold; color: #333333; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; box-shadow: 1px 1px 2px #555555; -moz-box-shadow: 1px 1px 2px #dddddd inset; -webkit-box-shadow: 1px 1px 2px #dddddd inset }
+select.cinema-city { border: 1px solid #d5d5d5; vertical-align:middle; height: 30px; padding: 4px 5px; font-size: 15px; font-weight:bold; color: #333333; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; box-shadow: 1px 1px 2px #555555; -moz-box-shadow: 1px 1px 2px #dddddd inset; -webkit-box-shadow: 1px 1px 2px #dddddd inset }
 
 button.cinema-searchbutton { width: 71px; height: 33px; cursor: pointer; vertical-align:middle; border: 0; background-image:url('../images/elements.png'); background-position: -217px -56px; background-color:transparent;  }
 button.cinema-searchbutton:active {  width: 71px; height: 33px; cursor: pointer; vertical-align:middle; border: 0; background-image:url('../images/elements.png'); background-position: -298px -56px; background-color:transparent }

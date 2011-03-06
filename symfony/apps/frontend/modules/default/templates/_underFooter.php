@@ -26,7 +26,7 @@
 	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px; vertical-align: top">
 		<p class="bigstrong spacer-bottom">La Tv Azi</p>
 		<?php foreach($filmsNowTv as $filmNowTv):?>
-			<a href="<?php echo url_for('@film?id=' . $filmNowTv->getId() . '&key=' . $filmNowTv->getUrlKey());?>"><?php echo $filmNowTv->getNameRo();?></a><br />
+			<a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>"><?php echo $filmNowTv->getFilm()->getNameRo();?></a><br />
 		<?php endforeach;?>
 	</div>
 	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px; vertical-align: top">

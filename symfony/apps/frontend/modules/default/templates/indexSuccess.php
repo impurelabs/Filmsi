@@ -219,7 +219,7 @@
       <div class="left" style="width: 260px"> <span style="font-size: 23px; color: #000000">Vrei la cinematograf?</span> <br />
         <span style="font-size: 17px; color: #ffffff">Afla chiar acum ce filme sunt la cinematograf in orasul tau.</span> </div>
       <div class="left spacer-top-m spacer-left-xxl">
-        <select id="cinema-city-selector" class="cinema-city" onchange="location.href='<?php echo url_for('@cinema_search');?>?l=' + $('#cinema-city-selector > option:selected').val()">
+        <select id="cinema-city-selector" class="cinema-city" style="width: 350px" onchange="location.href='<?php echo url_for('@cinema_search');?>?l=' + $('#cinema-city-selector > option:selected').val()">
           <option value="0">Alege orasul</option>
 		  <?php foreach($cinemaLocations as $locationId => $cinemaLocation):?>
 			<option value="<?php echo $locationId;?>"><?php echo $cinemaLocation;?></option>
@@ -370,7 +370,7 @@
   <div class="cell-container1">
     <div class="cell spacer-bottom-m">
       <div class="cell-hd">
-        <h4>BoxOffice <span class="black">USA</span></h4>
+        <h4>BoxOffice <span class="black">RO</span></h4>
       </div>
       <div class="cell-bd">
         <div class="spacer-bottom">

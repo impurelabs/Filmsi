@@ -118,6 +118,10 @@ abstract class BasePhotoAlbum extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'photo_album_id'));
 
+        $this->hasOne('Cinema', array(
+             'local' => 'id',
+             'foreign' => 'photo_album_id'));
+
         $this->hasOne('Stire', array(
              'local' => 'id',
              'foreign' => 'photo_album_id'));

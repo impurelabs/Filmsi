@@ -37,4 +37,8 @@ class defaultComponents extends sfComponents
 		$this->actors = PersonTable::getInstance()->getBestActors(5);
 		$this->stires = StireTable::getInstance()->getBest(5);
 	}
+
+	public function executeRightColumn(sfWebRequest $request) {
+		$this->gadgets = PageGadgetTable::getInstance()->findByPage($this->page);
+	}
 }

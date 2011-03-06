@@ -29,6 +29,11 @@ function filmsiVideoThumb($code)
 	return 'http://img.youtube.com/vi/' . $code . '/default.jpg';
 }
 
+function filmsiVideoThumb0($code)
+{
+	return 'http://img.youtube.com/vi/' . $code . '/0.jpg';
+}
+
 function filmsiVideo($code)
 {
 	return <<<FILMSI

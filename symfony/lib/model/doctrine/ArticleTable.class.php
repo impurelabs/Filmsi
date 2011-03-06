@@ -184,4 +184,28 @@ class ArticleTable extends Doctrine_Table
 
 		return $q->execute();
 	}
+
+	public function getNewest($limit = null)
+	{
+		return Doctrine_Query::create()
+			->from('Article a')
+			->limit($limit)
+			->andWhere('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->orderBy('a.publish_date, a.id DESC')
+			->execute();
+	}
+
+	public function getMostCommented($limit)
+	{
+		return Doctrine_Query::create()
+			->select('a.id, a.url_key, a.name, a.content_teaser, a.filename, COUNT(c.id) comment_count')
+			->from('Article a')
+			->leftJoin('a.Comment c')
+			->groupBy('c.model_library_id')
+			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
+			->andWhere('c.model = "Article"')
+			->orderBy('comment_count DESC')
+			->limit($limit)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
 }

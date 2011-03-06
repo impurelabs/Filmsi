@@ -231,6 +231,10 @@ abstract class BaseArticle extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'article_id'));
 
+        $this->hasMany('Comment', array(
+             'local' => 'library_id',
+             'foreign' => 'model_library_id'));
+
         $inlibrary0 = new inLibrary(array(
              'type_key' => 'Article',
              'has_imdb' => false,

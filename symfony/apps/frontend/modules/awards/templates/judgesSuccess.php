@@ -66,5 +66,5 @@
 
 
 <div class="cell-container7 spacer-left"> <!-- right column start -->
-	this is the right column
+	<?php include_component('default', 'rightColumn', array('page' => Page::AWARD));?>
 </div> <!-- right column end -->

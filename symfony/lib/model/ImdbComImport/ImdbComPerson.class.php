@@ -176,6 +176,9 @@ class ImdbComPerson
   	
   	/* All films the person acted in*/ 
   	preg_match('/<div id="filmo-head-Actor.*?<div style="display:none;">(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
+	if(!isset($matches[0])){
+		preg_match('/<div id="filmo-head-Actress.*?<div style="display:none;">(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
+	}
   	preg_match_all('/href="\/title\/(.*?)\/"/i', $matches[0], $matches);
   	if (isset($matches[1])){
   		$this->params['acted_films'] = $matches[1];

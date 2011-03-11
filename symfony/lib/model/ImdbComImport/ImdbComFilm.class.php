@@ -220,25 +220,25 @@ class ImdbComFilm
 		
 		
 		
-  	$html = str_replace(array("\r", "\r\n", "\n"), '', $response);
-	$html = str_replace('  ', '', $html);
-  	
-  	preg_match('/name="directors"(.*?)<\/table>/i', $html, $matches);
-  	preg_match_all('/<a href="\/name\/(.*?)\/">(.*?)<\/a>/i', $matches[0], $matches);
-  	$this->params['directors'] = $matches[1];
-  	
-  	preg_match('/name="producers"(.*?)<\/table>/i', $html, $matches);
-  	preg_match_all('/<a href="\/name\/(.*?)\/">(.*?)<\/a>/i', $matches[0], $matches);
-  	$this->params['producers'] = $matches[1];
-  	
-  	preg_match('/name="writers"(.*?)<\/table>/i', $html, $matches);
-  	preg_match_all('/<a href="\/name\/(.*?)\/">(.*?)<\/a>/i', $matches[0], $matches);
-  	$this->params['writers'] = $matches[1];
-  	
-  	preg_match_all('/<td class="nm"><a href="\/name\/(.*?)\/"/i', $html, $matches);
-  	$this->params['actors'] = $matches[1];
+		$html = str_replace(array("\r", "\r\n", "\n"), '', $response);
+		$html = str_replace('  ', '', $html);
 
-	//echo '<pre>'; var_dump($this->params['actors']); exit;
+		preg_match('/name="directors"(.*?)<\/table>/i', $html, $matches);
+		preg_match_all('/<a href="\/name\/(.*?)\/">(.*?)<\/a>/i', $matches[0], $matches);
+		$this->params['directors'] = $matches[1];
+
+		preg_match('/name="producers"(.*?)<\/table>/i', $html, $matches);
+		preg_match_all('/<a href="\/name\/(.*?)\/">(.*?)<\/a>/i', $matches[0], $matches);
+		$this->params['producers'] = $matches[1];
+
+		preg_match('/name="writers"(.*?)<\/table>/i', $html, $matches);
+		preg_match_all('/<a href="\/name\/(.*?)\/">(.*?)<\/a>/i', $matches[0], $matches);
+		$this->params['writers'] = $matches[1];
+
+		preg_match_all('/<td class="nm"><a href="\/name\/(.*?)\/"/i', $html, $matches);
+		$this->params['actors'] = $matches[1];
+
+		//echo '<pre>'; var_dump($this->params['actors']); exit;
 	}
 
 	public function parseAwardsPage()

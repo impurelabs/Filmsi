@@ -175,14 +175,16 @@ class ImdbComPerson
   	unset($matches);
   	
   	/* All films the person acted in*/ 
-  	preg_match('/<div id="filmo-head-Actor.*?<div style="display:none;">(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
+  	preg_match('/<div id="filmo-head-Actor.*?(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
 	if(!isset($matches[0])){
-		preg_match('/<div id="filmo-head-Actress.*?<div style="display:none;">(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
+		preg_match('/<div id="filmo-head-Actress.*?(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
 	}
+	//die('este:' . $matches[0]);
   	preg_match_all('/href="\/title\/(.*?)\/"/i', $matches[0], $matches);
   	if (isset($matches[1])){
   		$this->params['acted_films'] = $matches[1];
   	}
+	//echo '<pre>'; var_dump($this->params['acted_films']); exit;
   	unset($matches);
   	
   	/* All films the person produced */ 

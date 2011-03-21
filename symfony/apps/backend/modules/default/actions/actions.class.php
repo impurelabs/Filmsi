@@ -102,9 +102,19 @@ class defaultActions extends sfActions
   }
   
 	public function executeModerate(sfWebRequest $request)
-  {
-  	$this->objects = Doctrine_Core::getTable('Library')->getPending();
-  }
+	{
+		if ($request->hasParameter('filter_page')) {
+			$this->filterPage = $request->getParameter('filter_page');
+			$offset = ($this->filterPage - 1) * sfConfig::get('app_library_list_limit');
+		} else {
+			$offset = 0;
+			$this->filterPage = 1;
+		}
+
+		$this->objects = LibraryTable::getInstance()->getPending($offset, sfConfig::get('app_library_list_limit'));
+		$this->totalCount = LibraryTable::getInstance()->countPending();
+		$this->pageCount = ceil($this->totalCount / sfConfig::get('app_library_list_limit'));
+	}
   
   public function executeAllow(sfWebRequest $request)
   {

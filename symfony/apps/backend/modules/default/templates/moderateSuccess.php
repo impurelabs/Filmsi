@@ -1,4 +1,16 @@
-<table>
+<div class="right">
+Pagina
+<form id="filter-form" action="<?php echo url_for('@default?module=default&action=moderate') ?>" method="get">
+<select id="page" name="filter_page" onchange="getElementById('filter-form').submit();">
+	<?php for($counter = 1; $counter <= $pageCount; $counter++): ?>
+	<option value="<?php echo $counter;?>"<?php if ($counter == $filterPage) echo ' selected="selected"';?>><?php echo $counter;?></option>
+	<?php endfor ;?>
+</select>
+</form>
+
+</div>
+
+<table class="listhighlight">
     <tr>
         <th>ID</th>
         <th>Cod IMDB</th>
@@ -21,4 +33,7 @@
     </tr>
 <?php endforeach ?>
 </table>
-</form>
+
+<div class="align-right">
+	Gasite: <?php echo $totalCount;?>
+</div>

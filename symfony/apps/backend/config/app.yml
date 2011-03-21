@@ -4,7 +4,7 @@
 # default values
 all:
   library:
-    list_limit: 50
+    list_limit: 1
     types: [ PhotoAlbum, VideoAlbum, Person, Film, Cinema, FestivalEdition, Stire, Article ]
     type_names: [ "Album Foto", "Album Video", Persoana, Film, Cinematograf, Festival, Stire, Articol ]
     

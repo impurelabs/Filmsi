@@ -43,8 +43,8 @@
 
 	<div class="left" style="width:150px">
     	<div class="normalcell spacer-bottom-m align-center">
-            <a href="#"><img src="<?php echo filmsiPersonPhoto($person->getFilename());?>" class="spacer-bottom" /></a>
-            <div class="more-cell"><a href="" class="smallwhite-link">mai multe poze &raquo;</a></div>
+            <a href="<?php echo url_for('@person_photos?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>"><img src="<?php echo filmsiPersonPhoto($person->getFilename());?>" class="spacer-bottom" /></a>
+            <div class="more-cell"><a href="<?php echo url_for('@person_photos?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="smallwhite-link">mai multe poze &raquo;</a></div>
         </div>
 
         <?php include_partial('persons/alert', array('personId' => $person->getId()));?>

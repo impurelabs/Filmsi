@@ -165,7 +165,7 @@ class personsActions extends sfActions
 	public function executeFilms(sfWebRequest $request)
 	{
 		$this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
-		$this->films = $this->person->getMostViewedFilmsByRole(0);
+		$this->films = $this->person->getMostViewedFilmsByRole(0, null, Doctrine_Core::HYDRATE_RECORD);
 	}
 
 	public function executePhotos(sfWebRequest $request)

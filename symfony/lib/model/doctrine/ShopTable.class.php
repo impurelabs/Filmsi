@@ -7,6 +7,9 @@
  */
 class ShopTable extends Doctrine_Table
 {
+	/**
+	 * @return ShopTable
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('Shop');
@@ -51,6 +54,17 @@ class ShopTable extends Doctrine_Table
 		}
 
 		return $shops;
+	}
+
+	public function getByFilm($filmId)
+	{
+		return  Doctrine_Query::create()
+			->from('Shop s')
+			->innerJoin('s.ShopFilm sf')
+			->where('sf.film_id = ?', $filmId)
+			->orderBy('s.name ASC')
+			->groupBy('sf.shop_id')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
 
 	public function getForGadget($limit)

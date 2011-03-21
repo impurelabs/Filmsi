@@ -149,6 +149,11 @@ class Film extends BaseFilm
 		return ShopTable::getInstance()->getFormattedByFilm($this->getId());
 	}
 
+	public function getShops()
+	{
+		return ShopTable::getInstance()->getByFilm($this->getId());
+	}
+
 	public function getRecentAwardsDetailed($limit = 5)
     {
         return FestivalSectionParticipantTable::getInstance()->getDetailedByFilm($this->getImdb(), $limit);

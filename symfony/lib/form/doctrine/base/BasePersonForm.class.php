@@ -52,7 +52,7 @@ abstract class BasePersonForm extends BaseFormDoctrine
       'date_of_death'         => new sfValidatorDate(array('required' => false)),
       'place_of_birth'        => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'filename'              => new sfValidatorString(array('max_length' => 250, 'required' => false)),
-      'biography_teaser'      => new sfValidatorString(array('max_length' => 250, 'required' => false)),
+      'biography_teaser'      => new sfValidatorString(array('max_length' => 400, 'required' => false)),
       'biography_content'     => new sfValidatorPass(array('required' => false)),
       'meta_description'      => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'meta_keywords'         => new sfValidatorString(array('max_length' => 250, 'required' => false)),

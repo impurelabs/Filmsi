@@ -61,7 +61,7 @@ class Person extends BasePerson
 		return StireTable::getInstance()->getRelatedByPersonCount($this->getId());
     }
 
-    public function getMostViewedFilmsByRole($limit = null, $role = null)
+    public function getMostViewedFilmsByRole($limit = null, $role = null, $hydrator = Doctrine_Core::HYDRATE_ARRAY)
     {
         $q = Doctrine_Query::create()
             ->from('Film f')
@@ -77,7 +77,7 @@ class Person extends BasePerson
             $q->limit($limit);
         }
 
-        return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+        return $q->execute(array(), $hydrator);
     }
 
     public function getRecentAwardsDetailed($limit = 5)

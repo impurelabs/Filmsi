@@ -464,16 +464,31 @@ class LibraryTable extends Doctrine_Table
 
 		return $q['l_counter'];
 	}
-	
-    public function getPending($offset = 0)
+
+    public function getPending($offset, $limit)
 	{
 		return Doctrine_Query::create()
 			->from('Library l')
 			->innerJoin('l.Author u')
 			->orderBy('l.id ASC')
 			->addWhere('l.state = 0')
-			->limit(50)
+			->offset($offset)
+			->limit($limit)
 			->execute();
+	}
+
+    public function countPending()
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(l.id) counter')
+			->from('Library l')
+			->innerJoin('l.Author u')
+			->orderBy('l.id ASC')
+			->addWhere('l.state = 0');
+
+		$q = $q->fetchOne(array(), Doctrine_Core::HYDRATE_SCALAR);
+
+		return $q['l_counter'];
 	}
 
 	public function delete($ids)

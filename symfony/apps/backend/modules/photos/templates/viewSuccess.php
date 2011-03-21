@@ -3,7 +3,7 @@
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=photos&action=photoAdd');?>?aid=<?php echo $album->getId();?>'">Adauga poze</button>
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=photos&action=editAlbum');?>?aid=<?php echo $album->getId();?>'">Editeaza detalii album</button>
 <?php if($sf_user->hasCredential('Moderator') && $album->getState() == Library::STATE_PENDING): ?>
-Acest obiect este Pending! <button type="button" class="right" onclick="location.href='<?php echo url_for('@default?module=default&action=allow');?>?lid=<?php echo $album->getLibraryId();?>'">Aproba</button>
+Acest obiect este Pending! <button type="button" onclick="location.href='<?php echo url_for('@default?module=default&action=allow');?>?lid=<?php echo $album->getLibraryId();?>'">Aproba</button>
 <?php endif; ?>
 </div>
 

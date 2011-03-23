@@ -29,9 +29,8 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle($this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
-		$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		/* This var wil be used as a prefix in the title */
+		$statusForTitle = '';
 
 		$this->getContext()->getConfiguration()->loadHelpers('Date');
 		$this->statuses = array();
@@ -46,6 +45,7 @@ class filmsActions extends sfActions
 					if(strtotime($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01') < time()){
 						$this->statuses[] = 'ACUM in cinema';
 						$this->isInCinema = true;
+						$statusForTitle = 'Cinema';
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-' . $this->film->getStatusCinemaDay(),'D', 'ro')) . ' in cinema';
 					}
@@ -61,6 +61,7 @@ class filmsActions extends sfActions
 				if ($this->film->getStatusDvdYear() != '0' && $this->film->getStatusDvdMonth() != '0' && $this->film->getStatusDvdDay() != '0'){
 					if(strtotime($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01') < time()){
 						$this->statuses[] = 'ACUM pe DVD';
+						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', DVD' : 'DVD');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-' . $this->film->getStatusDvdDay(),'D', 'ro')) . ' pe DVD';
 					}
@@ -76,6 +77,7 @@ class filmsActions extends sfActions
 				if ($this->film->getStatusBlurayYear() != '0' && $this->film->getStatusBlurayMonth() != '0' && $this->film->getStatusBlurayDay() != '0'){
 					if(strtotime($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-01') < time()){
 						$this->statuses[] = 'ACUM pe Blu-ray';
+						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Blu-ray' : 'Blu-ray');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-' . $this->film->getStatusBlurayDay(),'D', 'ro')) . ' pe Blu-ray';
 					}
@@ -91,6 +93,7 @@ class filmsActions extends sfActions
 				if ($this->film->getStatusOnlineYear() != '0' && $this->film->getStatusOnlineMonth() != '0' && $this->film->getStatusOnlineDay() != '0'){
 					if(strtotime($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-01') < time()){
 						$this->statuses[] = 'ACUM online';
+						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Online' : 'Online');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-' . $this->film->getStatusOnlineDay(),'D', 'ro')) . ' online';
 					}
@@ -127,7 +130,7 @@ class filmsActions extends sfActions
 			if ($this->commentForm->isValid()){
 				$this->commentForm->save();
 
-                                $this->redirect($this->generateUrl('film', array('id' => $this->film->getId(), 'key' => $this->film->getUrlKey())) . '#comments');
+				$this->redirect($this->generateUrl('film', array('id' => $this->film->getId(), 'key' => $this->film->getUrlKey())) . '#comments');
 			}
 		}
 
@@ -140,6 +143,46 @@ class filmsActions extends sfActions
 		$visit->setName($this->film->getNameRo());
 		$visit->setIp($_SERVER['REMOTE_ADDR']);
 		$visit->save();
+
+
+
+		$this->getResponse()->setTitle($statusForTitle . ' - ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = $statusForTitle . ' - ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeVote(sfWebRequest $request)
@@ -167,10 +210,6 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle('Articole: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
-
 		$this->currentPage = (int)$request->getParameter('p', 1);
 		$this->articles = ArticleTable::getInstance()->getListByFilm($this->film->getId(), sfConfig::get('app_article_page_limit'), $this->currentPage);
 		$this->articleCount = ArticleTable::getInstance()->countByFilm($this->film->getId());
@@ -194,6 +233,47 @@ class filmsActions extends sfActions
 				$this->navEnd = $this->pageCount;
 			}
 		}
+
+
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Articole despre ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Articole despre ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeComments(sfWebRequest $request)
@@ -207,10 +287,6 @@ class filmsActions extends sfActions
 		}else{
 			$this->backgroundWidth = '';
 		}
-
-		$this->getResponse()->setTitle('Comentarii: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
 
 
 
@@ -239,6 +315,48 @@ class filmsActions extends sfActions
 		}
 
 		$this->comments = Doctrine_Core::getTable('Comment')->getActiveByModel('film', $this->film->getLibraryId(), $_SERVER['REMOTE_ADDR']);
+
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Cometarii despre ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Cometarii despre ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executePhotos(sfWebRequest $request)
@@ -253,14 +371,52 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle('Fotografii: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
-
 		$this->photos = $this->film->getPhotoAlbum()->getPhotos();
 		$this->photoCount = $this->photos->count();
 
 		$this->currentPhoto = $request->getParameter('pid', 1);
+
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Fotografii cu ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Fotografii cu ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeStiri(sfWebRequest $request)
@@ -274,10 +430,6 @@ class filmsActions extends sfActions
 		}else{
 			$this->backgroundWidth = '';
 		}
-
-		$this->getResponse()->setTitle('Stiri: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
 
 		$this->currentPage = (int)$request->getParameter('p', 1);
 		$this->stires = $this->film->getRelatedStires(sfConfig::get('app_stire_page_limit'), $this->currentPage, false);
@@ -303,6 +455,47 @@ class filmsActions extends sfActions
 						$this->navEnd = $this->pageCount;
 				}
 		}
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Stiri despre ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Stiri despre ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeSinopsis(sfWebRequest $request)
@@ -317,9 +510,46 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle('Sinopsis: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Sinopsis ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Sinopsis ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeCast(sfWebRequest $request)
@@ -334,14 +564,53 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle('Actori & echipa: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
-
 		$this->actors        = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId());
 		$this->directors     = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
 		$this->scriptwriters = FilmPersonTable::getInstance()->getBestScriptwritersByFilm($this->film->getId(), 3);
 		$this->producers     = FilmPersonTable::getInstance()->getBestProducersByFilm($this->film->getId());
+
+
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Actorii si echipa ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Actorii si echipa ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeBuy(sfWebRequest $request)
@@ -356,11 +625,50 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle('Cumpara pe DVD & Bluray: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
-
 		$this->shops = $this->film->getShopUrls();
+
+
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Cumpara pe DVD si Blu-ray ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Cumpara pe DVD si Blu-ray ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeAwards(sfWebRequest $request)
@@ -375,11 +683,49 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle('Premii: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
-
 		$this->awards = $this->film->getRecentAwardsDetailed(0);
+
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Premii ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Premii ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeVideos(sfWebRequest $request)
@@ -394,14 +740,52 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->getResponse()->setTitle('Trailere si clipuri: ' . $this->film->getName() . ' - Filmsi.ro');
-		$this->getResponse()->addMeta('keywords', '');
-		$this->getResponse()->addMeta('description', '');
-
 		$this->videos = $this->film->getVideoAlbum()->getVideos();
 		$this->videoCount = $this->videos->count();
 
 		$this->currentVideo = $request->getParameter('vid', 1);
+
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Trailere si clipuri ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Trailere si clipuri ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
 	}
 
 	public function executeNowInCinema(sfWebRequest $request)

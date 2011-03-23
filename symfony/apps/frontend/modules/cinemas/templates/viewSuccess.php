@@ -1,4 +1,4 @@
-<h2><?php echo $cinema->getName();?></h2>
+<h2><a href="<?php echo url_for('@cinema?id=' . $cinema->getId() . '&key=' . $cinema->getUrlKey());?>"><?php echo $cinema->getName();?></a></h2>
 
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
@@ -14,7 +14,7 @@
 
     <div class="cell spacer-bottom-m">
         <div class="cell-hd">
-            <h5>Detalii <span class="black">cinema</span></h5>
+            <h5><a href="<?php echo url_for('@cinema?id=' . $cinema->getId() . '&key=' . $cinema->getUrlKey());?>">Detalii <span class="black">cinema</span></a></h5>
         </div>
         <div class="cell-bd" style="padding:0">
         	<ul class="filterlist spacer-bottom-m">

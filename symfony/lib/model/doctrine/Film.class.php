@@ -16,6 +16,14 @@ class Film extends BaseFilm
 	protected $bestDirectors = null;
 
 
+	public function  getUrlKey() {
+		if ($this->_get('url_key') == '') {
+			return Doctrine_Inflector::urlize($this->getName());
+		} else {
+			return $this->_get('url_key');
+		}
+	}
+
 	public function getName()
 	{
 		return $this->getNameRo() . ($this->getNameEn() != '' ? ' (' . $this->getNameEn() . ')' : '');

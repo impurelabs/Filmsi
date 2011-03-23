@@ -12,6 +12,14 @@
  */
 class FestivalEdition extends BaseFestivalEdition
 {
+	public function  getUrlKey() {
+		if ($this->_get('url_key') == '') {
+			return Doctrine_Inflector::urlize($this->getName());
+		} else {
+			return $this->_get('url_key');
+		}
+	}
+
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('FestivalEdition');

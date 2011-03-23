@@ -11,7 +11,15 @@
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 class Cinema extends BaseCinema
-{	
+{
+	public function  getUrlKey() {
+		if ($this->_get('url_key') == '') {
+			return Doctrine_Inflector::urlize($this->getName());
+		} else {
+			return $this->_get('url_key');
+		}
+	}
+
 	public function preDelete($event)
 	{
 		// Delete the big file and the thumbnail

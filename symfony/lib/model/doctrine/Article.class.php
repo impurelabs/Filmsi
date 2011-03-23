@@ -12,6 +12,14 @@
  */
 class Article extends BaseArticle
 {
+	public function  getUrlKey() {
+		if ($this->_get('url_key') == '') {
+			return Doctrine_Inflector::urlize($this->getName());
+		} else {
+			return $this->_get('url_key');
+		}
+	}
+
 	public function preDelete($event)
 	{
 		// Delete the big file and the thumbnail

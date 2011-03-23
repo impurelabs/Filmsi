@@ -65,7 +65,7 @@ abstract class BaseCinemaForm extends BaseFormDoctrine
       'is_type_film'        => new sfValidatorPass(array('required' => false)),
       'is_type_digital'     => new sfValidatorPass(array('required' => false)),
       'is_type_3d'          => new sfValidatorPass(array('required' => false)),
-      'ticket_price'        => new sfValidatorString(array('max_length' => 250, 'required' => false)),
+      'ticket_price'        => new sfValidatorPass(array('required' => false)),
       'filename'            => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'description_teaser'  => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'description_content' => new sfValidatorPass(array('required' => false)),

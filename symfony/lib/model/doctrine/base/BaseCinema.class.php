@@ -176,9 +176,8 @@ abstract class BaseCinema extends sfDoctrineRecord
         $this->hasColumn('is_type_3d', 'bool', null, array(
              'type' => 'bool',
              ));
-        $this->hasColumn('ticket_price', 'string', 250, array(
-             'type' => 'string',
-             'length' => 250,
+        $this->hasColumn('ticket_price', 'text', null, array(
+             'type' => 'text',
              ));
         $this->hasColumn('filename', 'string', 250, array(
              'type' => 'string',

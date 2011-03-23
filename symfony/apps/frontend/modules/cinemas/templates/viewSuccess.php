@@ -50,16 +50,16 @@
 								
 				<p class="spacer-bottom-s"><strong>Ai votat deja azi pentru acest cinematograf!</strong></p>
 			<?php else:?>
-				<a href="" class="icon-votestar votetrigger" id="votestar-1"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-2"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-3"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-4"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-5"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-6"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-7"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-8"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-9"></a>
-				<a href="" class="icon-votestar votetrigger" id="votestar-10"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-1"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-2"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-3"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-4"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-5"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-6"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-7"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-8"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-9"></a>
+				<a href="javascript:void(0)" class="icon-votestar votetrigger" id="votestar-10"></a>
 				<form id="vote_form" method="post" action="<?php echo url_for('@cinema_vote');?>">
 					<input type="hidden" name="cinema_id" value="<?php echo $cinema->getId();?>" />
 					<input type="hidden" id="vote_grade" name="grade" value="" />

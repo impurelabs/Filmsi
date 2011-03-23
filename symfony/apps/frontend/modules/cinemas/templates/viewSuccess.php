@@ -135,7 +135,7 @@
         <div class="left spacer-left" style="width: 50px"><strong><?php echo $cinema->getRoomCount();?></strong></div>
         <div class="left spacer-left" style="width: 90px"><strong><?php echo $cinema->getSound();?></strong></div>
         <div class="left spacer-left" style="width: 150px">
-			<ul>
+			<ul style="list-style: none; padding: 0; margin: 0">
 				<?php foreach($cinema->getService() as $service):?>
             	<li><span class="icon-checkbullet"></span> <?php echo $service->getName();?></li>
 				<?php endforeach;?>

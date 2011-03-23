@@ -23,7 +23,7 @@
     height: <?php echo $height?>,
 
     // Example content CSS (should be your site CSS)
-    content_css : "/css/main.css"
+    content_css : "/css/main-editor.css"
 
   }); 
 </script>

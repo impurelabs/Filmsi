@@ -51,7 +51,7 @@ class personsActions extends sfActions
             }
 	}
 
-        public function executeActors(sfWebRequest $request)
+	public function executeActors(sfWebRequest $request)
 	{
             $this->getResponse()->setTitle('Filmsi.ro - Actori');
 
@@ -88,7 +88,7 @@ class personsActions extends sfActions
             }
 	}
 
-        public function executeDirectors(sfWebRequest $request)
+	public function executeDirectors(sfWebRequest $request)
 	{
             $this->getResponse()->setTitle('Filmsi.ro - Regizori');
 
@@ -126,46 +126,184 @@ class personsActions extends sfActions
 
 	public function executeView(sfWebRequest $request)
 	{
-            $this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+		$this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
 
-			$this->getResponse()->setTitle($this->person->getName() . ' - Filmsi.ro');
+		$routeParameters = $this->getRoute()->getParameters();
+		$this->personRole = $routeParameters['person_role'];
+
+		$this->films = $this->person->getMostViewedFilmsByRole(8, $this->personRole);
+
+		//$this->awards = Doctrine_Core::getTable('FestivalSectionParticipant')->getDetailedByPerson($this->person->getImdb());
+		$this->awards = $this->person->getRecentAwardsDetailed(5);
+
+		/* Add the visit */
+		if ($routeParameters['person_role'] == 'actor'){
+			$visit = new Visit();
+			$visit->setLibraryId($this->person->getLibraryId());
+			$visit->setUrl($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())));
+			$visit->setName($this->person->getName());
+			$visit->setIp($_SERVER['REMOTE_ADDR']);
+			$visit->save();
+		}
+
+
+		/* META Stuff */
+		$personRoles = '';
+		if ($this->person->getIsActor() == '1'){
+			$personRoles .= 'actor ';
+		}
+		if ($this->person->getIsDirector() == '1'){
+			$personRoles .= 'regizor ';
+		}
+		if ($this->person->getIsScriptwriter() == '1'){
+			$personRoles .= 'scenarist ';
+		}
+		if ($this->person->getIsProducer() == '1'){
+			$personRoles .= 'producator ';
+		}
+		$this->getResponse()->setTitle($this->person->getName() . ' - ' . $personRoles . '- Filmsi.ro');
+
+		if ($this->person->getMetaKeywords() == '' || $this->person->getMetaDescription() == ''){
+			$metaStuff = $this->person->getName() . ' ' . $personRoles;
+
+			foreach($this->person->getMostViewedFilmsByRole(3) as $key => $film){
+				$metaStuff .= $film['name_ro'] . ', ';
+			}
+		}
+
+		if ($this->person->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
 			$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
+		}
+		if ($this->person->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
 			$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
-
-            $routeParameters = $this->getRoute()->getParameters();
-            $this->personRole = $routeParameters['person_role'];
-
-            $this->films = $this->person->getMostViewedFilmsByRole(8, $this->personRole);
-
-            //$this->awards = Doctrine_Core::getTable('FestivalSectionParticipant')->getDetailedByPerson($this->person->getImdb());
-            $this->awards = $this->person->getRecentAwardsDetailed(5);
-
-            /* Add the visit */
-            if ($routeParameters['person_role'] == 'actor'){
-                $visit = new Visit();
-                $visit->setLibraryId($this->person->getLibraryId());
-                $visit->setUrl($this->generateUrl('person', array('id' => $this->person->getId(), 'key' => $this->person->getUrlKey())));
-                $visit->setName($this->person->getName());
-                $visit->setIp($_SERVER['REMOTE_ADDR']);
-                $visit->save();
-            }
+		}
 	}
 
 	public function executeBiography(sfWebRequest $request)
 	{
 		$this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+
+
+		/* META Stuff */
+		$personRoles = '';
+		if ($this->person->getIsActor() == '1'){
+			$personRoles .= 'actor ';
+		}
+		if ($this->person->getIsDirector() == '1'){
+			$personRoles .= 'regizor ';
+		}
+		if ($this->person->getIsScriptwriter() == '1'){
+			$personRoles .= 'scenarist ';
+		}
+		if ($this->person->getIsProducer() == '1'){
+			$personRoles .= 'producator ';
+		}
+		$this->getResponse()->setTitle('Biografie ' . $this->person->getName() . ' - ' . $personRoles . '- Filmsi.ro');
+
+		if ($this->person->getMetaKeywords() == '' || $this->person->getMetaDescription() == ''){
+			$metaStuff = 'Biografie ' . $this->person->getName() . ' ' . $personRoles;
+
+			foreach($this->person->getMostViewedFilmsByRole(3) as $key => $film){
+				$metaStuff .= $film['name_ro'] . ', ';
+			}
+		}
+
+		if ($this->person->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
+		}
+		if ($this->person->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
+		}
 	}
 
 	public function executeAwards(sfWebRequest $request)
 	{
 		$this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
 		$this->awards = $this->person->getRecentAwardsDetailed(0);
+
+		/* META Stuff */
+		$personRoles = '';
+		if ($this->person->getIsActor() == '1'){
+			$personRoles .= 'actor ';
+		}
+		if ($this->person->getIsDirector() == '1'){
+			$personRoles .= 'regizor ';
+		}
+		if ($this->person->getIsScriptwriter() == '1'){
+			$personRoles .= 'scenarist ';
+		}
+		if ($this->person->getIsProducer() == '1'){
+			$personRoles .= 'producator ';
+		}
+		$this->getResponse()->setTitle('Premii ' . $this->person->getName() . ' - ' . $personRoles . '- Filmsi.ro');
+
+		if ($this->person->getMetaKeywords() == '' || $this->person->getMetaDescription() == ''){
+			$metaStuff = 'Premii ' . $this->person->getName() . ' ' . $personRoles;
+
+			foreach($this->person->getMostViewedFilmsByRole(3) as $key => $film){
+				$metaStuff .= $film['name_ro'] . ', ';
+			}
+		}
+
+		if ($this->person->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
+		}
+		if ($this->person->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
+		}
 	}
 
 	public function executeFilms(sfWebRequest $request)
 	{
 		$this->person = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
 		$this->films = $this->person->getMostViewedFilmsByRole(0, null, Doctrine_Core::HYDRATE_RECORD);
+
+		/* META Stuff */
+		$personRoles = '';
+		if ($this->person->getIsActor() == '1'){
+			$personRoles .= 'actor ';
+		}
+		if ($this->person->getIsDirector() == '1'){
+			$personRoles .= 'regizor ';
+		}
+		if ($this->person->getIsScriptwriter() == '1'){
+			$personRoles .= 'scenarist ';
+		}
+		if ($this->person->getIsProducer() == '1'){
+			$personRoles .= 'producator ';
+		}
+		$this->getResponse()->setTitle('Filmografie ' . $this->person->getName() . ' - ' . $personRoles . '- Filmsi.ro');
+
+		if ($this->person->getMetaKeywords() == '' || $this->person->getMetaDescription() == ''){
+			$metaStuff = 'Filmografie ' . $this->person->getName() . ' ' . $personRoles;
+
+			foreach($this->person->getMostViewedFilmsByRole(3) as $key => $film){
+				$metaStuff .= $film['name_ro'] . ', ';
+			}
+		}
+
+		if ($this->person->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
+		}
+		if ($this->person->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
+		}
 	}
 
 	public function executePhotos(sfWebRequest $request)
@@ -175,6 +313,41 @@ class personsActions extends sfActions
 		$this->photoCount = $this->photos->count();
 
 		$this->currentPhoto = $request->getParameter('pid', 1);
+
+		/* META Stuff */
+		$personRoles = '';
+		if ($this->person->getIsActor() == '1'){
+			$personRoles .= 'actor ';
+		}
+		if ($this->person->getIsDirector() == '1'){
+			$personRoles .= 'regizor ';
+		}
+		if ($this->person->getIsScriptwriter() == '1'){
+			$personRoles .= 'scenarist ';
+		}
+		if ($this->person->getIsProducer() == '1'){
+			$personRoles .= 'producator ';
+		}
+		$this->getResponse()->setTitle('Fotografii ' . $this->person->getName() . ' - ' . $personRoles . '- Filmsi.ro');
+
+		if ($this->person->getMetaKeywords() == '' || $this->person->getMetaDescription() == ''){
+			$metaStuff = 'Fotografii ' . $this->person->getName() . ' ' . $personRoles;
+
+			foreach($this->person->getMostViewedFilmsByRole(3) as $key => $film){
+				$metaStuff .= $film['name_ro'] . ', ';
+			}
+		}
+
+		if ($this->person->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
+		}
+		if ($this->person->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
+		}
 	}
 
 	public function executeStiri(sfWebRequest $request)
@@ -204,6 +377,42 @@ class personsActions extends sfActions
 						$this->navStart = $this->pageCount - 4;
 						$this->navEnd = $this->pageCount;
 				}
+		}
+
+
+		/* META Stuff */
+		$personRoles = '';
+		if ($this->person->getIsActor() == '1'){
+			$personRoles .= 'actor ';
+		}
+		if ($this->person->getIsDirector() == '1'){
+			$personRoles .= 'regizor ';
+		}
+		if ($this->person->getIsScriptwriter() == '1'){
+			$personRoles .= 'scenarist ';
+		}
+		if ($this->person->getIsProducer() == '1'){
+			$personRoles .= 'producator ';
+		}
+		$this->getResponse()->setTitle('Stiri ' . $this->person->getName() . ' - ' . $personRoles . '- Filmsi.ro');
+
+		if ($this->person->getMetaKeywords() == '' || $this->person->getMetaDescription() == ''){
+			$metaStuff = 'Stiri ' . $this->person->getName() . ' ' . $personRoles;
+
+			foreach($this->person->getMostViewedFilmsByRole(3) as $key => $film){
+				$metaStuff .= $film['name_ro'] . ', ';
+			}
+		}
+
+		if ($this->person->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->person->getMetaKeywords());
+		}
+		if ($this->person->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->person->getMetaDescription());
 		}
 	}
 

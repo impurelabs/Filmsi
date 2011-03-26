@@ -46,15 +46,15 @@ class filmsActions extends sfActions
   	
   	$this->persons = array();
   }
-  
+
   public function executeImport(sfWebRequest $request)
   {
   	set_time_limit(10000);
-  	
-  	
+
+
   	$parameters = $request->getParameter('film');
   	$imdbCode = $parameters['imdb'];
-  	
+
   	if (false !== Doctrine_Core::getTable('Film')->findOneByImdb($imdbCode)){
   		echo 'Filmul deja exista in baza de date! Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
   		exit;
@@ -62,7 +62,10 @@ class filmsActions extends sfActions
 
   	try {
   		$imdbComFilm = new ImdbComFilm($imdbCode);
-  		
+		$imdbComFilm->parseTitlePage();
+		$imdbComFilm->parseCastPage();
+		$imdbComFilm->parseAwardsPage();
+
   		$film = new Film();
   		$film->setImdb($imdbComFilm->getImdb());
   		$film->setNameRo($imdbComFilm->getNameRo());
@@ -78,91 +81,91 @@ class filmsActions extends sfActions
   		$filenameSource = ( $imdbComFilm->getFilenameSource() == false || strpos($imdbComFilm->getFilenameSource(),'nopicture') !== false ) ? sfConfig::get('app_film_nophoto_image_path') : $imdbComFilm->getFilenameSource();
 	  	$pieces = explode('.', $filenameSource);
 	  	$extension = array_pop($pieces);
-  		
+
   		$filename = md5($filenameSource . time() . rand(0, 999999)). '.' . $extension;
 	    copy($filenameSource, sfConfig::get('app_film_path').'/'.$filename);
-	    
+
 	    $film->setFilename($filename);
 	    $film->createFile();
-	    
-	    $film->save();
-	    
-	    
-	    $photoAlbum = new PhotoAlbum();
-	    $photoAlbum->setName('Film: ' . $imdbComFilm->getNameRo());
-  		$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
-  		$photoAlbum->setPublishDate(date('Y-m-d'), time());
-  		$photoAlbum->save();
 
-  		
-  		$photo = new Photo();
-  		$photo->setAlbumId($photoAlbum->getId());
-  		
-  		/* Creating the filename */
-  		$pieces = explode('.', $film->getFilename());
-  		$extension = array_pop($pieces);
-  		
-  		$filename = md5(rand(0, 9000000) . $film->getFilename()) . '.' . $extension;
-			// Set the filename for the object
-	    $photo->setFilename($filename);		
-	    $photo->createFile(sfConfig::get('app_film_path') . '/' . $film->getFilename(), $filename);
-	    
-	    $photo->save();
-	    
-	    
-	    /* Assign the photo album to the film */
-	    $film->setPhotoAlbumId($photoAlbum->getId());
 	    $film->save();
-	    
-	    
-	    
-			 
-	  
-    
+
+	    /* The creation of the photo album will be done manually when hitting the import photos from IMDB. */
+//	    $photoAlbum = new PhotoAlbum();
+//	    $photoAlbum->setName('Film: ' . $imdbComFilm->getNameRo());
+//  		$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
+//  		$photoAlbum->setPublishDate(date('Y-m-d'), time());
+//  		$photoAlbum->save();
+//
+//
+//  		$photo = new Photo();
+//  		$photo->setAlbumId($photoAlbum->getId());
+//
+//  		/* Creating the filename */
+//  		$pieces = explode('.', $film->getFilename());
+//  		$extension = array_pop($pieces);
+//
+//  		$filename = md5(rand(0, 9000000) . $film->getFilename()) . '.' . $extension;
+//			// Set the filename for the object
+//	    $photo->setFilename($filename);
+//	    $photo->createFile(sfConfig::get('app_film_path') . '/' . $film->getFilename(), $filename);
+//
+//	    $photo->save();
+//
+//
+//	    /* Assign the photo album to the film */
+//	    $film->setPhotoAlbumId($photoAlbum->getId());
+//	    $film->save();
+
+
+
+
+
+
       /* Assign the film genres */
 	    foreach ($imdbComFilm->getGenres() as $genreName){
 			if ($genreName == ''){
 				continue;
 			}
 	    	$genre = Doctrine_Core::getTable('Genre')->findOneByName($genreName);
-	    	
+
 	    	$filmGenre = new FilmGenre();
 	    	$filmGenre->setFilmId($film->getId());
 	    	$filmGenre->setGenreId($genre->getId());
 	    	$filmGenre->save();
 	    }
-	    
-	    
-	    
-	    
+
+
+
+
 	    echo '<br />Am terminat de importat filmul <strong>' . $film->getName() . '</strong>';
-			ob_end_flush(); flush(); ob_start(); 
-	    
-			
-			
-	    
+			ob_end_flush(); flush(); ob_start();
+
+
+
+
 	    /* Add the Directors */
 	    foreach ($imdbComFilm->getDirectors() as $personImdbCode)
 	    {
 	    	/* If the person does not exist in the database, move to the next one */
 	    	if (false == $person = Doctrine_Core::getTable('Person')->findOneByImdb($personImdbCode)){
 	    			continue;
-	    	} 
-	    	
+	    	}
+
 	    	/* Check if a connection between the person and the film is already made, if not, create it */
     		if (false == $filmPerson = Doctrine_Core::getTable('FilmPerson')->getOneByFilmAndPerson($film->getId(), $person->getId())){
     			$filmPerson = new FilmPerson();
     			$filmPerson->setFilmId($film->getId(), $person->getId());
     			$filmPerson->setPersonId($person->getId());
     		}
-    		
+
     			$filmPerson->setIsDirector('1');
     			$filmPerson->save();
 	    }
 
 		echo '<br />Am terminat de importat regizorii';
 			ob_end_flush(); flush(); ob_start();
-	    
+
   		/* Add the Writers */
 	    foreach ($imdbComFilm->getWriters() as $personImdbCode)
 	    {
@@ -170,21 +173,21 @@ class filmsActions extends sfActions
 	    	if (false == $person = Doctrine_Core::getTable('Person')->findOneByImdb($personImdbCode)){
 	    			continue;
 	    	}
-	    	
+
 	    	/* Check if a connection between the person and the film is already made, if not, create it */
     		if (false == $filmPerson = Doctrine_Core::getTable('FilmPerson')->getOneByFilmAndPerson($film->getId(), $person->getId())){
     			$filmPerson = new FilmPerson();
     			$filmPerson->setFilmId($film->getId(), $person->getId());
     			$filmPerson->setPersonId($person->getId());
     		}
-    		
+
     			$filmPerson->setIsScriptwriter('1');
     			$filmPerson->save();
 	    }
 
 		echo '<br />Am terminat de importat scenaristii';
 			ob_end_flush(); flush(); ob_start();
-	    
+
   		/* Add the Producers */
 	    foreach ($imdbComFilm->getProducers() as $personImdbCode)
 	    {
@@ -192,21 +195,21 @@ class filmsActions extends sfActions
 	    	if (false == $person = Doctrine_Core::getTable('Person')->findOneByImdb($personImdbCode)){
 	    			continue;
 	    	}
-	    	
+
 	    	/* Check if a connection between the person and the film is already made, if not, create it */
     		if (false == $filmPerson = Doctrine_Core::getTable('FilmPerson')->getOneByFilmAndPerson($film->getId(), $person->getId())){
     			$filmPerson = new FilmPerson();
     			$filmPerson->setFilmId($film->getId(), $person->getId());
     			$filmPerson->setPersonId($person->getId());
     		}
-    		
+
     			$filmPerson->setIsProducer('1');
     			$filmPerson->save();
 	    }
 
 		echo '<br />Am terminat de importat producatorii';
 			ob_end_flush(); flush(); ob_start();
-	    
+
   		/* Add the Actors */
 	    foreach ($imdbComFilm->getActors() as $personImdbCode)
 	    {
@@ -214,14 +217,14 @@ class filmsActions extends sfActions
 	    	if (false == $person = Doctrine_Core::getTable('Person')->findOneByImdb($personImdbCode)){
 	    			continue;
 	    	}
-	    	
+
 	    	/* Check if a connection between the person and the film is already made, if not, create it */
     		if (false == $filmPerson = Doctrine_Core::getTable('FilmPerson')->getOneByFilmAndPerson($film->getId(), $person->getId())){
     			$filmPerson = new FilmPerson();
     			$filmPerson->setFilmId($film->getId(), $person->getId());
     			$filmPerson->setPersonId($person->getId());
     		}
-    		
+
     			$filmPerson->setIsActor('1');
     			$filmPerson->save();
 	    }
@@ -277,7 +280,7 @@ class filmsActions extends sfActions
 					$festivalSectionParticipant->save();
 				}
 			}
-			
+
 			if (count($award['personImdbs']) == 0){
 				if (false == Doctrine_Core::getTable('FestivalSectionParticipant')->getBySectionAndFilmAndNullPerson($festivalSection->getId(), $film->getImdb())){
 					$festivalSectionParticipant = new FestivalSectionParticipant();
@@ -297,13 +300,71 @@ class filmsActions extends sfActions
 
 		echo '<br />Am terminat de importat premiile';
 			ob_end_flush(); flush(); ob_start();
-  		
+
   	} catch (ImdbComFilmException $e){
   		echo 'A aparut o eroare! Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
   	}
 
   	echo '<br /><br />Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'edit')) . '?lid=' . $film->getLibraryId() . '">AICI</a> pentru a continua.';
-  	
+
+  	exit;
+  }
+
+  public function executeImportImdbPhotos(sfWebRequest $request)
+  {
+  	set_time_limit(10000);
+
+	$film  = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
+  	if (false === $film){
+  		echo 'Filmul nu exista in baza de date! Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
+  		exit;
+  	}
+
+  	try {
+  		$imdbComFilm = new ImdbComFilm($film->getImdb());
+		$imdbComFilm->parsePhotosPage();
+
+		//echo '<pre>'; var_dump($imdbComFilm->getPhotos());exit;
+		/* If the film doesn't have any album associated with it, just create one */
+		if ('' == $film->getPhotoAlbumId()){
+			$photoAlbum = new PhotoAlbum();
+			$photoAlbum->setName('Film: ' . $imdbComFilm->getNameRo());
+			$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
+			$photoAlbum->setPublishDate(date('Y-m-d'), time());
+			$photoAlbum->save();
+
+			/* Assign the photo album to the film */
+			$film->setPhotoAlbumId($photoAlbum->getId());
+			$film->save();
+		}
+
+		/* Create the photos and add them to the album */
+		foreach ($imdbComFilm->getPhotos() as $imdbPhoto){
+			$photo = new Photo();
+			$photo->setAlbumId($film->getPhotoAlbumId());
+
+			$pieces = explode('.', $imdbPhoto);
+			$extension = array_pop($pieces);
+
+			$filename = md5($imdbPhoto . time() . rand(0, 999999)). '.' . $extension;
+			copy($imdbPhoto, sfConfig::get('app_film_path').'/'.$filename);
+
+			// Set the filename for the object
+			$photo->setFilename($filename);
+			$photo->createFile(sfConfig::get('app_film_path').'/'.$filename, $filename);
+
+			$photo->save();
+		}
+
+		echo '<br />Am terminat de importat pozele';
+			ob_end_flush(); flush(); ob_start();
+
+  	} catch (ImdbComFilmException $e){
+  		echo 'A aparut o eroare! Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
+  	}
+
+  	echo '<br /><br />Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'view')) . '?lid=' . $film->getLibraryId() . '">AICI</a> pentru a continua.';
+
   	exit;
   }
   

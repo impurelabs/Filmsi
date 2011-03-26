@@ -15,6 +15,9 @@ class ImdbComFilm
 		'producers' => array(),
 		'awards' => array()
 	);
+
+	protected $photos = array();
+
 	protected $imdbCode;
 	
 	protected $genres = array(
@@ -50,83 +53,9 @@ class ImdbComFilm
 	public function __construct($imdbCode)
 	{		
 		$this->imdbCode = $imdbCode;
-		$this->parseTitlePage();
-		$this->parseCastPage();
-		$this->parseAwardsPage();
-	}
-	
-	public function getImdb()
-	{
-		return $this->imdbCode;
-	}
-	
-	public function getNameRo()
-	{
-		return $this->params['name_ro'];
-	}
-	
-	public function getNameEn()
-	{
-		return $this->params['name_en'];
-	}
-	
-	public function getYear()
-	{
-		return $this->params['year'];
-	}
-	
-	public function getSinopsis()
-	{
-		return $this->params['sinopsis'];
-	}
-	
-	public function getDuration()
-	{
-		return $this->params['duration'];
-	}
-	
-	public function getFilenameSource()
-	{
-		return $this->params['filename-source'];
-	}
-	
-	public function getFilenameExtension()
-	{
-		$pieces = explode('.', $this->params['filename-source']);
-		return array_pop($pieces);
-	}
-	
-	public function getGenres()
-	{
-		return $this->params['genres'];
-	}
-	
-	public function getDirectors()
-	{
-		return $this->params['directors'];
-	}
-	
-	public function getActors()
-	{
-		return $this->params['actors'];
-	}
-	
-	public function getWriters()
-	{
-		return $this->params['writers'];
-	}
-	
-	public function getProducers()
-	{
-		return $this->params['producers'];
 	}
 
-	public function getAwards()
-	{
-		return $this->params['awards'];
-	}
-
-	private function parseTitlePage()
+	public function parseTitlePage()
 	{
 		$handle = curl_init('http://www.imdb.com/title/' . $this->imdbCode . '/');
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
@@ -201,7 +130,7 @@ class ImdbComFilm
   	unset($matches);
 	}
 	
-	private function parseCastPage()
+	public function parseCastPage()
 	{
 		$handle = curl_init('http://www.imdb.com/title/' . $this->imdbCode . '/fullcredits');
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
@@ -327,10 +256,146 @@ class ImdbComFilm
 		}
 	}
 
+	/**
+	 * Parses the page with thte photo gallery
+	 */
+	public function parsePhotosPage()
+	{
+		$handle = curl_init('http://www.imdb.com/title/' . $this->imdbCode . '/mediaindex');
+		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+		/* Get the HTML or whatever is linked in $url. */
+		$response = curl_exec($handle);
+
+		/* Check for 404 (file not found). */
+		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+		if($httpCode != 200) {
+		    return;
+		}
+		curl_close($handle);
+
+		$html = str_replace(array("\r", "\r\n", "\n"), '', $response);
+		$html = str_replace('  ', '', $html);
+
+
+
+
+		preg_match_all('/href="\/rg\/mediaindex\/unknown-thumbnail\/media\/(.*?)\/' . $this->imdbCode . '"/i', $html, $photoPageKeys);
+		$photoPageKeys = $photoPageKeys[1];
+		//echo '<pre>'; var_dump($photoPageKeys);exit;
+
+		/* Import only the first 10 film photos */
+		for ($i = 0; $i <= 9; $i++){
+			$this->photos[] = $this->parsePhotoPage($photoPageKeys[$i]);
+		}
+	}
+
+	/**
+	 * Parses the page where the actual big photo is located at. Returns the url to the actual image.
+	 */
+	private function parsePhotoPage($photoUrlKey)
+	{
+		$handle = curl_init('http://www.imdb.com/media/' . $photoUrlKey . '/' . $this->imdbCode);
+		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+		/* Get the HTML or whatever is linked in $url. */
+		$response = curl_exec($handle);
+
+		/* Check for 404 (file not found). */
+		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+		if($httpCode != 200) {
+		    return;
+		}
+		curl_close($handle);
+
+		$html = str_replace(array("\r", "\r\n", "\n"), '', $response);
+		$html = str_replace('  ', '', $html);
+
+		preg_match('/id="primary-img"(.*?)src="(.*?)"/i', $html, $matches);
+		
+		return $matches[2];
+	}
+
 	private function setGenres($genreCodes)
 	{
 		foreach ($genreCodes as $genreCode){
 			$this->params['genres'][] = $this->genres[$genreCode];
 		}
+	}
+
+	public function getImdb()
+	{
+		return $this->imdbCode;
+	}
+
+	public function getNameRo()
+	{
+		return $this->params['name_ro'];
+	}
+	
+	public function getNameEn()
+	{
+		return $this->params['name_en'];
+	}
+
+	public function getYear()
+	{
+		return $this->params['year'];
+	}
+
+	public function getSinopsis()
+	{
+		return $this->params['sinopsis'];
+	}
+
+	public function getDuration()
+	{
+		return $this->params['duration'];
+	}
+
+	public function getFilenameSource()
+	{
+		return $this->params['filename-source'];
+	}
+
+	public function getFilenameExtension()
+	{
+		$pieces = explode('.', $this->params['filename-source']);
+		return array_pop($pieces);
+	}
+
+	public function getGenres()
+	{
+		return $this->params['genres'];
+	}
+
+	public function getDirectors()
+	{
+		return $this->params['directors'];
+	}
+
+	public function getActors()
+	{
+		return $this->params['actors'];
+	}
+
+	public function getWriters()
+	{
+		return $this->params['writers'];
+	}
+
+	public function getProducers()
+	{
+		return $this->params['producers'];
+	}
+
+	public function getAwards()
+	{
+		return $this->params['awards'];
+	}
+
+	public function getPhotos()
+	{
+		return $this->photos;
 	}
 }

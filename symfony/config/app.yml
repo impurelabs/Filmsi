@@ -16,7 +16,7 @@ all:
     path_for_web: /content/persons
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_width: 450
+    sourceimage_width: 480
     sourceimage_height: null
     thumbnail_width: 114
     thumbnail_height: null
@@ -28,7 +28,7 @@ all:
     path_for_web: /content/films
     nophoto_image_path: %SF_WEB_DIR%/defaults/nophoto.jpg
     maxfilesize: 5000000
-    sourceimage_width: 450
+    sourceimage_width: 480
     sourceimage_height: null
     thumbnail_width: 201
     thumbnail_height: null

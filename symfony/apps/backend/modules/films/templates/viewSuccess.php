@@ -21,6 +21,11 @@
 <div class="mb-3">
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=films&action=edit');?>?lid=<?php echo $film->getLibraryId();?>'">Editeaza detalii</button>
 </div>
+<form class="mb-3" method="post" action="<?php echo url_for('@default?module=films&action=importImdbPhotos');?>">
+	<input type="hidden" name="id" value="<?php echo $film->getId();?>" />
+    <button type="submit">Importa poze din Imdb</button>
+</form>
+
 <div class="clear"></div>
 
 <table class="span-19">

@@ -171,4 +171,13 @@ class CinemaTable extends Doctrine_Table
 			->whereIn('c.id', $ids)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
+
+	public function cleanPhotoAlbums($photoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Cinema a')
+			->set('a.photo_album_id', 'null')
+			->where('a.photo_album_id = ?', $photoAlbumId)
+			->execute();
+	}
 }

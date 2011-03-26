@@ -208,4 +208,22 @@ class ArticleTable extends Doctrine_Table
 			->limit($limit)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
+
+	public function cleanPhotoAlbums($photoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Article a')
+			->set('a.photo_album_id', 'null')
+			->where('a.photo_album_id = ?', $photoAlbumId)
+			->execute();
+	}
+
+	public function cleanVideoAlbums($videoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Film a')
+			->set('a.video_album_id', 'null')
+			->where('a.video_album_id = ?', $videoAlbumId)
+			->execute();
+	}
 }

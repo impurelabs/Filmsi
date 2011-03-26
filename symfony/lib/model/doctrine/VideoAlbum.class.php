@@ -19,7 +19,13 @@ class VideoAlbum extends BaseVideoAlbum
 		if ($videos->count() > 0) {
 			$videos->delete();	
 		}
-		
+
+		/* Delete from all the elemets that are tied to this album */
+		ArticleTable::getInstance()->cleanVideoAlbums($event->getInvoker()->getId());
+		FilmTable::getInstance()->cleanVideoAlbums($event->getInvoker()->getId());
+		FestivalEditionTable::getInstance()->cleanVideoAlbums($event->getInvoker()->getId());
+		PersonTable::getInstance()->cleanVideoAlbums($event->getInvoker()->getId());
+		StireTable::getInstance()->cleanVideoAlbums($event->getInvoker()->getId());
 	}
 
 	public function getCover()

@@ -127,4 +127,22 @@ class FestivalEditionTable extends Doctrine_Table
 
 		return $q->execute();
 	}
+
+	public function cleanPhotoAlbums($photoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('FestivalEdition a')
+			->set('a.photo_album_id', 'null')
+			->where('a.photo_album_id = ?', $photoAlbumId)
+			->execute();
+	}
+
+	public function cleanVideoAlbums($videoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('FestivalEdition a')
+			->set('a.video_album_id', 'null')
+			->where('a.video_album_id = ?', $videoAlbumId)
+			->execute();
+	}
 }

@@ -20,7 +20,15 @@ class PhotoAlbum extends BasePhotoAlbum
 		if ($photos->count() > 0) {
 			$photos->delete();	
 		}
-		
+
+
+		/* Delete from all the elemets that are tied to this album */
+		ArticleTable::getInstance()->cleanPhotoAlbums($event->getInvoker()->getId());
+		FilmTable::getInstance()->cleanPhotoAlbums($event->getInvoker()->getId());
+		CinemaTable::getInstance()->cleanPhotoAlbums($event->getInvoker()->getId());
+		FestivalEditionTable::getInstance()->cleanPhotoAlbums($event->getInvoker()->getId());
+		PersonTable::getInstance()->cleanPhotoAlbums($event->getInvoker()->getId());
+		StireTable::getInstance()->cleanPhotoAlbums($event->getInvoker()->getId());
 	}
 
 	public function getCover()

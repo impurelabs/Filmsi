@@ -230,4 +230,22 @@ class PersonTable extends Doctrine_Table
 			->limit($limit)
 			->execute();
 	}
+
+	public function cleanPhotoAlbums($photoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Person a')
+			->set('a.photo_album_id', 'null')
+			->where('a.photo_album_id = ?', $photoAlbumId)
+			->execute();
+	}
+
+	public function cleanVideoAlbums($videoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Person a')
+			->set('a.video_album_id', 'null')
+			->where('a.video_album_id = ?', $videoAlbumId)
+			->execute();
+	}
 }

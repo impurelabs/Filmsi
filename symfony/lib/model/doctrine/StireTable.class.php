@@ -298,4 +298,22 @@ class StireTable extends Doctrine_Table
 			->limit($limit)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
+
+	public function cleanPhotoAlbums($photoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Stire a')
+			->set('a.photo_album_id', 'null')
+			->where('a.photo_album_id = ?', $photoAlbumId)
+			->execute();
+	}
+
+	public function cleanVideoAlbums($videoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Stire a')
+			->set('a.video_album_id', 'null')
+			->where('a.video_album_id = ?', $videoAlbumId)
+			->execute();
+	}
 }

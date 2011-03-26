@@ -7,6 +7,9 @@
  */
 class FilmTable extends Doctrine_Table
 {
+	/**
+	 * @return FilmTable
+	 */
     public static function getInstance()
     {
         return Doctrine_Core::getTable('Film');
@@ -660,5 +663,23 @@ text;
 
 		return  $q->execute(array(), $hydrator);
 
+	}
+
+	public function cleanPhotoAlbums($photoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Film a')
+			->set('a.photo_album_id', 'null')
+			->where('a.photo_album_id = ?', $photoAlbumId)
+			->execute();
+	}
+
+	public function cleanVideoAlbums($videoAlbumId)
+	{
+		return Doctrine_Query::create()
+			->update('Film a')
+			->set('a.video_album_id', 'null')
+			->where('a.video_album_id = ?', $videoAlbumId)
+			->execute();
 	}
 }

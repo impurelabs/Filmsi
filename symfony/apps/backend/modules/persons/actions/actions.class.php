@@ -76,6 +76,8 @@ class personsActions extends sfActions
 
   	try {
   		$imdbComPerson = new ImdbComPerson($imdbCode);
+		$imdbComPerson->parseNamePage();
+		$imdbComPerson->parseBioPage();
   		
 	  	$person = new Person();
 	  	$person->setImdb($imdbComPerson->getImdb());
@@ -105,33 +107,33 @@ class personsActions extends sfActions
 	    
 	    $person->save();
 	  	
-	    
-	    /* Create the photo album */
-	    $photoAlbum = new PhotoAlbum();
-	    $photoAlbum->setName('Persoana: ' . $person->getName());
-	  	$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
-	  	$photoAlbum->setPublishDate(date('Y-m-d'), time());
-	  	$photoAlbum->save();
-	
-	  	
-	  	$photo = new Photo();
-	  	$photo->setAlbumId($photoAlbum->getId());
-	  	
-	  	/* Creating the filename */
-	  	$pieces = explode('.', $person->getFilename());
-	  	$extension = array_pop($pieces);
-	  	
-	  	$filename = md5(rand(0, 9000000) . $person->getFilename()) . '.' . $extension;
-			// Set the filename for the object
-	    $photo->setFilename($filename);		
-	    $photo->createFile(sfConfig::get('app_person_path') . '/' . $person->getFilename(), $filename);
-	    
-	    $photo->save();
-	    
-	    
-	    /* Assign the photo album to the person */
-	    $person->setPhotoAlbumId($photoAlbum->getId());
-	    $person->save();
+//	    
+//	    /* Create the photo album */
+//	    $photoAlbum = new PhotoAlbum();
+//	    $photoAlbum->setName('Persoana: ' . $person->getName());
+//	  	$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
+//	  	$photoAlbum->setPublishDate(date('Y-m-d'), time());
+//	  	$photoAlbum->save();
+//
+//
+//	  	$photo = new Photo();
+//	  	$photo->setAlbumId($photoAlbum->getId());
+//
+//	  	/* Creating the filename */
+//	  	$pieces = explode('.', $person->getFilename());
+//	  	$extension = array_pop($pieces);
+//
+//	  	$filename = md5(rand(0, 9000000) . $person->getFilename()) . '.' . $extension;
+//			// Set the filename for the object
+//	    $photo->setFilename($filename);
+//	    $photo->createFile(sfConfig::get('app_person_path') . '/' . $person->getFilename(), $filename);
+//
+//	    $photo->save();
+//
+//
+//	    /* Assign the photo album to the person */
+//	    $person->setPhotoAlbumId($photoAlbum->getId());
+//	    $person->save();
   	
 	    
   	  /* Add the Acted films */
@@ -220,6 +222,64 @@ class personsActions extends sfActions
 
   	echo 'Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'edit')) . '?lid=' . $person->getLibraryId() . '">AICI</a> pentru a continua.';
   	
+  	exit;
+  }
+
+  public function executeImportImdbPhotos(sfWebRequest $request)
+  {
+  	set_time_limit(10000);
+
+	$person  = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+  	if (false === $person){
+  		echo 'Persoana nu exista in baza de date! Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
+  		exit;
+  	}
+
+  	try {
+  		$imdbComPerson = new ImdbComPerson($person->getImdb());
+		$imdbComPerson->parsePhotosPage();
+
+		//echo '<pre>'; var_dump($imdbComPerson->getPhotos());exit;
+		/* If the person doesn't have any album associated with it, just create one */
+		if ('' == $person->getPhotoAlbumId()){
+			$photoAlbum = new PhotoAlbum();
+			$photoAlbum->setName('Person: ' . $person->getName());
+			$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
+			$photoAlbum->setPublishDate(date('Y-m-d'), time());
+			$photoAlbum->save();
+
+			/* Assign the photo album to the person */
+			$person->setPhotoAlbumId($photoAlbum->getId());
+			$person->save();
+		}
+
+		/* Create the photos and add them to the album */
+		foreach ($imdbComPerson->getPhotos() as $imdbPhoto){
+			$photo = new Photo();
+			$photo->setAlbumId($person->getPhotoAlbumId());
+
+			$pieces = explode('.', $imdbPhoto);
+			$extension = array_pop($pieces);
+
+			$filename = md5($imdbPhoto . time() . rand(0, 999999)). '.' . $extension;
+			copy($imdbPhoto, sfConfig::get('app_person_path').'/'.$filename);
+
+			// Set the filename for the object
+			$photo->setFilename($filename);
+			$photo->createFile(sfConfig::get('app_person_path').'/'.$filename, $filename);
+
+			$photo->save();
+		}
+
+		echo '<br />Am terminat de importat pozele';
+			ob_end_flush(); flush(); ob_start();
+
+  	} catch (ImdbComPersonException $e){
+  		echo 'A aparut o eroare! Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
+  	}
+
+  	echo '<br /><br />Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'view')) . '?lid=' . $person->getLibraryId() . '">AICI</a> pentru a continua.';
+
   	exit;
   }
 }

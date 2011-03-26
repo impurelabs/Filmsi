@@ -285,8 +285,11 @@ class ImdbComFilm
 		//echo '<pre>'; var_dump($photoPageKeys);exit;
 
 		/* Import only the first 10 film photos */
-		for ($i = 0; $i <= 9; $i++){
-			$this->photos[] = $this->parsePhotoPage($photoPageKeys[$i]);
+		for ($i = 0; $i <= 14; $i++){
+			$photoUrl = $this->parsePhotoPage($photoPageKeys[$i]);
+			if ($photoUrl) {
+				$this->photos[] = $photoUrl;
+			}
 		}
 	}
 
@@ -304,7 +307,7 @@ class ImdbComFilm
 		/* Check for 404 (file not found). */
 		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 		if($httpCode != 200) {
-		    return;
+		    return false;
 		}
 		curl_close($handle);
 

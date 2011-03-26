@@ -20,113 +20,16 @@ class ImdbComPerson
 	  'awards' => array(),
 	);
 	protected $imdbCode;
+
+	protected $photos = array();
 	
 	
 	public function __construct($imdbCode)
 	{		
 		$this->imdbCode = $imdbCode;
-		$this->parseNamePage();
-		$this->parseBioPage();
-	}
-	
-
-	public function getImdb()
-	{
-		return $this->imdbCode;
-	}
-	
-	public function getFirstName()
-	{
-		$pieces = explode(' ', $this->params['name']);
-		array_pop($pieces);
-		
-		return implode(' ', $pieces);
 	}
 
-	public function getLastName()
-	{
-		$pieces = explode(' ', $this->params['name']);
-		return array_pop($pieces);
-	}
-	
-	public function getIsActor()
-	{
-		return (in_array('Actor', $this->params['roles']) or in_array('Actress', $this->params['roles']))  ? '1' : null;
-	}
-	
-	public function getIsDirector()
-	{
-		return in_array('Director', $this->params['roles']) ? '1' : null;
-	}
-	
-	public function getIsProducer()
-	{
-		return in_array('Producer', $this->params['roles']) ? '1' : null;
-	}
-	
-	public function getIsScriptwriter()
-	{
-		return in_array('Writer', $this->params['roles']) ? '1' : null;
-	}
-	
-	public function getFilenameSource()
-	{
-		return $this->params['filename-source'];
-	}
-	
-	public function getDateOfBirth()
-	{
-		if ($this->params['date_of_birth_year'] != '' && $this->params['date_of_birth_month'] != '' && $this->params['date_of_birth_day'] != '') {
-			return $this->params['date_of_birth_year'] . '-' . 
-				$this->params['date_of_birth_month'] . '-' .
-				$this->params['date_of_birth_day'];
-		} else {
-			return null;
-		}
-	}
-	
-	public function getDateOfDeath()
-	{
-		if ($this->params['date_of_death_year'] != '' && $this->params['date_of_death_month'] != '' && $this->params['date_of_death_day'] != '') {
-			return $this->params['date_of_death_year'] . '-' . 
-				$this->params['date_of_death_month'] . '-' .
-				$this->params['date_of_death_day'];
-		} else {
-			return null;
-		}
-	}
-
-	public function getPlaceOfBirth()
-	{
-		return $this->params['place_of_birth'];
-	}
-	
-	public function getBio()
-	{
-		return $this->params['bio'];
-	}
-	
-	public function getActedFilms()
-	{
-		return $this->params['acted_films'];
-	}
-	
-	public function getDirectedFilms()
-	{
-		return $this->params['directed_films'];
-	}
-	
-	public function getProducedFilms()
-	{
-		return $this->params['produced_films'];
-	}
-	
-	public function getWrittenFilms()
-	{
-		return $this->params['written_films'];
-	}
-	
-	private function parseNamePage()
+	public function parseNamePage()
 	{
 		$handle = curl_init('http://www.imdb.com/name/' . $this->imdbCode . '/');
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
@@ -224,7 +127,7 @@ class ImdbComPerson
   	unset($matches);
 	}
 	
-	private function parseBioPage()
+	public function parseBioPage()
 	{
 		$handle = curl_init('http://www.imdb.com/name/' . $this->imdbCode . '/bio');
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
@@ -375,5 +278,169 @@ class ImdbComPerson
 			$this->params['awards'][] = $result;
 
 		}
+	}
+
+	/**
+	 * Parses the page with thte photo gallery
+	 */
+	public function parsePhotosPage()
+		{
+		$handle = curl_init('http://www.imdb.com/name/' . $this->imdbCode . '/mediaindex');
+		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+		/* Get the HTML or whatever is linked in $url. */
+		$response = curl_exec($handle);
+
+		/* Check for 404 (file not found). */
+		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+		if($httpCode != 200) {
+		    return;
+		}
+		curl_close($handle);
+
+		$html = str_replace(array("\r", "\r\n", "\n"), '', $response);
+		$html = str_replace('  ', '', $html);
+
+
+
+
+		preg_match_all('/href="\/rg\/mediaindex\/unknown-thumbnail\/media\/(.*?)\/' . $this->imdbCode . '"/i', $html, $photoPageKeys);
+		$photoPageKeys = $photoPageKeys[1];
+		//echo '<pre>'; var_dump($photoPageKeys);exit;
+
+		/* Import only the first 10 film photos */
+		for ($i = 0; $i <= 9; $i++){
+			$photoUrl = $this->parsePhotoPage($photoPageKeys[$i]);
+			if ($photoUrl) {
+				$this->photos[] = $photoUrl;
+			}
+		}
+	}
+
+	/**
+	 * Parses the page where the actual big photo is located at. Returns the url to the actual image.
+	 */
+	private function parsePhotoPage($photoUrlKey)
+	{
+		$handle = curl_init('http://www.imdb.com/media/' . $photoUrlKey . '/' . $this->imdbCode);
+		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+		/* Get the HTML or whatever is linked in $url. */
+		$response = curl_exec($handle);
+
+		/* Check for 404 (file not found). */
+		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+		if($httpCode != 200) {
+		    return;
+		}
+		curl_close($handle);
+
+		$html = str_replace(array("\r", "\r\n", "\n"), '', $response);
+		$html = str_replace('  ', '', $html);
+
+		preg_match('/id="primary-img"(.*?)src="(.*?)"/i', $html, $matches);
+
+		return $matches[2];
+	}
+
+	public function getImdb()
+	{
+		return $this->imdbCode;
+	}
+
+	public function getFirstName()
+	{
+		$pieces = explode(' ', $this->params['name']);
+		array_pop($pieces);
+
+		return implode(' ', $pieces);
+	}
+
+	public function getLastName()
+	{
+		$pieces = explode(' ', $this->params['name']);
+		return array_pop($pieces);
+	}
+
+	public function getIsActor()
+	{
+		return (in_array('Actor', $this->params['roles']) or in_array('Actress', $this->params['roles']))  ? '1' : null;
+	}
+
+	public function getIsDirector()
+	{
+		return in_array('Director', $this->params['roles']) ? '1' : null;
+	}
+
+	public function getIsProducer()
+	{
+		return in_array('Producer', $this->params['roles']) ? '1' : null;
+	}
+
+	public function getIsScriptwriter()
+	{
+		return in_array('Writer', $this->params['roles']) ? '1' : null;
+	}
+
+	public function getFilenameSource()
+	{
+		return $this->params['filename-source'];
+	}
+
+	public function getDateOfBirth()
+	{
+		if ($this->params['date_of_birth_year'] != '' && $this->params['date_of_birth_month'] != '' && $this->params['date_of_birth_day'] != '') {
+			return $this->params['date_of_birth_year'] . '-' .
+				$this->params['date_of_birth_month'] . '-' .
+				$this->params['date_of_birth_day'];
+		} else {
+			return null;
+		}
+	}
+
+	public function getDateOfDeath()
+	{
+		if ($this->params['date_of_death_year'] != '' && $this->params['date_of_death_month'] != '' && $this->params['date_of_death_day'] != '') {
+			return $this->params['date_of_death_year'] . '-' .
+				$this->params['date_of_death_month'] . '-' .
+				$this->params['date_of_death_day'];
+		} else {
+			return null;
+		}
+	}
+
+	public function getPlaceOfBirth()
+	{
+		return $this->params['place_of_birth'];
+	}
+
+	public function getBio()
+	{
+		return $this->params['bio'];
+	}
+
+	public function getActedFilms()
+	{
+		return $this->params['acted_films'];
+	}
+
+	public function getDirectedFilms()
+	{
+		return $this->params['directed_films'];
+	}
+
+	public function getProducedFilms()
+	{
+		return $this->params['produced_films'];
+	}
+
+	public function getWrittenFilms()
+	{
+		return $this->params['written_films'];
+	}
+
+	public function getPhotos()
+	{
+		return $this->photos;
 	}
 }

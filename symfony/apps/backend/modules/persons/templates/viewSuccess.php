@@ -5,6 +5,10 @@ Acest obiect este Pending!  <button type="button" onclick="location.href='<?php 
 <?php endif; ?>
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=persons&action=edit');?>?lid=<?php echo $person->getLibraryId();?>'">Editeaza detalii</button>
 </div>
+<form class="mb-3" method="post" action="<?php echo url_for('@default?module=persons&action=importImdbPhotos');?>">
+	<input type="hidden" name="id" value="<?php echo $person->getId();?>" />
+    <button type="submit">Importa poze din Imdb</button>
+</form>
 
 <div class="clear"></div>
 

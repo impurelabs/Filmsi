@@ -1,14 +1,35 @@
-<h4>Detalii Persoana</h4>
+<h4 class="mb-2"><?php echo $person->getName();?></h4>
+
 <div class="mb-3">
 <?php if($sf_user->hasCredential('Moderator') && $person->getState() == Library::STATE_PENDING): ?>
 Acest obiect este Pending!  <button type="button" onclick="location.href='<?php echo url_for('@default?module=default&action=allow');?>?lid=<?php echo $person->getLibraryId();?>'">Aproba</button>
 <?php endif; ?>
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=persons&action=edit');?>?lid=<?php echo $person->getLibraryId();?>'">Editeaza detalii</button>
 </div>
+
+
+<h5>Import poze din IMDB</h5><br />
+<strong>Pasul 1</strong> - Pregatirea importului: <br />
+<?php if ($imdbPhotoKeys > 0):?>
+Sunt pregatite <?php echo $imdbPhotoKeys;?> poze pentru a fi importate.
+<?php else:?>
+<button onclick="location.href='<?php echo url_for('@default?module=persons&action=importImdbPhotoKeys');?>?id=<?php echo $person->getId();?>'">Pregateste import-ul</button> (da click doar o singura data si pe urma asteapta)
+<?php endif;?>
+<br /><br />
+<strong>Pasul 2</strong> - Importul propriu-zis: <br />
+<br />
+<?php if ($imdbPhotoKeys > 0):?>
 <form class="mb-3" method="post" action="<?php echo url_for('@default?module=persons&action=importImdbPhotos');?>">
 	<input type="hidden" name="id" value="<?php echo $person->getId();?>" />
-    <button type="submit">Importa poze din Imdb</button>
+    <button type="submit">Importa poze din Imdb</button>  (da click doar o singura data si pe urma asteapta)
 </form>
+<?php else:?>
+Nu este nici o poza pregatita pentru import.
+<?php endif;?>
+
+<div class="cell-separator-double mb-3 mt-1"></div>
+
+<h5>Detalii Persoana</h5>
 
 <div class="clear"></div>
 

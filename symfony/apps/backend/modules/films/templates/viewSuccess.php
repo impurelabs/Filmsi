@@ -17,14 +17,35 @@
 <div class="mt-2 mb-2 cell-separator-double"></div>
 
 
+
+
+
+<h5>Import poze din IMDB</h5><br />
+<strong>Pasul 1</strong> - Pregatirea importului: <br />
+<?php if ($imdbPhotoKeys > 0):?>
+Sunt pregatite <?php echo $imdbPhotoKeys;?> poze pentru a fi importate.
+<?php else:?>
+<button onclick="location.href='<?php echo url_for('@default?module=films&action=importImdbPhotoKeys');?>?id=<?php echo $film->getId();?>'">Pregateste import-ul</button> (da click doar o singura data si pe urma asteapta)
+<?php endif;?>
+<br /><br />
+<strong>Pasul 2</strong> - Importul propriu-zis: <br />
+<br />
+<?php if ($imdbPhotoKeys > 0):?>
+<form class="mb-3" method="post" action="<?php echo url_for('@default?module=films&action=importImdbPhotos');?>">
+	<input type="hidden" name="id" value="<?php echo $film->getId();?>" />
+    <button type="submit">Importa poze din Imdb</button> (da click doar o singura data si pe urma asteapta)
+</form>
+<?php else:?>
+Nu este nici o poza pregatita pentru import.
+<?php endif;?>
+
+<div class="cell-separator-double mb-3 mt-1"></div>
+
 <h5>Detalii Film</h5>
+
 <div class="mb-3">
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=films&action=edit');?>?lid=<?php echo $film->getLibraryId();?>'">Editeaza detalii</button>
 </div>
-<form class="mb-3" method="post" action="<?php echo url_for('@default?module=films&action=importImdbPhotos');?>">
-	<input type="hidden" name="id" value="<?php echo $film->getId();?>" />
-    <button type="submit">Importa poze din Imdb</button>
-</form>
 
 <div class="clear"></div>
 

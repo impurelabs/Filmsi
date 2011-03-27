@@ -23,10 +23,12 @@ class personsActions extends sfActions
   		}
   	}
   }
-  
-	public function executeView(sfWebRequest $request)
+
+  public function executeView(sfWebRequest $request)
   {
   	$this->person = Doctrine_Core::getTable('Person')->findOneByLibraryId($request->getParameter('lid'));
+
+	$this->imdbPhotoKeys = ImdbPersonPhotoKeyTable::getInstance()->countByPerson($this->person->getImdb());
   }
   
 	public function executeEdit(sfWebRequest $request)
@@ -220,7 +222,7 @@ class personsActions extends sfActions
   		echo 'A aparut o eroare! Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
   	}
 
-  	echo 'Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'edit')) . '?lid=' . $person->getLibraryId() . '">AICI</a> pentru a continua.';
+  	echo 'Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'view')) . '?lid=' . $person->getLibraryId() . '">AICI</a> pentru a continua.';
   	
   	exit;
   }
@@ -235,12 +237,7 @@ class personsActions extends sfActions
   		exit;
   	}
 
-  	try {
-  		$imdbComPerson = new ImdbComPerson($person->getImdb());
-		$imdbComPerson->parsePhotosPage();
-
-		//echo '<pre>'; var_dump($imdbComPerson->getPhotos());exit;
-		/* If the person doesn't have any album associated with it, just create one */
+	/* If the person doesn't have any album associated with it, just create one */
 		if ('' == $person->getPhotoAlbumId()){
 			$photoAlbum = new PhotoAlbum();
 			$photoAlbum->setName('Person: ' . $person->getName());
@@ -253,22 +250,44 @@ class personsActions extends sfActions
 			$person->save();
 		}
 
+	$imdbPhotoKeys = ImdbPersonPhotoKeyTable::getInstance()->findByImdb($person->getImdb());
+
+  	try {
+		$imdbComPerson = new ImdbComPerson($person->getImdb());
 		/* Create the photos and add them to the album */
-		foreach ($imdbComPerson->getPhotos() as $imdbPhoto){
+		$counter = 1;
+		foreach ($imdbPhotoKeys as $imdbPhotoKey){
+
+			/* Get the photo url from the photo page */
+			$photoUrl = $imdbComPerson->parsePhotoPage($imdbPhotoKey->getPhotoKey());
+			if (!$photoUrl){
+				echo '<br />Nu s-a putut importa poza cu key-ul:' . $imdbPhoto;
+				ob_end_flush(); flush(); ob_start();
+				continue;
+			}
+
+			/* Create the actual photo in the database */
 			$photo = new Photo();
 			$photo->setAlbumId($person->getPhotoAlbumId());
 
-			$pieces = explode('.', $imdbPhoto);
+			$pieces = explode('.', $photoUrl);
 			$extension = array_pop($pieces);
 
-			$filename = md5($imdbPhoto . time() . rand(0, 999999)). '.' . $extension;
-			copy($imdbPhoto, sfConfig::get('app_person_path').'/'.$filename);
+			$filename = md5($photoUrl . time() . rand(0, 999999)). '.' . $extension;
+			copy($photoUrl, sfConfig::get('app_person_path').'/'.$filename);
 
 			// Set the filename for the object
 			$photo->setFilename($filename);
 			$photo->createFile(sfConfig::get('app_person_path').'/'.$filename, $filename);
 
 			$photo->save();
+
+			echo '<br />Am terminat de importat poza nr ' . $counter . ' cu key-ul:' . $imdbPhotoKey->getPhotoKey();
+			ob_end_flush(); flush(); ob_start();
+			$counter += 1;
+
+			/* Delete from database */
+			$imdbPhotoKey->delete();
 		}
 
 		echo '<br />Am terminat de importat pozele';
@@ -281,5 +300,27 @@ class personsActions extends sfActions
   	echo '<br /><br />Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'persons', 'action' => 'view')) . '?lid=' . $person->getLibraryId() . '">AICI</a> pentru a continua.';
 
   	exit;
+  }
+
+  public function executeImportImdbPhotoKeys(sfWebRequest $request)
+  {
+  	set_time_limit(10000);
+
+	$person  = Doctrine_Core::getTable('Person')->findOneById($request->getParameter('id'));
+
+	/* Delete any existing keys for this person */
+	ImdbPersonPhotoKeyTable::getInstance()->deleteByPerson($person->getImdb());
+
+	/* Import the keys */
+	$imdbComPerson = new ImdbComPerson($person->getImdb());
+
+	foreach ($imdbComPerson->parsePhotosPage() as $photoKey){
+		$imdbPersonPhotoKey = new ImdbPersonPhotoKey();
+		$imdbPersonPhotoKey->setImdb($person->getImdb());
+		$imdbPersonPhotoKey->setPhotoKey($photoKey);
+		$imdbPersonPhotoKey->save();
+	}
+
+  	$this->redirect($this->generateUrl('default', array('module' => 'persons', 'action' => 'view')) . '?lid=' . $person->getLibraryId());
   }
 }

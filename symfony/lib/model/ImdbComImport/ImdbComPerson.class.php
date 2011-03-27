@@ -284,7 +284,7 @@ class ImdbComPerson
 	 * Parses the page with thte photo gallery
 	 */
 	public function parsePhotosPage()
-		{
+	{
 		$handle = curl_init('http://www.imdb.com/name/' . $this->imdbCode . '/mediaindex');
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
 
@@ -303,24 +303,50 @@ class ImdbComPerson
 
 
 
+		/* The array that will contain all the photo keys */
+		$photoPageKeys = array();
 
-		preg_match_all('/href="\/rg\/mediaindex\/unknown-thumbnail\/media\/(.*?)\/' . $this->imdbCode . '"/i', $html, $photoPageKeys);
-		$photoPageKeys = $photoPageKeys[1];
-		//echo '<pre>'; var_dump($photoPageKeys);exit;
+		/* Get the number of pages */
+		preg_match_all('/href="\?page=(.*?)"/i', $html, $matches);
+		$pageCount = max($matches[1]);
 
-		/* Import only the first 10 film photos */
-		for ($i = 0; $i <= 9; $i++){
-			$photoUrl = $this->parsePhotoPage($photoPageKeys[$i]);
-			if ($photoUrl) {
-				$this->photos[] = $photoUrl;
+		/* Get the photos for the first page that is already loaded */
+		preg_match_all('/href="\/rg\/mediaindex\/unknown-thumbnail\/media\/(.*?)\/' . $this->imdbCode . '"/i', $html, $matches);
+		$photoPageKeys = $matches[1];
+
+		/* If there are more pages, for each get the photo keys and add them to the array */
+		if ($pageCount > 1){
+			for ($i = 2; $i <= $pageCount; $i++){
+				$handle = curl_init('http://www.imdb.com/name/' . $this->imdbCode . '/mediaindex?page=' . $i);
+				curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+				/* Get the HTML or whatever is linked in $url. */
+				$response = curl_exec($handle);
+
+				/* Check for 404 (file not found). */
+				$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+				if($httpCode != 200) {
+					return;
+				}
+				curl_close($handle);
+
+				$html = str_replace(array("\r", "\r\n", "\n"), '', $response);
+				$html = str_replace('  ', '', $html);
+
+
+				preg_match_all('/href="\/rg\/mediaindex\/unknown-thumbnail\/media\/(.*?)\/' . $this->imdbCode . '"/i', $html, $matches);
+				$photoPageKeys = array_merge($photoPageKeys, $matches[1]);
 			}
 		}
+		//echo '<pre>'; var_dump($photoPageKeys);exit;
+
+		return $photoPageKeys;
 	}
 
 	/**
 	 * Parses the page where the actual big photo is located at. Returns the url to the actual image.
 	 */
-	private function parsePhotoPage($photoUrlKey)
+	public function parsePhotoPage($photoUrlKey)
 	{
 		$handle = curl_init('http://www.imdb.com/media/' . $photoUrlKey . '/' . $this->imdbCode);
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
@@ -331,7 +357,7 @@ class ImdbComPerson
 		/* Check for 404 (file not found). */
 		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 		if($httpCode != 200) {
-		    return;
+		    return false;
 		}
 		curl_close($handle);
 

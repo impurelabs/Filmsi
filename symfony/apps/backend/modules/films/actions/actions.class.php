@@ -305,7 +305,7 @@ class filmsActions extends sfActions
   		echo 'A aparut o eroare! Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'newObject')) . '">AICI</a> pentru a continua.';
   	}
 
-  	echo '<br /><br />Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'edit')) . '?lid=' . $film->getLibraryId() . '">AICI</a> pentru a continua.';
+  	echo '<br /><br />Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'view')) . '?lid=' . $film->getLibraryId() . '">AICI</a> pentru a continua.';
 
   	exit;
   }
@@ -320,15 +320,10 @@ class filmsActions extends sfActions
   		exit;
   	}
 
-  	try {
-  		$imdbComFilm = new ImdbComFilm($film->getImdb());
-		$imdbComFilm->parsePhotosPage();
-
-		//echo '<pre>'; var_dump($imdbComFilm->getPhotos());exit;
-		/* If the film doesn't have any album associated with it, just create one */
+	/* If the film doesn't have any album associated with it, just create one */
 		if ('' == $film->getPhotoAlbumId()){
 			$photoAlbum = new PhotoAlbum();
-			$photoAlbum->setName('Film: ' . $imdbComFilm->getNameRo());
+			$photoAlbum->setName('Film: ' . $film->getNameRo());
 			$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
 			$photoAlbum->setPublishDate(date('Y-m-d'), time());
 			$photoAlbum->save();
@@ -338,22 +333,44 @@ class filmsActions extends sfActions
 			$film->save();
 		}
 
+	$imdbPhotoKeys = ImdbFilmPhotoKeyTable::getInstance()->findByImdb($film->getImdb());
+
+  	try {
+		$imdbComFilm = new ImdbComFilm($film->getImdb());
 		/* Create the photos and add them to the album */
-		foreach ($imdbComFilm->getPhotos() as $imdbPhoto){
+		$counter = 1;
+		foreach ($imdbPhotoKeys as $imdbPhotoKey){
+
+			/* Get the photo url from the photo page */
+			$photoUrl = $imdbComFilm->parsePhotoPage($imdbPhotoKey->getPhotoKey());
+			if (!$photoUrl){
+				echo '<br />Nu s-a putut importa poza cu key-ul:' . $imdbPhoto;
+				ob_end_flush(); flush(); ob_start();
+				continue;
+			}
+
+			/* Create the actual photo in the database */
 			$photo = new Photo();
 			$photo->setAlbumId($film->getPhotoAlbumId());
 
-			$pieces = explode('.', $imdbPhoto);
+			$pieces = explode('.', $photoUrl);
 			$extension = array_pop($pieces);
 
-			$filename = md5($imdbPhoto . time() . rand(0, 999999)). '.' . $extension;
-			copy($imdbPhoto, sfConfig::get('app_film_path').'/'.$filename);
+			$filename = md5($photoUrl . time() . rand(0, 999999)). '.' . $extension;
+			copy($photoUrl, sfConfig::get('app_film_path').'/'.$filename);
 
 			// Set the filename for the object
 			$photo->setFilename($filename);
 			$photo->createFile(sfConfig::get('app_film_path').'/'.$filename, $filename);
 
 			$photo->save();
+
+			echo '<br />Am terminat de importat poza nr ' . $counter . ' cu key-ul:' . $imdbPhotoKey->getPhotoKey();
+			ob_end_flush(); flush(); ob_start();
+			$counter += 1;
+
+			/* Delete from database */
+			$imdbPhotoKey->delete();
 		}
 
 		echo '<br />Am terminat de importat pozele';
@@ -366,6 +383,28 @@ class filmsActions extends sfActions
   	echo '<br /><br />Importul s-a terminat!  Click <a href="' . $this->generateUrl('default', array('module' => 'films', 'action' => 'view')) . '?lid=' . $film->getLibraryId() . '">AICI</a> pentru a continua.';
 
   	exit;
+  }
+
+  public function executeImportImdbPhotoKeys(sfWebRequest $request)
+  {
+  	set_time_limit(10000);
+
+	$film  = Doctrine_Core::getTable('Film')->findOneById($request->getParameter('id'));
+
+	/* Delete any existing keys for this film */
+	ImdbFilmPhotoKeyTable::getInstance()->deleteByFilm($film->getImdb());
+
+	/* Import the keys */
+	$imdbComFilm = new ImdbComFilm($film->getImdb());
+
+	foreach ($imdbComFilm->parsePhotosPage() as $photoKey){
+		$imdbFilmPhotoKey = new ImdbFilmPhotoKey();
+		$imdbFilmPhotoKey->setImdb($film->getImdb());
+		$imdbFilmPhotoKey->setPhotoKey($photoKey);
+		$imdbFilmPhotoKey->save();
+	}
+
+  	$this->redirect($this->generateUrl('default', array('module' => 'films', 'action' => 'view')) . '?lid=' . $film->getLibraryId());
   }
   
   public function executeImportProvideoDetails(sfWebRequest $request)
@@ -456,6 +495,8 @@ class filmsActions extends sfActions
   	$this->film = Doctrine_Core::getTable('Film')->findOneByLibraryId($request->getParameter('lid'));
   	
   	$this->persons = Doctrine_Core::getTable('FilmPerson')->getDetailedByFilm($this->film->getId());
+
+	$this->imdbPhotoKeys = ImdbFilmPhotoKeyTable::getInstance()->countByFilm($this->film->getImdb());
   }
 
   public function executePerson(sfWebRequest $request)

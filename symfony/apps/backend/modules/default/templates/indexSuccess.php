@@ -39,7 +39,11 @@ Pagina
 </div>
 
 <form method="get" id="list-form">
-Cu cele selectate: <button type="button" id="delete-selected">Sterge</button> <button type="button" id="clone-selected">Cloneaza</button> 
+Cu cele selectate: 
+<?php if ($sf_user->hasCredential('Moderator')):?>
+<button type="button" id="delete-selected">Sterge</button> 
+<?php endif;?>
+<button type="button" id="clone-selected">Cloneaza</button> 
 
 <div class="clear"></div>
 <br /><br />
@@ -99,13 +103,14 @@ $(document).ready(function(){
 			$('.selected-object').removeAttr('checked', 'checked');	
 		}
 	});
-	
+	<?php if ($sf_user->hasCredential('Moderator')):?>
 	$('#delete-selected').click(function(){
 		if (confirm('Esti sigur ca vrei sa stergi obiectele selectate?')){
 			$('#list-form').attr('action', '<?php echo url_for('@default?module=default&action=delete');?>');
 			$('#list-form').submit();
 		} 
 	});
+	<?php endif;?>
 	$('#clone-selected').click(function(){
 		if (confirm('Esti sigur ca vrei sa clonezi obiectele selectate?')){
 			$('#list-form').attr('action', '<?php echo url_for('@default?module=default&action=cloneObjects');?>');

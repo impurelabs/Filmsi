@@ -125,6 +125,11 @@ class defaultActions extends sfActions
   
   public function executeDelete(sfWebRequest $request)
   {
+	  /* Security check */
+	  if (!$sf_user->hasCredential('Moderator')){
+		  $this->forward404();
+	  }
+
   	$ids = $request->getParameter('selected_objects');
   	
   	if (!is_null($ids) && !is_array($ids)){

@@ -551,10 +551,10 @@
 </div>
 <div class="cell-container5">
   <div class="cell spacer-bottom-m">
-    <div class="cell-hd" style="height: 162px">
+    <div class="cell-hd">
       <h4>Fotografii <span class="black">din filme</span></h4>
     </div>
-    <div class="cell-bd">
+    <div class="cell-bd" style="height: 162px">
 		<?php foreach($filmPhotos  as $filmPhoto):?>
 			<div class="inline-block align-center spacer-bottom ml-1" style="width: 85px; vertical-align: top">
 				<a href="<?php echo url_for('@film_photos?id=' . $filmPhoto->getAlbum()->getFilm()->getId() . '&key=' . $filmPhoto->getAlbum()->getFilm()->getUrlKey());?>?pid=<?php echo $filmPhoto->getPosition();?>">

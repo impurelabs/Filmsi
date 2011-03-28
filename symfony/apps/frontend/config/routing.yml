@@ -229,6 +229,14 @@ film_photos_no_key:
   url: /fotografii-film/:id/
   param: { module: films, action: photos }
 
+film_redcarpet:
+  url: /fotografii-de-la-premiera-film/:id/:key
+  param: { module: films, action: redcarpet }
+
+film_redcarpet_no_key:
+  url: /fotografii-de-la-premiera-film/:id/
+  param: { module: films, action: redcarpet }
+
 film_videos:
   url: /video-film/:id/:key
   param: { module: films, action: videos }

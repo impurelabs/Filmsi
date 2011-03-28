@@ -12,6 +12,15 @@ Nume<br />
 <?php echo $form['description']->render(array('class' => 'span-10'))?>
 <?php echo $form['description']->renderError()?>
 
+<br /><br />
+	<?php echo $form['on_home']->render()?> pe homepage <br />
+	<?php echo $form['on_home']->renderError()?>
+
+<br />
+	<?php echo $form['is_redcarpet']->render()?>de la premiera<br />
+	<?php echo $form['is_redcarpet']->renderError()?>
+
+<br />
 
 <div class="mt-3" id="photo-description-button-container">
 <button type="submit" class="mr-2">Salveaza</button>

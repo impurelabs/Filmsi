@@ -39,8 +39,8 @@ class defaultActions extends sfActions
 		$this->latestComments = CommentTable::getInstance()->getLatestForFilms(7);
 		$this->boxRoFilms = BoxofficeFilmTable::getInstance()->getByType('ro');
 		$this->boxUsFilms = BoxofficeFilmTable::getInstance()->getByType('us');
-		$this->filmPhotos = PhotoTable::getInstance()->getLatestForFilms(5);
-		$this->awardPhotos = PhotoTable::getInstance()->getLatestForFestivalEditions(5);
+		$this->filmPhotos = PhotoTable::getInstance()->getLatestNonRedcarpetPhotosOnHome(5);
+		$this->redcarpetPhotos = PhotoTable::getInstance()->getLatestRedcarpetPhotosOnHome(5);
 		$this->latestAwards = FestivalEditionTable::getInstance()->getLatest(3);
 
 		$this->homepage = HomepageTable::getInstance()->findOneById(1);

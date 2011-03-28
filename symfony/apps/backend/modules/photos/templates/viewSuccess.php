@@ -9,10 +9,23 @@ Acest obiect este Pending! <button type="button" onclick="location.href='<?php e
 
 <div class="span-16">
 <table>
+	<tr>
+		<td></td>
+		<td></td>
+		<td>Homepage</td>
+		<td>De la<br />premiera</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
 	<?php foreach ($photos as $photo): ?>
 	<tr>
     	<td><a href="<?php echo filmsiPhoto($photo->getFilename());?>" target="_blank"><img src="<?php echo filmsiPhotoThumb($photo->getFilename());?>" /></a></td>
         <td><?php echo $photo->getDescription();?>
+		<td><?php if($photo->getOnHome()) echo 'DA';?></td>
+		<td><?php if($photo->getIsRedcarpet()) echo 'DA';?></td>
         <td><img src="<?php echo image_path('state-' . $photo->getState() . '.png');?>" /></td>
         <td><a href="<?php echo url_for('@default?module=photos&action=editPhoto');?>?pid=<?php echo $photo->getId();?>" class="small-link">editeaza</a></td>
         <td><?php echo link_to('sterge', 'photos/deletePhoto', array('confirm' => 'Esti sigur ca vrei sa stergi poza?', 'query_string' => 'pid='.$photo->getId(), 'post' => true, 'class' => 'small-link'));?></td>

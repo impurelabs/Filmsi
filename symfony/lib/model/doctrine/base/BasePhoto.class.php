@@ -43,12 +43,18 @@ abstract class BasePhoto extends sfDoctrineRecord
              ));
         $this->hasColumn('state', 'enum', null, array(
              'type' => 'enum',
-             'values' => 
+             'values' =>
              array(
               0 => -1,
               1 => 0,
               2 => 1,
              ),
+             ));
+        $this->hasColumn('on_home', 'bool', null, array(
+             'type' => 'bool',
+             ));
+        $this->hasColumn('is_redcarpet', 'bool', null, array(
+             'type' => 'bool',
              ));
         $this->hasColumn('album_id', 'integer', null, array(
              'type' => 'integer',

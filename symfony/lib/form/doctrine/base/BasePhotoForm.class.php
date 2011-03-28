@@ -19,6 +19,8 @@ abstract class BasePhotoForm extends BaseFormDoctrine
       'filename'    => new sfWidgetFormInputText(),
       'description' => new sfWidgetFormInputText(),
       'state'       => new sfWidgetFormChoice(array('choices' => array(-1 => -1, 0 => 0, 1 => 1))),
+	  'on_home'     => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1)),
+	  'is_redcarpet'=> new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1)),
       'album_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Album'), 'add_empty' => true)),
       'position'    => new sfWidgetFormInputText(),
     ));
@@ -28,6 +30,8 @@ abstract class BasePhotoForm extends BaseFormDoctrine
       'filename'    => new sfValidatorString(array('max_length' => 50)),
       'description' => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'state'       => new sfValidatorChoice(array('choices' => array(0 => -1, 1 => 0, 2 => 1), 'required' => false)),
+	  'on_home'     => new sfValidatorPass(array('required' => false)),
+	  'is_redcarpet'=> new sfValidatorPass(array('required' => false)),
       'album_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Album'), 'required' => false)),
       'position'    => new sfValidatorInteger(array('required' => false)),
     ));

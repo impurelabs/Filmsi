@@ -43,4 +43,13 @@ class PhotoAlbum extends BasePhotoAlbum
 		return Doctrine_Core::getTable('Photo')->getCountByAlbum($this->getId());
 	}
 
+	public function getNonRedcarpetPhotos()
+	{
+		return PhotoTable::getInstance()->getNonRedcarpetByAlbum($this->getId());
+	}
+
+	public function getRedcarpetPhotos()
+	{
+		return PhotoTable::getInstance()->getRedcarpetByAlbum($this->getId());
+	}
 }

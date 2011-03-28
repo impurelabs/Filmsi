@@ -231,4 +231,70 @@ class PhotoTable extends Doctrine_Table
 
 
 	}
+
+	public function getNonRedcarpetByAlbum($albumId)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->where('p.is_redcarpet IS NULL or p.is_redcarpet = 0')
+			->andWhere('p.album_id = ?', $albumId)
+			->andWhere('p.state = 1')
+			->execute();
+	}
+
+	public function getNonRedcarpetPhotoByPositionAndAlbum($position, $albumId)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->where('p.is_redcarpet IS NULL or p.is_redcarpet = 0')
+			->andWhere('p.album_id = ?', $albumId)
+			->andWhere('p.state = 1')
+			->offset($position - 1)
+			->fetchOne();
+	}
+
+	public function getRedcarpetByAlbum($albumId)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->where('p.is_redcarpet = 1')
+			->andWhere('p.album_id = ?', $albumId)
+			->andWhere('p.state = 1')
+			->execute();
+	}
+
+	public function getRedcarpetPhotoByPositionAndAlbum($position, $albumId)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->where('p.is_redcarpet = 1')
+			->andWhere('p.album_id = ?', $albumId)
+			->andWhere('p.state = 1')
+			->offset($position - 1)
+			->fetchOne();
+	}
+
+	public function getLatestRedcarpetPhotosOnHome($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->where('p.is_redcarpet = 1')
+			->andWhere('p.on_home = 1')
+			->andWhere('p.state = 1')
+			->orderBy('p.updated_at DESC')
+			->limit($limit)
+			->execute();
+	}
+
+	public function getLatestNonRedcarpetPhotosOnHome($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->where('p.is_redcarpet IS NULL or p.is_redcarpet = 0')
+			->andWhere('p.on_home = 1')
+			->andWhere('p.state = 1')
+			->orderBy('p.updated_at DESC')
+			->limit($limit)
+			->execute();
+	}
 }

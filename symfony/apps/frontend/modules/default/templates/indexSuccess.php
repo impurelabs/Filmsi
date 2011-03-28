@@ -551,7 +551,7 @@
 </div>
 <div class="cell-container5">
   <div class="cell spacer-bottom-m">
-    <div class="cell-hd">
+    <div class="cell-hd" style="height: 162px">
       <h4>Fotografii <span class="black">din filme</span></h4>
     </div>
     <div class="cell-bd">
@@ -573,16 +573,16 @@
 <div class="cell-container5 spacer-left-m">
   <div class="cell spacer-bottom-m">
     <div class="cell-hd">
-      <h4>Corespondent <span class="black">la festival</span></h4>
+      <h4>Corespondent <span class="black">la premiera</span></h4>
     </div>
-    <div class="cell-bd">
-      <?php foreach($awardPhotos  as $awardPhoto):?>
-			<div class="inline-block align-center spacer-bottom ml-1" style="width: 85px; vertical-align: top">
-				<a href="<?php echo url_for('@festival_edition_photos?id=' . $awardPhoto->getAlbum()->getFestivalEdition()->getId() . '&key=' . $awardPhoto->getAlbum()->getFestivalEdition()->getUrlKey());?>?pid=<?php echo $awardPhoto->getPosition();?>">
-					<img width="80" src="<?php echo filmsiPhotoThumb($awardPhoto->getFilename());?>" />
+    <div class="cell-bd" style="height: 162px">
+      <?php foreach($redcarpetPhotos  as $redcarpetPhoto):?>
+			<div class="inline-block align-center spacer-bottom ml-1" style="width: 85px; vertical-align: middle">
+				<a href="<?php echo url_for('@film_redcarpet?id=' . $redcarpetPhoto->getAlbum()->getFestivalEdition()->getId() . '&key=' . $redcarpetPhoto->getAlbum()->getFestivalEdition()->getUrlKey());?>?pid=<?php echo $redcarpetPhoto->getPosition();?>">
+					<img width="80" src="<?php echo filmsiPhotoThumb($redcarpetPhoto->getFilename());?>" />
 				</a> <br />
-				<a href="<?php echo url_for('@festival_edition_photos?id=' . $awardPhoto->getAlbum()->getFestivalEdition()->getId() . '&key=' . $awardPhoto->getAlbum()->getFestivalEdition()->getUrlKey());?>?pid=<?php echo $awardPhoto->getPosition();?>" class="black-link">
-					<?php echo $awardPhoto->getAlbum()->getFestivalEdition()->getFestival()->getName();?> - <?php echo $awardPhoto->getAlbum()->getFestivalEdition()->getEdition();?>
+				<a href="<?php echo url_for('@film_redcarpet?id=' . $redcarpetPhoto->getAlbum()->getFestivalEdition()->getId() . '&key=' . $redcarpetPhoto->getAlbum()->getFestivalEdition()->getUrlKey());?>?pid=<?php echo $redcarpetPhoto->getPosition();?>" class="black-link">
+					<?php echo $redcarpetPhoto->getAlbum()->getFestivalEdition()->getFestival()->getName();?> - <?php echo $redcarpetPhoto->getAlbum()->getFestivalEdition()->getEdition();?>
 				</a> <br />
 			</div>
 		<?php endforeach;?>

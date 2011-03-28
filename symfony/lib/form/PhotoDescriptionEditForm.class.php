@@ -5,7 +5,7 @@ class PhotoDescriptionEditForm extends PhotoForm
 	{
 		parent::configure();
 		
-		$this->useFields(array('id', 'description'));
+		$this->useFields(array('id', 'description', 'on_home', 'is_redcarpet'));
 		
 		$this->widgetSchema['id'] = new sfWidgetFormInputHidden();
 		

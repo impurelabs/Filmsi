@@ -297,4 +297,48 @@ class PhotoTable extends Doctrine_Table
 			->limit($limit)
 			->execute();
 	}
+
+	public function makeOnHomeTrueByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->update('Photo p')
+			->set('p.on_home', '?', '1')
+			->whereIn('p.id', $ids)
+			->execute();
+	}
+
+	public function makeOnHomeFalseByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->update('Photo p')
+			->set('p.on_home', 'null')
+			->whereIn('p.id', $ids)
+			->execute();
+	}
+
+	public function makeIsRedcarpetTrueByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->update('Photo p')
+			->set('p.is_redcarpet', '?', '1')
+			->whereIn('p.id', $ids)
+			->execute();
+	}
+
+	public function makeIsRedcarpetFalseByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->update('Photo p')
+			->set('p.is_redcarpet', 'null')
+			->whereIn('p.id', $ids)
+			->execute();
+	}
+
+	public function getByIds($ids)
+	{
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->whereIn('p.id', $ids)
+			->execute();
+	}
 }

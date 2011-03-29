@@ -82,11 +82,48 @@ class photosActions extends sfActions
 		 
 	}
 
-	public function executeDeletePhoto(sfWebRequest $request)
+	public function executeDeletePhotos(sfWebRequest $request)
 	{
-		$photo = Doctrine_Core::getTable('Photo')->findOneById($request->getParameter('pid'));
-		
-		$photo->delete();
+		$ids = $request->getParameter('selected_objects');
+
+		$selectedPhotos = PhotoTable::getInstance()->getByIds($ids);
+		$selectedPhotos->delete();
+
+		$this->redirect($request->getReferer());
+	}
+
+	public function executeMakePhotosOnHomeTrue(sfWebRequest $request)
+	{
+		$ids = $request->getParameter('selected_objects');
+
+		PhotoTable::getInstance()->makeOnHomeTrueByIds($ids);
+
+		$this->redirect($request->getReferer());
+	}
+
+	public function executeMakePhotosOnHomeFalse(sfWebRequest $request)
+	{
+		$ids = $request->getParameter('selected_objects');
+
+		PhotoTable::getInstance()->makeOnHomeFalseByIds($ids);
+
+		$this->redirect($request->getReferer());
+	}
+
+	public function executeMakePhotosIsRedcarpetTrue(sfWebRequest $request)
+	{
+		$ids = $request->getParameter('selected_objects');
+
+		PhotoTable::getInstance()->makeIsRedcarpetTrueByIds($ids);
+
+		$this->redirect($request->getReferer());
+	}
+
+	public function executeMakePhotosIsRedcarpetFalse(sfWebRequest $request)
+	{
+		$ids = $request->getParameter('selected_objects');
+
+		PhotoTable::getInstance()->makeIsRedcarpetFalseByIds($ids);
 
 		$this->redirect($request->getReferer());
 	}

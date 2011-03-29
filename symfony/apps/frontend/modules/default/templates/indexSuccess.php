@@ -92,7 +92,7 @@
         <div class="cell-bd" style="height: 450px">
 			<?php foreach ($filmsNowInCinema as $filmNowInCinema):?>
 				<div class="mb-3 details-container">
-					<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowInCinema->getFilename());?>" /></a></div>
+					<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowInCinema->getFilename());?>" style="width: 49px" /></a></div>
 				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="important-link"><?php echo $filmNowInCinema->getNameRo();?></a><br />
 				  <?php if($filmNowInCinema->getNameEn() != ''):?><em>(<?php echo $filmNowInCinema->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu: 
@@ -139,7 +139,7 @@
         <div class="cell-bd" style="height: 450px">
 			<?php foreach($filmsNowDbo as $filmNowDbo):?>
 			<div class="mb-3 details-container">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowDbo->getFilename());?>" /></a></div>
+				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowDbo->getFilename());?>" style="width: 49px" /></a></div>
 				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="important-link"><?php echo $filmNowDbo->getNameRo();?></a><br />
 				  <?php if ($filmNowDbo->getNameEn() != ''):?><em>(<?php echo $filmNowDbo->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu:
@@ -184,7 +184,7 @@
         <div class="cell-bd" style="height: 450px">
 			<?php foreach ($filmsNowTv as $filmNowTv):?>
 			  <div class="mb-3 details-container">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowTv->getFilm()->getFilename());?>" /></a></div>
+				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowTv->getFilm()->getFilename());?>" style="width: 49px" /></a></div>
 				<div class="inline-block cell-separator-dotted-bottom" style="width: 135px"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="important-link"><?php echo $filmNowTv->getFilm()->getNameRo();?></a><br />
 				  <?php if ($filmNowTv->getFilm()->getNameEn() != ''):?><em>(<?php echo $filmNowTv->getFilm()->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="explanation-link">Pro TV</a></div>
@@ -241,7 +241,7 @@
         <div class="cell-bd" style="height: 450px">
           <?php foreach ($filmsSoonInCinema as $filmSoonInCinema):?>
 				<div class="mb-3 details-container">
-					<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonInCinema->getFilename());?>" /></a></div>
+					<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonInCinema->getFilename());?>" style="width: 49px" /></a></div>
 				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="important-link"><?php echo $filmSoonInCinema->getNameRo();?></a><br />
 				  <?php if($filmSoonInCinema->getNameEn() != ''):?><em>(<?php echo $filmSoonInCinema->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu:
@@ -288,7 +288,7 @@
         <div class="cell-bd" style="height: 450px">
           <?php foreach($filmsSoonDbo as $filmSoonDbo):?>
 			<div class="mb-3 details-container">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonDbo->getFilename());?>" /></a></div>
+				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonDbo->getFilename());?>" style="width: 49px" /></a></div>
 				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="important-link"><?php echo $filmSoonDbo->getNameRo();?></a><br />
 				  <?php if ($filmSoonDbo->getNameEn() != ''):?><em>(<?php echo $filmSoonDbo->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu:
@@ -333,7 +333,7 @@
         <div class="cell-bd" style="height: 450px">
           <?php foreach ($filmsSoonTv as $filmSoonTv):?>
 			  <div class="mb-3 details-container">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonTv->getFilename());?>" /></a></div>
+				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonTv->getFilename());?>" style="width: 49px" /></a></div>
 				<div class="inline-block cell-separator-dotted-bottom" style="width: 135px"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="important-link"><?php echo $filmSoonTv->getNameRo();?></a><br />
 				  <?php if ($filmSoonTv->getNameEn() != ''):?><em>(<?php echo $filmSoonTv->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="explanation-link">Pro TV</a></div>
@@ -376,7 +376,7 @@
         <div class="spacer-bottom">
           <div class="inline-block spacer-right-s" style="vertical-align:top">
 			  <a href="<?php echo url_for('@film?id=' . $boxRoFilms['Film1']['id'] . '&key=' . $boxRoFilms['Film1']['url_key']);?>">
-				  <img src="<?php echo filmsiFilmPhotoThumbS($boxRoFilms['Film1']['filename']);?>" />
+				  <img src="<?php echo filmsiFilmPhotoThumbS($boxRoFilms['Film1']['filename']);?>" style="width: 49px" />
 			  </a>
 		  </div>
           <div class="inline-block cell-separator-dotted-bottom" style="width: 135px; height: 73px">
@@ -418,7 +418,7 @@
         <div class="spacer-bottom">
           <div class="inline-block spacer-right-s" style="vertical-align:top">
 			  <a href="<?php echo url_for('@film?id=' . $boxUsFilms['Film1']['id'] . '&key=' . $boxUsFilms['Film1']['url_key']);?>">
-				  <img src="<?php echo filmsiFilmPhotoThumbS($boxUsFilms['Film1']['filename']);?>" />
+				  <img src="<?php echo filmsiFilmPhotoThumbS($boxUsFilms['Film1']['filename']);?>" style="width: 49px" />
 			  </a>
 		  </div>
           <div class="inline-block cell-separator-dotted-bottom" style="width: 135px; height: 73px">

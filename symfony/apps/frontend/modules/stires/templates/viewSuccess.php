@@ -30,7 +30,7 @@
                 <div class="right spacer-left"><img src="<?php echo filmsiStirePhoto($stire->getFilename());?>" /></div>
 
 
-                <div class="innerspacer-bottom spacer-bottom">
+                <div class="innerspacer-bottom spacer-bottom tinyMce">
                         <?php echo $sf_data->getRaw('stire')->getContentContent();?>
 
                 </div>

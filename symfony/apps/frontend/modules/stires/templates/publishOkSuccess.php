@@ -12,7 +12,7 @@
 
 
     <div class="greencell innerspacer">
-    	<div class="left normalcell" style="width:450px; height:100px">
+    	<div class="left normalcell tinyMce" style="width:450px; height:100px">
         	<?php echo $sf_data->getRaw('contentTop')->getContent();?>
         </div>
         <div class="left" style="color:#fff; font-size:135px; line-height:120px; font-weight:bold; margin-left:50px">?</div>
@@ -66,7 +66,7 @@
 
 
 
-    <div class="normalcell left spacer-left" style="width: 220px; height: 400px">
+    <div class="normalcell left spacer-left tinyMce" style="width: 220px; height: 400px">
 		<?php echo $sf_data->getRaw('contentRight')->getContent();?>
     </div>
 

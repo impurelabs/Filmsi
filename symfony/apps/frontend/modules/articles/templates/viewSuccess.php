@@ -58,7 +58,7 @@
 			<?php endif;?>
 
 			
-			<div class="innerspacer-bottom spacer-bottom">
+			<div class="innerspacer-bottom spacer-bottom tinyMce">
 				<?php echo $sf_data->getRaw('article')->getContentContent();?>
 
 			</div>

@@ -33,7 +33,7 @@
     </tr>
 	<tr>
     	<th>Descriere - continut</th>
-        <td><?php echo $sf_data->getRaw('festivalEdition')->getDescriptionContent();?></td>
+        <td class="tinyMce"><?php echo $sf_data->getRaw('festivalEdition')->getDescriptionContent();?></td>
     </tr>
 	<tr>
     	<th>META Description</th>

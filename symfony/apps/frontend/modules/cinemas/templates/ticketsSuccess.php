@@ -41,7 +41,7 @@
             <h4>Pret bilete</h4>
         </div>
 
-        <div class="cell-bd">
+        <div class="cell-bd tinyMce">
         	<?php echo $sf_data->getRaw('cinema')->getTicketPrice();?>
         </div>
     </div>

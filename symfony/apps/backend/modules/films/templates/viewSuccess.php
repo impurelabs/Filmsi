@@ -100,7 +100,7 @@ Nu este nici o poza pregatita pentru import.
     </tr>
 	<tr>
     	<th>Sinopsis - continut</th>
-        <td><?php echo $sf_data->getRaw('film')->getDescriptionContent();?></td>
+        <td class="tinyMce"><?php echo $sf_data->getRaw('film')->getDescriptionContent();?></td>
     </tr>
 	<tr>
     	<th>META Description</th>

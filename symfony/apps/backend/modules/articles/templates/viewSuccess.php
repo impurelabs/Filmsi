@@ -20,7 +20,7 @@ Acest obiect este Pending!  <button type="button" onclick="location.href='<?php 
     </tr>
 	<tr>
     	<th>Continut</th>
-        <td><?php echo $sf_data->getRaw('article')->getContentContent();?></td>
+        <td class="tinyMce"><?php echo $sf_data->getRaw('article')->getContentContent();?></td>
     </tr>
 	<tr>
     	<th>META Description</th>

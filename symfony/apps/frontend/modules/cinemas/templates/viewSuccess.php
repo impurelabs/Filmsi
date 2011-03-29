@@ -288,7 +288,7 @@
         </div>
 
 		<?php foreach ($sf_data->getRaw('cinema')->getPromotions() as $promotion):?>
-			<div class="cell-bd">
+			<div class="cell-bd tinyMce">
 				<h6><?php echo $promotion->getName();?></h6><br />
 				<?php echo $promotion->getContent();?> <br /><br />
 				<img src="<?php echo filmsiCinemaPromotionPhoto($promotion->getFilename());?>" />

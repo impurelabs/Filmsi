@@ -8,7 +8,7 @@
 
 <div class="cell-container8"> <!-- content column start -->
 
-	<div class="normalcell">
+	<div class="normalcell tinyMce">
 		<?php echo $sf_data->getRaw('content')->getContent();?>
 
 		<div class="cell-separator-double mt-2 mb-2"></div>

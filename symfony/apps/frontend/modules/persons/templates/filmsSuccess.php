@@ -30,7 +30,7 @@
 <div class="cell-container5 spacer-left"> <!-- content column start -->
 
     
-    <div class="normalcell spacer-bottom">
+    <div class="normalcell spacer-bottom tinyMce">
         <h4 class="spacer-bottom-m">Filmografie</h4>
 
         <?php foreach($sf_data->getRaw('films') as $film):?>

@@ -65,7 +65,7 @@
     </tr>
 	<tr>
     	<th>Pret bilete</th>
-        <td><?php echo $sf_data->getRaw('cinema')->getTicketPrice();?></td>
+        <td class="tinyMce"><?php echo $sf_data->getRaw('cinema')->getTicketPrice();?></td>
     </tr>
 	<tr>
     	<th>Facilitati</th>
@@ -85,7 +85,7 @@
     </tr>
 	<tr>
     	<th>Descriere - continut</th>
-        <td><?php echo $sf_data->getRaw('cinema')->getDescriptionContent();?></td>
+        <td class="tinyMce"><?php echo $sf_data->getRaw('cinema')->getDescriptionContent();?></td>
     </tr>
 	<tr>
     	<th>META Description</th>

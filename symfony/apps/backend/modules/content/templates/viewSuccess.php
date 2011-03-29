@@ -4,6 +4,6 @@
     <a href="<?php echo url_for('@default?module=content&action=index');?>">Intoarce-te inapoi</a>
 </div>
 
-<div style="width:<?php echo filmsiContentLocationWidth($content->getId());?>px">
+<div class="tinyMce" style="width:<?php echo filmsiContentLocationWidth($content->getId());?>px">
 <?php echo $sf_data->getRaw('content')->getContent(); ?>
 </div>

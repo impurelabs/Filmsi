@@ -43,7 +43,7 @@
             <h4>Promotii</h4>
         </div>
 
-        <div class="cell-bd">
+        <div class="cell-bd tinyMce">
         	<?php foreach ($sf_data->getRaw('cinema')->getPromotions() as $promotion):?>
 				<br />
 				<?php if($sf_user->isAuthenticated() && $sf_user->getAttribute('user_id', null, 'sfGuardSecurityUser') == $cinema->getAdminUserId()):?>

@@ -60,11 +60,11 @@ Nu este nici o poza pregatita pentru import.
     </tr>
 	<tr>
     	<th>Intro biografie</th>
-        <td><?php echo $person->getBiographyTeaser();?></td>
+        <td class="tinyMce"><?php echo $person->getBiographyTeaser();?></td>
     </tr>
 	<tr>
     	<th>Biografie</th>
-        <td><?php echo $sf_data->getRaw('person')->getBiographyContent();?></td>
+        <td class="tinyMce"><?php echo $sf_data->getRaw('person')->getBiographyContent();?></td>
     </tr>
 	<tr>
     	<th>META Description</th>

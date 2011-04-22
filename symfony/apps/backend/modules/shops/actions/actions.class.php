@@ -119,17 +119,7 @@ class shopsActions extends sfActions
 		if ($request->isMethod('post')){
 			set_time_limit(10000);
 
-			//$stuff = file_get_contents($request->getParameter('import_url'));
-			
-			$stuff = <<<text
-<products export_date="2011-04-22T11:27:09.187">
-	<product nume="Constantin si Elena" imdb="tt1506953" is_dvd="1" dvd_url="http://www.provideo.ro/Catalogs/Filme/Film/Constantin-si-Elena/7798p.aspx" is_bluray="0" bluray_url="http://www.provideo.ro/Catalogs/Filme/Film/Constantin-si-Elena/7798p.aspx" is_online="1" online_url="http://www.provideo.ro/Catalogs/Filme/Film/Constantin-si-Elena/7798p.aspx"></product>
-	<product nume="Barbie in Secretul zanei" imdb="tt1725929" is_dvd="1" dvd_url="http://www.provideo.ro/Catalogs/Filme/Film/Barbie-in-Secretul-zanei/7797p.aspx" is_bluray="0" bluray_url="http://www.provideo.ro/Catalogs/Filme/Film/Barbie-in-Secretul-zanei/7797p.aspx" is_online="1" online_url="http://www.provideo.ro/Catalogs/Filme/Film/Barbie-in-Secretul-zanei/7797p.aspx"></product>
-	<product nume="Cursa infernala (BD)" imdb="tt0111257" is_dvd="0" dvd_url="http://www.provideo.ro/Catalogs/Filme/Film/Cursa-infernala-BD-/7749p.aspx" is_bluray="1" bluray_url="http://www.provideo.ro/Catalogs/Filme/Film/Cursa-infernala-BD-/7749p.aspx" is_online="1" online_url="http://www.provideo.ro/Catalogs/Filme/Film/Cursa-infernala-BD-/7749p.aspx"></product>
-</products>		
-			
-text;
-			
+			$stuff = file_get_contents($request->getParameter('import_url'));
 			if (false == $products = simplexml_load_string($stuff)){
 				die('A aparut o eroare la deschiderea feed-ului!');
 				$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId());

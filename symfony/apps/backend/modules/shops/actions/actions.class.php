@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 /**
  * shops actions.
@@ -119,10 +119,14 @@ class shopsActions extends sfActions
 		if ($request->isMethod('post')){
 			set_time_limit(10000);
 
-			if (false == $products = simplexml_load_file($request->getParameter('import_url'))){
-				die('A aparut o eroare la deschiderea feed-ului!');
-				$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId());
-			}
+			$stuff = file_get_contents($request->getParameter('import_url'));
+			die('este: ' . $stuff);
+			
+			//simplexml_load_string($data)
+//			if (false == $products = simplexml_load_file($request->getParameter('import_url'))){
+//				die('A aparut o eroare la deschiderea feed-ului!');
+//				$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId());
+//			}
 
 			/* delete the existing films from this shop */
 			Doctrine_Core::getTable('ShopFilm')->deleteByShop($this->shop->getId());

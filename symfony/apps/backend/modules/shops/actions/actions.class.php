@@ -120,6 +120,7 @@ class shopsActions extends sfActions
 			set_time_limit(10000);
 
 			if (false == $products = simplexml_load_file($request->getParameter('import_url'))){
+				die('A aparut o eroare la deschiderea feed-ului!');
 				$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId());
 			}
 

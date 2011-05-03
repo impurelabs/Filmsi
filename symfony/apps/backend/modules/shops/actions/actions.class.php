@@ -136,7 +136,7 @@ class shopsActions extends sfActions
 					$notImportedCount += 1;
 
 					$notImportedFilms[] = array(
-						'name' => $product['name'],
+						'nume' => $product['nume'],
 						'imdb' => $product['imdb']
 					);
 					continue;
@@ -171,7 +171,7 @@ class shopsActions extends sfActions
 
 				$importedCount += 1;
 
-				echo '<br />Am terminat de importat filmul:' . $product['name'];
+				echo '<br />Am terminat de importat filmul:' . $product['nume'];
 				ob_end_flush(); flush(); ob_start();
 			}
 
@@ -182,7 +182,7 @@ class shopsActions extends sfActions
 				echo '<br />Nu s-a putut face importarea pentru ' . $notImportedCount . ' filme:';
 
 				foreach ($notImportedFilms as $notImportedFilm){
-					echo '<br />' . $notImportedFilm['name'] . ', IMDB: ' . $notImportedFilm['imdb'];
+					echo '<br />' . $notImportedFilm['nume'] . ', IMDB: ' . $notImportedFilm['imdb'];
 				}
 			}
 

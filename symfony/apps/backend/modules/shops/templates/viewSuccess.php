@@ -41,13 +41,14 @@
 <h6 class="left">Lista filme</h6>
  <a href="<?php echo url_for('@default?module=shops&action=films');?>?id=<?php echo $shop->getId();?>" class="ml-3">editeaza</a>
 
-<div class="clear mb-3"
+ <div class="clear mb-3"></div>
 
 <table class="mt-3 span-12">
 	<?php foreach($films as $film): ?>
     	<tr>
         	<td><?php echo $film->getFilm()->getName();?></td>
         	<td><a href="<?php echo $film->getUrl();?>" target="_blank"><?php echo $film->getUrl();?></a></td>
+        	<td><?php echo $film->getFormat();?></td>
         </tr>
     <?php endforeach; ?>
 </table>

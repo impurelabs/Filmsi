@@ -249,62 +249,57 @@ function start_element($parser, $elementName, $elementAttrs)
 		->from('Film f')
 		->where('f.imdb = ?');
 	echo '<br />' . 'Memory 251: ' . $elementAttrs['IMDB'] . '|' . memory_get_usage(true);
+	
+	
+	
+	
+
 	if ($film = $q->fetchOne(array($elementAttrs['IMDB']))){
+		if ($elementAttrs['IS_DVD'] == '1'){
+			$shopFilm = new ShopFilm();
+			$shopFilm->setShopId($GLOBALS['shopId']);
+			$shopFilm->setFilmId($film->getId());
+			$shopFilm->setUrl($elementAttrs['DVD_URL']);
+			$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
+			$shopFilm->save();
+
+			$shopFilm->free();
+			unset($shopFilm);
+		}
+
+		if ($elementAttrs['IS_BLURAY'] == '1'){
+			$shopFilm = new ShopFilm();
+			$shopFilm->setShopId($GLOBALS['shopId']);
+			$shopFilm->setFilmId($film->getId());
+			$shopFilm->setUrl($elementAttrs['BLURAY_URL']);
+			$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
+			$shopFilm->save();
+
+			$shopFilm->free();
+			unset($shopFilm);
+			sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
+		}
+
+		if ($elementAttrs['IS_ONLINE'] == '1'){
+			$shopFilm = new ShopFilm();
+			$shopFilm->setShopId($GLOBALS['shopId']);
+			$shopFilm->setFilmId($film->getId());
+			$shopFilm->setUrl($elementAttrs['ONLINE_URL']);
+			$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
+			$shopFilm->save();
+
+			$shopFilm->free();
+			unset($shopFilm);
+			sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
+		}
+		
 		$film->free();
+		
 	}
-	echo '<br />' . 'Memory 255: ' . $elementAttrs['IMDB'] . '|' . memory_get_usage(true);
+	
 	$q->free();
-	
+
 	echo '<br />' . 'Memory 260: ' . $elementAttrs['IMDB'] . '|' . memory_get_usage(true);
-	
-	
-	
-
-//	if ($film = $q->fetchOne(array($elementAttrs['IMDB']))){
-//		if ($elementAttrs['IS_DVD'] == '1'){
-//			$shopFilm = new ShopFilm();
-//			$shopFilm->setShopId($GLOBALS['shopId']);
-//			$shopFilm->setFilmId($film->getId());
-//			$shopFilm->setUrl($elementAttrs['DVD_URL']);
-//			$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
-//			$shopFilm->save();
-//
-//			$shopFilm->free();
-//			unset($shopFilm);
-//		}
-//
-//		if ($elementAttrs['IS_BLURAY'] == '1'){
-//			$shopFilm = new ShopFilm();
-//			$shopFilm->setShopId($GLOBALS['shopId']);
-//			$shopFilm->setFilmId($film->getId());
-//			$shopFilm->setUrl($elementAttrs['BLURAY_URL']);
-//			$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
-//			$shopFilm->save();
-//
-//			$shopFilm->free();
-//			unset($shopFilm);
-//			sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
-//		}
-//
-//		if ($elementAttrs['IS_ONLINE'] == '1'){
-//			$shopFilm = new ShopFilm();
-//			$shopFilm->setShopId($GLOBALS['shopId']);
-//			$shopFilm->setFilmId($film->getId());
-//			$shopFilm->setUrl($elementAttrs['ONLINE_URL']);
-//			$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
-//			$shopFilm->save();
-//
-//			$shopFilm->free();
-//			unset($shopFilm);
-//			sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
-//		}
-		
-//		$film->free();
-		
-//	}
-	
-//	$q->free();
-
 }
 
 function end_element($parser, $elementName){

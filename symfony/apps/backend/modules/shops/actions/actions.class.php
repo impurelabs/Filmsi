@@ -140,9 +140,9 @@ class shopsActions extends sfActions
 			
 			sfContext::getInstance()->getLogger()->info('Mem AFTER films from db: ' . memory_get_usage(true));
 			
-			for ($i = 0; $i<= $products->product->count() - 1; $i++) {	
-				//$productImdb = (string)$products->product[$i]['imdb'];
-				sfContext::getInstance()->getLogger()->info('Mem after ' . (string)$products->product[$i]['imdb'] . '|' . memory_get_usage(true));
+			foreach ($products->product as $product) {	
+				$productImdb = (string)$product['imdb'];
+				sfContext::getInstance()->getLogger()->info('Mem after ' . $productImdb . memory_get_usage(true));
 				
 				
 				/* Check if the product exists in the database */

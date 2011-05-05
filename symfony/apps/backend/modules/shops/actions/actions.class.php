@@ -114,6 +114,7 @@ class shopsActions extends sfActions
 
 	public function executeImport(sfWebRequest $request)
 	{
+		/* just fo testing*/
 		$this->forward404If(false == $this->shop = Doctrine_Core::getTable('Shop')->findOneById($request->getParameter('sid')));
 
 		if ($request->isMethod('post')){

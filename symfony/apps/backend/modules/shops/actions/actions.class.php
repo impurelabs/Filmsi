@@ -127,64 +127,56 @@ class shopsActions extends sfActions
 			/* delete the existing films from this shop */
 			Doctrine_Core::getTable('ShopFilm')->deleteByShop($this->shop->getId());
 
-			$notImportedFilms = array();
-			$importedCount = 0;
-			$notImportedCount = 0;
+			/* Find out the IDs of all the films that exist in the database */
+			$inshopImdbCodes = array();
 			foreach ($products->product as $product)
 			{
-				if (false == $film = Doctrine_Core::getTable('Film')->findOneByImdb($product['imdb'])){
-					$notImportedCount += 1;
-
-					$notImportedFilms[] = array(
-						'nume' => $product['nume'],
-						'imdb' => $product['imdb']
-					);
-					continue;
-				}
-
-				if ($product['is_dvd'] == '1'){
-					$shopFilm = new ShopFilm();
-					$shopFilm->setShopId($this->shop->getId());
-					$shopFilm->setFilmId($film->getId());
-					$shopFilm->setUrl($product['dvd_url']);
-					$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
-					$shopFilm->save();
-				}
-
-				if ($product['is_bluray'] == '1'){
-					$shopFilm = new ShopFilm();
-					$shopFilm->setShopId($this->shop->getId());
-					$shopFilm->setFilmId($film->getId());
-					$shopFilm->setUrl($product['bluray_url']);
-					$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
-					$shopFilm->save();
-				}
-
-				if ($product['is_online'] == '1'){
-					$shopFilm = new ShopFilm();
-					$shopFilm->setShopId($this->shop->getId());
-					$shopFilm->setFilmId($film->getId());
-					$shopFilm->setUrl($product['online_url']);
-					$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
-					$shopFilm->save();
-				}
-
-				$importedCount += 1;
-
-				echo '<br />Am terminat de importat filmul:' . $product['nume'];
-				ob_end_flush(); flush(); ob_start();
+				$inshopImdbCodes[] = $product['imdb'];
 			}
+			
+			/* Get all the films that also exist in the db */
+			$filmsInDb = FilmTable::getInstance()->getAllByImdbForShopImport($inshopImdbCodes);
+			
+			
+			$filmCollection = new Doctrine_Collection('Film');
+			foreach ($products->product as $product) {				
+				$productImdb = (string)$product['imdb'];
+				
+				/* Check if the product exists in the database */
+				if (array_key_exists($productImdb, $filmsInDb)){
+					if ($product['is_dvd'] == '1'){
+						$shopFilm = new ShopFilm();
+						$shopFilm->setShopId($this->shop->getId());
+						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setUrl($product['dvd_url']);
+						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
+						
+						$filmCollection->add($shopFilm);
+					}
+					
+					if ($product['is_bluray'] == '1'){
+						$shopFilm = new ShopFilm();
+						$shopFilm->setShopId($this->shop->getId());
+						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setUrl($product['bluray_url']);
+						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
+						
+						$filmCollection->add($shopFilm);
+					}
 
-			echo '<br />-----------------';
-			echo '<br />S-au importat ' . $importedCount . ' filme';
-
-			if ((int)$notImportedCount > 0){
-				echo '<br />Nu s-a putut face importarea pentru ' . $notImportedCount . ' filme:';
-
-				foreach ($notImportedFilms as $notImportedFilm){
-					echo '<br />' . $notImportedFilm['nume'] . ', IMDB: ' . $notImportedFilm['imdb'];
+					if ($product['is_online'] == '1'){
+						$shopFilm = new ShopFilm();
+						$shopFilm->setShopId($this->shop->getId());
+						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setUrl($product['online_url']);
+						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
+						
+						$filmCollection->add($shopFilm);
+					}
 				}
 			}
+			
+			$filmCollection->save();
 
 			echo '<br /><br />Click <a href="' . $this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId() . '">AICI</a> pentru a continua.';
 			exit;

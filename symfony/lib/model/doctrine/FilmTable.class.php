@@ -682,4 +682,19 @@ text;
 			->where('a.video_album_id = ?', $videoAlbumId)
 			->execute();
 	}
+	
+	public function getAllByImdbForShopImport($imdbCodes)
+	{
+		$films = Doctrine_Query::create()
+			->from('Film f')
+			->whereIn('f.imdb', $imdbCodes)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		$result = array();
+		foreach($films as $film){
+			$result[$film['imdb']] = $film;
+		}
+				
+		return $result;
+	}
 }

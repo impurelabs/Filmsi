@@ -20,7 +20,7 @@ class ShopTable extends Doctrine_Table
 		return Doctrine_Query::create()
 			->select('s.*, COUNT(f.id) film_counter')
 			->from('Shop s')
-			->groupBy('s.id, f.id')
+			->groupBy('s.id')
 			->leftJoin('s.Films f')
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}

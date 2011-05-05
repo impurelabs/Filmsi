@@ -142,7 +142,7 @@ class shopsActions extends sfActions
 			
 			foreach ($products->product as $product) {	
 				$productImdb = (string)$product['imdb'];
-				echo '<br />' . $productImdb;
+				sfContext::getInstance()->getLogger()->info('Mem after ' . $productImdb . memory_get_usage(true));
 				/* Check if the product exists in the database */
 //				if (array_key_exists($productImdb, $filmsInDb)){
 //

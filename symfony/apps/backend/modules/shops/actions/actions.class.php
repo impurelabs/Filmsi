@@ -142,7 +142,6 @@ class shopsActions extends sfActions
 					
 				/* Check if the product exists in the database */
 				if (array_key_exists($productImdb, $filmsInDb)){
-					$filmCollection = new Doctrine_Collection(ShopFilmTable::getInstance());
 
 					if ($product['is_dvd'] == '1'){
 						$shopFilm = new ShopFilm();
@@ -150,8 +149,10 @@ class shopsActions extends sfActions
 						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['dvd_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
+						$shopFilm->save();
 						
-						$filmCollection->add($shopFilm);
+						$shopFilm->free();
+						unset($shopFilm);
 					}
 					
 					if ($product['is_bluray'] == '1'){
@@ -160,8 +161,10 @@ class shopsActions extends sfActions
 						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['bluray_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
+						$shopFilm->save();
 						
-						$filmCollection->add($shopFilm);
+						$shopFilm->free();
+						unset($shopFilm);
 					}
 
 					if ($product['is_online'] == '1'){
@@ -170,13 +173,11 @@ class shopsActions extends sfActions
 						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['online_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
+						$shopFilm->save();
 						
-						$filmCollection->add($shopFilm);
+						$shopFilm->free();
+						unset($shopFilm);
 					}
-					
-					$filmCollection->save();
-					$filmCollection->free(true);
-					$shopFilm->free(true);
 				}
 				
 			}

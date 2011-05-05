@@ -141,7 +141,7 @@ class shopsActions extends sfActions
 			sfContext::getInstance()->getLogger()->info('Mem AFTER films from db: ' . memory_get_usage(true));
 			
 			for ($i = 0; $i<= $products->product->count() - 1; $i++) {	
-				$productImdb = (string)$products->product[$i]['imdb'];
+				//$productImdb = (string)$products->product[$i]['imdb'];
 				sfContext::getInstance()->getLogger()->info('Mem after ' . $productImdb . '|' . memory_get_usage(true));
 				
 				

@@ -152,7 +152,6 @@ class shopsActions extends sfActions
 						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
 						
 						$filmCollection->add($shopFilm);
-						$shopFilm->free(true);
 					}
 					
 					if ($product['is_bluray'] == '1'){
@@ -163,7 +162,6 @@ class shopsActions extends sfActions
 						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
 						
 						$filmCollection->add($shopFilm);
-						$shopFilm->free(true);
 					}
 
 					if ($product['is_online'] == '1'){
@@ -174,11 +172,11 @@ class shopsActions extends sfActions
 						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
 						
 						$filmCollection->add($shopFilm);
-						$shopFilm->free(true);
 					}
 					
 					$filmCollection->save();
 					$filmCollection->free(true);
+					$shopFilm->free(true);
 				}
 				
 			}

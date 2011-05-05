@@ -137,8 +137,6 @@ class shopsActions extends sfActions
 			/* Get all the films that also exist in the db */
 			$filmsInDb = FilmTable::getInstance()->getAllByImdbForShopImport($inshopImdbCodes);
 			
-echo '<pre>'; var_dump($filmsInDb); die('e ok la films from db');						
-			
 			foreach ($products->product as $product) {	
 				$productImdb = (string)$product['imdb'];
 					
@@ -149,7 +147,7 @@ echo '<pre>'; var_dump($filmsInDb); die('e ok la films from db');
 					if ($product['is_dvd'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['dvd_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
 						
@@ -159,7 +157,7 @@ echo '<pre>'; var_dump($filmsInDb); die('e ok la films from db');
 					if ($product['is_bluray'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['bluray_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
 						
@@ -169,7 +167,7 @@ echo '<pre>'; var_dump($filmsInDb); die('e ok la films from db');
 					if ($product['is_online'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['online_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
 						

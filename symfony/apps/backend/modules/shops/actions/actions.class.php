@@ -142,7 +142,7 @@ class shopsActions extends sfActions
 			
 			for ($i = 0; $i<= $products->product->count() - 1; $i++) {	
 				//$productImdb = (string)$products->product[$i]['imdb'];
-				sfContext::getInstance()->getLogger()->info('Mem after ' . $productImdb . '|' . memory_get_usage(true));
+				sfContext::getInstance()->getLogger()->info('Mem after ' . (string)$products->product[$i]['imdb'] . '|' . memory_get_usage(true));
 				
 				
 				/* Check if the product exists in the database */

@@ -142,52 +142,52 @@ class shopsActions extends sfActions
 			
 			foreach ($products->product as $product) {	
 				$productImdb = (string)$product['imdb'];
-					
+				echo '<br />' . $productImdb;
 				/* Check if the product exists in the database */
-				if (array_key_exists($productImdb, $filmsInDb)){
-
-					if ($product['is_dvd'] == '1'){
-						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' dvd: ' . memory_get_usage(true));
-						$shopFilm = new ShopFilm();
-						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]);
-						$shopFilm->setUrl($product['dvd_url']);
-						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
-						$shopFilm->save();
-						
-						$shopFilm->free();
-						unset($shopFilm);
-						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
-					}
-					
-					if ($product['is_bluray'] == '1'){
-						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' blu: ' . memory_get_usage(true));
-						$shopFilm = new ShopFilm();
-						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]);
-						$shopFilm->setUrl($product['bluray_url']);
-						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
-						$shopFilm->save();
-						
-						$shopFilm->free();
-						unset($shopFilm);
-						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
-					}
-
-					if ($product['is_online'] == '1'){
-						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' onl: ' . memory_get_usage(true));
-						$shopFilm = new ShopFilm();
-						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]);
-						$shopFilm->setUrl($product['online_url']);
-						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
-						$shopFilm->save();
-						
-						$shopFilm->free();
-						unset($shopFilm);
-						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
-					}
-				}
+//				if (array_key_exists($productImdb, $filmsInDb)){
+//
+//					if ($product['is_dvd'] == '1'){
+//						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' dvd: ' . memory_get_usage(true));
+//						$shopFilm = new ShopFilm();
+//						$shopFilm->setShopId($this->shop->getId());
+//						$shopFilm->setFilmId($filmsInDb[$productImdb]);
+//						$shopFilm->setUrl($product['dvd_url']);
+//						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
+//						$shopFilm->save();
+//						
+//						$shopFilm->free();
+//						unset($shopFilm);
+//						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
+//					}
+//					
+//					if ($product['is_bluray'] == '1'){
+//						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' blu: ' . memory_get_usage(true));
+//						$shopFilm = new ShopFilm();
+//						$shopFilm->setShopId($this->shop->getId());
+//						$shopFilm->setFilmId($filmsInDb[$productImdb]);
+//						$shopFilm->setUrl($product['bluray_url']);
+//						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
+//						$shopFilm->save();
+//						
+//						$shopFilm->free();
+//						unset($shopFilm);
+//						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
+//					}
+//
+//					if ($product['is_online'] == '1'){
+//						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' onl: ' . memory_get_usage(true));
+//						$shopFilm = new ShopFilm();
+//						$shopFilm->setShopId($this->shop->getId());
+//						$shopFilm->setFilmId($filmsInDb[$productImdb]);
+//						$shopFilm->setUrl($product['online_url']);
+//						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
+//						$shopFilm->save();
+//						
+//						$shopFilm->free();
+//						unset($shopFilm);
+//						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
+//					}
+//				}
 				
 			}
 			

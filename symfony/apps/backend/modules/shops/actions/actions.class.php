@@ -114,10 +114,13 @@ class shopsActions extends sfActions
 
 	public function executeImport(sfWebRequest $request)
 	{
+	
 		$this->forward404If(false == $this->shop = Doctrine_Core::getTable('Shop')->findOneById($request->getParameter('sid')));
 
+		
 		if ($request->isMethod('post')){
 			set_time_limit(10000);
+			ini_set('memory_limit', '50M');
 
 			if (!$products = simplexml_load_file($request->getParameter('import_url'))){
 				die('A aparut o eroare la deschiderea feed-ului!');

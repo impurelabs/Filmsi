@@ -135,22 +135,23 @@ class shopsActions extends sfActions
 				$inshopImdbCodes[] = $product['imdb'];
 			}
 			
-			/* Get all the films that also exist in the db */
-			$filmsInDb = FilmTable::getInstance()->getAllByImdbForShopImport($inshopImdbCodes);
-			
 			
 			
 			foreach ($products->product as $product) {	
 				$productImdb = (string)$product['imdb'];
 					
+				if ($productImdb == ''){
+					continue;
+				}
+				
 				/* Check if the product exists in the database */
-				if (array_key_exists($productImdb, $filmsInDb)){
+				if ($film = FilmTable::getInstance()->findOneByImdbForShopImport($productImdb)){
 					$filmCollection = new Doctrine_Collection(ShopFilmTable::getInstance());
 
 					if ($product['is_dvd'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]);
+						$shopFilm->setFilmId($film->getId());
 						$shopFilm->setUrl($product['dvd_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
 						
@@ -160,7 +161,7 @@ class shopsActions extends sfActions
 					if ($product['is_bluray'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]);
+						$shopFilm->setFilmId($film->getId());
 						$shopFilm->setUrl($product['bluray_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
 						
@@ -170,7 +171,7 @@ class shopsActions extends sfActions
 					if ($product['is_online'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]);
+						$shopFilm->setFilmId($film->getId());
 						$shopFilm->setUrl($product['online_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
 						

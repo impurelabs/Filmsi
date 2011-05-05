@@ -150,7 +150,7 @@ class shopsActions extends sfActions
 					if ($product['is_dvd'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['dvd_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
 						
@@ -160,7 +160,7 @@ class shopsActions extends sfActions
 					if ($product['is_bluray'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['bluray_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
 						
@@ -170,7 +170,7 @@ class shopsActions extends sfActions
 					if ($product['is_online'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
-						$shopFilm->setFilmId($filmsInDb[$productImdb]['id']);
+						$shopFilm->setFilmId($filmsInDb[$productImdb]);
 						$shopFilm->setUrl($product['online_url']);
 						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
 						

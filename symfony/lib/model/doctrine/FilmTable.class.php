@@ -683,12 +683,20 @@ text;
 			->execute();
 	}
 	
-	public function findOneByImdbForShopImport($imdbCode)
+	public function getAllByImdbForShopImport($imdbCodes)
 	{
-		return Doctrine_Query::create()
-			->select('f.id')
+		
+		$films =  Doctrine_Query::create()
+			->select('f.id, f.imdb')
 			->from('Film f')
-			->whereIn('f.imdb', $imdbCode)
-			->fetchOne();
+			->whereIn('f.imdb', $imdbCodes)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		$result = array();
+		foreach ($films as $film){
+			$result[$film['imdb']] = $film['id'];
+		}
+		
+		return $result;
 	}
 }

@@ -134,8 +134,11 @@ class shopsActions extends sfActions
 				$inshopImdbCodes[] = $product['imdb'];
 			}
 
+			sfContext::getInstance()->getLogger()->info('Mem BEFORE films from db: ' . memory_get_usage(true));
 			/* Get all the films that also exist in the db */
 			$filmsInDb = FilmTable::getInstance()->getAllByImdbForShopImport($inshopImdbCodes);
+			
+			sfContext::getInstance()->getLogger()->info('Mem AFTER films from db: ' . memory_get_usage(true));
 			
 			foreach ($products->product as $product) {	
 				$productImdb = (string)$product['imdb'];
@@ -144,6 +147,7 @@ class shopsActions extends sfActions
 				if (array_key_exists($productImdb, $filmsInDb)){
 
 					if ($product['is_dvd'] == '1'){
+						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' dvd: ' . memory_get_usage(true));
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
 						$shopFilm->setFilmId($filmsInDb[$productImdb]);
@@ -153,9 +157,11 @@ class shopsActions extends sfActions
 						
 						$shopFilm->free();
 						unset($shopFilm);
+						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
 					}
 					
 					if ($product['is_bluray'] == '1'){
+						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' blu: ' . memory_get_usage(true));
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
 						$shopFilm->setFilmId($filmsInDb[$productImdb]);
@@ -165,9 +171,11 @@ class shopsActions extends sfActions
 						
 						$shopFilm->free();
 						unset($shopFilm);
+						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
 					}
 
 					if ($product['is_online'] == '1'){
+						sfContext::getInstance()->getLogger()->info('Mem BEFORE ' . $productImdb . ' onl: ' . memory_get_usage(true));
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
 						$shopFilm->setFilmId($filmsInDb[$productImdb]);
@@ -177,6 +185,7 @@ class shopsActions extends sfActions
 						
 						$shopFilm->free();
 						unset($shopFilm);
+						sfContext::getInstance()->getLogger()->info('Mem AFTER: ' . memory_get_usage(true));
 					}
 				}
 				

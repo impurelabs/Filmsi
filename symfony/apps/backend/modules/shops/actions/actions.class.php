@@ -138,8 +138,11 @@ class shopsActions extends sfActions
 			$filmsInDb = FilmTable::getInstance()->getAllByImdbForShopImport($inshopImdbCodes);
 			
 			
-			$filmCollection = new Doctrine_Collection('Film');
+			
 			foreach ($products->product as $product) {				
+				$filmCollection = new Doctrine_Collection('Film');
+				
+				
 				$productImdb = (string)$product['imdb'];
 				
 				/* Check if the product exists in the database */
@@ -174,9 +177,11 @@ class shopsActions extends sfActions
 						$filmCollection->add($shopFilm);
 					}
 				}
+				
+				$filmCollection->save();
 			}
 			
-			$filmCollection->save();
+			
 
 			echo '<br /><br />Click <a href="' . $this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId() . '">AICI</a> pentru a continua.';
 			exit;

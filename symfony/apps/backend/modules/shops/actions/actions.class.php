@@ -123,7 +123,7 @@ class shopsActions extends sfActions
 				die('A aparut o eroare la deschiderea feed-ului!');
 				$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId());
 			}
-die('e ok la products' . count($products));
+
 			/* delete the existing films from this shop */
 			Doctrine_Core::getTable('ShopFilm')->deleteByShop($this->shop->getId());
 
@@ -133,11 +133,11 @@ die('e ok la products' . count($products));
 			{
 				$inshopImdbCodes[] = $product['imdb'];
 			}
-			
+
 			/* Get all the films that also exist in the db */
 			$filmsInDb = FilmTable::getInstance()->getAllByImdbForShopImport($inshopImdbCodes);
 			
-			
+echo '<pre>'; var_dump($filmsInDb); die('e ok la films from db');						
 			
 			foreach ($products->product as $product) {	
 				$productImdb = (string)$product['imdb'];

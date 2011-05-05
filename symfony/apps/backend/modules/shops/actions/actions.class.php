@@ -139,14 +139,13 @@ class shopsActions extends sfActions
 			
 			
 			
-			foreach ($products->product as $product) {				
-				$filmCollection = new Doctrine_Collection('Film');
-				
-				
+			foreach ($products->product as $product) {	
 				$productImdb = (string)$product['imdb'];
-				
+					
 				/* Check if the product exists in the database */
 				if (array_key_exists($productImdb, $filmsInDb)){
+					$filmCollection = new Doctrine_Collection(ShopFilmTable::getInstance());
+
 					if ($product['is_dvd'] == '1'){
 						$shopFilm = new ShopFilm();
 						$shopFilm->setShopId($this->shop->getId());
@@ -176,9 +175,10 @@ class shopsActions extends sfActions
 						
 						$filmCollection->add($shopFilm);
 					}
+					
+					$filmCollection->save();
 				}
 				
-				$filmCollection->save();
 			}
 			
 			

@@ -7,6 +7,12 @@
  */
 class ShopFilmTable extends Doctrine_Table
 {
+	static public function getInstance()
+	{
+		return Doctrine_Core::getTable('ShopFilm');
+	}
+
+
 	public function getDetailedByShop($shopId)
 	{
 		return Doctrine_Query::create()

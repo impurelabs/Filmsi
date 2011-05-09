@@ -110,7 +110,9 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-		window.scroll(0,500);
+		<?php if (isset($cinemas) && count($cinemas) > 0):?>
+			window.scroll(0,500);
+		<?php endif;?>
 		
 		$('ul.romania > li > a').mouseover(function(){
 			$('#cinema-count-number').html($(this).attr('cinema_count'));

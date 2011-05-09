@@ -104,7 +104,7 @@
 
     <div class="normalcell spacer-bottom">
 
-        <div class="left innerspacer-top cell-separator-dotted-right" style="width: 260px">
+        <div class="left cell-separator-dotted-right" style="width: 260px">
         	<p class="bigstronggreen spacer-bottom-s">Adresa</p>
             <p class="spacer-bottom-s"><?php echo $cinema->getAddress();?></p>
             <p class="spacer-bottom"><a href="<?php echo $cinema->getWebsite();?>" class="important-link"><?php echo $cinema->getWebsite();?></a></p>

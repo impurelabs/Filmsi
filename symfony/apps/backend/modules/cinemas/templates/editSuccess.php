@@ -80,8 +80,12 @@
     </tr>
     <tr>
     	<th>Format film</th>
-        <td><?php echo $form['is_type_film']->render();?> pelicula, <?php echo $form['is_type_digital']->render();?> digital, <?php echo $form['is_type_3d']->render();?> 3D <br />
-			<?php echo $form['is_type_film']->renderError();?> <?php echo $form['is_type_digital']->renderError();?> <?php echo $form['is_type_3d']->renderError();?></td>
+        <td>
+			<?php echo $form['is_type_film']->render();?> pelicula, 
+			<?php echo $form['is_type_digital']->render();?> digital, 
+			<?php echo $form['is_type_3d']->render();?> 3D,
+			<?php echo $form['is_type_imax']->render();?> IMAX
+		</td>
     </tr>
 	<tr>
     	<th>Descriere - intro</th>

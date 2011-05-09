@@ -55,6 +55,7 @@
  * @method bool                getIsTypeFilm()          Returns the current record's "is_type_film" value
  * @method bool                getIsTypeDigital()       Returns the current record's "is_type_digital" value
  * @method bool                getIsType3d()            Returns the current record's "is_type_3d" value
+ * @method bool                getIsTypeImax()          Returns the current record's "is_type_imax" value
  * @method string              getTicketPrice()         Returns the current record's "ticket_price" value
  * @method string              getFilename()            Returns the current record's "filename" value
  * @method string              getDescriptionTeaser()   Returns the current record's "description_teaser" value
@@ -174,6 +175,9 @@ abstract class BaseCinema extends sfDoctrineRecord
              'type' => 'bool',
              ));
         $this->hasColumn('is_type_3d', 'bool', null, array(
+             'type' => 'bool',
+             ));
+        $this->hasColumn('is_type_imax', 'bool', null, array(
              'type' => 'bool',
              ));
         $this->hasColumn('ticket_price', 'text', null, array(

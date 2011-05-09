@@ -5,7 +5,7 @@ public function configure()
   {
   	$this->useFields(array(
   		'name', 'location_id', 'address', 'phone', 'website', 'room_count', 'lat', 'lng', 'seats', 'sound', 'ticket_price',
-		'is_type_film', 'is_type_digital', 'is_type_3d', 'url_key', 'filename', 'description_teaser', 'description_content',  'meta_description', 'meta_keywords',
+		'is_type_film', 'is_type_digital', 'is_type_3d', 'is_type_imax', 'url_key', 'filename', 'description_teaser', 'description_content',  'meta_description', 'meta_keywords',
 		'publish_date', 'service_list', 'lat', 'lng', 'map_zoom', 'reservation_url', 'photo_album_id'
   	));
   	
@@ -24,6 +24,7 @@ public function configure()
   	$this->widgetSchema['is_type_film'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
   	$this->widgetSchema['is_type_digital'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
   	$this->widgetSchema['is_type_3d'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
+  	$this->widgetSchema['is_type_imax'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
   	$this->widgetSchema['filename'] = new sfWidgetFormInputFile();
   	$this->widgetSchema['description_teaser'] = new sfWidgetFormTextarea();
   	$this->widgetSchema['description_content'] = new sfWidgetFormTextarea();

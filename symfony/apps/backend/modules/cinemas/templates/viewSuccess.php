@@ -77,7 +77,8 @@
     </tr>
     <tr>
     	<th>Format</th>
-        <td><?php echo ($cinema->getIsTypeFilm() ? 'pelicula, ' : '') . ($cinema->getIsTypeDigital() ? 'digital, ' : '') . ($cinema->getIsType_3d() ? '3D' : '');?></td>
+        <td>
+			<?php echo ($cinema->getIsTypeFilm() ? 'pelicula, ' : '') . ($cinema->getIsTypeDigital() ? 'digital, ' : '') . ($cinema->getIsType_3d() ? '3D, ' : '') . ($cinema->getIsTypeImax() ? 'IMAX' : '');?></td>
     </tr>
 	<tr>
     	<th>Descriere - intro</th>

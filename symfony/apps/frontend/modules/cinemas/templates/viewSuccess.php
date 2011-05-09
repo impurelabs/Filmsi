@@ -122,26 +122,37 @@
 
     <div class="normalcell spacer-bottom" style="padding: 5px 0">
 
-        <div class="left bigstronggreen spacer-left cell-separator-dotted-right" style="width: 100px">Capacitate</div>
-        <div class="left bigstronggreen spacer-left cell-separator-dotted-right" style="width: 50px">Sali</div>
+        <div class="left bigstronggreen spacer-left cell-separator-dotted-right" style="width: 80px">Capacitate</div>
+        <div class="left bigstronggreen spacer-left cell-separator-dotted-right" style="width: 30px">Sali</div>
         <div class="left bigstronggreen spacer-left cell-separator-dotted-right" style="width: 90px">Sunet</div>
-        <div class="left bigstronggreen spacer-left" style="width: 150px">Facilitati</div>
+        <div class="left bigstronggreen spacer-left cell-separator-dotted-right" style="width: 130px">Facilitati</div>
+        <div class="left bigstronggreen spacer-left" style="width: 90px">Proiectie</div>
 
         <div class="clear"></div>
 
         <hr class="cell-separator2 spacer-top-s spacer-bottom-s" />
 
-        <div class="left spacer-left" style="width: 100px"><strong><?php echo $cinema->getSeats();?></strong></div>
-        <div class="left spacer-left" style="width: 50px"><strong><?php echo $cinema->getRoomCount();?></strong></div>
+        <div class="left spacer-left" style="width: 80px"><strong><?php echo $cinema->getSeats();?></strong></div>
+        <div class="left spacer-left" style="width: 30px"><strong><?php echo $cinema->getRoomCount();?></strong></div>
         <div class="left spacer-left" style="width: 90px"><strong><?php echo $cinema->getSound();?></strong></div>
-        <div class="left spacer-left" style="width: 150px">
+        <div class="left spacer-left" style="width: 130px">
 			<ul style="list-style: none; padding: 0; margin: 0">
 				<?php foreach($cinema->getService() as $service):?>
             	<li><span class="icon-checkbullet"></span> <?php echo $service->getName();?></li>
 				<?php endforeach;?>
             </ul>
         </div>
+		<div class="left spacer-left" style="width: 90px">
+			<ul style="list-style: none; padding: 0; margin: 0">
+				<?php if ($cinema->getIsTypeFilm()) echo '<li><span class="icon-checkbullet"></span> pelicula</li>';?>
+				<?php if ($cinema->getIsTypeDigital()) echo '<li><span class="icon-checkbullet"></span> digital</li>';?>
+				<?php if ($cinema->getIsType_3d()) echo '<li><span class="icon-checkbullet"></span> 3D</li>';?>
+				<?php if ($cinema->getIsTypeImax()) echo '<li><span class="icon-checkbullet"></span> IMAX</li>';?>
+			</ul>
+		</div>
+		
         <div class="clear"></div>
+		
     </div>
 
     <div class="normalcell mb-3">

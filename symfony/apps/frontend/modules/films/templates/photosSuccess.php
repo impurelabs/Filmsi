@@ -40,11 +40,12 @@
 
 
     <div class="spacer-bottom">
+		<a name="scrolled"></a>
     	<?php if ($currentPhoto < $photoCount):?>
-    	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto + 1;?>" class="right"><span class="pagenav-forward"></span></a>
+    	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto + 1;?>#scrolled" class="right"><span class="pagenav-forward"></span></a>
         <?php endif;?>
         <?php if ($currentPhoto > 1):?>
-	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto - 1;?>" class="left"><span class="pagenav-back"></span></a>
+	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto - 1;?>#scrolled" class="left"><span class="pagenav-back"></span></a>
         <?php endif;?>
         <div class="align-center explanation-small"><?php echo $currentPhoto;?> din <?php echo $photoCount;?></div>
         <div class="clear"></div>
@@ -60,10 +61,10 @@
 
     <div class="spacer-bottom spacer-top">
     	<?php if ($currentPhoto < $photoCount):?>
-    	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto + 1;?>" class="right"><span class="pagenav-forward"></span></a>
+    	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto + 1;?>#scrolled" class="right"><span class="pagenav-forward"></span></a>
         <?php endif;?>
         <?php if ($currentPhoto > 1):?>
-	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto - 1;?>" class="left"><span class="pagenav-back"></span></a>
+	<a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto - 1;?>#scrolled" class="left"><span class="pagenav-back"></span></a>
         <?php endif;?>
         <div class="align-center explanation-small"><?php echo $currentPhoto;?> din <?php echo $photoCount;?></div>
         <div class="clear"></div>
@@ -94,8 +95,8 @@
         <div class="cell-bd">
             <?php foreach($photos as $photo):?>
             <div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: middle">
-                <a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>"><img src="<?php echo filmsiPhotoThumbS($photo->getFilename());?>" /></a> <br />
-                <a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>" class="black-link"><?php echo $photo->getDescription();?></a> <br />
+                <a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>#scrolled"><img src="<?php echo filmsiPhotoThumbS($photo->getFilename());?>" /></a> <br />
+                <a href="<?php echo url_for('@film_photos?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>#scrolled" class="black-link"><?php echo $photo->getDescription();?></a> <br />
             </div>
             <?php endforeach;?>
         </div>

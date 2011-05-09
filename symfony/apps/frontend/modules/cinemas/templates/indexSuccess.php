@@ -108,7 +108,10 @@
 </div> <!-- right column end -->
 
 <script type="text/javascript">
+	
 	$(document).ready(function(){
+		window.scroll(0,500);
+		
 		$('ul.romania > li > a').mouseover(function(){
 			$('#cinema-count-number').html($(this).attr('cinema_count'));
 			$('#cinema-region-container').html($(this).html());

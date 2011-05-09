@@ -61,7 +61,7 @@
         <?php foreach ($persons as $person):?>
         <div class="left spacer-bottom-m" style="width: 75px; margin-left: 20px; text-align: center; margin-right: 20px">
             <a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>">
-                <img src="<?php echo filmsiPersonPhotoThumb($person->getFilename());?>" style="border: 1px solid #d5d5d5; padding: 1px" /><br />
+                <img src="<?php echo filmsiPersonPhotoThumb($person->getFilename());?>" style="border: 1px solid #d5d5d5; padding: 1px; width: 77px" /><br />
                 <?php echo $person->getName();?>
             </a>
         </div>

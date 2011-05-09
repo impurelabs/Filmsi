@@ -44,7 +44,7 @@
 <div class="cell-container5 spacer-left"> <!-- content column start -->
 
 	<div class="left" style="width:185px">
-    	<img src="<?php echo filmsiFilmPhotoThumb($film->getFilename());?>" class="spacer-bottom" />
+    	<img src="<?php echo filmsiFilmPhotoThumb($film->getFilename());?>" class="spacer-bottom" width="185" />
 
         <?php include_partial('films/alert', array('filmId' => $film->getId()));?>
     </div>

@@ -691,4 +691,17 @@ text;
 			->whereIn('f.imdb', $imdbCode)
 			->fetchOne();
 	}
+	
+	public function getForLiveSearch($term, $limit)
+	{
+		$term = '(^| |-)' . $term ;
+		
+		return Doctrine_Query::create()
+			->from('Film f')
+			->where('f.state = 1')
+			->andWhere('f.name_ro REGEXP ? or f.name_en REGEXP ?', array($term, $term))
+			->orderBy('f.visit_count desc')
+			->limit($limit)
+			->execute();
+	}
 }

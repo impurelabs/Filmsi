@@ -343,7 +343,7 @@ class SearchIndexTable extends Doctrine_Table
 			return 'Article:' . $q['id'];
 		}
 	}
-
+	
 	public function searchFilms($term, $limit)
 	{
 		$items = Doctrine_Query::create()

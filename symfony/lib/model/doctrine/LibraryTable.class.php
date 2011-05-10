@@ -565,27 +565,6 @@ class LibraryTable extends Doctrine_Table
     $connection->commit();
 	}
 
-	public function getForSearch($term)
-	{
-		$term = '(^| |-)' . $term ;
-
-		$bruteItems = Doctrine_Query::create()
-			->from('Library l')
-			->where('l.state = 1 and ( type = "Person" or type = "Film" )')
-			->andWhere('l.name REGEXP ?', array($term))
-			->orderBy('l.visit_count desc')
-			->limit(20)
-			->execute();
-
-		$items = array();
-		foreach ($bruteItems as $key => $bruteItem){
-			$items[$key]['value'] = $bruteItem->getId();
-			$items[$key]['label'] = $bruteItem->getName();
-		}
-
-		return $items;
-	}
-
 	public function searchByType($term, $type, $limit)
 	{
 		$items = Doctrine_Query::create()

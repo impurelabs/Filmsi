@@ -248,4 +248,21 @@ class PersonTable extends Doctrine_Table
 			->where('a.video_album_id = ?', $videoAlbumId)
 			->execute();
 	}
+	
+	
+
+	public function getForLiveSearch($term, $limit)
+	{
+		$term = '(^| |-)' . $term ;
+
+		$persons = array();
+		
+		return Doctrine_Query::create()
+			->from('Person p')
+			->where('p.state = 1')
+			->andWhere('p.first_name REGEXP ? or p.last_name REGEXP ?', array($term, $term))
+			->orderBy('p.visit_count desc')
+			->limit($limit)
+			->execute();
+	}
 }

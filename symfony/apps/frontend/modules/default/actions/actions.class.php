@@ -82,9 +82,28 @@ class defaultActions extends sfActions
 	public function executeSearch(sfWebRequest $request)
 	{
 		$this->setLayout(false);
-		$this->getResponse()->setContentType('application/json');
-
-		return $this->renderText(json_encode(Doctrine_Core::getTable('Library')->getForSearch($request->getParameter('term'))));
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		foreach (FilmTable::getInstance()->getForLiveSearch($request->getParameter('term'), 5) as $film) {
+			$results['films'][] = array(
+				'name' => $film->getNameRo(),
+				'url' => $this->generateUrl('film', array('id' => $film->getId(), 'key' => $film->getUrlKey())),
+				'filename_url' => filmsiFilmPhotoThumbS($film->getFilename())
+			);
+		}
+		
+		foreach (PersonTable::getInstance()->getForLiveSearch($request->getParameter('term'), 5) as $person) {
+			$results['persons'][] = array(
+				'name' => $person->getName(),
+				'url' => $this->generateUrl('person', array('id' => $person->getId(), 'key' => $person->getUrlKey())),
+				'filename_url' => filmsiPersonPhotoThumbS($person->getFilename())
+			);
+		}
+		
+		return $this->renderText(json_encode($results));
 	}
 
 	public function executeSearchResults(sfWebRequest $request)

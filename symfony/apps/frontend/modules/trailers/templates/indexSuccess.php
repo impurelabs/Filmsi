@@ -122,7 +122,7 @@
             <div class="left spacer-left" style="width: 490px">
 				<div class="cell-bd innerspacer-bottom-m">
 					<?php foreach($trailers as $trailer):?>
-					<div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: middle">
+					<div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: top">
 						<a href="<?php echo url_for('@trailer?id=' . $trailer['video_id']);?><?php if($sf_request->hasParameter('acum-in-cinema')) echo '?acum-in-cinema';?><?php if($sf_request->hasParameter('in-curand-in-cinema')) echo '?in-curand-in-cinema';?><?php if($sf_request->hasParameter('acum-pe-dvd-bluray')) echo '?acum-pe-dvd-bluray';?><?php if($sf_request->hasParameter('la-tv')) echo '?la-tv';?>">
 							<img src="<?php echo filmsiVideoThumb($trailer['video_code']);?>" />
 						</a> <br />

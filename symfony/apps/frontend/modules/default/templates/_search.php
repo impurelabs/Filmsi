@@ -31,6 +31,10 @@ $(document).ready(function(){
 					term: term
 				},
 				success: function(data) {
+					if ($('#search-results-<?php echo $searchId;?>').is(':hidden')){
+						$('#search-results-<?php echo $searchId;?>').slideDown('fast');
+					}
+					
 					/* Remove the previous results */
 					$('#search-results-films-<?php echo $searchId;?>').children().remove();
 					$('#search-results-persons-<?php echo $searchId;?>').children().remove();
@@ -53,6 +57,8 @@ $(document).ready(function(){
 					}
 				}
 			});
+		} else {
+			$('#search-results-<?php echo $searchId;?>').slideUp('fast');
 		}
 	});
 });

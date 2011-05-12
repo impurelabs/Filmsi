@@ -78,8 +78,9 @@ $(document).ready(function(){
 							)
 							.append(
 								$(document.createElement('div'))
-									.attr('class', 'left cell-separator-dotted-bottom spacer-left-s innerspacer-left-s')
+									.attr('class', 'cell-separator-dotted-bottom innerspacer-left-s')
 									.css('height', '74px')
+									.css('margin-left', '55px')
 									.append(
 										'<a href="' + data.films[i]['url'] + '" class="importantblack-link">' + data.films[i]['name_ro'] + '</a><br />' + 
 										nameEn + '<br /><br />' + actors
@@ -104,8 +105,9 @@ $(document).ready(function(){
 							)
 							.append(
 								$(document.createElement('div'))
-									.attr('class', 'left cell-separator-dotted-bottom spacer-left-s innerspacer-left-s')
+									.attr('class', 'cell-separator-dotted-bottom innerspacer-left-s')
 									.css('height', '74px')
+									.css('margin-left', '55px')
 									.append(
 										'<a href="' + data.persons[i]['url'] + '" class="importantblack-link">' + data.persons[i]['name'] + '</a><br />' + 
 										'<br /><br />' + 

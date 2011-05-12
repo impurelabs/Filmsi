@@ -106,16 +106,21 @@ class defaultActions extends sfActions
 		}
 		
 		foreach (PersonTable::getInstance()->getForLiveSearch($request->getParameter('term'), 5) as $person) {
-			$film = $person->getMostViewedFilmsByRole(1, null, Doctrine_Core::HYDRATE_RECORD)->getFirst();
+			if ($film = $person->getMostViewedFilmsByRole(1, null, Doctrine_Core::HYDRATE_RECORD)->getFirst()){
+				$filmParam = array(
+					'name' => $film->getNameRo(),
+					'url' => $this->generateUrl('film', array('id' => $film->getId(), 'key' => $film->getUrlKey()))
+				);
+			} else {
+				$filmParam = array();
+			}
+				
 			
 			$results['persons'][] = array(
 				'name' => $person->getName(),
 				'url' => $this->generateUrl('person', array('id' => $person->getId(), 'key' => $person->getUrlKey())),
 				'filename_url' => filmsiPersonPhotoThumb($person->getFilename()),
-				'film' => array(
-					'name' => $film->getNameRo(),
-					'url' => $this->generateUrl('film', array('id' => $film->getId(), 'key' => $film->getUrlKey()))
-				)
+				'film' => $filmParam
 			);
 		}
 		

@@ -88,18 +88,34 @@ class defaultActions extends sfActions
 		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
 		
 		foreach (FilmTable::getInstance()->getForLiveSearch($request->getParameter('term'), 5) as $film) {
+			$persons = array();
+			foreach($film->getBestActors(2) as $person){
+				$persons[] = array(
+					'name' => $person->getName(),
+					'url' => $this->generateUrl('person', array('id' => $person->getId(), 'key' => $person->getUrlKey()))
+				);
+			}
+			
 			$results['films'][] = array(
-				'name' => $film->getNameRo(),
+				'name_ro' => $film->getNameRo(),
+				'name_en' => $film->getNameEn(),
 				'url' => $this->generateUrl('film', array('id' => $film->getId(), 'key' => $film->getUrlKey())),
-				'filename_url' => filmsiFilmPhotoThumbS($film->getFilename())
+				'filename_url' => filmsiFilmPhotoThumbS($film->getFilename()),
+				'persons' => $persons
 			);
 		}
 		
 		foreach (PersonTable::getInstance()->getForLiveSearch($request->getParameter('term'), 5) as $person) {
+			$film = $person->getMostViewedFilmsByRole(1, null, Doctrine_Core::HYDRATE_RECORD)->getFirst();
+			
 			$results['persons'][] = array(
 				'name' => $person->getName(),
 				'url' => $this->generateUrl('person', array('id' => $person->getId(), 'key' => $person->getUrlKey())),
-				'filename_url' => filmsiPersonPhotoThumbS($person->getFilename())
+				'filename_url' => filmsiPersonPhotoThumb($person->getFilename()),
+				'film' => array(
+					'name' => $film->getNameRo(),
+					'url' => $this->generateUrl('film', array('id' => $film->getId(), 'key' => $film->getUrlKey()))
+				)
 			);
 		}
 		

@@ -266,6 +266,15 @@ a.header-logo{ display: block; width: 132px; height: 41px; float: left; backgrou
 	z-index: 1000;
 }
 
+.livesearch-result {
+	padding: 5px 0 5px 5px;
+	cursor: pointer
+}
+
+.livesearch-result:hover {
+	background-color: #FFE7A1;
+}
+
 .livesearch-results .livesearch-results-top {
 	height: 15px;
 	margin-left: -10px; margin-top: -10px; margin-right: -10px;

@@ -84,7 +84,8 @@ class shopsActions extends sfActions
 		}
 		
 		$this->shopFilms = Doctrine_Core::getTable('ShopFilm')->getDetailedByShop($this->shop->getId());
-		die('ss:' . $this->shopFilms->count());
+		
+		//die('ss:' . $this->shopFilms->count());
 	}
 	
 	public function executeDeleteFilm(sfWebRequest $request)

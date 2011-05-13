@@ -234,6 +234,9 @@ abstract class BaseCinema extends sfDoctrineRecord
         $this->hasColumn('admin_user_id', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('visit_count', 'integer', null, array(
+             'type' => 'integer'
+             ));
 
         $this->option('symfony', array(
              'filter' => false,

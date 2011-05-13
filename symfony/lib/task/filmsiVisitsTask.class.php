@@ -32,7 +32,7 @@ class filmsiVisitsTask extends sfBaseTask
             $this->countVisits();
         }
 
-        $this->logBlock('filmsi:visits task completed succesfully!', 'INFO');
+        $this->logBlock('filmsi:visits task completed succesfully! (memory total: ' . memory_get_peak_usage(true) . ')', 'INFO');
     }
 
     protected function countVisits()

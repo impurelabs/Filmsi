@@ -119,7 +119,6 @@ class shopsActions extends sfActions
 		/* just fo testing*/
 		$this->forward404If(false == $this->shop = Doctrine_Core::getTable('Shop')->findOneById($request->getParameter('sid')));
 
-		$this->preparedFilms = ShopFilmBufferTable::getInstance()->countByShop($this->shop->getId());
 	}
 	
 	/* Sets the total import property for this shop */

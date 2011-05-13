@@ -150,53 +150,6 @@ class shopsActions extends sfActions
 		}
 	}
 	
-//	public function executeImportBuffer(sfWebRequest $request)
-//	{
-//		/* just fo testing*/
-//		$this->forward404If(false == $this->shop = Doctrine_Core::getTable('Shop')->findOneById($request->getParameter('sid')));
-//		
-//
-//		if ($request->isMethod('post')){
-//			set_time_limit(10000);
-//			
-//			/* delete the existing films from this shop and from the buffer*/
-//			Doctrine_Core::getTable('ShopFilm')->deleteByShop($this->shop->getId());
-//			Doctrine_Core::getTable('ShopFilmBuffer')->deleteByShop($this->shop->getId());
-//
-//			if (!$products = simplexml_load_file($request->getParameter('import_url'))){
-//				die('A aparut o eroare la deschiderea feed-ului!');
-//				$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'films')) . '?id=' . $this->shop->getId());
-//			}
-//			
-//			$filmCollection = new Doctrine_Collection('ShopFilmBuffer');
-//			
-//			foreach ($products->product as $product) {	
-//				$productImdb = (string)$product['imdb'];
-//					
-//				if ($productImdb == ''){
-//					continue;
-//				}
-//				
-//				$shopFilmBuffer = new ShopFilmBuffer();
-//				$shopFilmBuffer->setShopId($this->shop->getId());
-//				$shopFilmBuffer->setImdb($productImdb);
-//				$shopFilmBuffer->setIsDvd($product['is_dvd']);
-//				$shopFilmBuffer->setDvdUrl($product['dvd_url']);
-//				$shopFilmBuffer->setIsBluray($product['is_bluray']);
-//				$shopFilmBuffer->setBlurayUrl($product['bluray_url']);
-//				$shopFilmBuffer->setIsOnline($product['is_online']);
-//				$shopFilmBuffer->setOnlineUrl($product['online_url']);
-//				//$shopFilmBuffer->save();
-//				
-//				$filmCollection->add($shopFilmBuffer);
-//			}
-//			
-//			$filmCollection->save();
-//			
-//
-//			//$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'import')) . '?sid=' . $this->shop->getId());
-//		}
-//	}
 	
 	/* Import a batch of films starting from the pointer */
 	public function executeImportBatch(sfWebRequest $request)
@@ -269,51 +222,5 @@ class shopsActions extends sfActions
 		}
 	}
 	
-//	public function executeMakeImport(sfWebRequest $request)
-//	{
-//		/* just fo testing*/
-//		$this->forward404If(false == $this->shop = Doctrine_Core::getTable('Shop')->findOneById($request->getParameter('sid')));
-//		
-//
-//		if ($request->isMethod('post')){
-//			set_time_limit(10000);
-//			
-//			$bufferFilms = ShopFilmBufferTable::getInstance()->getBatch($this->shop->getId(), 500);
-//			
-//			
-//			//die('aa' . $bufferFilms->count());
-//			foreach ($bufferFilms as $bufferFilm) {		
-//				
-//				/* If the film exists in the db, add it to the film shop table */
-//				if ($film = FilmTable::getInstance()->findOneByImdb($bufferFilm->getImdb())){
-//					if ($bufferFilm->getIsDvd() == '1'){
-//						$shopFilm = new ShopFilm();
-//						$shopFilm->setShopId($this->shop->getId());
-//						$shopFilm->setFilmId($film->getId());
-//						$shopFilm->setFormat(ShopFilm::FORMAT_DVD);
-//						$shopFilm->setUrl($bufferFilm->getDvdUrl());
-//						$shopFilm->save();
-//					}
-//					if ($bufferFilm->getIsBluray() == '1'){
-//						$shopFilm = new ShopFilm();
-//						$shopFilm->setShopId($this->shop->getId());
-//						$shopFilm->setFilmId($film->getId());
-//						$shopFilm->setFormat(ShopFilm::FORMAT_BLURAY);
-//						$shopFilm->setUrl($bufferFilm->getBlurayUrl());
-//						$shopFilm->save();
-//					}
-//					if ($bufferFilm->getIsOnline() == '1'){
-//						$shopFilm = new ShopFilm();
-//						$shopFilm->setShopId($this->shop->getId());
-//						$shopFilm->setFilmId($film->getId());
-//						$shopFilm->setFormat(ShopFilm::FORMAT_ONLINE);
-//						$shopFilm->setUrl($bufferFilm->getOnlineUrl());
-//						$shopFilm->save();
-//					}
-//				}
-//			}
-//			
-//			$this->redirect($this->generateUrl('default', array('module' => 'shops', 'action' => 'import')) . '?sid=' . $this->shop->getId());
-//		}
-//	}
+//	
 }

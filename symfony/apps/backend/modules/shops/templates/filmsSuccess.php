@@ -1,6 +1,18 @@
-<h4>Lista filme pentru magazinul "<?php echo $shop->getName();?>"</h4>
-<button type="button" onclick="location.href='<?php echo url_for('@default?module=shops&action=import');?>?sid=<?php echo $shop->getId();?>'">Importa feed</button>
-<a class="mb-3" href="<?php echo url_for('@default?module=shops&action=view');?>?id=<?php echo $shop->getId();?>">Intoarce-te inapoi</a>
+<h4 class="mb-2">Magazin <?php echo $shop->getName();?></h4>
+
+
+<a href="<?php echo url_for('@default?module=shops&action=view');?>?id=<?php echo $shop->getId();?>">Detalii</a>
+ | <a href="<?php echo url_for('@default?module=shops&action=films');?>?id=<?php echo $shop->getId();?>" class="selected">Lista filme</a>
+
+<div class="mt-2 mb-2 cell-separator-double"></div>
+
+
+
+
+<h5>Lista filme pentru magazinul "<?php echo $shop->getName();?>"</h5>
+<div class="mb-3">
+	<button type="button" onclick="location.href='<?php echo url_for('@default?module=shops&action=import');?>?sid=<?php echo $shop->getId();?>'">Importa feed</button>
+</div>
 
 
 <div class="mt-3">
@@ -24,6 +36,20 @@
 
 
 <div class="clear mb-4"></div>
+
+
+<form id="page-form" action="<?php echo url_for('@default?module=shops&action=films');?>?id=<?php echo $shop->getId();?>" method="get">
+	<input type="hidden" name="id" value="<?php echo $shop->getId();?>" />
+	Pagina: 
+	<select name="page" onchange="document.getElementById('page-form').submit()">
+		<?php for ($i = 1; $i <= $pageCount; $i++):?>
+		<option value="<?php echo $i;?>"<?php if($page == $i) echo 'selected="selected"';?>><?php echo $i;?></option>
+		<?php endfor;?>
+	</select> |
+	Filme: <?php echo $filmCount;?>
+</form>
+
+<br />
 
 <table id="film-list" class="span-15">
 	<?php foreach ($shopFilms as $shopFilm):?>

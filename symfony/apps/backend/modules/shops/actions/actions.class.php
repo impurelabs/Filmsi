@@ -83,9 +83,11 @@ class shopsActions extends sfActions
 			}
 		}
 		
-		$this->shopFilms = Doctrine_Core::getTable('ShopFilm')->getDetailedByShop($this->shop->getId());
+		$this->page = $request->hasParameter('page') ? $request->getParameter('page') : 1;
 		
-		//die('ss:' . $this->shopFilms->count());
+		$this->shopFilms = Doctrine_Core::getTable('ShopFilm')->getPagedByShop($this->shop->getId(), $this->page, 200);
+		$this->filmCount = Doctrine_Core::getTable('ShopFilm')->countByShop($this->shop->getId());
+		$this->pageCount = ceil($this->filmCount / 200);
 	}
 	
 	public function executeDeleteFilm(sfWebRequest $request)

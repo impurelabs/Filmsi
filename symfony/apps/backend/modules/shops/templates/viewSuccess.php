@@ -1,4 +1,13 @@
-<h4>Detalii Magazin</h4>
+<h4 class="mb-2">Magazin <?php echo $shop->getName();?></h4>
+
+
+<a href="<?php echo url_for('@default?module=shops&action=view');?>?id=<?php echo $shop->getId();?>" class="selected">Detalii</a>
+ | <a href="<?php echo url_for('@default?module=shops&action=films');?>?id=<?php echo $shop->getId();?>">Lista filme</a>
+
+<div class="mt-2 mb-2 cell-separator-double"></div>
+
+
+<h5>Detalii</h5>
 <div class="mb-3">
 <button type="button" onclick="location.href='<?php echo url_for('@default?module=shops&action=edit');?>?id=<?php echo $shop->getId();?>'">Editeaza detalii</button>
 </div>
@@ -32,25 +41,6 @@
     	<th>Logo</th>
         <td><img src="<?php echo filmsiShopPhotoThumb($shop->getFilename());?>" /></td>
     </tr>
-</table>
-
-<div class="clear"></div>
-
-<div class="mt-2 mb-2 cell-separator-double"></div>
-
-<h6 class="left">Lista filme</h6>
- <a href="<?php echo url_for('@default?module=shops&action=films');?>?id=<?php echo $shop->getId();?>" class="ml-3">editeaza</a>
-
- <div class="clear mb-3"></div>
-
-<table class="mt-3 span-12">
-	<?php foreach($films as $film): ?>
-    	<tr>
-        	<td><?php echo $film->getFilm()->getName();?></td>
-        	<td><a href="<?php echo $film->getUrl();?>" target="_blank"><?php echo $film->getUrl();?></a></td>
-        	<td><?php echo $film->getFormat();?></td>
-        </tr>
-    <?php endforeach; ?>
 </table>
 
 <div class="clear"></div>

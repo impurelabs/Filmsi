@@ -22,7 +22,31 @@ class ShopFilmTable extends Doctrine_Table
 			->orderBy('f.name_ro')
 			->execute();
 	}
+
+	public function getPagedByShop($shopId, $page, $limit)
+	{
+		return Doctrine_Query::create()
+			->from('ShopFilm fp')
+			->innerJoin('fp.Film f')
+			->where('fp.shop_id = ?', $shopId)
+			->orderBy('f.name_ro')
+			->offset(($page - 1) * $limit)
+			->limit($limit)
+			->execute();
+	}
 	
+	public function countByShop($shopId)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(id) count')
+			->from('ShopFilm f')
+			->where('f.shop_id = ?', $shopId)
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		return $q['count'];
+	}
+
+
 	public function update($filmDetails, $shopId)
 	{
 		Doctrine_Query::create()

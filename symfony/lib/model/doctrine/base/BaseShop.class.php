@@ -64,6 +64,16 @@ abstract class BaseShop extends sfDoctrineRecord
         $this->hasColumn('description', 'text', null, array(
              'type' => 'text',
              ));
+        $this->hasColumn('import_pointer', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('import_total', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('import_url', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
+             ));
 
         $this->option('symfony', array(
              'filter' => false,

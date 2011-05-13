@@ -10,7 +10,10 @@ class filmsiIndexTask extends sfBaseTask
         $this->name = 'index';
         $this->briefDescription = "Updates the index for search.";
 
-        
+        $this->addOptions(array(
+			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED,
+			'The environment', 'dev'),
+		));
     }
 
     public function execute($arguments = array(), $options = array())

@@ -54,8 +54,6 @@ class shopsActions extends sfActions
 	public function executeView(sfWebRequest $request)
   {
   	$this->shop = Doctrine_Core::getTable('Shop')->findOneById($request->getParameter('id'));
-  	
-  	$this->films = Doctrine_Core::getTable('ShopFilm')->getDetailedByShop($this->shop->getId());
   }
 
 	public function executeApi(sfWebRequest $request)

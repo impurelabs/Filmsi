@@ -692,14 +692,26 @@ text;
 			->fetchOne();
 	}
 	
-	public function getForLiveSearch($term, $limit)
+	public function getForSearch($term, $limit)
 	{
-		$term = '(^| |-)' . $term ;
+		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+		$term = preg_replace('/\s+/i', ' ', $term);
+		$terms = explode(' ', $term);
+		unset($term);
+		
+		$qArray = array();
+		$qString = '';
+		foreach ($terms as $term){
+			$qString = 'f.name_ro REGEXP ? or f.name_en REGEXP ? ';
+			$qArray[] = '(^| |-)' . $term;
+			$qArray[] = '(^| |-)' . $term;
+			
+		}
 		
 		return Doctrine_Query::create()
 			->from('Film f')
 			->where('f.state = 1')
-			->andWhere('f.name_ro REGEXP ? or f.name_en REGEXP ?', array($term, $term))
+			->andWhere($qString, $qArray)
 			->orderBy('f.visit_count desc')
 			->limit($limit)
 			->execute();

@@ -249,18 +249,26 @@ class PersonTable extends Doctrine_Table
 			->execute();
 	}
 	
-	
-
-	public function getForLiveSearch($term, $limit)
+	public function getForSearch($term, $limit)
 	{
-		$term = '(^| |-)' . $term ;
-
-		$persons = array();
+		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+		$term = preg_replace('/\s+/i', ' ', $term);
+		$terms = explode(' ', $term);
+		unset($term);
+		
+		$qArray = array();
+		$qString = '';
+		foreach ($terms as $term){
+			$qString = 'p.first_name REGEXP ? or p.last_name REGEXP ? ';
+			$qArray[] = '(^| |-)' . $term;
+			$qArray[] = '(^| |-)' . $term;
+			
+		}
 		
 		return Doctrine_Query::create()
 			->from('Person p')
 			->where('p.state = 1')
-			->andWhere('p.first_name REGEXP ? or p.last_name REGEXP ?', array($term, $term))
+			->andWhere($qString, $qArray)
 			->orderBy('p.visit_count desc')
 			->limit($limit)
 			->execute();

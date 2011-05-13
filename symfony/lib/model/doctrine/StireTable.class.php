@@ -316,4 +316,29 @@ class StireTable extends Doctrine_Table
 			->where('a.video_album_id = ?', $videoAlbumId)
 			->execute();
 	}
+	
+	public function getForSearch($term, $limit)
+	{
+		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+		$term = preg_replace('/\s+/i', ' ', $term);
+		$terms = explode(' ', $term);
+		unset($term);
+		
+		$qArray = array();
+		$qString = '';
+		foreach ($terms as $term){
+			$qString = 's.name REGEXP ? or s.meta_keywords REGEXP ? ';
+			$qArray[] = '(^| |-)' . $term;
+			$qArray[] = '(^| |-)' . $term;
+			
+		}
+		
+		return Doctrine_Query::create()
+			->from('Stire s')
+			->where('s.state = 1')
+			->andWhere($qString, $qArray)
+			->orderBy('s.visit_count desc')
+			->limit($limit)
+			->execute();
+	}
 }

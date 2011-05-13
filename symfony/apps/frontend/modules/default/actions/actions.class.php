@@ -87,7 +87,7 @@ class defaultActions extends sfActions
 		
 		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
 		
-		foreach (FilmTable::getInstance()->getForLiveSearch($request->getParameter('term'), 5) as $film) {
+		foreach (FilmTable::getInstance()->getForSearch($request->getParameter('term'), 5) as $film) {
 			$persons = array();
 			foreach($film->getBestActors(2) as $person){
 				$persons[] = array(
@@ -105,7 +105,7 @@ class defaultActions extends sfActions
 			);
 		}
 		
-		foreach (PersonTable::getInstance()->getForLiveSearch($request->getParameter('term'), 5) as $person) {
+		foreach (PersonTable::getInstance()->getForSearch($request->getParameter('term'), 5) as $person) {
 			if ($film = $person->getMostViewedFilmsByRole(1, null, Doctrine_Core::HYDRATE_RECORD)->getFirst()){
 				$filmParam = array(
 					'name' => $film->getNameRo(),
@@ -130,16 +130,24 @@ class defaultActions extends sfActions
 	public function executeSearchResults(sfWebRequest $request)
 	{
 		$term = $request->getParameter('q');
-		$pattern = '/\b[^\b]{1,2}\b/';
-		$replacement = ' ';
-		$term = str_replace(' ', ' +', rtrim(str_replace('  ', ' ', preg_replace($pattern, $replacement, ' ' . $term . ' '))));
-
-		$this->films = SearchIndexTable::getInstance()->searchFilms($term, 5);
-		$this->persons = SearchIndexTable::getInstance()->searchPersons($term, 5);
-		$this->articles = SearchIndexTable::getInstance()->searchArticles($term, 5);
-		$this->stires = SearchIndexTable::getInstance()->searchStires($term, 5);
-		$this->photos = SearchIndexTable::getInstance()->searchPhotos($term, 4);
-		$this->videos = SearchIndexTable::getInstance()->searchVideos($term, 4);
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->films = FilmTable::getInstance()->getForSearch($term, 5);
+		$this->persons = PersonTable::getInstance()->getForSearch($term, 5);
+		$this->articles = ArticleTable::getInstance()->getForSearch($term, 5);
+		$this->stires = StireTable::getInstance()->getForSearch($term, 5);
+		$this->photos = PhotoTable::getInstance()->getForSearch($term, 5);
+		$this->videos = VideoTable::getInstance()->getForSearch($term, 5);
+		
+//		$this->films = SearchIndexTable::getInstance()->searchFilms($term, 5);
+//		$this->persons = SearchIndexTable::getInstance()->searchPersons($term, 5);
+//		$this->articles = SearchIndexTable::getInstance()->searchArticles($term, 5);
+//		$this->stires = SearchIndexTable::getInstance()->searchStires($term, 5);
+//		$this->photos = SearchIndexTable::getInstance()->searchPhotos($term, 4);
+//		$this->videos = SearchIndexTable::getInstance()->searchVideos($term, 4);
 	}
 
 	public function executeTerms(sfWebRequest $request)

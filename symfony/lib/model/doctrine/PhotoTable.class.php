@@ -341,4 +341,28 @@ class PhotoTable extends Doctrine_Table
 			->whereIn('p.id', $ids)
 			->execute();
 	}
+	
+	public function getForSearch($term, $limit)
+	{
+		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+		$term = preg_replace('/\s+/i', ' ', $term);
+		$terms = explode(' ', $term);
+		unset($term);
+		
+		$qArray = array();
+		$qString = '';
+		foreach ($terms as $term){
+			$qString = 'p.description REGEXP ? ';
+			$qArray[] = '(^| |-)' . $term;
+			
+		}
+		
+		return Doctrine_Query::create()
+			->from('Photo p')
+			->where('p.state = 1')
+			->andWhere($qString, $qArray)
+			->orderBy('p.id desc')
+			->limit($limit)
+			->execute();
+	}
 }

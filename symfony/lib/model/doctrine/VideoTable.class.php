@@ -82,4 +82,28 @@ class VideoTable extends Doctrine_Table
 		return $q->execute();
 
 	}
+	
+	public function getForSearch($term, $limit)
+	{
+		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+		$term = preg_replace('/\s+/i', ' ', $term);
+		$terms = explode(' ', $term);
+		unset($term);
+		
+		$qArray = array();
+		$qString = '';
+		foreach ($terms as $term){
+			$qString = 'v.name REGEXP ? ';
+			$qArray[] = '(^| |-)' . $term;
+			
+		}
+		
+		return Doctrine_Query::create()
+			->from('Video v')
+			->where('v.state = 1')
+			->andWhere($qString, $qArray)
+			->orderBy('v.id desc')
+			->limit($limit)
+			->execute();
+	}
 }

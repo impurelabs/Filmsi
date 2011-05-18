@@ -50,18 +50,20 @@ class CinemaNewForm extends CinemaForm
   }
   
 	public function updateObject($values = null)
-  {
-  	$object = parent::updateObject($values);
-  	
-  	$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
-  	
-  	$file = $this->getValue('file');
-    $filename = md5($file->getOriginalName() . time() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension());
-    $file->save(sfConfig::get('app_cinema_path').'/'.$filename);
-    
-    $object->setFilename($filename);
-    $object->createFile();
-  	
-  	return $object;
-  }
+	{
+		$file = $this->getValue('file');
+		
+		$object = parent::updateObject($values);
+
+		$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+
+		$object->setFilename(md5($file->getOriginalName() . microtime() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension()));
+		
+		$object->createFile(
+			$file->getTempName(), 
+			$file->getType()
+		);
+		
+		return $object;
+	}
 }

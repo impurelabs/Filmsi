@@ -26,38 +26,88 @@ class Person extends BasePerson
     }
 
     public function preDelete($event)
-    {
-            // Delete the big file and the thumbnail
-            unlink(sfConfig::get('app_person_path') . '/' . $event->getInvoker()->getFilename());
-            unlink(sfConfig::get('app_person_path') . '/t-' . $event->getInvoker()->getFilename());
-            unlink(sfConfig::get('app_person_path') . '/ts-' . $event->getInvoker()->getFilename());
+	{
+		// Delete the big file and the thumbnail
+		$this->deleteFiles();
 
-            return parent::preDelete($event);
-    }
+		return parent::preDelete($event);
+	}
+	
+	public function deleteFiles()
+	{
+		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
+		
+		$response = $s3->delete_all_objects(sfConfig::get('app_aws_bucket'), '/' . sfConfig::get('app_person_aws_s3_folder') . '\/(.*)' . $this->getFilename() . '/i');
+		
+		$this->_set('filename', '');
+	}
+	
+	public function createFile($source, $type = null)
+	{	
+		if (!isset($type)){
+			$imageData = getimagesize($source);
+			$type = $imageData['mime'];
+		}
+		
+		$sourceData = file_get_contents($source);
+		
+		/* Initiate the Amazon S3 object */
+		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
+		
+		/* Create and upload the the big file */
+		$photo = new sfThumbnail(sfConfig::get('app_person_sourceimage_width'), sfConfig::get('app_person_sourceimage_height'), true, false, 100);
+		$photo->loadData($sourceData, $type);
+		
+		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_person_aws_s3_folder') . '/' . $this->getFilename(), array(
+			'body' => $photo->toString($type),
+			'contentType' => $type,
+			'meta' => array(
+				'Expires'		=> 'Thu, 16 Apr 2020 05:00:00 GMT',
+				'Cache-Control' => 'max-age=315360000'
+			),
+			'acl' => AmazonS3::ACL_PUBLIC
+		));
+		
+		if (!$response->isOk()){
+			echo '<pre>'; var_dump($response);
+		}
 
-    public function createFile()
-    {
-            $sourceFile = sfConfig::get('app_person_path') . '/' . $this->getFilename();
+		/* Create and upload the thumbnail */
+		$thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_width'), sfConfig::get('app_person_thumbnail_height'), true, false, 100);
+		$thumb->loadData($sourceData, $type);
+		
+		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_person_aws_s3_folder') . '/t-' . $this->getFilename(), array(
+			'body' => $thumb->toString($type),
+			'contentType' => $type,
+			'meta' => array(
+				'Expires'		=> 'Thu, 16 Apr 2020 05:00:00 GMT',
+				'Cache-Control' => 'max-age=315360000'
+			),
+			'acl' => AmazonS3::ACL_PUBLIC
+		));
+				
+		if (!$response->isOk()){
+			echo '<pre>'; var_dump($response);
+		}
 
-            if (!file_exists($sourceFile)){
-                    throw new sfException('Source file not available: ' . $sourceFile);
-            }
-
-            /* Create the big file */
-            $photo = new sfThumbnail(sfConfig::get('app_person_sourceimage_width'), sfConfig::get('app_person_sourceimage_height'), true, false, 100);
-            $photo->loadFile($sourceFile);
-            $photo->save(sfConfig::get('app_person_path') . '/' . $this->getFilename());
-
-            /* Create the thumbnail */
-            $thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_width'), sfConfig::get('app_person_thumbnail_height'), true, false, 100);
-            $thumb->loadFile($sourceFile);
-            $thumb->save(sfConfig::get('app_person_path') . '/t-' . $this->getFilename());
-
-            /* Create the small thumbnail */
-            $thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_small_width'), sfConfig::get('app_person_thumbnail_small_height'), true, false, 100);
-            $thumb->loadFile($sourceFile);
-            $thumb->save(sfConfig::get('app_person_path') . '/ts-' . $this->getFilename());
-    }
+		/* Create and upload the small thumbnail */
+		$thumb = new sfThumbnail(sfConfig::get('app_person_thumbnail_small_width'), sfConfig::get('app_person_thumbnail_small_height'), true, false, 100);
+		$thumb->loadData($sourceData, $type);
+		
+		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_person_aws_s3_folder') . '/ts-' . $this->getFilename(), array(
+			'body' => $thumb->toString($type),
+			'contentType' => $type,
+			'meta' => array(
+				'Expires'		=> 'Thu, 16 Apr 2020 05:00:00 GMT',
+				'Cache-Control' => 'max-age=315360000'
+			),
+			'acl' => AmazonS3::ACL_PUBLIC
+		));
+		
+		if (!$response->isOk()){
+			echo '<pre>'; var_dump($response);
+		}
+	}
 
     public function getRelatedStires($limit = null, $page = null, $returnArray = true)
     {

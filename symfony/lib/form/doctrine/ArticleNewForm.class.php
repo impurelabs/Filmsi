@@ -4,7 +4,7 @@ class ArticleNewForm extends ArticleForm
 	public function configure()
   {
   	$this->useFields(array(
-  		'name', 'content_teaser', 'content_content', 'filename', 'meta_description', 'meta_keywords', 'about_stars', 'url_key',
+  		'name', 'content_teaser', 'content_content', 'meta_description', 'meta_keywords', 'about_stars', 'url_key',
   		'expiration_date', 'publish_date', 'category_list', 'photo_album_id', 'video_album_id'
   	));
   	
@@ -31,19 +31,20 @@ class ArticleNewForm extends ArticleForm
   }
   
 	public function updateObject($values = null)
-  {
-  	$object = parent::updateObject($values);
-  	
-  	$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
-  	
-  	$file = $this->getValue('file');
-    $filename = md5($file->getOriginalName() . time() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension());
-    $file->save(sfConfig::get('app_article_path').'/'.$filename);
-    
-    $object->setFilename($filename);
-    $object->createFile();
-    
-  	
-  	return $object;
-  }
+	{
+		$file = $this->getValue('file');
+		
+		$object = parent::updateObject($values);
+
+		$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+
+		$object->setFilename(md5($file->getOriginalName() . microtime() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension()));
+		
+		$object->createFile(
+			$file->getTempName(), 
+			$file->getType()
+		);
+		
+		return $object;
+	}
 }

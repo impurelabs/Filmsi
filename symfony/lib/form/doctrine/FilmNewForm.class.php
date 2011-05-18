@@ -4,7 +4,7 @@ class FilmNewForm extends FilmForm
 	public function configure()
   {
   	$this->useFields(array(
-  		'imdb', 'name_ro', 'name_en', 'year', 'rating', 'filename', 'meta_description', 'meta_keywords', 'is_series',
+  		'imdb', 'name_ro', 'name_en', 'year', 'rating', 'meta_description', 'meta_keywords', 'is_series',
 		'is_type_film', 'is_type_digital', 'is_type_3d', 'url_key', 'distribuitor', 'description_teaser',
 		'description_content', 'duration', 'publish_date', 'genres_list', 'photo_album_id', 'video_album_id'
   	));
@@ -45,18 +45,20 @@ class FilmNewForm extends FilmForm
   }
   
 	public function updateObject($values = null)
-  {
-  	$object = parent::updateObject($values);
-  	
-  	$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
-  	
-  	$file = $this->getValue('file');
-    $filename = md5($file->getOriginalName() . time() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension());
-    $file->save(sfConfig::get('app_film_path').'/'.$filename);
-    
-    $object->setFilename($filename);
-    $object->createFile();
-  	
-  	return $object;
-  }
+	{
+		$file = $this->getValue('file');
+		
+		$object = parent::updateObject($values);
+
+		$object->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+
+		$object->setFilename(md5($file->getOriginalName() . microtime() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension()));
+		
+		$object->createFile(
+			$file->getTempName(), 
+			$file->getType()
+		);
+		
+		return $object;
+	}
 }

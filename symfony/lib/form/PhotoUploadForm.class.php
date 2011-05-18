@@ -18,15 +18,14 @@ class PhotoUploadForm extends PhotoForm
 	
 	public function doSave($con = null)
 	{
-		
 		$file = $this->getValue('file');
-		
-		$filename = md5(rand(0, 9000000)) . $file->getExtension($file->getOriginalExtension());
-		
-		// Set the filename for the object
-    $this->getObject()->setFilename($filename);		
-    $this->getObject()->createFile($file->getTempName(), $filename);
 
+		$this->getObject()->setFilename(md5($file->getOriginalName() . microtime() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension()));
+		
+		$this->getObject()->createFile(
+			$file->getTempName(), 
+			$file->getType()
+		);
       
 		return parent::doSave($con);
 	}

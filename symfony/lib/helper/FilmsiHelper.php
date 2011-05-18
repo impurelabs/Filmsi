@@ -2,17 +2,17 @@
 
 function filmsiPhoto($sourceimage)
 {
-	return sfConfig::get('app_photos_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_photos_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_photos_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_photos_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_photos_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_photos_aws_s3_folder') .  '/ts-' . $sourceimage;
 }
 
 function filmsiState($stateCode)
@@ -52,17 +52,17 @@ FILMSI;
 
 function filmsiPersonPhoto($sourceimage)
 {
-	return sfConfig::get('app_person_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_person_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiPersonPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_person_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_person_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiPersonPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_person_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_person_aws_s3_folder') .  '/ts-' . $sourceimage;
 }
 
 function filmsiFilmBackground($sourceimage)
@@ -72,107 +72,107 @@ function filmsiFilmBackground($sourceimage)
 
 function filmsiFilmPhoto($sourceimage)
 {
-	return sfConfig::get('app_film_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_film_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiFilmPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_film_path_for_web') . '/t-' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_film_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiFilmPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_film_path_for_web') . '/ts-' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_film_aws_s3_folder') .  '/ts' . $sourceimage;
 }
 
 function filmsiFestivalEditionPhoto($sourceimage)
 {
-	return sfConfig::get('app_festival_edition_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_festival_edition_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiFestivalEditionPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_festival_edition_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_festival_edition_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiFestivalEditionPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_festival_edition_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_festival_edition_aws_s3_folder') .  '/ts' . $sourceimage;
 }
 
 function filmsiCinemaPhoto($sourceimage)
 {
-	return sfConfig::get('app_cinema_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_cinema_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiCinemaPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_cinema_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_cinema_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiCinemaPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_cinema_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_cinema_aws_s3_folder') .  '/ts' . $sourceimage;
 }
 
 function filmsiCinemaPromotionPhoto($sourceimage)
 {
-	return sfConfig::get('app_cinemapromotion_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_cinemapromotion_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiCinemaPromotionPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_cinemapromotion_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_cinemapromotion_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiCinemaPromotionPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_cinemapromotion_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_cinemapromotion_aws_s3_folder') .  '/ts' . $sourceimage;
 }
 
 function filmsiArticlePhoto($sourceimage)
 {
-	return sfConfig::get('app_article_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_article_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiArticlePhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_article_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_article_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiArticlePhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_article_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_article_aws_s3_folder') .  '/ts-' . $sourceimage;
 }
 
 function filmsiStirePhoto($sourceimage)
 {
-	return sfConfig::get('app_stire_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_stire_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiStirePhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_stire_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_stire_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiStirePhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_stire_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_stire_aws_s3_folder') .  '/ts' . $sourceimage;
 }
 
 function filmsiShopPhoto($sourceimage)
 {
-	return sfConfig::get('app_shop_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_shop_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiShopPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_shop_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_shop_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiShopPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_shop_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_shop_aws_s3_folder') .  '/ts' . $sourceimage;
 }
 
 function filmsiStatusCinemaExplained($film)
@@ -289,15 +289,15 @@ function filmsiDayOfWeek($dayNo){
 
 function filmsiChannelPhoto($sourceimage)
 {
-	return sfConfig::get('app_channel_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_channel_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiChannelPhotoThumb($sourceimage)
 {
-  return sfConfig::get('app_channel_path_for_web') . '/t-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_channel_aws_s3_folder') .  '/t-' . $sourceimage;
 }
 
 function filmsiChannelPhotoThumbS($sourceimage)
 {
-  return sfConfig::get('app_channel_path_for_web') . '/ts-' . $sourceimage;
+  return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_channel_aws_s3_folder') .  '/ts-' . $sourceimage;
 }

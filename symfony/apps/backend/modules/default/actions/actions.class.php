@@ -126,7 +126,7 @@ class defaultActions extends sfActions
   public function executeDelete(sfWebRequest $request)
   {
 	  /* Security check */
-	  if (!$sf_user->hasCredential('Moderator')){
+	  if (!$this->getUser()->hasCredential('Moderator')){
 		  $this->forward404();
 	  }
 

@@ -12,8 +12,8 @@
     
     Poza:<br />
     <img src=<?php echo filmsiCinemaPromotionPhotoThumb($form->getObject()->getFilename());?> /><br />
-    <?php echo $form['filename']->render();?><br />
-    <?php echo $form['filename']->renderError();?>
+    <?php echo $form['file']->render();?><br />
+    <?php echo $form['file']->renderError();?>
     <br /><br />
     
     Descriere:<br />

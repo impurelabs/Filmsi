@@ -5,7 +5,7 @@ public function configure()
   {
   	$this->useFields(array(
   		'name', 'location_id', 'address', 'phone', 'website', 'room_count', 'lat', 'lng', 'seats', 'sound', 'ticket_price',
-		'is_type_film', 'is_type_digital', 'is_type_3d', 'is_type_imax', 'url_key', 'filename', 'description_teaser', 'description_content',  'meta_description', 'meta_keywords',
+		'is_type_film', 'is_type_digital', 'is_type_3d', 'is_type_imax', 'url_key', 'description_teaser', 'description_content',  'meta_description', 'meta_keywords',
 		'publish_date', 'service_list', 'lat', 'lng', 'map_zoom', 'reservation_url', 'photo_album_id'
   	));
   	
@@ -25,7 +25,7 @@ public function configure()
   	$this->widgetSchema['is_type_digital'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
   	$this->widgetSchema['is_type_3d'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
   	$this->widgetSchema['is_type_imax'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1));
-  	$this->widgetSchema['filename'] = new sfWidgetFormInputFile();
+  	$this->widgetSchema['file'] = new sfWidgetFormInputFile();
   	$this->widgetSchema['description_teaser'] = new sfWidgetFormTextarea();
   	$this->widgetSchema['description_content'] = new sfWidgetFormTextarea();
   	$this->widgetSchema['meta_description'] = new sfWidgetFormTextarea();
@@ -40,33 +40,34 @@ public function configure()
   	$this->widgetSchema['photo_album_id'] = new sfWidgetFormInputHidden();
   	
   	$this->validatorSchema['location'] = new sfValidatorString();
-  	$this->validatorSchema['filename'] = new sfValidatorFile(array('required' => false));
+  	$this->validatorSchema['file'] = new sfValidatorFile(array('required' => false));
 	$this->validatorSchema['url_key'] = new sfValidatorRegex(array('pattern' => '/^[0-9a-z\-\_]+$/', 'required' => false));
 	$this->validatorSchema['url_key']->setMessage('invalid', 'Caracterele admise sunt literele, cifrele, "-", "_"');
   }
   
 	public function updateObject($values = null)
-  {
-  	$file = $this->getValue('filename');
-  	if(!isset($file)){
-  		return parent::updateObject($values);
-  	}
-    
-  	/* Delete old files */
-    @unlink(sfConfig::get('app_cinema_path'). '/' . $this->getObject()->getFilename());
-    @unlink(sfConfig::get('app_cinema_path'). '/t-' . $this->getObject()->getFilename());
-    @unlink(sfConfig::get('app_cinema_path'). '/ts-' . $this->getObject()->getFilename());
-    
-  	$object = parent::updateObject($values);
-  	
-    $filename = md5($file->getOriginalName() . time() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension());
-    $file->save(sfConfig::get('app_cinema_path').'/'.$filename);
-    
-    $object->setFilename($filename);
-    $object->createFile();
-  	
-  	return $object;
-  }
+	{
+		$file = $this->getValue('file');
+
+		if(!isset($file)){
+			unset($this['file']);
+			return parent::updateObject($values);
+		}
+
+		$object = parent::updateObject($values);
+
+		/* Delete the old files */
+		$object->deleteFiles();
+
+		$object->setFilename(md5($file->getOriginalName() . microtime() . rand(0, 999999)).$file->getExtension($file->getOriginalExtension()));
+
+		$object->createFile(
+			$file->getTempName(), 
+			$file->getType()
+		);
+
+		return $object;
+	}
   
   public function updateDefaultsFromObject()
   {

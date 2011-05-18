@@ -50,7 +50,7 @@ $(function() {
   var isFirstUploaded = true;
   
   uploader.bind('FileUploaded', function(u, f, r){
-	  
+	  //alert(r.response);
 	  data = JSON.parse(r.response);
 
 	  if (data.isOk){

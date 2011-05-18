@@ -96,46 +96,20 @@ class personsActions extends sfActions
 	  	$person->setUserId($this->getUser()->getGuardUser()->getId());
 	  	$person->setPublishDate(date('Y-m-d'), time());
 	  	
-	  	$filenameSource = $imdbComPerson->getFilenameSource() == '' ? sfConfig::get('app_person_nophoto_image_path') : $imdbComPerson->getFilenameSource();
-	  	
+	  	$filenameSource = ( $imdbComPerson->getFilenameSource() == false || strpos($imdbComPerson->getFilenameSource(),'nopicture') !== false ) ? ( sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_asset_aws_s3_folder') . '/default-nophoto.jpg' ) : $imdbComPerson->getFilenameSource();
+		
 	  	$pieces = explode('.', $filenameSource);
 	  	$extension = array_pop($pieces);
-	  	  
-	  	$filename = md5($filenameSource . time() . rand(0, 999999)). '.' . $extension;
-	    copy($filenameSource, sfConfig::get('app_person_path').'/'.$filename);
-	        
-	    $person->setFilename($filename);
-	    $person->createFile();
-	    
+		
+		$person->setFilename(md5($filenameSource . microtime() . rand(0, 999999)) . '.' . $extension);
+
+		$imageData = getimagesize($filenameSource);
+	    $person->createFile(
+			$filenameSource, 
+			$imageData['mime']
+		);
+
 	    $person->save();
-	  	
-//	    
-//	    /* Create the photo album */
-//	    $photoAlbum = new PhotoAlbum();
-//	    $photoAlbum->setName('Persoana: ' . $person->getName());
-//	  	$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
-//	  	$photoAlbum->setPublishDate(date('Y-m-d'), time());
-//	  	$photoAlbum->save();
-//
-//
-//	  	$photo = new Photo();
-//	  	$photo->setAlbumId($photoAlbum->getId());
-//
-//	  	/* Creating the filename */
-//	  	$pieces = explode('.', $person->getFilename());
-//	  	$extension = array_pop($pieces);
-//
-//	  	$filename = md5(rand(0, 9000000) . $person->getFilename()) . '.' . $extension;
-//			// Set the filename for the object
-//	    $photo->setFilename($filename);
-//	    $photo->createFile(sfConfig::get('app_person_path') . '/' . $person->getFilename(), $filename);
-//
-//	    $photo->save();
-//
-//
-//	    /* Assign the photo album to the person */
-//	    $person->setPhotoAlbumId($photoAlbum->getId());
-//	    $person->save();
   	
 	    
   	  /* Add the Acted films */
@@ -266,19 +240,20 @@ class personsActions extends sfActions
 				continue;
 			}
 
-			/* Create the actual photo in the database */
+			
 			$photo = new Photo();
 			$photo->setAlbumId($person->getPhotoAlbumId());
 
 			$pieces = explode('.', $photoUrl);
 			$extension = array_pop($pieces);
 
-			$filename = md5($photoUrl . time() . rand(0, 999999)). '.' . $extension;
-			copy($photoUrl, sfConfig::get('app_person_path').'/'.$filename);
-
-			// Set the filename for the object
-			$photo->setFilename($filename);
-			$photo->createFile(sfConfig::get('app_person_path').'/'.$filename, $filename);
+			$photo->setFilename(md5($photoUrl . microtime() . rand(0, 999999)). '.' . $extension);
+			
+			$imageData = getimagesize($photoUrl);
+			$photo->createFile(
+				$photoUrl, 
+				$imageData['mime']
+			);
 
 			$photo->save();
 

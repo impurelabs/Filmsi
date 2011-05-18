@@ -78,45 +78,20 @@ class filmsActions extends sfActions
   		$film->setUserId($this->getUser()->getGuardUser()->getId());
   		$film->setPublishDate(date('Y-m-d'), time());
 
-  		$filenameSource = ( $imdbComFilm->getFilenameSource() == false || strpos($imdbComFilm->getFilenameSource(),'nopicture') !== false ) ? sfConfig::get('app_film_nophoto_image_path') : $imdbComFilm->getFilenameSource();
+  		$filenameSource = ( $imdbComFilm->getFilenameSource() == false || strpos($imdbComFilm->getFilenameSource(),'nopicture') !== false ) ? ( sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_asset_aws_s3_folder') . '/default-nophoto.jpg' ) : $imdbComFilm->getFilenameSource();
+		
 	  	$pieces = explode('.', $filenameSource);
 	  	$extension = array_pop($pieces);
+		
+		$film->setFilename(md5($filenameSource . microtime() . rand(0, 999999)) . '.' . $extension);
 
-  		$filename = md5($filenameSource . time() . rand(0, 999999)). '.' . $extension;
-	    copy($filenameSource, sfConfig::get('app_film_path').'/'.$filename);
-
-	    $film->setFilename($filename);
-	    $film->createFile();
+		$imageData = getimagesize($filenameSource);
+	    $film->createFile(
+			$filenameSource, 
+			$imageData['mime']
+		);
 
 	    $film->save();
-
-	    /* The creation of the photo album will be done manually when hitting the import photos from IMDB. */
-//	    $photoAlbum = new PhotoAlbum();
-//	    $photoAlbum->setName('Film: ' . $imdbComFilm->getNameRo());
-//  		$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
-//  		$photoAlbum->setPublishDate(date('Y-m-d'), time());
-//  		$photoAlbum->save();
-//
-//
-//  		$photo = new Photo();
-//  		$photo->setAlbumId($photoAlbum->getId());
-//
-//  		/* Creating the filename */
-//  		$pieces = explode('.', $film->getFilename());
-//  		$extension = array_pop($pieces);
-//
-//  		$filename = md5(rand(0, 9000000) . $film->getFilename()) . '.' . $extension;
-//			// Set the filename for the object
-//	    $photo->setFilename($filename);
-//	    $photo->createFile(sfConfig::get('app_film_path') . '/' . $film->getFilename(), $filename);
-//
-//	    $photo->save();
-//
-//
-//	    /* Assign the photo album to the film */
-//	    $film->setPhotoAlbumId($photoAlbum->getId());
-//	    $film->save();
-
 
 
 
@@ -356,12 +331,13 @@ class filmsActions extends sfActions
 			$pieces = explode('.', $photoUrl);
 			$extension = array_pop($pieces);
 
-			$filename = md5($photoUrl . time() . rand(0, 999999)). '.' . $extension;
-			copy($photoUrl, sfConfig::get('app_film_path').'/'.$filename);
-
-			// Set the filename for the object
-			$photo->setFilename($filename);
-			$photo->createFile(sfConfig::get('app_film_path').'/'.$filename, $filename);
+			$photo->setFilename(md5($photoUrl . microtime() . rand(0, 999999)). '.' . $extension);
+			
+			$imageData = getimagesize($photoUrl);
+			$photo->createFile(
+				$photoUrl, 
+				$imageData['mime']
+			);
 
 			$photo->save();
 

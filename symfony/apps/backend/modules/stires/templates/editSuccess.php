@@ -38,7 +38,7 @@
     </tr>
 	<tr>
     	<th>Poza</th>
-        <td><img src="<?php echo filmsiStirePhotoThumb($form->getObject()->getFilename());?>" /><br /><?php echo $form['filename']->render();?><br /><?php echo $form['filename']->renderError();?></td>
+        <td><img src="<?php echo filmsiStirePhotoThumb($form->getObject()->getFilename());?>" /><br /><?php echo $form['file']->render();?><br /><?php echo $form['file']->renderError();?></td>
     </tr>
 	<tr>
     	<th>Publicat la</th>

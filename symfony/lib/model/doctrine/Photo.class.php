@@ -15,51 +15,103 @@ class Photo extends BasePhoto
 	public function preInsert($event)
 	{
 		if (sfContext::getInstance()->getUser()->hasCredential(array('Fara_moderare', 'Moderator'), false)){
-  		$event->getInvoker()->setState(Library::STATE_ACTIVE);	
-  	} else {
-  		$event->getInvoker()->setState(Library::STATE_PENDING);
-  	}
+			$event->getInvoker()->setState(Library::STATE_ACTIVE);	
+		} else {
+			$event->getInvoker()->setState(Library::STATE_PENDING);
+		}
 	}
 	
 	public function preDelete($event)
 	{
 		// Delete the big file and the thumbnail
-		unlink(sfConfig::get('app_photos_path') . '/' . $event->getInvoker()->getFilename());
-		unlink(sfConfig::get('app_photos_path') . '/t-' . $event->getInvoker()->getFilename());
-		unlink(sfConfig::get('app_photos_path') . '/ts-' . $event->getInvoker()->getFilename());
+		$this->deleteFiles();
 
 		return parent::preDelete($event);
 	}
-
-	public function createFile($sourceFile, $filename)
+	
+	public function deleteFiles()
 	{
-		if (!is_readable($sourceFile)){
-			throw new sfException('Source file not available: ' . $sourceFile);
+		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
+		
+		$response = $s3->delete_all_objects(sfConfig::get('app_aws_bucket'), '/' . sfConfig::get('app_photos_aws_s3_folder') . '\/(.*)' . $this->getFilename() . '/i');
+		
+		$this->_set('filename', '');
+	}
+	
+	public function createFile($source, $type = null)
+	{	
+		if (!isset($type)){
+			$imageData = getimagesize($source);
+			$type = $imageData['mime'];
+		}
+		
+		$sourceData = file_get_contents($source);
+		
+		/* Initiate the Amazon S3 object */
+		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
+		
+		/* Create and upload the the big file */
+		$photo = new sfThumbnail(sfConfig::get('app_photos_sourceimage_width'), sfConfig::get('app_photos_sourceimage_height'), true, false, 100);
+		$photo->loadData($sourceData, $type);
+		
+		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_photos_aws_s3_folder') . '/' . $this->getFilename(), array(
+			'body' => $photo->toString($type),
+			'contentType' => $type,
+			'meta' => array(
+				'Expires'		=> 'Thu, 16 Apr 2020 05:00:00 GMT',
+				'Cache-Control' => 'max-age=315360000'
+			),
+			'acl' => AmazonS3::ACL_PUBLIC
+		));
+		
+		if (!$response->isOk()){
+			echo '<pre>'; var_dump($response);
 		}
 
-		/* Create the big file */
-		$photo = new sfThumbnail(sfConfig::get('app_photos_sourceimage_width'), sfConfig::get('app_photos_sourceimage_height'), true, false, 100);
-		$photo->loadFile($sourceFile);
-		$photo->save(sfConfig::get('app_photos_path') . '/' . $filename);
-
-		/* Create the thumbnail */
+		/* Create and upload the thumbnail */
 		$thumb = new sfThumbnail(sfConfig::get('app_photos_thumbnail_width'), sfConfig::get('app_photos_thumbnail_height'), true, false, 100);
-		$thumb->loadFile($sourceFile);
-		$thumb->save(sfConfig::get('app_photos_path') . '/t-' . $filename);
+		$thumb->loadData($sourceData, $type);
+		
+		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_photos_aws_s3_folder') . '/t-' . $this->getFilename(), array(
+			'body' => $thumb->toString($type),
+			'contentType' => $type,
+			'meta' => array(
+				'Expires'		=> 'Thu, 16 Apr 2020 05:00:00 GMT',
+				'Cache-Control' => 'max-age=315360000'
+			),
+			'acl' => AmazonS3::ACL_PUBLIC
+		));
+				
+		if (!$response->isOk()){
+			echo '<pre>'; var_dump($response);
+		}
 
-		/* Create the small thumbnail */
+		/* Create and upload the small thumbnail */
 		$thumb = new sfThumbnail(sfConfig::get('app_photos_thumbnail_small_width'), sfConfig::get('app_photos_thumbnail_small_height'), true, false, 100);
-		$thumb->loadFile($sourceFile);
-		$thumb->save(sfConfig::get('app_photos_path') . '/ts-' . $filename);
+		$thumb->loadData($sourceData, $type);
+		
+		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_photos_aws_s3_folder') . '/ts-' . $this->getFilename(), array(
+			'body' => $thumb->toString($type),
+			'contentType' => $type,
+			'meta' => array(
+				'Expires'		=> 'Thu, 16 Apr 2020 05:00:00 GMT',
+				'Cache-Control' => 'max-age=315360000'
+			),
+			'acl' => AmazonS3::ACL_PUBLIC
+		));
+		
+		if (!$response->isOk()){
+			echo '<pre>'; var_dump($response);
+		}
 	}
 
 	public function getThumb()
 	{
-		return sfConfig::get('app_photos_path_for_web') . '/t-' . $this->_get('filename');
+		return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_photos_aws_s3_folder') .  '/t-' . $this->_get('filename');
 	}
 
 	public function getPhoto()
 	{
-		return sfConfig::get('app_photos_path_for_web') . '/' . $this->_get('filename');
+		return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_photos_aws_s3_folder') .  '/' . $this->_get('filename');
 	}
 }

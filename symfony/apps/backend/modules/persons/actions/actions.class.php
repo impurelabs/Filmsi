@@ -189,7 +189,7 @@ class personsActions extends sfActions
 	    }
 	    
 	    echo '<br />Am terminat de importat persoana <strong>' . $person->getName() . '</strong>';
-			ob_end_flush(); flush(); ob_start();
+			@ob_end_flush(); @flush(); @ob_start();
 	    
   		
   	} catch (ImdbComPersonException $e){

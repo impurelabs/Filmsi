@@ -33,7 +33,7 @@ class Film extends BaseFilm
 	{
 		// Delete the big file and the thumbnail
 		//unlink(sfConfig::get('app_film_background_path') . '/' . $event->getInvoker()->getFilename());
-		$this->deleteFiles();
+		$event->getInvoker()->deleteFiles();
 
 		return parent::preDelete($event);
 	}
@@ -42,7 +42,9 @@ class Film extends BaseFilm
 	{
 		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
 		
-		$response = $s3->delete_all_objects(sfConfig::get('app_aws_bucket'), '/' . sfConfig::get('app_film_aws_s3_folder') . '\/(.*)' . $this->getFilename() . '/i');
+		$response = $s3->delete_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_film_aws_s3_folder') . '/' . $this->getFilename());
+		$response = $s3->delete_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_film_aws_s3_folder') . '/t-' . $this->getFilename());
+		$response = $s3->delete_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_film_aws_s3_folder') . '/ts-' . $this->getFilename());
 		
 		$this->_set('filename', '');
 	}
@@ -121,7 +123,14 @@ class Film extends BaseFilm
 
 	public function deleteBackground()
 	{
-		unlink(sfConfig::get('app_film_background_path') . '/' . $this->getBackgroundFilename());
+		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
+		
+		$response = $s3->delete_object(sfConfig::get('app_aws_bucket'), '/' . sfConfig::get('app_film_aws_s3_background_folder') . '/' . $this->getBackgroundFilename());
+		
+		if (!$response->isOk()){
+			echo '<pre>'; var_dump($response); exit;
+		}
+		
 		$this->setBackgroundFilename(NULL);
 		$this->save();
 	}

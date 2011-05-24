@@ -23,7 +23,7 @@ class filmsActions extends sfActions
 
 		if ($this->film->getBackgroundFilename() != ''){
 			$this->setLayout('layoutFilm');
-			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$details = getimagesize(sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_film_aws_s3_background_folder') .  '/' . $this->film->getBackgroundFilename());
 			$this->backgroundWidth = $details[0];
 		}else{
 			$this->backgroundWidth = '';

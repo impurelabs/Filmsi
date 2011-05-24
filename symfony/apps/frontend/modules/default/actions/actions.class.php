@@ -46,7 +46,7 @@ class defaultActions extends sfActions
 		$this->homepage = HomepageTable::getInstance()->findOneById(1);
 		if ($this->homepage->getBackgroundFilename() != ''){
 			$this->setLayout('layoutHome');
-			$details = getimagesize(sfConfig::get('app_homepage_background_path') . '/' .$this->homepage->getBackgroundFilename());
+			$details = getimagesize(sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_homepage_aws_s3_folder') .  '/' . $this->homepage->getBackgroundFilename());
 			$this->width = $details[0];
 		}
 

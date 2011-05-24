@@ -67,7 +67,7 @@ function filmsiPersonPhotoThumbS($sourceimage)
 
 function filmsiFilmBackground($sourceimage)
 {
-	return sfConfig::get('app_film_background_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_film_aws_s3_background_folder') .  '/' . $sourceimage;
 }
 
 function filmsiFilmPhoto($sourceimage)
@@ -272,7 +272,7 @@ function filmsiContentLocationWidth($contentId)
 
 function filmsiHomepageBackground($sourceimage)
 {
-	return sfConfig::get('app_homepage_background_path_for_web') . '/' . $sourceimage;
+	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_homepage_aws_s3_folder') .  '/' . $sourceimage;
 }
 
 function filmsiDayOfWeek($dayNo){

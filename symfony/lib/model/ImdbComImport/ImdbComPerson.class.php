@@ -70,8 +70,8 @@ class ImdbComPerson
   	unset($matches);
   	
   	/* All films the person directed */ 
-  	preg_match('/<div id="filmo-head-Director.*?<div style="display:none;">(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
-  	preg_match_all('/href="\/title\/(.*?)\/"/i', $matches[0], $matches);
+  	@preg_match('/<div id="filmo-head-Director.*?<div style="display:none;">(<div class="filmo-row[^>]*>(.*?)<div class="clear"\/>&nbsp;<\/div><\/div>)<\/div>/i', $html, $matches);
+  	@preg_match_all('/href="\/title\/(.*?)\/"/i', $matches[0], $matches);
   	if (isset($matches[1])){
   		$this->params['directed_films'] = $matches[1];
   	}

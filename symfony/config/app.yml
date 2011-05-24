@@ -36,8 +36,7 @@ all:
     thumbnail_height: null
     thumbnail_small_width: 73
     thumbnail_small_height: null
-    background_path: %SF_WEB_DIR%/content/promovare/film_backgrounds
-    background_path_for_web: /content/promovare/film_backgrounds
+    aws_s3_background_folder: "film_backgrounds"
 
   homepage:
     aws_s3_folder: 'homepage_backgrounds'

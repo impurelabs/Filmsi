@@ -33,7 +33,7 @@ class FestivalEdition extends BaseFestivalEdition
 	public function preDelete($event)
 	{
 		// Delete the big file and the thumbnail
-		$this->deleteFiles();
+		$event->getInvoker()->deleteFiles();
 
 		return parent::preDelete($event);
 	}
@@ -42,7 +42,9 @@ class FestivalEdition extends BaseFestivalEdition
 	{
 		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
 		
-		$response = $s3->delete_all_objects(sfConfig::get('app_aws_bucket'), '/' . sfConfig::get('app_festival_edition_aws_s3_folder') . '\/(.*)' . $this->getFilename() . '/i');
+		$response = $s3->delete_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_festival_edition_aws_s3_folder') . '/' . $this->getFilename());
+		$response = $s3->delete_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_festival_edition_aws_s3_folder') . '/t-' . $this->getFilename());
+		$response = $s3->delete_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_festival_edition_aws_s3_folder') . '/ts-' . $this->getFilename());
 		
 		$this->_set('filename', '');
 	}

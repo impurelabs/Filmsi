@@ -8,6 +8,6 @@ if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '78.97.152.233', '::1
 }
 
 require_once(dirname(__FILE__).'/../symfony/config/ProjectConfiguration.class.php');
-
+die('asd');
 $configuration = ProjectConfiguration::getApplicationConfiguration('backend', 'dev', true);
 sfContext::createInstance($configuration)->dispatch();

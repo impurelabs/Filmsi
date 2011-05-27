@@ -1,6 +1,14 @@
 <form method="get" id="search-form-<?php echo $searchId;?>" action="<?php echo url_for('@default?module=default&action=searchResults');?>" class="livesearch-form">
 <input type="text" class="searchmain-field" id="search-field-<?php echo $searchId;?>" name="q" autocomplete="off" />
 <button class="searchmain-button" type="submit"></button>
+
+<div style="margin-top: 5px; color: #6c6c6c">
+	Cautari frecvente: 
+	<?php foreach ($mostSearchedItems as $mostSearchedItem):?>
+		<a href="<?php echo $mostSearchedItem['url'];?>"><?php echo $mostSearchedItem['name'];?></a> | 
+	<?php endforeach;?>
+</div>
+
 <div id="search-results-<?php echo $searchId;?>" class="livesearch-results innerspacer-bottom-m">
 	<div class="livesearch-results-top"></div>
 	<div class="left" style="width: 270px">
@@ -44,8 +52,12 @@ $(document).ready(function(){
 					term: term
 				},
 				success: function(data) {
-					if ($('#search-results-<?php echo $searchId;?>').is(':hidden')){
+					if ($('#search-results-<?php echo $searchId;?>').is(':hidden') && (typeof data.films != 'undefined' || typeof data.persons != 'undefined')){
 						$('#search-results-<?php echo $searchId;?>').slideDown('fast');
+					}
+					
+					if ($('#search-results-<?php echo $searchId;?>').is(':visible') && (typeof data.films == 'undefined' && typeof data.persons == 'undefined')){
+						$('#search-results-<?php echo $searchId;?>').slideUp('fast');
 					}
 					
 					/* Remove the previous results */

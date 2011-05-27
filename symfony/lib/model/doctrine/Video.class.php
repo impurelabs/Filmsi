@@ -15,10 +15,30 @@ class Video extends BaseVideo
 	public function preInsert($event)
 	{
 		if (sfContext::getInstance()->getUser()->hasCredential(array('Fara_moderare', 'Moderator'), false)){
-  		$event->getInvoker()->setState(Library::STATE_ACTIVE);	
-  	} else {
-  		$event->getInvoker()->setState(Library::STATE_PENDING);
-  	}
+			$event->getInvoker()->setState(Library::STATE_ACTIVE);	
+		} else {
+			$event->getInvoker()->setState(Library::STATE_PENDING);
+		}
+	}
+	
+	public function getUrlInParentGallery()
+	{
+		/* Check if the parent album belongs to any film */
+		if ( false !== $film = FilmTable::getInstance()->findOneByVideoAlbumId($this->getAlbumId())) {
+			return sfContext::getInstance()->getRouting()->generate('film_videos', array('id' => $film->getId(), 'key' => $film->getUrlKey())) . '?vid=' . $this->getPosition() . '#scrolled';
+		}
+		
+		/* Check if the parent album belongs to any film */
+		if ( false !== $cinema = CinemaTable::getInstance()->findOneByVideoAlbumId($this->getAlbumId())) {
+			return sfContext::getInstance()->getRouting()->generate('cinema_videos', array('id' => $cinema->getId(), 'key' => $cinema->getUrlKey())) . '?vid=' . $this->getPosition() . '#scrolled';
+		}
+		
+		/* Check if the parent album belongs to any film */
+		if ( false !== $person = PersonTable::getInstance()->findOneByVideoAlbumId($this->getAlbumId())) {
+			return sfContext::getInstance()->getRouting()->generate('person_videos', array('id' => $person->getId(), 'key' => $person->getUrlKey())) . '?vid=' . $this->getPosition() . '#scrolled';
+		}
+		
+		return false;
 	}
 
 }

@@ -108,7 +108,7 @@ class Article extends BaseArticle
 
 	public function getFilenameIsTall()
 	{
-		$size = getimagesize(sfConfig::get('app_article_path') . '/' . $this->getFilename());
+		$size = getimagesize(sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_article_aws_s3_folder') .  '/' . $this->getFilename());
 
 		if ($size[1] > $size[0]){
 			return true;

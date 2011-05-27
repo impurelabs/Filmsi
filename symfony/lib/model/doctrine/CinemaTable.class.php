@@ -180,4 +180,62 @@ class CinemaTable extends Doctrine_Table
 			->where('a.photo_album_id = ?', $photoAlbumId)
 			->execute();
 	}
+	
+//	public function getForSearch($term, $limit)
+//	{
+//		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+//		$term = preg_replace('/\s+/i', ' ', $term);
+//		$terms = explode(' ', $term);
+//		unset($term);
+//		
+//		$qArray = array();
+//		$qString = '';
+//		foreach ($terms as $term){
+//			$qString = 'c.name REGEXP ? or c.meta_keywords REGEXP ? ';
+//			$qArray[] = '(^| |-)' . $term;
+//			$qArray[] = '(^| |-)' . $term;
+//			
+//		}
+//		
+//		return Doctrine_Query::create()
+//			->from('Cinema c')
+//			->where('c.state = 1')
+//			->andWhere($qString, $qArray)
+//			->orderBy('c.visit_count desc')
+//			->limit($limit)
+//			->execute();
+//	}
+	
+	public function getForSearch($term, $limit)
+	{
+		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+		$term = preg_replace('/\s+/i', ' ', $term);
+		$terms = explode(' ', $term);
+		
+		foreach ($terms as $key => $term){
+			if (strlen($terms[$key]) <= 2 ){
+				unset ($terms[$key]);
+			}
+		}
+		
+		unset($term);
+		
+		$qArray = array();
+		$qString = '';
+		
+		
+		$q = Doctrine_Query::create()
+			->select('c.id, c.name, c.filename, c.url_key')
+			->from('Cinema c')
+			->where('c.state = 1');
+		
+		foreach ($terms as $term){
+			$q = $q->andWhere('c.name LIKE ? or c.meta_keywords LIKE ? ', array('%' . $term . '%', '%' . $term . '%'));
+			
+		}
+		
+		return $q->orderBy('c.visit_count desc')
+			->limit($limit)
+			->execute();
+	}
 }

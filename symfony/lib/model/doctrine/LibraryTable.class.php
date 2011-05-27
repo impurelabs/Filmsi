@@ -622,4 +622,38 @@ class LibraryTable extends Doctrine_Table
 
 		return $items;
 	}
+	
+	public function raiseSearchCounterByIds($searchedIds)
+	{
+		return Doctrine_Query::create()
+			->update('Library')
+			->set('search_count', 'search_count + 1')
+			->whereIn('id', $searchedIds)
+			->execute();
+	}
+	
+	public function getMostSearchedItems($limit)
+	{
+		$libItems = Doctrine_Query::create()
+			->from('Library l')
+			->orderBy('l.search_count DESC')
+			->where('l.search_count > 0')
+			->limit($limit)
+			->execute();
+		
+		$results = array();
+		foreach ($libItems as $libItem){
+			$q = Doctrine_Query::create()
+				->from($libItem->getType() . ' t')
+				->where('t.library_id = ?', $libItem->getId())
+				->fetchOne();
+			
+			$results[] = array(
+				'name' => $q->getName(),
+				'url' => sfContext::getInstance()->getRouting()->generate(strtolower($libItem->getType()), array('id' => $q->getId(), 'key' => $q->getUrlKey()))
+			);
+		}
+		
+		return $results;
+	}
 }

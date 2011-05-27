@@ -317,27 +317,60 @@ class StireTable extends Doctrine_Table
 			->execute();
 	}
 	
+//	public function getForSearch($term, $limit)
+//	{
+//		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+//		$term = preg_replace('/\s+/i', ' ', $term);
+//		$terms = explode(' ', $term);
+//		unset($term);
+//		
+//		$qArray = array();
+//		$qString = '';
+//		foreach ($terms as $term){
+//			$qString = 's.name REGEXP ? or s.meta_keywords REGEXP ? ';
+//			$qArray[] = '(^| |-)' . $term;
+//			$qArray[] = '(^| |-)' . $term;
+//			
+//		}
+//		
+//		return Doctrine_Query::create()
+//			->from('Stire s')
+//			->where('s.state = 1')
+//			->andWhere($qString, $qArray)
+//			->orderBy('s.visit_count desc')
+//			->limit($limit)
+//			->execute();
+//	}
+	
 	public function getForSearch($term, $limit)
 	{
 		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
 		$term = preg_replace('/\s+/i', ' ', $term);
 		$terms = explode(' ', $term);
+		
+		foreach ($terms as $key => $term){
+			if (strlen($terms[$key]) <= 2 ){
+				unset ($terms[$key]);
+			}
+		}
+		
 		unset($term);
 		
 		$qArray = array();
 		$qString = '';
+		
+		
+		$q = Doctrine_Query::create()
+			->select('s.id, s.name, s.filename, s.url_key')
+			->from('Stire s')
+			->where('s.state = 1');
+		
 		foreach ($terms as $term){
-			$qString = 's.name REGEXP ? or s.meta_keywords REGEXP ? ';
-			$qArray[] = '(^| |-)' . $term;
-			$qArray[] = '(^| |-)' . $term;
+			$q = $q->andWhere('s.name LIKE ? or s.meta_keywords LIKE ? ', array('%' . $term . '%', '%' . $term . '%'));
 			
 		}
 		
-		return Doctrine_Query::create()
-			->from('Stire s')
-			->where('s.state = 1')
-			->andWhere($qString, $qArray)
-			->orderBy('s.visit_count desc')
+		return $q->orderBy('s.visit_count desc')
 			->limit($limit)
 			->execute();
 	}

@@ -41,4 +41,15 @@ class defaultComponents extends sfComponents
 	public function executeRightColumn(sfWebRequest $request) {
 		$this->gadgets = PageGadgetTable::getInstance()->findByPage($this->page);
 	}
+	
+	public function executeSearch(sfWebRequest $request)
+	{
+		if ($this->getContext()->has('mostSearchedItems')){
+			$this->mostSearchedItems = $this->getContext()->get('mostSearchedItems');
+		} else {
+			$this->mostSearchedItems = LibraryTable::getInstance()->getMostSearchedItems(3);
+			
+			$this->getContext()->set('mostSearchedItems', $this->mostSearchedItems);
+		}
+	}
 }

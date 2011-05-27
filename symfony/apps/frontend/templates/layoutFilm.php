@@ -61,7 +61,7 @@
         	<a href="http://www.filmsi.ro" class="header-logo"></a>
 
             <div class="mainsearch-container">
-	            <?php include_partial('default/search', array('searchId' => '1'));?>
+	            <?php include_component('default', 'search', array('searchId' => '1'));?>
             </div> <!-- mainsearch-container end -->
 			<div style="margin-top: 15px">
 				<a href="<?php echo url_for('@cinema_search');?>" class="spacer-left-l">Program cinema &raquo;</a>
@@ -99,7 +99,7 @@
                 <a href="http://www.filmsi.ro" class="header-logo"></a>
 
                 <div class="mainsearch-container">
-	            <?php include_partial('default/search', array('searchId' => '2'));?>
+	            <?php include_component('default', 'search', array('searchId' => '1'));?>
             </div> <!-- mainsearch-container end -->
 			<div style="margin-top: 15px">
 				<a href="<?php echo url_for('@cinema_search');?>" class="spacer-left-l">Program cinema &raquo;</a>

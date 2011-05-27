@@ -425,21 +425,24 @@ class filmsActions extends sfActions
                 if ($this->film->getPhotoAlbumId() != ''){
                     $sourcefile = str_replace('_thumb', '', $produs['coperta']);
 
-                    $photo = new Photo();
-                    $photo->setAlbumId($this->film->getPhotoAlbumId());
+					
+					/* Create the actual photo in the database */
+					$photo = new Photo();
+					$photo->setAlbumId($this->film->getPhotoAlbumId());
 
-                    /* Creating the filename */
+					/* Creating the filename */
                     $pieces = explode('.', $sourcefile);
                     $extension = array_pop($pieces);
 
-                    $filename = md5(rand(0, 9000000) . $this->film->getFilename()) . '.' . $extension;
-                    copy($sourcefile, sfConfig::get('app_photos_path').'/'.$filename);
+					$photo->setFilename(md5(rand(0, 9000000) . $this->film->getFilename()) . '.' . $extension);
 
-                            // Set the filename for the object
-                    $photo->setFilename($filename);
-                    $photo->createFile(sfConfig::get('app_photos_path').'/'.$filename, $filename);
+					$imageData = getimagesize($sourcefile);
+					$photo->createFile(
+						$sourcefile, 
+						$imageData['mime']
+					);
 
-                    $photo->save();
+					$photo->save();
                 }
 
                 $this->imported = true;

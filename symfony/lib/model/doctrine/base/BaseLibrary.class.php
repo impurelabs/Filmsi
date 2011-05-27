@@ -58,6 +58,9 @@ abstract class BaseLibrary extends sfDoctrineRecord
         $this->hasColumn('visit_count', 'integer', null, array(
              'type' => 'integer'
              ));
+        $this->hasColumn('search_count', 'integer', null, array(
+             'type' => 'integer'
+             ));
         $this->hasColumn('type', 'string', 250, array(
              'type' => 'string',
              'length' => 250,

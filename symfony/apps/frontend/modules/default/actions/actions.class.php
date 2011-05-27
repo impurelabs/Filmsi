@@ -137,17 +137,103 @@ class defaultActions extends sfActions
 		
 		$this->films = FilmTable::getInstance()->getForSearch($term, 5);
 		$this->persons = PersonTable::getInstance()->getForSearch($term, 5);
+		$this->cinemas = CinemaTable::getInstance()->getForSearch($term, 5);
 		$this->articles = ArticleTable::getInstance()->getForSearch($term, 5);
 		$this->stires = StireTable::getInstance()->getForSearch($term, 5);
-		$this->photos = PhotoTable::getInstance()->getForSearch($term, 5);
-		$this->videos = VideoTable::getInstance()->getForSearch($term, 5);
+		$this->photos = PhotoTable::getInstance()->getForSearch($term, 3);
+		$this->videos = VideoTable::getInstance()->getForSearch($term, 1);
 		
-//		$this->films = SearchIndexTable::getInstance()->searchFilms($term, 5);
-//		$this->persons = SearchIndexTable::getInstance()->searchPersons($term, 5);
-//		$this->articles = SearchIndexTable::getInstance()->searchArticles($term, 5);
-//		$this->stires = SearchIndexTable::getInstance()->searchStires($term, 5);
-//		$this->photos = SearchIndexTable::getInstance()->searchPhotos($term, 4);
-//		$this->videos = SearchIndexTable::getInstance()->searchVideos($term, 4);
+		
+		/* Update the search counter for the films, persons and cinemas */
+		$searchedIds = array();
+		foreach ($this->films as $film){
+			$searchedIds[] = $film->getLibraryId();
+		}
+		foreach ($this->persons as $person){
+			$searchedIds[] = $person->getLibraryId();
+		}
+		foreach ($this->cinemas as $cinema){
+			$searchedIds[] = $cinema->getLibraryId();
+		}
+		
+		LibraryTable::getInstance()->raiseSearchCounterByIds($searchedIds);
+	}
+
+	public function executeSearchResultsFilms(sfWebRequest $request)
+	{
+		$term = $request->getParameter('q');
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->films = FilmTable::getInstance()->getForSearch($term, 100);
+	}
+
+	public function executeSearchResultsPersons(sfWebRequest $request)
+	{
+		$term = $request->getParameter('q');
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->persons = PersonTable::getInstance()->getForSearch($term, 100);
+	}
+
+	public function executeSearchResultsCinemas(sfWebRequest $request)
+	{
+		$term = $request->getParameter('q');
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->cinemas = CinemaTable::getInstance()->getForSearch($term, 100);
+	}
+
+	public function executeSearchResultsArticles(sfWebRequest $request)
+	{
+		$term = $request->getParameter('q');
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->articles = ArticleTable::getInstance()->getForSearch($term, 100);
+	}
+
+	public function executeSearchResultsStires(sfWebRequest $request)
+	{
+		$term = $request->getParameter('q');
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->stires = StireTable::getInstance()->getForSearch($term, 100);
+	}
+
+	public function executeSearchResultsPhotos(sfWebRequest $request)
+	{
+		$term = $request->getParameter('q');
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->photos = PhotoTable::getInstance()->getForSearch($term, 100);
+	}
+
+	public function executeSearchResultsVideos(sfWebRequest $request)
+	{
+		$term = $request->getParameter('q');
+		
+		$results = array();
+		
+		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
+		
+		$this->videos = VideoTable::getInstance()->getForSearch($term, 100);
 	}
 
 	public function executeTerms(sfWebRequest $request)

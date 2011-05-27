@@ -8,37 +8,33 @@
 
 <div class="cell-container8"> <!-- content column start -->
 
-	
-	
-	
+	<?php if(count($photos)):?>
+
+     <div class="normalcell">
+		<?php foreach ($photos as $photoId => $photo):?>
+			<a href="<?php echo url_for('@' . $photo['route_prefix'] . '_photos_no_key?id=' . $photo['route_model_id']);?>?pid=<?php echo $photo['photo_position'];?>">
+				<img src="<?php echo filmsiPhotoThumbS($photo['photo_filename']);?>" />
+			 </a>
+		<?php endforeach;?>
+     </div>
+	 <?php endif;?>
+
+
 	 <?php if(count($videos)):?>
-     <div class="normalcell right ml-2">
+     <h5 class="ml-2">Video</h5>
+
+     <div class="normalcell">
 		<?php foreach ($videos as $video):?>
-		 <div class="inline-block align-center" style="width: 138px; vertical-align: middle">
-			<a href="<?php echo $video->getUrlInParentGallery();?>">
-			<img src="<?php echo filmsiVideoThumb($video->getCode());?>" style="height: 83px" />
+		 <div class="inline-block align-center spacer-bottom-m ml-3" style="width: 138px; vertical-align: middle">
+			<a href="<?php echo url_for('@' . $video['route_prefix'] . '_videos_no_key?id=' . $video['route_model_id']);?>?vid=<?php echo $video['video_position'];?>">
+			<img src="<?php echo filmsiVideoThumb($video['video_code']);?>" />
 		 </a>
 		</div>
 		<?php endforeach;?>
      </div>
 	 <?php endif;?>
 	
-	<?php if(count($photos)):?>
-
-     <div class="normalcell left">
-		<?php foreach ($photos as $photoId => $photo):?>
-			<a href="<?php echo $photo->getUrlInParentGallery();?>" class="mr-2">
-				<img src="<?php echo filmsiPhotoThumbS($photo->getFilename());?>" style="height: 83px" />
-			 </a>
-		<?php endforeach;?>
-     </div>
-	 <?php endif;?>
 	
-	
-
-
-	<div class="clear"></div>
-
 	<?php if(count($films)):?>
      <h5 class="ml-2">Filme</h5>
 

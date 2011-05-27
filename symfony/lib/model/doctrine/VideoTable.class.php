@@ -83,27 +83,57 @@ class VideoTable extends Doctrine_Table
 
 	}
 	
+//	public function getForSearch($term, $limit)
+//	{
+//		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+//		$term = preg_replace('/\s+/i', ' ', $term);
+//		$terms = explode(' ', $term);
+//		unset($term);
+//		
+//		$qArray = array();
+//		$qString = '';
+//		foreach ($terms as $term){
+//			$qString = 'v.name REGEXP ? ';
+//			$qArray[] = '(^| |-)' . $term;
+//			
+//		}
+//		
+//		return Doctrine_Query::create()
+//			->from('Video v')
+//			->where('v.state = 1')
+//			->andWhere($qString, $qArray)
+//			->orderBy('v.id desc')
+//			->limit($limit)
+//			->execute();
+//	}
+	
 	public function getForSearch($term, $limit)
 	{
 		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
 		$term = preg_replace('/\s+/i', ' ', $term);
 		$terms = explode(' ', $term);
+		
+		foreach ($terms as $key => $term){
+			if (strlen($terms[$key]) <= 2 ){
+				unset ($terms[$key]);
+			}
+		}
+		
 		unset($term);
 		
 		$qArray = array();
 		$qString = '';
+		
+		
+		$q = Doctrine_Query::create()
+			->from('Video v')
+			->where('v.state = 1');
+		
 		foreach ($terms as $term){
-			$qString = 'v.name REGEXP ? ';
-			$qArray[] = '(^| |-)' . $term;
-			
+			$q = $q->andWhere('v.name LIKE ?', array('%' . $term . '%'));	
 		}
 		
-		return Doctrine_Query::create()
-			->from('Video v')
-			->where('v.state = 1')
-			->andWhere($qString, $qArray)
-			->orderBy('v.id desc')
-			->limit($limit)
+		return $q->limit($limit)
 			->execute();
 	}
 }

@@ -116,4 +116,24 @@ class Photo extends BasePhoto
 	{
 		return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_photos_aws_s3_folder') .  '/' . $this->_get('filename');
 	}
+	
+	public function getUrlInParentGallery()
+	{
+		/* Check if the parent album belongs to any film */
+		if ( false !== $film = FilmTable::getInstance()->findOneByPhotoAlbumId($this->getAlbumId())) {
+			return sfContext::getInstance()->getRouting()->generate('film_photos', array('id' => $film->getId(), 'key' => $film->getUrlKey())) . '?pid=' . $this->getPosition() . '#scrolled';
+		}
+		
+		/* Check if the parent album belongs to any film */
+		if ( false !== $cinema = CinemaTable::getInstance()->findOneByPhotoAlbumId($this->getAlbumId())) {
+			return sfContext::getInstance()->getRouting()->generate('cinema_photos', array('id' => $cinema->getId(), 'key' => $cinema->getUrlKey())) . '?pid=' . $this->getPosition() . '#scrolled';
+		}
+		
+		/* Check if the parent album belongs to any film */
+		if ( false !== $person = PersonTable::getInstance()->findOneByPhotoAlbumId($this->getAlbumId())) {
+			return sfContext::getInstance()->getRouting()->generate('person_photos', array('id' => $person->getId(), 'key' => $person->getUrlKey())) . '?pid=' . $this->getPosition() . '#scrolled';
+		}
+		
+		return false;
+	}
 }

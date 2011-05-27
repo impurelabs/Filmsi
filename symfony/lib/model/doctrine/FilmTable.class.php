@@ -697,22 +697,30 @@ text;
 		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
 		$term = preg_replace('/\s+/i', ' ', $term);
 		$terms = explode(' ', $term);
+		
+		foreach ($terms as $key => $term){
+			if (strlen($terms[$key]) <= 2 ){
+				unset ($terms[$key]);
+			}
+		}
+		
 		unset($term);
 		
 		$qArray = array();
 		$qString = '';
+		
+		
+		$q = Doctrine_Query::create()
+			->select('f.id, f.name_ro, f.name_en, f.filename, f.url_key')
+			->from('Film f')
+			->where('f.state = 1');
+		
 		foreach ($terms as $term){
-			$qString = 'f.name_ro REGEXP ? or f.name_en REGEXP ? ';
-			$qArray[] = '(^| |-)' . $term;
-			$qArray[] = '(^| |-)' . $term;
+			$q = $q->andWhere('f.name_ro LIKE ? or f.name_en LIKE ? ', array('%' . $term . '%', '%' . $term . '%'));
 			
 		}
 		
-		return Doctrine_Query::create()
-			->from('Film f')
-			->where('f.state = 1')
-			->andWhere($qString, $qArray)
-			->orderBy('f.visit_count desc')
+		return $q->orderBy('f.visit_count desc')
 			->limit($limit)
 			->execute();
 	}

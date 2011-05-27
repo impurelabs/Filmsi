@@ -227,27 +227,60 @@ class ArticleTable extends Doctrine_Table
 			->execute();
 	}
 	
+//	public function getForSearch($term, $limit)
+//	{
+//		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
+//		$term = preg_replace('/\s+/i', ' ', $term);
+//		$terms = explode(' ', $term);
+//		unset($term);
+//		
+//		$qArray = array();
+//		$qString = '';
+//		foreach ($terms as $term){
+//			$qString = 'a.name REGEXP ? or a.meta_keywords REGEXP ? ';
+//			$qArray[] = '(^| |-)' . $term;
+//			$qArray[] = '(^| |-)' . $term;
+//			
+//		}
+//		
+//		return Doctrine_Query::create()
+//			->from('Article a')
+//			->where('a.state = 1')
+//			->andWhere($qString, $qArray)
+//			->orderBy('a.visit_count desc')
+//			->limit($limit)
+//			->execute();
+//	}
+	
 	public function getForSearch($term, $limit)
 	{
 		$term = preg_replace('/[^a-zA-Z]/i', ' ', $term);
 		$term = preg_replace('/\s+/i', ' ', $term);
 		$terms = explode(' ', $term);
+		
+		foreach ($terms as $key => $term){
+			if (strlen($terms[$key]) <= 2 ){
+				unset ($terms[$key]);
+			}
+		}
+		
 		unset($term);
 		
 		$qArray = array();
 		$qString = '';
+		
+		
+		$q = Doctrine_Query::create()
+			->select('a.id, a.name, a.filename, a.url_key')
+			->from('Article a')
+			->where('a.state = 1');
+		
 		foreach ($terms as $term){
-			$qString = 'a.name REGEXP ? or a.meta_keywords REGEXP ? ';
-			$qArray[] = '(^| |-)' . $term;
-			$qArray[] = '(^| |-)' . $term;
+			$q = $q->andWhere('a.name LIKE ? or a.meta_keywords LIKE ? ', array('%' . $term . '%', '%' . $term . '%'));
 			
 		}
 		
-		return Doctrine_Query::create()
-			->from('Article a')
-			->where('a.state = 1')
-			->andWhere($qString, $qArray)
-			->orderBy('a.visit_count desc')
+		return $q->orderBy('a.visit_count desc')
 			->limit($limit)
 			->execute();
 	}

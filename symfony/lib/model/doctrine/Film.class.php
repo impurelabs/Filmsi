@@ -165,19 +165,49 @@ class Film extends BaseFilm
 
 	}
 
-	public function getVoteScore()
+	public function getVoteDetails()
 	{
 		$q = Doctrine_Query::create()
-			->select('AVG(v.grade) score')
+			->select('COUNT(v.id) count')
 			->from('FilmVote v')
 			->where('v.film_id = ?', $this->getId())
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		$count = $q['count'];
+		
+		if ($count == 0){
+			return false;
+		}
+		
+		$q = Doctrine_Query::create()
+			->select('COUNT(v.id) count')
+			->from('FilmVote v')
+			->where('v.film_id = ? and v.grade = 0', $this->getId())
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		$noVoteCount = $q['count'];
+		
+		$q = Doctrine_Query::create()
+			->select('COUNT(v.id) count')
+			->from('FilmVote v')
+			->where('v.film_id = ? and v.grade = 1', $this->getId())
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		$yesVoteCount = $q['count'];
+		
+		$noVotePercent = 100 * $noVoteCount / $count;
+		$yesVotePercent = 100 * $yesVoteCount / $count;
+		
 
-		return $q['score'];
-
+		return array(
+			'yesCount' => $yesVoteCount,
+			'yesPercent' => $yesVotePercent,
+			'noCount' => $noVoteCount,
+			'noPercent' => $noVotePercent,
+		);
 	}
 
-	public function getVoteCount()
+	public function getVoteYesCount()
 	{
 		$q = Doctrine_Query::create()
 			->select('COUNT(v.id) count')

@@ -58,53 +58,51 @@
 		</p>
     	<div class="cell-separator-double spacer-bottom"></div>
 
-        <div class="left" style="width: 190px">
+        <div>
 			<?php if ($film->checkIfIpVotedToday($_SERVER['REMOTE_ADDR'])):?>
 				<br />
-				<p class="spacer-bottom-s"><strong>Ai votat deja azi pentru acest film!</strong></p>
+				<p class="spacer-bottom-s align-center"><strong>Ai votat deja azi pentru acest film!</strong></p>
 			<?php else:?>
-				<p class="spacer-bottom-s"><strong>Voteaza acest film</strong></p>
+				<span class="bigstrong black">Iti place?</span> 
+				<span class="bigtext explanation">Voteaza si tu!</span>
+				
+				<div style="margin-top: 5px">
+					<button class="votebutton-yes">DA</button>
+					<button class="votebutton-no">NU</button>
+				</div>
 
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-1"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-2"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-3"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-4"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-5"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-6"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-7"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-8"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-9"></a>
-				<a href="javascript: void(0)" class="icon-votestar-s votetrigger" id="votestar-10"></a>
 				<form id="vote_form" method="post" action="<?php echo url_for('@film_vote');?>">
 					<input type="hidden" name="film_id" value="<?php echo $film->getId();?>" />
 					<input type="hidden" id="vote_grade" name="grade" value="" />
 				</form>
+				
 				<script type="text/javascript">
 					$(document).ready(function(){
-						$('.votetrigger').mouseover(function(){
-							id = parseInt($(this).attr('id').substr(9));
-
-							for (i = 1; i <= id; i++){
-								$('#votestar-' + i).removeClass('icon-votestar-s').addClass('icon-votestar-s-active');
-							}
+						$('.votebutton-yes').click(function(){
+							$('#vote_grade').val('1');
+							$('#vote-form').submit();
 						});
-
-						$('.votetrigger').mouseout(function(){
-							$('.votetrigger').removeClass('icon-votestar-s-active').addClass('icon-votestar-s');
-						});
-
-						$('.votetrigger').click(function(){
-							$('#vote_grade').val($(this).attr('id').substr(9));
+						$('.votebutton-no').click(function(){
+							$('#vote_grade').val('0');
 							$('#vote_form').submit();
 						});
 					});
 				</script>
 			<?php endif;?>
-        </div>
-
-        <div class="left cell-separator-dotted-left" style="width: 70px; padding-left:5px; margin-left:5px">
-			<span class="hugegreen"><?php echo format_number(number_format($film->getVoteScore(), 2), 'ro');?></span><br />
-            <span class="smalltext"><?php echo $film->getVoteCount();?> voturi</span>
+				
+				<?php if (false !== $voteDetails = $film->getVoteDetails()):?>
+				<div style="margin-top: 5px">
+					<div class="left align-center" style="width: 110px;">
+						<span class="votedetails-yes"><?php echo $voteDetails['yesPercent'];?>%</span><br />
+						<span class="explanation smalltext"><?php echo $voteDetails['yesCount'];?> useri au votat DA</span>
+					</div>
+					<div class="left align-center" style="width: 110px; margin-left: 40px;">
+						<span class="votedetails-no"><?php echo $voteDetails['noPercent'];?>%</span><br />
+						<span class="explanation smalltext"><?php echo $voteDetails['noCount'];?> useri au votat NU</span>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<?php endif;?>
         </div>
 
         <div class="clear"></div>

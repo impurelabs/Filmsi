@@ -180,4 +180,12 @@ class CinemaScheduleTable extends Doctrine_Table
 			->where('c.day = ? AND c.cinema_id = ?', array($date, $cinemaId))
 			->execute();
 	}
+
+	public function deleteOlderThan($days)
+	{
+		Doctrine_Query::create()
+			->delete('CinemaSchedule s')
+			->where('s.day < date_sub(NOW(), interval ? day)', $days)
+			->execute();
+	}
 }

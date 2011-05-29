@@ -105,7 +105,7 @@ class channelsActions extends sfActions
 			  if ($dateDiff < 0) {
 				  $dateDiff += 7;
 			  }
-
+			  
 			  $selectedDate = date('Y-m-d', strtotime('+' . $dateDiff . ' day'));
 
 			/* Delete all the schedules for the selected day */
@@ -134,7 +134,7 @@ class channelsActions extends sfActions
 			preg_match_all('/<table width="100%" border="0" cellspacing="0" cellpadding="0" class="events">(.*?)<\/table>/i', $html, $matches);
 
 			/* For each day get the schedules */
-			preg_match_all('/<tr>(.*?)\/tr>/i', $matches[1][$selectedDay - 1], $dayMatches);
+			preg_match_all('/<tr>(.*?)\/tr>/i', $matches[1][$dateDiff], $dayMatches);
 
 			/* For each schedule of the day get the details */
 			$bruteSchedules = array();

@@ -32,8 +32,8 @@ class defaultComponents extends sfComponents
 		$this->filmsSoonInCinema = FilmTable::getInstance()->getInCinemaSoon(5, null, null, null, Doctrine_Core::HYDRATE_RECORD);
 		$this->filmsNowDbo = FilmTable::getInstance()->getOnDvdAndBlurayNow(5, null, null, null, null, true, true, Doctrine_Core::HYDRATE_RECORD);
 		$this->filmsSoonDbo = FilmTable::getInstance()->getOnDvdAndBluraySoon(5, null, null, null, null, true, true, Doctrine_Core::HYDRATE_RECORD);
-		$this->filmsNowTv = ChannelScheduleTable::getInstance()->getFilmsByDay(date('Y-m-d'), 5);
-		$this->filmsTomorrowTv = ChannelScheduleTable::getInstance()->getFilmsByDay(date('Y-m-d', time() + 86400), 5);
+		//$this->filmsNowTv = ChannelScheduleTable::getInstance()->getFilmsByDay(date('Y-m-d'), 5);
+		//$this->filmsTomorrowTv = ChannelScheduleTable::getInstance()->getFilmsByDay(date('Y-m-d', time() + 86400), 5);
 		$this->actors = PersonTable::getInstance()->getBestActors(5);
 		$this->stires = StireTable::getInstance()->getBest(5);
 	}

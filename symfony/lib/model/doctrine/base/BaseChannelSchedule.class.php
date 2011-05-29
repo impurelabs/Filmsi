@@ -26,6 +26,13 @@ abstract class BaseChannelSchedule extends sfDoctrineRecord
         $this->hasColumn('time_min', 'integer', null, array(
              'type' => 'integer',
              ));
+		$this->hasColumn('film_not_in_db', 'bool', null, array(
+             'type' => 'bool',
+             ));
+        $this->hasColumn('film_name', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
+             ));
 
         $this->option('symfony', array(
              'filter' => false,

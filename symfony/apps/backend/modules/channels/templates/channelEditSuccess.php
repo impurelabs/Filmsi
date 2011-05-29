@@ -1,6 +1,6 @@
-<h4 class="mb-3">Creeaza Canal Nou</h4>
+<h4 class="mb-3">Editeaza Canal</h4>
 
-<form id="the-form" action="<?php echo url_for('@default?module=channels&action=channelAdd');?>" method="post" enctype="multipart/form-data">
+<form id="the-form" action="<?php echo url_for('@default?module=channels&action=channelEdit&id=' . $channel->getId());?>" method="post" enctype="multipart/form-data">
 
 <?php echo $form->renderHiddenFields();?>
 <?php echo $form->renderGlobalErrors();?>

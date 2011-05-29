@@ -6,7 +6,7 @@ public function configure()
   	$this->useFields(array(
   		'name', 'location_id', 'address', 'phone', 'website', 'room_count', 'lat', 'lng', 'seats', 'sound', 'ticket_price',
 		'is_type_film', 'is_type_digital', 'is_type_3d', 'is_type_imax', 'url_key', 'description_teaser', 'description_content',  'meta_description', 'meta_keywords',
-		'publish_date', 'service_list', 'lat', 'lng', 'map_zoom', 'reservation_url', 'photo_album_id'
+		'publish_date', 'service_list', 'lat', 'lng', 'map_zoom', 'reservation_url', 'photo_album_id', 'cinemagia_pull_aid'
   	));
   	
   	$this->widgetSchema['name'] = new sfWidgetFormInput();

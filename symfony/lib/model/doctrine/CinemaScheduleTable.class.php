@@ -16,7 +16,7 @@ class CinemaScheduleTable extends Doctrine_Table
 	{
 		$scheduleBrutes = Doctrine_Query::create()
 			->from('CinemaSchedule cs')
-			->innerJoin('cs.Film f')
+			->leftJoin('cs.Film f')
 			->innerJoin('cs.Cinema c')
 			->where('cs.cinema_id = ?', $cinemaId)
 			->orderBy('cs.day ASC')
@@ -26,7 +26,8 @@ class CinemaScheduleTable extends Doctrine_Table
 		foreach ($scheduleBrutes as $scheduleBrute){
 			$schedules[$scheduleBrute->getDay()][] = array(
 				'id' => $scheduleBrute->getId(),
-				'film' => $scheduleBrute->getFilm()->getName(),
+				'film' => $scheduleBrute->getFilmNotInDb() == '1' ? $scheduleBrute->getFilmName() : $scheduleBrute->getFilm()->getName(),
+				'film_not_in_bd' => $scheduleBrute->getFilmNotInDb(),
 				'schedule' => $scheduleBrute->getSchedule(),
 				'format' => $scheduleBrute->getFormat()
 			);
@@ -170,5 +171,13 @@ class CinemaScheduleTable extends Doctrine_Table
 			return $films;
 		}
 
+	}
+	
+	public function deleteByDayAndCinema($date, $cinemaId)
+	{
+		return Doctrine_Query::create()
+			->delete('CinemaSchedule c')
+			->where('c.day = ? AND c.cinema_id = ?', array($date, $cinemaId))
+			->execute();
 	}
 }

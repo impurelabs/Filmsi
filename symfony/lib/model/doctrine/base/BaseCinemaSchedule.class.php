@@ -61,6 +61,13 @@ abstract class BaseCinemaSchedule extends sfDoctrineRecord
               2 => '3d',
              ),
              ));
+		$this->hasColumn('film_not_in_db', 'bool', null, array(
+             'type' => 'bool',
+             ));
+        $this->hasColumn('film_name', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
+             ));
 
         $this->option('symfony', array(
              'filter' => false,

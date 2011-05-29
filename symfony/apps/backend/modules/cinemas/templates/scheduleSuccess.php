@@ -1,4 +1,4 @@
-<h4>Cinematograf</h4>
+<h4>Cinematograf "<?php echo $cinema->getName();?>"</h4>
 
 <a href="<?php echo url_for('@default?module=cinemas&action=view');?>?lid=<?php echo $cinema->getLibraryId();?>">Detalii</a>
  | <a href="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $cinema->getLibraryId();?>" class="selected">Program</a>
@@ -10,6 +10,8 @@
  <div class="mt-2 mb-2 cell-separator-double"></div>
 
 <h5>Program</h5>
+
+<button onclick="location.href='<?php echo url_for('@default?module=cinemas&action=import&id=' . $cinema->getId());?>'">Importa</button>
 
 <div id="test"></div>
 <form id="the-form" action="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $cinema->getLibraryId();?>" method="post">
@@ -41,11 +43,12 @@
 <table id="film-list" class="mt-3">
 	<?php foreach($schedules as $day => $schedule): ?>
     	<tr>
-        	<td colspan="5"><h6><?php echo $day;?></h6></td>
+        	<td colspan="6"><h6><?php echo $day;?></h6></td>
         </tr>
         <?php foreach ($schedule as $scheduleDetail):?>
     	<tr>
         	<td><?php echo $scheduleDetail['film'];?></td>
+			<td><?php if ($scheduleDetail['film_not_in_bd'] == '1') echo 'nu e in bd';?></td>
         	<td><?php echo $scheduleDetail['format'];?></td>
         	<td><?php echo $scheduleDetail['schedule'];?></td>
             <td><a href="<?php echo url_for('@default?module=cinemas&action=editSchedule');?>?id=<?php echo $scheduleDetail['id'];?>" class="small-link">editeaza</a></td>

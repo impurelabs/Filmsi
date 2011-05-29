@@ -237,6 +237,10 @@ abstract class BaseCinema extends sfDoctrineRecord
         $this->hasColumn('visit_count', 'integer', null, array(
              'type' => 'integer'
              ));
+        $this->hasColumn('cinemagia_pull_aid', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
+             ));
 
         $this->option('symfony', array(
              'filter' => false,

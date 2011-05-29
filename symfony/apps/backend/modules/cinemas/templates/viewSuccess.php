@@ -1,6 +1,6 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-<h4>Cinematograf</h4>
+<h4>Cinematograf "<?php echo $cinema->getName();?>"</h4>
 
 <a href="<?php echo url_for('@default?module=cinemas&action=view');?>?lid=<?php echo $cinema->getLibraryId();?>" class="selected">Detalii</a>
  | <a href="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $cinema->getLibraryId();?>">Program</a>
@@ -21,6 +21,10 @@
 	<tr>
     	<th>Nume</th>
         <td><?php echo $cinema->getName();?></td>
+    </tr>
+	<tr>
+    	<th>Pula Id</th>
+        <td><?php echo $cinema->getCinemagiaPullAid();?></td>
     </tr>
 	<tr>
     	<th>Oras</th>

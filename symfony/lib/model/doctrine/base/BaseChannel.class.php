@@ -21,6 +21,10 @@ abstract class BaseChannel extends sfDoctrineRecord
              'type' => 'string',
              'length' => 250,
              ));
+        $this->hasColumn('cinemagia_pull_aid', 'string', 250, array(
+             'type' => 'string',
+             'length' => 250,
+             ));
 
         $this->option('symfony', array(
              'filter' => false,

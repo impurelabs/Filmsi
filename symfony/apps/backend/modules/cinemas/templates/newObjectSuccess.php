@@ -17,6 +17,10 @@
         <td><?php echo $form['name']->render(array('class' => 'span-13'));?><br /><?php echo $form['name']->renderError();?></td>
     </tr>
 	<tr>
+    	<th>Pula Id</th>
+        <td><?php echo $form['cinemagia_pull_aid']->render(array('class' => 'span-13'));?><br /><?php echo $form['cinemagia_pull_aid']->renderError();?></td>
+    </tr>
+	<tr>
     	<th>Oras</th>
         <td><?php echo $form['location']->render(array('class' => 'span-13'));?><br /><?php echo $form['location']->renderError();?></td>
     </tr>

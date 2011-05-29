@@ -4,7 +4,7 @@ class ChannelNewForm extends ChannelForm
 	public function configure()
   {
   	$this->useFields(array(
-  		'name'
+  		'name', 'cinemagia_pull_aid'
   	));
   	
   	$this->widgetSchema['name'] = new sfWidgetFormInput();

@@ -24,18 +24,6 @@
 		<?php endforeach;?>
 	</div>
 	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px; vertical-align: top">
-		<p class="bigstrong spacer-bottom">La Tv Azi</p>
-		<?php foreach($filmsNowTv as $filmNowTv):?>
-			<a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>"><?php echo $filmNowTv->getFilm()->getNameRo();?></a><br />
-		<?php endforeach;?>
-	</div>
-	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px; vertical-align: top">
-		<p class="bigstrong spacer-bottom">La Tv Maine</p>
-		<?php foreach($filmsTomorrowTv as $filmTomorrowTv):?>
-			<a href="<?php echo url_for('@film?id=' . $filmTomorrowTv->getId() . '&key=' . $filmTomorrowTv->getUrlKey());?>"><?php echo $filmTomorrowTv->getNameRo();?></a><br />
-		<?php endforeach;?>
-	</div>
-	<div class="inline-block spacer-bottom-l spacer-left" style="width: 235px; height: 90px; vertical-align: top">
 		<p class="bigstrong spacer-bottom">Actori</p>
 		<?php foreach($actors as $actor):?>
 			<a href="<?php echo url_for('@person?id=' . $actor->getId() . '&key=' . $actor->getUrlKey());?>"><?php echo $actor->getName();?></a><br />

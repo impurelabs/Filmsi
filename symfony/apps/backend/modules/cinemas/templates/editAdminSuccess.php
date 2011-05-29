@@ -1,4 +1,4 @@
-<h4>Cinematograf</h4>
+<h4>Cinematograf "<?php echo $cinema->getName();?>"</h4>
 
 <a href="<?php echo url_for('@default?module=cinemas&action=view');?>?lid=<?php echo $form->getObject()->getLibraryId();?>">Detalii</a>
  | <a href="<?php echo url_for('@default?module=cinemas&action=schedule');?>?lid=<?php echo $form->getObject()->getLibraryId();?>">Program</a>

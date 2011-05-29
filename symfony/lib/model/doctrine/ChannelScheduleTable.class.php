@@ -27,7 +27,7 @@ class ChannelScheduleTable extends Doctrine_Table
 	{
 		$scheduleBrutes = Doctrine_Query::create()
 			->from('ChannelSchedule cs')
-			->innerJoin('cs.Film f')
+			->leftJoin('cs.Film f')
 			->innerJoin('cs.Channel c')
 			->where('cs.channel_id = ?', $channelId)
 			->orderBy('cs.day, cs.time_hour ASC')
@@ -37,7 +37,8 @@ class ChannelScheduleTable extends Doctrine_Table
 		foreach ($scheduleBrutes as $scheduleBrute){
 			$schedules[$scheduleBrute->getDay()][] = array(
 				'id' => $scheduleBrute->getId(),
-				'film' => $scheduleBrute->getFilm()->getName(),
+				'film' => $scheduleBrute->getFilmNotInDb() == '1' ? $scheduleBrute->getFilmName() : $scheduleBrute->getFilm()->getName(),
+				'film_not_in_bd' => $scheduleBrute->getFilmNotInDb(),
 				'time_hour' => $scheduleBrute->getTimeHour(),
 				'time_min' => $scheduleBrute->getTimeMin()
 			);
@@ -52,7 +53,7 @@ class ChannelScheduleTable extends Doctrine_Table
 			->select('s.time_hour, s.time_min, c.name channel_name, c.filename channel_filename, c.id channel_id, f.name_ro film_name, f.id film_id, f.url_key film_url_key, f.is_series film_is_series')
 			->from('ChannelSchedule s')
 			->orderBy('c.name, s.time_hour, s.time_min ASC')
-			->innerJoin('s.Film f')
+			->leftJoin('s.Film f')
 			->innerJoin('s.Channel c')
 			->where('s.day = ?', $day)
 			->andWhereIn('s.time_hour', array($hour - 1, $hour, $hour + 1));
@@ -88,7 +89,7 @@ class ChannelScheduleTable extends Doctrine_Table
 				'film_is_series' => $schedule['film_is_series'],
 			);
 		}
-//echo '<pre>'; var_dump($results); exit;
+
 		return $results;
 	}
 
@@ -107,5 +108,13 @@ class ChannelScheduleTable extends Doctrine_Table
 		}
 
 		return $q->execute();
+	}
+	
+	public function deleteByChannelAndDay($channelId, $day)
+	{
+		return Doctrine_Query::create()
+			->delete('ChannelSchedule s')
+			->where('s.channel_id = ? and s.day = ?', array($channelId, $day))
+			->execute();
 	}
 }

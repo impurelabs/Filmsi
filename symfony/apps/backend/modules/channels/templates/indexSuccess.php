@@ -6,15 +6,19 @@
 	<tr>
 		<th></th>
 		<th>Nume Canal</th>
+		<th>Pula ID</th>
 		<th>Numar Filme</th>
+		<th></th>
 		<th></th>
 	</tr>
 	<?php foreach($channels as $channel):?>
 	<tr>
 		<td><img src="<?php echo filmsiChannelPhotoThumb($channel->getFilename());?>" /></td>
 		<td><?php echo $channel->getName();?></td>
+		<td><?php echo $channel->getCinemagiaPullAid();?></td>
 		<td><?php echo $channel->getFilmCount();?></td>
 		<td><a href="<?php echo url_for('@default?module=channels&action=schedule');?>?id=<?php echo $channel->getId();?>">program</a></td>
+		<td><a href="<?php echo url_for('@default?module=channels&action=channelEdit');?>?id=<?php echo $channel->getId();?>">editeaza</a></td>
 	</tr>
 	<?php endforeach;?>
 </table>

@@ -5,7 +5,8 @@
  <div class="mt-2 mb-2 cell-separator-double"></div>
 
 <h5>Program</h5>
-
+<button type="button" onclick="location.href='<?php echo url_for('@default?module=channels&action=import&id=' . $channel->getId());?>'">Importa ;)</button>
+<br /><br />
 <div id="test"></div>
 <form id="the-form" action="<?php echo url_for('@default?module=channels&action=schedule');?>?id=<?php echo $channel->getId();?>" method="post">
 

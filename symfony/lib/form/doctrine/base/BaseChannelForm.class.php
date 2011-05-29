@@ -18,12 +18,14 @@ abstract class BaseChannelForm extends BaseFormDoctrine
       'id'                  => new sfWidgetFormInputHidden(),
       'name'                => new sfWidgetFormInputText(),
       'filename'            => new sfWidgetFormInputText(),
+      'cinemagia_pull_aid'  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'                  => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'name'                => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'filename'            => new sfValidatorString(array('max_length' => 250, 'required' => false)),
+	  'cinemagia_pull_aid'   => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('channel[%s]');

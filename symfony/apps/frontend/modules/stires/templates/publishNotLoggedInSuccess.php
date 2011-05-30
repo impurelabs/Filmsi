@@ -38,10 +38,11 @@
         <script type="text/javascript">
             $(document).ready(function(){
                 $('#enter-account-button').click(function(){
-                        
+					window.scrollTo(0, 0);
+					
                         if ($("#user-container").is(':hidden')){
-                                $('#user-container').load('<?php echo url_for('@login');?>')
-                                        $('#user-container').slideDown('fast');
+							 $('#user-container').load('<?php echo url_for('@login');?>')
+                                    $('#user-container').slideDown('fast');
                         } else {
                                 $('#user-container').slideUp('fast')
                                         .load('<?php echo url_for('@login');?>', function(){
@@ -51,6 +52,8 @@
                 });
 
                 $('#create-account-button').click(function(){
+					window.scrollTo(0, 0);
+				
                         if ($("#user-container").is(':hidden')){
                                 $('#user-container').load('<?php echo url_for('@default?module=user&action=register');?>')
                                         $('#user-container').slideDown('fast');

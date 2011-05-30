@@ -190,7 +190,7 @@
         <div class="cell-bd" style="height: 450px">
 			<?php foreach ($filmsNowTv as $filmNowTv):?>
 			  <div class="mb-3" style="position: relative">
-				<div class="inline-block spacer-right-s" style="vertical-align:top">
+				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
 					<a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowTv->getFilm()->getFilename());?>" style="width: 49px" /></a>
 					<div class="detailscell" id="detailscell3-<?php echo $filmNowTv->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmNowTv->getFilm()->getFilename());?>" /></a>
 					  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="bigblack-link"><?php echo $filmNowTv->getFilm()->getNameRo();?></a> <br />

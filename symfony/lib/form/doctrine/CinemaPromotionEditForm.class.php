@@ -8,7 +8,7 @@ class CinemaPromotionEditForm extends CinemaPromotionForm
   	));
   	
   	$this->widgetSchema['name'] = new sfWidgetFormInput();
-  	$this->widgetSchema['filename'] = new sfWidgetFormInputFile();
+  	$this->widgetSchema['file'] = new sfWidgetFormInputFile();
   	$this->widgetSchema['content'] = new sfWidgetFormTextarea();
   	$this->widgetSchema['cinema_id'] = new sfWidgetFormInputHidden();
   	

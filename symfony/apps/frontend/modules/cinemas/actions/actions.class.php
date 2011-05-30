@@ -132,8 +132,13 @@ class cinemasActions extends sfActions
 	public function executePromotionEdit(sfWebRequest $request)
 	{
 		$this->forward404If(false == $this->cinemaPromotion = Doctrine_Core::getTable('CinemaPromotion')->findOneById($request->getParameter('id')));
-
+		
 		$this->cinema = $this->cinemaPromotion->getCinema();
+		
+		/* Security Check */
+		if (!$this->getUser()->isAuthenticated() || $this->getUser()->getGuardUser()->getId() != $this->cinema->getAdminUserId()){
+			$this->forward404();
+		}
 
 		$this->form = new CinemaPromotionEditForm($this->cinemaPromotion);
 
@@ -148,6 +153,17 @@ class cinemasActions extends sfActions
 		}
 
 	}
+  
+  public function executeDeletePromotionPhoto(sfWebRequest $request)
+  {
+	  $this->forward404Unless($request->isMethod('post'));
+	  
+	  $this->forward404If(false == $this->cinemaPromotion = Doctrine_Core::getTable('CinemaPromotion')->findOneById($request->getParameter('id')));
+	  
+	  $this->cinemaPromotion->deletePhoto();
+	  
+	  $this->redirect($this->generateUrl('cinema_promotion_edit', array('id' => $this->cinemaPromotion->getId())));
+  }
 
 	public function executeSchedule(sfWebRequest $request)
 	{

@@ -79,6 +79,16 @@ class channelsActions extends sfActions
 			}
 		}
 	}
+  
+	public function executeChannelDelete(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod('post'));
+		
+		$this->channel = Doctrine_Core::getTable('Channel')->findOneById($request->getParameter('id'));
+		$this->channel->delete();
+
+		$this->redirect($this->generateUrl('default', array('module' => 'channels', 'action' => 'index')));
+	}
 	
 	public function executeImport(sfWebRequest $request)
 	{

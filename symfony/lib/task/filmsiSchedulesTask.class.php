@@ -26,10 +26,10 @@ class filmsiSchedulesTask extends sfBaseTask
     protected function resetSchedules()
     {
         $this->logSection('resetting', 'Deleting cinema schedules older then today.');
-        $this->dbConnection->getTable('CinemaSchedule')->deleteOlderThan(1);
+        $this->dbConnection->getTable('CinemaSchedule')->deleteOlderThan(8);
 
         $this->logSection('resetting', 'Deleting channel schedules older then today.');
-        $this->dbConnection->getTable('ChannelSchedule')->deleteOlderThan(1);
+        $this->dbConnection->getTable('ChannelSchedule')->deleteOlderThan(8);
 
 		return true;
     }

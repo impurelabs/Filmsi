@@ -113,6 +113,17 @@ class cinemasActions extends sfActions
   	} 
   }
   
+  public function executeDeletePromotionPhoto(sfWebRequest $request)
+  {
+	  $this->forward404Unless($request->isMethod('post'));
+	  
+	  $this->forward404If(false == $this->cinemaPromotion = Doctrine_Core::getTable('CinemaPromotion')->findOneById($request->getParameter('id')));
+	  
+	  $this->cinemaPromotion->deletePhoto();
+	  
+	  $this->redirect($this->generateUrl('default', array('module' => 'cinemas', 'action' => 'view')) . '?lid=' . $this->cinemaPromotion->getCinema()->getLibraryId());
+  }
+  
   public function executeDeletePromotion(sfWebRequest $request)
   {
   	$cinemaPromotion = Doctrine_Core::getTable('CinemaPromotion')->findOneById($request->getParameter('id'));

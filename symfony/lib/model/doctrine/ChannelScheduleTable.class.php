@@ -122,7 +122,7 @@ class ChannelScheduleTable extends Doctrine_Table
 	{
 		Doctrine_Query::create()
 			->delete('ChannelSchedule s')
-			->where('s.day < date_sub(NOW(), interval ? day)', $days)
+			->where('s.day < date_sub(NOW(), interval ? day)', $days)	
 			->execute();
 	}
 }

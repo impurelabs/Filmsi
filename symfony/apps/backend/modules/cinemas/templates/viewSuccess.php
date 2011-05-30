@@ -142,13 +142,20 @@
 
 <h6 class="mb-2"><?php echo $promotion->getName();?></h6> 
 
+<?php if ($promotion->getFilename() != ''):?>
 <img src="<?php echo filmsiCinemaPromotionPhotoThumb($promotion->getFilename());?>" /> <br />
-
+<form action="<?php echo url_for('@default?module=cinemas&action=deletePromotionPhoto');?>" method="post">
+<input type="hidden" name="id" value="<?php echo $promotion->getId();?>" />
+<button type="submit">Sterge imaginea</button>
+</form>
+<?php endif;?>
+<br />
 <strong>Descriere</strong><br />
 <?php echo $promotion->getContent();?> <br />
 
 <a href="<?php echo url_for('@default?module=cinemas&action=editPromotion');?>?id=<?php echo $promotion->getId();?>">editeaza</a> |
-<a href="<?php echo url_for('@default?module=cinemas&action=deletePromotion');?>?id=<?php echo $promotion->getId();?>">sterge</a>
+<a href="<?php echo url_for('@default?module=cinemas&action=deletePromotion');?>?id=<?php echo $promotion->getId();?>">sterge</a> |
+
 
 <div class="cell-separator-double"></div>
 <?php endforeach; ?>

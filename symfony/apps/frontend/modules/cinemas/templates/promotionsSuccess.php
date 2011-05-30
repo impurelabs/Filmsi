@@ -51,7 +51,9 @@
 				<?php endif;?>
 				<h6><?php echo $promotion->getName();?></h6><br />
 				<?php echo $promotion->getContent();?> <br /><br />
+				<?php if($form->getObject()->getFilename() != ''):?>
 				<img src="<?php echo filmsiCinemaPromotionPhoto($promotion->getFilename());?>" />
+				<?php endif;?>
 				<hr class="cell-separator-double spacer-top spacer-bottom" />
 			<?php endforeach;?>
         </div>

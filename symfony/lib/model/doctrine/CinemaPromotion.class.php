@@ -97,5 +97,13 @@ class CinemaPromotion extends BaseCinemaPromotion
 			echo '<pre>'; var_dump($response);
 		}
 	}
+	
+	public function deletePhoto()
+	{
+		$this->deleteFiles();
+		
+		$this->setFilename('');
+		$this->save();
+	}
 
 }

@@ -36,8 +36,8 @@
 
 <div class="cell-container5 spacer-left"> <!-- content column start -->
 
-	<div class="normalcell spacer-bottom-m" style="padding:0">
-		<a href="<?php echo url_for('@cinema_photos?id=' . $cinema->getId() . '&key=' . $cinema->getUrlKey());?>"><img src="<?php echo filmsiCinemaPhoto($cinema->getFilename());?>" /></a><br /><br />
+	<div class="normalcell spacer-bottom-m" style="padding:0; width: 465px; margin: 0 auto 20px auto">
+		<a href="<?php echo url_for('@cinema_photos?id=' . $cinema->getId() . '&key=' . $cinema->getUrlKey());?>"><img src="<?php echo filmsiCinemaPhoto($cinema->getFilename());?>" /></a>
         <span class="more-cell"><a href="<?php echo url_for('@cinema_photos?id=' . $cinema->getId() . '&key=' . $cinema->getUrlKey());?>" class="smallwhite-link">vezi mai multe fotografii &raquo;</a></span>
     </div>
 
@@ -302,7 +302,9 @@
 			<div class="cell-bd tinyMce">
 				<h6><?php echo $promotion->getName();?></h6><br />
 				<?php echo $promotion->getContent();?> <br /><br />
+				<?php if($promotion->getFilename() != ''):?>
 				<img src="<?php echo filmsiCinemaPromotionPhoto($promotion->getFilename());?>" />
+				<?php endif;?>
 			</div>
 		<?php endforeach;?>
     </div>

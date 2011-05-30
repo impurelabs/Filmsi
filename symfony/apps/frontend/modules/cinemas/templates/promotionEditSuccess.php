@@ -60,9 +60,16 @@
 			<br /><br />
 
 			Poza:<br />
+			<?php if($form->getObject()->getFilename() != ''):?>
 			<img src=<?php echo filmsiCinemaPromotionPhoto($form->getObject()->getFilename());?> /><br /><br />
-			<?php echo $form['filename']->render();?><br />
-			<?php echo $form['filename']->renderError();?>
+			<?php endif;?>
+			<?php echo $form['file']->render();?> 
+			
+			<?php if($form->getObject()->getFilename() != ''):?>
+			|	<a href="javascript: void(0)" id="delete-promotion-photo">sterge poza</a>
+			<?php endif;?>
+			<br />
+			<?php echo $form['file']->renderError();?>
 			<br /><br />
 
 
@@ -76,7 +83,15 @@
 
 </div> <!-- content column end -->
 
+<form id="delete-promotion-photo-form" method="post" action="<?php echo url_for('@default?module=cinemas&action=deletePromotionPhoto');?>">
+	<input type="hidden" name="id" value="<?php echo $form->getObject()->getId();?>" />
+</form>
 
+<script type="text/javascript">
+	$('#delete-promotion-photo').click(function(){
+		$('#delete-promotion-photo-form').submit();
+	});
+</script>
 
 
 

@@ -392,7 +392,7 @@ class filmsActions extends sfActions
         $produse = simplexml_load_file(sfConfig::get('app_provideo_url'));
 
 		$this->imported = false;
-		foreach ($produse->product as $produs)
+		foreach ($produse->produs as $produs)
         {
             if ($produs['imdb'] == $this->film->getImdb()){
                 $this->film->setDescriptionContent($produs['sinopsis']);

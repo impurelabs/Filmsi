@@ -61,10 +61,16 @@ class VisitTable extends Doctrine_Table
                 ->update('Person p')
                 ->set('p.visit_count', '0')
                 ->execute();
+			
+			
+            $q = Doctrine_Query::create()
+                ->update('FestivalEdition e')
+                ->set('e.visit_count', '0')
+                ->execute();
 
             /* Reset to 0 the visit_count field for all the elements in the Person */
             $q = Doctrine_Query::create()
-                ->update('stire s')
+                ->update('Stire s')
                 ->set('s.visit_count', '0')
                 ->execute();
 

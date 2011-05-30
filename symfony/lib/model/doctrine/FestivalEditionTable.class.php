@@ -7,6 +7,10 @@
  */
 class FestivalEditionTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return FestivalEdition
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('FestivalEdition');
@@ -143,6 +147,15 @@ class FestivalEditionTable extends Doctrine_Table
 			->update('FestivalEdition a')
 			->set('a.video_album_id', 'null')
 			->where('a.video_album_id = ?', $videoAlbumId)
+			->execute();
+	}
+	
+	public function getBest($limit)
+	{
+		return Doctrine_Query::create()
+			->from('FestivalEdition e')
+			->orderBy('e.visit_count DESC')
+			->limit($limit)
 			->execute();
 	}
 }

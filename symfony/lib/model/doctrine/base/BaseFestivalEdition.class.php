@@ -90,6 +90,9 @@ abstract class BaseFestivalEdition extends sfDoctrineRecord
              'type' => 'year',
              'notnull' => true,
              ));
+        $this->hasColumn('visit_count', 'integer', null, array(
+             'type' => 'integer'
+             ));
         $this->hasColumn('filename', 'string', 250, array(
              'type' => 'string',
              'length' => 250,

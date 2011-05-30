@@ -21,8 +21,10 @@ class articlesActions extends sfActions
 
 		$this->currentPage = (int)$request->getParameter('p', 1);
 		$this->currentCategory = $request->getParameter('c', null);
+		$this->currentAuthor = $request->getParameter('u', null);
 		$this->categories = Doctrine_Core::getTable('ArticleCategory')->getList();
-		$this->articles = Doctrine_Core::getTable('Article')->getList($this->currentCategory, sfConfig::get('app_article_page_limit'), $this->currentPage);
+		$this->authors = ArticleTable::getInstance()->getAuthors();
+		$this->articles = ArticleTable::getInstance()->getList($this->currentCategory, sfConfig::get('app_article_page_limit'), $this->currentPage, $this->currentAuthor);
 		$this->articleCount = Doctrine_Core::getTable('Article')->countByCategory($this->currentCategory);
 		$this->pageCount = ceil($this->articleCount / sfConfig::get('app_article_page_limit'));
 		$this->firstArticleCount = sfConfig::get('app_article_page_limit') * ($this->currentPage - 1) + 1;

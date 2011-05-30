@@ -26,7 +26,7 @@ class ArticleTable extends Doctrine_Table
 		return;
 	}
 
-	public function getList($categoryId = null, $limit = null, $page = null)
+	public function getList($categoryId = null, $limit = null, $page = null, $authorId = null)
 	{
 		$q = Doctrine_Query::create()
 			->from('Article a')
@@ -36,6 +36,10 @@ class ArticleTable extends Doctrine_Table
 		if (!empty($categoryId)){
 			$q->innerJoin('a.ArticleCategory ac')
 				->addWhere('ac.category_id = ?', $categoryId);
+		}
+
+		if (!empty($authorId)){
+			$q = $q->addWhere('a.user_id = ?', $authorId);
 		}
 
 		if (!empty ($limit)){
@@ -283,5 +287,27 @@ class ArticleTable extends Doctrine_Table
 		return $q->orderBy('a.visit_count desc')
 			->limit($limit)
 			->execute();
+	}
+	
+	public function getAuthors()
+	{
+		$q = Doctrine_Query::create()
+			->select('a.id, u.id, u.first_name, u.last_name')
+			->from('Article a')
+			->innerJoin('a.Author u')
+			->groupBy('u.id')
+			->where('a.state = 1')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		$authors = array();
+		foreach ($q as $item){
+			$authors[] = array(
+				'id' => $item['Author']['id'],
+				'first_name' => $item['Author']['first_name'],
+				'last_name' => $item['Author']['last_name']
+			);
+		}
+		
+		return $authors;
 	}
 }

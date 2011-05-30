@@ -10,8 +10,24 @@
         <div class="cell-bd" style="padding:0">
         	<ul class="filterlist spacer-bottom-m">
 				<?php foreach($categories as $category):?>
-					<li <?php if($currentCategory == $category->getId()) echo 'class="active"';?> onclick="location.href='<?php echo $currentCategory == $category->getId() ? url_for('@articles') : url_for('@articles') . '?c=' . $category->getId();?>'">
+					<li <?php if($currentCategory == $category->getId()) echo 'class="active"';?> onclick="location.href='<?php echo $currentCategory == $category->getId() ? url_for('@articles?u=' . $currentAuthor) : url_for('@articles?c=' . $category->getId() . '&u=' . $currentAuthor);?>'">
 						<?php echo $category->getName();?>
+						<span class="filter-cioc"></span>
+					</li>
+				<?php endforeach;?>
+            </ul>
+        </div>
+    </div>
+	
+	<div class="cell spacer-bottom-m">
+        <div class="cell-hd">
+            <h4>Autori</h4>
+        </div>
+        <div class="cell-bd" style="padding:0">
+        	<ul class="filterlist spacer-bottom-m">
+				<?php foreach($authors as $author):?>
+					<li <?php if($currentAuthor == $author['id']) echo 'class="active"';?> onclick="location.href='<?php echo $currentAuthor == $author['id'] ? url_for('@articles?c=' . $currentCategory) : url_for('@articles?c=' . $currentCategory . '&u=' . $author['id']);?>'">
+						<?php echo $author['first_name'] . ' ' . $author['last_name'];?>
 						<span class="filter-cioc"></span>
 					</li>
 				<?php endforeach;?>

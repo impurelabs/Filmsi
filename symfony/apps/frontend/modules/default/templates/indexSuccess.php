@@ -89,7 +89,7 @@
           <span class="icon-popcorn"></span>
           <h4>La cinema</h4>
         </div>
-        <div class="cell-bd" style="height: 450px">
+        <div class="cell-bd" style="height: 470px">
 			<?php foreach ($filmsNowInCinema as $filmNowInCinema):?>
 				<div class="mb-3" style="position: relative">
 					<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
@@ -138,7 +138,7 @@
           <span class="icon-dvd"></span>
           <h4>Dvd <span class="black">&amp;</span> Bluray</h4>
         </div>
-        <div class="cell-bd" style="height: 450px">
+        <div class="cell-bd" style="height: 470px">
 			<?php foreach($filmsNowDbo as $filmNowDbo):?>
 			<div class="mb-3" style="position: relative">
 				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
@@ -187,7 +187,7 @@
           <span class="icon-tv"></span>
           <h4>La TV</h4>
         </div>
-        <div class="cell-bd" style="height: 450px">
+        <div class="cell-bd" style="height: 470px">
 			<?php foreach ($filmsNowTv as $filmNowTv):?>
 			  <div class="mb-3" style="position: relative">
 				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
@@ -246,7 +246,7 @@
           <span class="icon-popcorn"></span>
           <h4>La cinema</h4>
         </div>
-        <div class="cell-bd" style="height: 450px">
+        <div class="cell-bd" style="height: 470px">
           <?php foreach ($filmsSoonInCinema as $filmSoonInCinema):?>
 				<div class="mb-3" style="position: relative">
 					<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
@@ -295,7 +295,7 @@
           <span class="icon-dvd"></span>
           <h4>Dvd <span class="black">&amp;</span> Bluray</h4>
         </div>
-        <div class="cell-bd" style="height: 450px">
+        <div class="cell-bd" style="height: 470px">
           <?php foreach($filmsSoonDbo as $filmSoonDbo):?>
 			<div class="mb-3" style="position: relative">
 				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
@@ -342,7 +342,7 @@
           <span class="icon-tv"></span>
           <h4>La TV</h4>
         </div>
-        <div class="cell-bd" style="height: 450px">
+        <div class="cell-bd" style="height: 470px">
           <?php foreach ($filmsSoonTv as $filmSoonTv):?>
 			  <div class="mb-3" style="position: relative">
 				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">

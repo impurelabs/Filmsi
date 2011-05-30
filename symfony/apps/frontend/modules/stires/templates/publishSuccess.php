@@ -53,7 +53,35 @@
     <div class="normalcell left spacer-left tinyMce" style="width: 220px; height: 400px">
 		<?php echo $sf_data->getRaw('contentRight')->getContent();?>
     </div>
-
+	
+	<div class="clear"></div>
+	
+	<h4 class="black align-center mt-3">Iata cateva sugestii de subiecte mainstream:</h4>
+	<br />
+	
+	<div class="cell spacer-bottom-m left" style="width: 330px">
+        <div class="cell-hd">
+            <h4>Actori <span class="black">&amp; regizori</span></h4>
+        </div>
+        <div class="cell-bd">
+        	<?php foreach ($bestPersons as $bestPerson):?>
+			<a href="<?php echo url_for('@person?id=' . $bestPerson->getId() . '&key=' . $bestPerson->getUrlKey());?>" class="important-link"><?php echo $bestPerson->getName();?></a><br />
+			<?php endforeach;?>
+        </div>
+    </div>
+	
+	<div class="cell spacer-bottom-m left ml-2" style="width: 330px">
+        <div class="cell-hd">
+            <h4>Filme</h4>
+        </div>
+        <div class="cell-bd">
+        	<?php foreach ($bestFilms as $bestFilm):?>
+			<a href="<?php echo url_for('@film?id=' . $bestFilm->getId() . '&key=' . $bestFilm->getUrlKey());?>" class="important-link"><?php echo $bestFilm->getName();?></a><br />
+			<?php endforeach;?>
+        </div>
+    </div>
+-->
+	<div class="clear"></div>
 
 
 </div>

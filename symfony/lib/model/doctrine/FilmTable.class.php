@@ -724,4 +724,13 @@ text;
 			->limit($limit)
 			->execute();
 	}
+	
+	public function getBest($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Film f')
+			->orderBy('f.visit_count DESC')
+			->limit($limit)
+			->execute();
+	}
 }

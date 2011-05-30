@@ -7,6 +7,10 @@
  */
 class PersonTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return PersonTable
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('Person');
@@ -226,6 +230,15 @@ class PersonTable extends Doctrine_Table
 		return Doctrine_Query::create()
 			->from('Person p')
 			->where('p.is_actor = 1')
+			->orderBy('p.visit_count DESC')
+			->limit($limit)
+			->execute();
+	}
+
+	public function getBest($limit)
+	{
+		return Doctrine_Query::create()
+			->from('Person p')
 			->orderBy('p.visit_count DESC')
 			->limit($limit)
 			->execute();

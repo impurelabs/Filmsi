@@ -110,5 +110,9 @@ class stiresActions extends sfActions
 				$this->setTemplate('publishOk');
 			}
 		}
+		
+		$this->bestPersons = PersonTable::getInstance()->getBest(10);
+		$this->bestFilms = FilmTable::getInstance()->getBest(10);
+		//$this->bestFestivalEditions = FestivalEditionTable::getInstance()->getBest(10);
 	}
 }

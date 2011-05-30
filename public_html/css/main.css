@@ -445,6 +445,7 @@ tfoot {font-style:italic;}
 .quotecell { font-size: 11px; color: #848383; background-color: #ffffff; padding: 3px; border: 1px solid #e7e7e7; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 
 .detailscell { display: none; position: absolute; z-index: 1000; padding: 5px; border: 1px solid #d5d5d5; top: -160px; left: 10px; width: 331px; height: 160px; background-color: #fff6e2; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; box-shadow: 1px 1px 2px #555555; -moz-box-shadow: 1px 1px 2px #555555; -webkit-box-shadow: 1px 1px 2px #555555}
+.details-container:hover .detailscell {display: block}
 .details-cioc { position: absolute; bottom:-18px; left: 10px; width: 22px; height: 18px; background-image: url('../images/elements.png'); background-position: 0 -611px }
 .details-content { float: left; margin-left: 5px; width: 220px }
 

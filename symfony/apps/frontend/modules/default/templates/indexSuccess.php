@@ -92,8 +92,29 @@
         <div class="cell-bd" style="height: 450px">
 			<?php foreach ($filmsNowInCinema as $filmNowInCinema):?>
 				<div class="mb-3" style="position: relative">
-					<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowInCinema->getFilename());?>" style="width: 49px" class="detailstrigger1" film_id="<?php echo $filmNowInCinema->getId();?>" /></a></div>
-				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="important-link detailstrigger1" film_id="<?php echo $filmNowInCinema->getId();?>"><?php echo $filmNowInCinema->getNameRo();?></a><br />
+					<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
+						<a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowInCinema->getFilename());?>" style="width: 49px" /></a>
+						<div class="detailscell" id="detailscell1-<?php echo $filmNowInCinema->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmNowInCinema->getFilename());?>" /></a>
+						  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="bigblack-link"><?php echo $filmNowInCinema->getNameRo();?></a> <br />
+							<?php if($filmNowInCinema->getNameEn() != ''):?><em>(<?php echo $filmNowInCinema->getNameEn();?>)</em><?php endif;?>
+							<hr class="cell-separator1 spacer-top spacer-bottom" />
+							<?php if (count($filmNowInCinema->getBestDirectors()) > 0):?>
+							<span class="explanation-small">Regia:</span>
+								<?php foreach ($filmNowInCinema->getBestDirectors() as $person):?>
+									<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+								<?php endforeach;?>
+							<?php endif;?>
+							<span class="explanation-small">Cu:</span>
+								<?php foreach ($filmNowInCinema->getBestActors(3) as $person):?>
+									<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+								<?php endforeach;?>
+							<hr class="cell-separator1 spacer-top spacer-bottom" />
+							<a href="<?php echo url_for('@cinema_search');?>?f=<?php echo $filmNowInCinema->getId();?>" class="whitebutton-small-link">rezerva bilet&raquo;</a>
+							<a href="<?php echo url_for('@film_videos?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
+						  <span class="details-cioc"></span> 
+						</div><!-- details end -->
+					</div>
+				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="important-link"><?php echo $filmNowInCinema->getNameRo();?></a><br />
 				  <?php if($filmNowInCinema->getNameEn() != ''):?><em>(<?php echo $filmNowInCinema->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu: 
 					  <?php foreach ($filmNowInCinema->getBestActors(3) as $person):?>
@@ -101,25 +122,6 @@
 					<?php endforeach;?>
 				  </div>
 				</div>
-				<div class="detailscell" id="detailscell1-<?php echo $filmNowInCinema->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmNowInCinema->getFilename());?>" /></a>
-				  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="bigblack-link"><?php echo $filmNowInCinema->getNameRo();?></a> <br />
-					<?php if($filmNowInCinema->getNameEn() != ''):?><em>(<?php echo $filmNowInCinema->getNameEn();?>)</em><?php endif;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<?php if (count($filmNowInCinema->getBestDirectors()) > 0):?>
-					<span class="explanation-small">Regia:</span>
-						<?php foreach ($filmNowInCinema->getBestDirectors() as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<?php endif;?>
-					<span class="explanation-small">Cu:</span>
-						<?php foreach ($filmNowInCinema->getBestActors(3) as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<a href="<?php echo url_for('@cinema_search');?>?f=<?php echo $filmNowInCinema->getId();?>" class="whitebutton-small-link">rezerva bilet&raquo;</a>
-					<a href="<?php echo url_for('@film_videos?id=' . $filmNowInCinema->getId() . '&key=' . $filmNowInCinema->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
-				  <span class="details-cioc"></span> </div>
-				<!-- details end -->
 				</div>
 			<?php endforeach;?>
         </div>
@@ -139,8 +141,30 @@
         <div class="cell-bd" style="height: 450px">
 			<?php foreach($filmsNowDbo as $filmNowDbo):?>
 			<div class="mb-3" style="position: relative">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowDbo->getFilename());?>" style="width: 49px" class="detailstrigger2" film_id="<?php echo $filmNowDbo->getId();?>" /></a></div>
-				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="important-link detailstrigger2" film_id="<?php echo $filmNowDbo->getId();?>"><?php echo $filmNowDbo->getNameRo();?></a><br />
+				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
+					<a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>">
+						<img src="<?php echo filmsiFilmPhotoThumbS($filmNowDbo->getFilename());?>" style="width: 49px" />
+					</a>
+					<div class="detailscell" id="detailscell2-<?php echo $filmNowDbo->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmNowDbo->getFilename());?>" /></a>
+					  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="bigblack-link"><?php echo $filmNowDbo->getNameRo();?></a> <br />
+						<?php if ($filmNowDbo->getNameEn() != ''):?><em>(<?php echo $filmNowDbo->getNameEn();?>)</em><?php endif;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<?php if (count($filmNowDbo->getBestDirectors()) > 0):?>
+						<span class="explanation-small">Regia:</span>
+							<?php foreach ($filmNowDbo->getBestDirectors() as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<?php endif;?>
+						<span class="explanation-small">Cu:</span>
+							<?php foreach ($filmNowDbo->getBestActors(3) as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<a href="<?php echo url_for('@film_buy?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="whitebutton-small-link">cumpara&raquo;</a> <a href="<?php echo url_for('@film_videos?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
+					  <span class="details-cioc"></span> 
+					</div><!-- details end -->
+				</div>
+				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="important-link"><?php echo $filmNowDbo->getNameRo();?></a><br />
 				  <?php if ($filmNowDbo->getNameEn() != ''):?><em>(<?php echo $filmNowDbo->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu:
 					  <?php foreach ($filmNowDbo->getBestActors(3) as $person):?>
@@ -148,24 +172,6 @@
 					<?php endforeach;?>
 				  </div>
 				</div>
-				<div class="detailscell" id="detailscell2-<?php echo $filmNowDbo->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmNowDbo->getFilename());?>" /></a>
-				  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="bigblack-link"><?php echo $filmNowDbo->getNameRo();?></a> <br />
-					<?php if ($filmNowDbo->getNameEn() != ''):?><em>(<?php echo $filmNowDbo->getNameEn();?>)</em><?php endif;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<?php if (count($filmNowDbo->getBestDirectors()) > 0):?>
-					<span class="explanation-small">Regia:</span>
-						<?php foreach ($filmNowDbo->getBestDirectors() as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<?php endif;?>
-					<span class="explanation-small">Cu:</span>
-						<?php foreach ($filmNowDbo->getBestActors(3) as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<a href="<?php echo url_for('@film_buy?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="whitebutton-small-link">cumpara&raquo;</a> <a href="<?php echo url_for('@film_videos?id=' . $filmNowDbo->getId() . '&key=' . $filmNowDbo->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
-				  <span class="details-cioc"></span> </div>
-				<!-- details end -->
 			</div>
 			<?php endforeach;?>
           
@@ -184,29 +190,31 @@
         <div class="cell-bd" style="height: 450px">
 			<?php foreach ($filmsNowTv as $filmNowTv):?>
 			  <div class="mb-3" style="position: relative">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowTv->getFilm()->getFilename());?>" style="width: 49px" class="detailstrigger3" film_id="<?php echo $filmNowInCinema->getId();?>" /></a></div>
-				<div class="inline-block cell-separator-dotted-bottom" style="width: 135px"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="important-link detailstrigger3" film_id="<?php echo $filmNowInCinema->getId();?>"><?php echo $filmNowTv->getFilm()->getNameRo();?></a><br />
+				<div class="inline-block spacer-right-s" style="vertical-align:top">
+					<a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmNowTv->getFilm()->getFilename());?>" style="width: 49px" /></a>
+					<div class="detailscell" id="detailscell3-<?php echo $filmNowTv->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmNowTv->getFilm()->getFilename());?>" /></a>
+					  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="bigblack-link"><?php echo $filmNowTv->getFilm()->getNameRo();?></a> <br />
+						<?php if ($filmNowTv->getFilm()->getNameEn() != ''):?><em>(<?php echo $filmNowTv->getFilm()->getNameEn();?>)</em><?php endif;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<?php if (count($filmNowTv->getFilm()->getBestDirectors()) > 0):?>
+						<span class="explanation-small">Regia:</span>
+							<?php foreach ($filmNowTv->getFilm()->getBestDirectors() as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<?php endif;?>
+						<span class="explanation-small">Cu:</span>
+							<?php foreach ($filmNowTv->getFilm()->getBestActors(3) as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<a href="<?php echo url_for('@film_videos?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
+					  <span class="details-cioc"></span> </div>
+					<!-- details end -->
+				</div>
+				<div class="inline-block cell-separator-dotted-bottom" style="width: 135px"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="important-link"><?php echo $filmNowTv->getFilm()->getNameRo();?></a><br />
 				  <?php if ($filmNowTv->getFilm()->getNameEn() != ''):?><em>(<?php echo $filmNowTv->getFilm()->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="explanation-link">Pro TV</a></div>
 				</div>
-				<div class="detailscell" id="detailscell3-<?php echo $filmNowTv->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmNowTv->getFilm()->getFilename());?>" /></a>
-				  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="bigblack-link"><?php echo $filmNowTv->getFilm()->getNameRo();?></a> <br />
-					<?php if ($filmNowTv->getFilm()->getNameEn() != ''):?><em>(<?php echo $filmNowTv->getFilm()->getNameEn();?>)</em><?php endif;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<?php if (count($filmNowTv->getFilm()->getBestDirectors()) > 0):?>
-					<span class="explanation-small">Regia:</span>
-						<?php foreach ($filmNowTv->getFilm()->getBestDirectors() as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<?php endif;?>
-					<span class="explanation-small">Cu:</span>
-						<?php foreach ($filmNowTv->getFilm()->getBestActors(3) as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<a href="<?php echo url_for('@film_videos?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
-				  <span class="details-cioc"></span> </div>
-				<!-- details end -->
 			  </div>
 			<?php endforeach;?>
         </div>
@@ -241,8 +249,29 @@
         <div class="cell-bd" style="height: 450px">
           <?php foreach ($filmsSoonInCinema as $filmSoonInCinema):?>
 				<div class="mb-3" style="position: relative">
-					<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonInCinema->getFilename());?>" style="width: 49px" class="detailstrigger4" film_id="<?php echo $filmNowInCinema->getId();?>" /></a></div>
-				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="important-link detailstrigger4" film_id="<?php echo $filmNowInCinema->getId();?>"><?php echo $filmSoonInCinema->getNameRo();?></a><br />
+					<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
+						<a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonInCinema->getFilename());?>" style="width: 49px" /></a>
+						<div class="detailscell" id="detailscell4-<?php echo $filmSoonInCinema->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmSoonInCinema->getFilename());?>" /></a>
+						  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="bigblack-link"><?php echo $filmSoonInCinema->getNameRo();?></a> <br />
+							<?php if($filmSoonInCinema->getNameEn() != ''):?><em>(<?php echo $filmSoonInCinema->getNameEn();?>)</em><?php endif;?>
+							<hr class="cell-separator1 spacer-top spacer-bottom" />
+							<?php if (count($filmSoonInCinema->getBestDirectors()) > 0):?>
+							<span class="explanation-small">Regia:</span>
+								<?php foreach ($filmSoonInCinema->getBestDirectors() as $person):?>
+									<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+								<?php endforeach;?>
+							<?php endif;?>
+							<span class="explanation-small">Cu:</span>
+								<?php foreach ($filmSoonInCinema->getBestActors(3) as $person):?>
+									<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+								<?php endforeach;?>
+							<hr class="cell-separator1 spacer-top spacer-bottom" />
+							<a href="<?php echo url_for('@cinema_search');?>?f=<?php echo $filmSoonInCinema->getId();?>" class="whitebutton-small-link">rezerva bilet&raquo;</a>
+							<a href="<?php echo url_for('@film_videos?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
+						  <span class="details-cioc"></span> </div>
+						<!-- details end -->
+					</div>
+				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="important-link"><?php echo $filmSoonInCinema->getNameRo();?></a><br />
 				  <?php if($filmSoonInCinema->getNameEn() != ''):?><em>(<?php echo $filmSoonInCinema->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu:
 					  <?php foreach ($filmSoonInCinema->getBestActors(3) as $person):?>
@@ -250,25 +279,6 @@
 					<?php endforeach;?>
 				  </div>
 				</div>
-				<div class="detailscell" id="detailscell4-<?php echo $filmSoonInCinema->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmSoonInCinema->getFilename());?>" /></a>
-				  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="bigblack-link"><?php echo $filmSoonInCinema->getNameRo();?></a> <br />
-					<?php if($filmSoonInCinema->getNameEn() != ''):?><em>(<?php echo $filmSoonInCinema->getNameEn();?>)</em><?php endif;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<?php if (count($filmSoonInCinema->getBestDirectors()) > 0):?>
-					<span class="explanation-small">Regia:</span>
-						<?php foreach ($filmSoonInCinema->getBestDirectors() as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<?php endif;?>
-					<span class="explanation-small">Cu:</span>
-						<?php foreach ($filmSoonInCinema->getBestActors(3) as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<a href="<?php echo url_for('@cinema_search');?>?f=<?php echo $filmSoonInCinema->getId();?>" class="whitebutton-small-link">rezerva bilet&raquo;</a>
-					<a href="<?php echo url_for('@film_videos?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
-				  <span class="details-cioc"></span> </div>
-				<!-- details end -->
 				</div>
 			<?php endforeach;?>
         </div>
@@ -288,8 +298,28 @@
         <div class="cell-bd" style="height: 450px">
           <?php foreach($filmsSoonDbo as $filmSoonDbo):?>
 			<div class="mb-3" style="position: relative">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonDbo->getFilename());?>" style="width: 49px" class="detailstrigger5" film_id="<?php echo $filmNowInCinema->getId();?>" /></a></div>
-				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="important-link detailstrigger5" film_id="<?php echo $filmNowInCinema->getId();?>"><?php echo $filmSoonDbo->getNameRo();?></a><br />
+				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
+					<a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonDbo->getFilename());?>" style="width: 49px" /></a>
+					<div class="detailscell" id="detailscell5-<?php echo $filmSoonDbo->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmSoonDbo->getFilename());?>" /></a>
+					  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="bigblack-link"><?php echo $filmSoonDbo->getNameRo();?></a> <br />
+						<?php if ($filmSoonDbo->getNameEn() != ''):?><em>(<?php echo $filmSoonDbo->getNameEn();?>)</em><?php endif;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<?php if (count($filmSoonDbo->getBestDirectors()) > 0):?>
+						<span class="explanation-small">Regia:</span>
+							<?php foreach ($filmSoonDbo->getBestDirectors() as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<?php endif;?>
+						<span class="explanation-small">Cu:</span>
+							<?php foreach ($filmSoonDbo->getBestActors(3) as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<a href="<?php echo url_for('@film_buy?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="whitebutton-small-link">cumpara&raquo;</a> <a href="<?php echo url_for('@film_videos?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
+					  <span class="details-cioc"></span> </div>
+					<!-- details end -->
+				</div>
+				<div class="inline-block cell-separator-dotted-bottom" style="width: 200px"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="important-link"><?php echo $filmSoonDbo->getNameRo();?></a><br />
 				  <?php if ($filmSoonDbo->getNameEn() != ''):?><em>(<?php echo $filmSoonDbo->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-sm explanation-small">Cu:
 					  <?php foreach ($filmSoonDbo->getBestActors(3) as $person):?>
@@ -297,24 +327,6 @@
 					<?php endforeach;?>
 				  </div>
 				</div>
-				<div class="detailscell" id="detailscell5-<?php echo $filmSoonDbo->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmSoonDbo->getFilename());?>" /></a>
-				  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="bigblack-link"><?php echo $filmSoonDbo->getNameRo();?></a> <br />
-					<?php if ($filmSoonDbo->getNameEn() != ''):?><em>(<?php echo $filmSoonDbo->getNameEn();?>)</em><?php endif;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<?php if (count($filmSoonDbo->getBestDirectors()) > 0):?>
-					<span class="explanation-small">Regia:</span>
-						<?php foreach ($filmSoonDbo->getBestDirectors() as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<?php endif;?>
-					<span class="explanation-small">Cu:</span>
-						<?php foreach ($filmSoonDbo->getBestActors(3) as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<a href="<?php echo url_for('@film_buy?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="whitebutton-small-link">cumpara&raquo;</a> <a href="<?php echo url_for('@film_videos?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
-				  <span class="details-cioc"></span> </div>
-				<!-- details end -->
 			</div>
 			<?php endforeach;?>
         </div>
@@ -333,29 +345,31 @@
         <div class="cell-bd" style="height: 450px">
           <?php foreach ($filmsSoonTv as $filmSoonTv):?>
 			  <div class="mb-3" style="position: relative">
-				<div class="inline-block spacer-right-s" style="vertical-align:top"><a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonTv->getFilename());?>" style="width: 49px" class="detailstrigger6" film_id="<?php echo $filmNowInCinema->getId();?>" /></a></div>
-				<div class="inline-block cell-separator-dotted-bottom" style="width: 135px"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="important-link detailstrigger6" film_id="<?php echo $filmNowInCinema->getId();?>"><?php echo $filmSoonTv->getNameRo();?></a><br />
+				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
+					<a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>"><img src="<?php echo filmsiFilmPhotoThumbS($filmSoonTv->getFilename());?>" style="width: 49px" /></a>
+					<div class="detailscell" id="detailscell6-<?php echo $filmSoonTv->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmSoonTv->getFilename());?>" /></a>
+					  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="bigblack-link"><?php echo $filmSoonTv->getNameRo();?></a> <br />
+						<?php if ($filmSoonTv->getNameEn() != ''):?><em>(<?php echo $filmSoonTv->getNameEn();?>)</em><?php endif;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<?php if (count($filmSoonTv->getBestDirectors()) > 0):?>
+						<span class="explanation-small">Regia:</span>
+							<?php foreach ($filmSoonTv->getBestDirectors() as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<?php endif;?>
+						<span class="explanation-small">Cu:</span>
+							<?php foreach ($filmSoonTv->getBestActors(3) as $person):?>
+								<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
+							<?php endforeach;?>
+						<hr class="cell-separator1 spacer-top spacer-bottom" />
+						<a href="<?php echo url_for('@film_videos?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
+					  <span class="details-cioc"></span> </div>
+					<!-- details end -->
+				</div>
+				<div class="inline-block cell-separator-dotted-bottom" style="width: 135px"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="important-link"><?php echo $filmSoonTv->getNameRo();?></a><br />
 				  <?php if ($filmSoonTv->getNameEn() != ''):?><em>(<?php echo $filmSoonTv->getNameEn();?>)</em><?php endif;?>
 				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="explanation-link">Pro TV</a></div>
 				</div>
-				<div class="detailscell" id="detailscell6-<?php echo $filmSoonTv->getId();?>"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="left"><img width="100" src="<?php echo filmsiFilmPhotoThumb($filmSoonTv->getFilename());?>" /></a>
-				  <div class="details-content"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="bigblack-link"><?php echo $filmSoonTv->getNameRo();?></a> <br />
-					<?php if ($filmSoonTv->getNameEn() != ''):?><em>(<?php echo $filmSoonTv->getNameEn();?>)</em><?php endif;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<?php if (count($filmSoonTv->getBestDirectors()) > 0):?>
-					<span class="explanation-small">Regia:</span>
-						<?php foreach ($filmSoonTv->getBestDirectors() as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<?php endif;?>
-					<span class="explanation-small">Cu:</span>
-						<?php foreach ($filmSoonTv->getBestActors(3) as $person):?>
-							<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
-						<?php endforeach;?>
-					<hr class="cell-separator1 spacer-top spacer-bottom" />
-					<a href="<?php echo url_for('@film_videos?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="whitebutton-small-link spacer-left">vezi trailer &raquo;</a> </div>
-				  <span class="details-cioc"></span> </div>
-				<!-- details end -->
 			  </div>
 			<?php endforeach;?>
         </div>
@@ -632,26 +646,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-		$('.detailstrigger1').mouseover(function(){ $('#detailscell1-' + $(this).attr('film_id')).show(); });
-		$('.detailstrigger1').mouseout(function(){ $('#detailscell1-' + $(this).attr('film_id')).hide(); });
-		
-		$('.detailstrigger2').mouseover(function(){ $('#detailscell2-' + $(this).attr('film_id')).show(); });
-		$('.detailstrigger2').mouseout(function(){ $('#detailscell2-' + $(this).attr('film_id')).hide(); });
-		
-		$('.detailstrigger3').mouseover(function(){ $('#detailscell3-' + $(this).attr('film_id')).show(); });
-		$('.detailstrigger3').mouseout(function(){ $('#detailscell3-' + $(this).attr('film_id')).hide(); });
-		
-		$('.detailstrigger4').mouseover(function(){ $('#detailscell4-' + $(this).attr('film_id')).show(); });
-		$('.detailstrigger4').mouseout(function(){ $('#detailscell4-' + $(this).attr('film_id')).hide(); });
-		
-		$('.detailstrigger5').mouseover(function(){ $('#detailscell5-' + $(this).attr('film_id')).show(); });
-		$('.detailstrigger5').mouseout(function(){ $('#detailscell5-' + $(this).attr('film_id')).hide(); });
-		
-		$('.detailstrigger6').mouseover(function(){ $('#detailscell6-' + $(this).attr('film_id')).show(); });
-		$('.detailstrigger6').mouseout(function(){ $('#detailscell6-' + $(this).attr('film_id')).hide(); });
-	});
-</script>

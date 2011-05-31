@@ -229,19 +229,32 @@ class cinemasActions extends sfActions
 			
 			preg_match_all('/<table id="showInterval(\d*?)\-(\d*?)"(.*?)>(.*?)<td class="theatre_info">(.*?)<span class="nowrap">(.*?)<a href="#" class="show_hour_price_info"(.*?)>(.*?)<\/a>(.*?)<\/span>(.*?)<\/td>(.*?)<\/table>/i', $html, $matches);
 			
+			if (count($matches[0]) == 0){
+				preg_match_all('/<table id="showInterval(\d*?)\-(\d*?)"(.*?)>(.*?)<td class="theatre_info">(.*?)<span class="nowrap">(.*?)<\/span>(.*?)<\/td>(.*?)<\/table>/i', $html, $matches);
+				$timeMatches = $matches[6];
+				$pullAidMatches = $matches[2];
+				$nameMatches = $matches[4];
+			} else {
+				$timeMatches = $matches[8];
+				$pullAidMatches = $matches[2];
+				$nameMatches = $matches[4];
+			}
+			unset($matches);
+			
+			
 			/* Group all the hours for each film */
 			$filmsSchedule = array();
-			foreach ($matches[2] as $key => $filmPullAid){
+			foreach ($pullAidMatches as $key => $filmPullAid){
 				if (!isset($filmsSchedule[$filmPullAid]['name'])){
 					/* Get the name */
-					preg_match('/<small>(.*?)<\/small>/i', $matches[4][$key], $otherMatches);
+					preg_match('/<small>(.*?)<\/small>/i', $nameMatches[$key], $otherMatches);
 					
 					//var_dump($otherMatches);
 					$filmsSchedule[$filmPullAid]['name'] = $otherMatches[1];
 					$filmsSchedule[$filmPullAid]['schedule'] = array();
 				}
 				
-				$filmsSchedule[$filmPullAid]['schedule'][] = $matches[8][$key];
+				$filmsSchedule[$filmPullAid]['schedule'][] = $timeMatches[$key];
 			}
 			
 			$filmsWithImdbSchedule = array();

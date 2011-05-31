@@ -121,21 +121,31 @@
 
             <div class="left spacer-left" style="width: 490px">
 				<div class="cell-bd innerspacer-bottom-m">
-					<?php foreach($trailers as $trailer):?>
-					<div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: top">
-						<a href="<?php echo url_for('@trailer?id=' . $trailer['video_id']);?><?php if($sf_request->hasParameter('acum-in-cinema')) echo '?acum-in-cinema';?><?php if($sf_request->hasParameter('in-curand-in-cinema')) echo '?in-curand-in-cinema';?><?php if($sf_request->hasParameter('acum-pe-dvd-bluray')) echo '?acum-pe-dvd-bluray';?><?php if($sf_request->hasParameter('la-tv')) echo '?la-tv';?>">
-							<img src="<?php echo filmsiVideoThumb($trailer['video_code']);?>" />
-						</a> <br />
-						<a href="<?php echo url_for('@trailer?id=' . $trailer['video_id']);?>" class="important-link">
-							<?php echo $trailer['name_ro'];?>
-						</a> <br />
-						<?php if ($trailer['name_en'] != ''):?>
-						<a href="<?php echo url_for('@trailer?id=' . $trailer['video_id']);?>" class="black-link">
-							(<?php echo $trailer['name_en'];?>)
-						</a> <br />
+					<?php for ($i = 0; $i <= 2; $i++):?>
+						<?php if (isset($trailers[$i])):?>
+						<div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: top">
+							<a href="<?php echo url_for('@trailer?id=' . $trailers[$i]['video_id']);?><?php if($sf_request->hasParameter('acum-in-cinema')) echo '?acum-in-cinema';?><?php if($sf_request->hasParameter('in-curand-in-cinema')) echo '?in-curand-in-cinema';?><?php if($sf_request->hasParameter('acum-pe-dvd-bluray')) echo '?acum-pe-dvd-bluray';?><?php if($sf_request->hasParameter('la-tv')) echo '?la-tv';?>">
+								<img src="<?php echo filmsiVideoThumb($trailers[$i]['video_code']);?>" />
+							</a> <br />
+							<a href="<?php echo url_for('@trailer?id=' . $trailers[$i]['video_id']);?>" class="important-link">
+								<?php echo $trailers[$i]['name_ro'];?>
+							</a> <br />
+							<?php if ($trailers[$i]['name_en'] != ''):?>
+							<a href="<?php echo url_for('@trailer?id=' . $trailers[$i]['video_id']);?>" class="black-link">
+								(<?php echo $trailers[$i]['name_en'];?>)
+							</a> <br />
+							<?php endif;?>
+						</div>
 						<?php endif;?>
+					<?php endfor;?>
+					
+					<div class="cell-separator-double mb-2 "></div>
+					
+					<?php for($i = 3; $i <= count($trailers) - 1; $i++):?>
+					<div class="mb-1 ml-3 p-1"<?php if ($i % 2 != 0) echo ' style="background-color: #FFE7A1"';?>>
+						<a class="important-link" href="<?php echo url_for('@trailer?id=' . $trailers[$i]['video_id']);?>"><?php echo $trailers[$i]['name_ro'];?></a><?php if($trailers[$i]['name_en'] != '') echo ' (' . $trailers[$i]['name_en'] . ')';?>
 					</div>
-					<?php endforeach;?>
+					<?php endfor;?>
 				</div>
 
 

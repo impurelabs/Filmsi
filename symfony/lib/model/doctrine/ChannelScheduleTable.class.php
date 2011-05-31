@@ -75,7 +75,7 @@ class ChannelScheduleTable extends Doctrine_Table
 		}
 
 		$q = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-echo '<pre>'; var_dump($q); 
+
 		$results = array();
 		foreach ($q as $schedule){
 			if (!isset($results[$schedule['channel_id']] )){
@@ -93,7 +93,7 @@ echo '<pre>'; var_dump($q);
 				'film_is_series' => $schedule['film_is_series'],
 			);
 		}
-echo 'aaaaaaaaaaaaaaaa<pre>'; var_dump($results); exit;
+
 		return $results;
 	}
 

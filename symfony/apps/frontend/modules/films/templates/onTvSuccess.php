@@ -128,7 +128,11 @@
 				<ul>
 				<?php foreach($schedule['films'][$selectedHour - 1] as $film):?>
 					<li><?php echo sprintf("%02s", $selectedHour - 1) . ':' . sprintf('%02s', $film['time_min']);?> 
+						<?php if ($film['film_id'] != ''):?>
 						<a href="<?php echo url_for('@film?id=' . $film['film_id'] . '&key=' . $film['film_url_key']);?>" class="strong <?php echo $film['film_is_series'] == '1' ? 'orange' : 'green';?>"><?php echo $film['film_name'];?></a>
+						<?php else:?>
+						<?php echo $film['film_name'];?>
+						<?php endif;?>
 				<?php endforeach;?>
 				</ul>
 				<?php endif;?>
@@ -139,7 +143,11 @@
 				<ul>
 				<?php foreach($schedule['films'][$selectedHour] as $film):?>
 					<li><?php echo sprintf("%02s", $selectedHour) . ':' . sprintf('%02s', $film['time_min']);?>
+						<?php if ($film['film_id'] != ''):?>
 						<a href="<?php echo url_for('@film?id=' . $film['film_id'] . '&key=' . $film['film_url_key']);?>" class="strong <?php echo $film['film_is_series'] == '1' ? 'orange' : 'green';?>"><?php echo $film['film_name'];?></a>
+						<?php else:?>
+						<?php echo $film['film_name'];?>
+						<?php endif;?>
 				<?php endforeach;?>
 				</ul>
 				<?php endif;?>
@@ -150,7 +158,11 @@
 				<ul>
 				<?php foreach($schedule['films'][$selectedHour + 1] as $film):?>
 					<li><?php echo sprintf("%02s", $selectedHour + 1) . ':' . sprintf('%02s', $film['time_min']);?>
+						<?php if ($film['film_id'] != ''):?>
 						<a href="<?php echo url_for('@film?id=' . $film['film_id'] . '&key=' . $film['film_url_key']);?>" class="strong <?php echo $film['film_is_series'] == '1' ? 'orange' : 'green';?>"><?php echo $film['film_name'];?></a>
+						<?php else:?>
+						<?php echo $film['film_name'];?>
+						<?php endif;?>
 				<?php endforeach;?>
 				</ul>
 				<?php endif;?>

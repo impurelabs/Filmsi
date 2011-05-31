@@ -210,6 +210,11 @@ class CinemaScheduleTable extends Doctrine_Table
 			->where('s.film_id = ?', $filmId)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		
-		echo '<pre>'; var_dump($q); exit;
+		$results = array();
+		foreach ($q as $item){
+			$results[] = $item['Cinema']['Location'];
+		}
+		
+		return $results;
 	}
 }

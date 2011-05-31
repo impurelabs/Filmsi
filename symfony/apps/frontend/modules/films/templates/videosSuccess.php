@@ -39,7 +39,6 @@
 <div class="cell-container5 spacer-left"> <!-- content column start -->
 
 
-
     <div class="align-center mb-2">
         <?php echo filmsiVideo($videos[$currentVideo - 1]->getCode());?>
     </div>
@@ -48,13 +47,8 @@
 		<div class="normalcell mb-2 align-center"><?php echo $videos[$currentVideo - 1]->getName();?></div>
 	<?php endif;?>
 
-    <div class="normalcell">
-        <button class="announcement spacer-bottom left spacer-right-l"></button>
-        <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza in cinema</a></p>
-        <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza pe DVD</a></p>
-    </div>
-
-
+	<?php include_partial('films/alert1', array('filmId' => $film->getId()));?>
+    
 
     <div class="normalcell spacer-top spacer-bottom">
     	<div>

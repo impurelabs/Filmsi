@@ -70,11 +70,7 @@
         <div class="clear"></div>
     </div>
 
-    <div class="normalcell">
-        <button class="announcement spacer-bottom left spacer-right-l"></button>
-        <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza in cinema</a></p>
-        <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza pe DVD</a></p>
-    </div>
+    <?php include_partial('films/alert1', array('filmId' => $film->getId()));?>
 
 
 

@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="" style="width: 450px">
+            <div class="left" style="width: 450px">
                 <table>
                     <tr class="cell-separator-dotted-bottom">
 						<td class="explanation-small" style="width: 220px">Cinematograf</td>

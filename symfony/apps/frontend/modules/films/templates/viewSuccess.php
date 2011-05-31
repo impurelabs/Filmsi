@@ -190,7 +190,7 @@
 			<select class="cinema-city spacer-left" name="l" style="width: 350px">
 				<option>Selecteaza orasul tau</option>
 				<?php foreach ($film->getLocationsWhereIsInCinema() as $location):?>
-				<option value=""><?php echo $location['city'];?></option>
+				<option value="<?php echo $location['id'];?>"><?php echo $location['city'];?></option>
 				<?php endforeach;?>
 			</select>
 			<button class="cinema-searchbutton spacer-left" type="submit"></button>

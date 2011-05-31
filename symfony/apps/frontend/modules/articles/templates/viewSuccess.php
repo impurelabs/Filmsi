@@ -40,7 +40,7 @@
 			</div>
 
 			<div class="inline-block spacer-bottom innerspacer-top-s spacer-right innerspacer-right cell-separator-dotted-right">
-				<span class="explanation-xs">Autor: <?php echo $article->getAuthor()->getName();?></span>
+				<span class="explanation-xs">Autor: </span><a class="xs-link" href="<?php echo url_for('@articles?u=' . $article->getAuthor()->getId());?>"><?php echo $article->getAuthor()->getName();?></a>
 			</div>
 
 			<span class="explanation-xs">Categorii:

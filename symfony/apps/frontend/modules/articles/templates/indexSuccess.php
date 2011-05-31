@@ -1,11 +1,11 @@
 <h2>Camera secreta</h2>
 
-<div class="spacer-bottom-m"><a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo; Din filme</div>
+<div class="spacer-bottom-m"><a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo; Camera secreta</div>
 
 <div class="cell-container6"> <!-- left column start -->
 	<div class="cell spacer-bottom-m">
         <div class="cell-hd">
-            <h4>Din <span class="black">filme</span></h4>
+            <h4>Camera <span class="black">secreta</span></h4>
         </div>
         <div class="cell-bd" style="padding:0">
         	<ul class="filterlist spacer-bottom-m">

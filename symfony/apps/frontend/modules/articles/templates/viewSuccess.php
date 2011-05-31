@@ -10,7 +10,7 @@
 <div class="cell-container6"> <!-- left column start -->
 	<div class="cell spacer-bottom-m">
         <div class="cell-hd">
-            <h4>Din <span class="black">filme</span></h4>
+            <h4>Camera <span class="black">secreta</span></h4>
         </div>
         <div class="cell-bd" style="padding:0">
         	<ul class="filterlist spacer-bottom-m">

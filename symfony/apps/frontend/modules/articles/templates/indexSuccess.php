@@ -1,4 +1,4 @@
-<h2>Din filme</h2>
+<h2>Camera secreta</h2>
 
 <div class="spacer-bottom-m"><a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo; Din filme</div>
 

@@ -1,8 +1,8 @@
-<h2>Din filme</h2>
+<h2>Camera secreta</h2>
 
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
-	<a href="<?php echo url_for('@articles');?>" class="black-link">Din filme</a> &raquo;
+	<a href="<?php echo url_for('@articles');?>" class="black-link">Camera secreta</a> &raquo;
 	<a href="<?php echo url_for('@articles');?><?php echo isset($currentCategory) ? '?c=' . $currentCategory->getId() : '';?>" class="black-link"><?php echo isset($currentCategory) ? $currentCategory->getName() . ' &raquo;' : '';?></a>
 	<?php echo $article->getName();?>
 </div>

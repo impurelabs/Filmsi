@@ -7,6 +7,10 @@
  */
 class FilmPersonTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return FilmPersonTable
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('FilmPerson');

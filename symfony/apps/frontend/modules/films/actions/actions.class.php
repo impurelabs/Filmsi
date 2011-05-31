@@ -627,6 +627,7 @@ class filmsActions extends sfActions
 		}
 
 		$this->actors        = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId());
+		die('aa:' . $this->actors->count());
 		$this->directors     = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
 		$this->scriptwriters = FilmPersonTable::getInstance()->getBestScriptwritersByFilm($this->film->getId(), 3);
 		$this->producers     = FilmPersonTable::getInstance()->getBestProducersByFilm($this->film->getId());

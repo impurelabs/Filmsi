@@ -56,7 +56,6 @@
 			<div class="clear"></div><br />
 		<?php endif;?>
 
-
 		<?php if ($actors->count() > 0):?>
 			<h6 class="mb-2">Actori</h6>
 			<?php foreach ($actors as $actor):?>

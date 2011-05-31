@@ -627,7 +627,6 @@ class filmsActions extends sfActions
 		}
 
 		$this->actors        = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId());
-		die('aa:' . count($this->actors));
 		$this->directors     = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
 		$this->scriptwriters = FilmPersonTable::getInstance()->getBestScriptwritersByFilm($this->film->getId(), 3);
 		$this->producers     = FilmPersonTable::getInstance()->getBestProducersByFilm($this->film->getId());
@@ -635,8 +634,6 @@ class filmsActions extends sfActions
 
 
 		/* META Stuff */
-		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
-		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
 		$this->getResponse()->setTitle('Actorii si echipa ' . $this->film->getName() . ' - Filmsi.ro');
 
 		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
@@ -649,17 +646,29 @@ class filmsActions extends sfActions
 				}
 			}
 			$metaStuff .= ' - ';
+			$i = 1;
 			foreach ($this->actors as $key => $person){
 				$metaStuff .= $person->getName();
 				if ($key < count($this->actors) - 1){
 					$metaStuff .= ', ';
 				}
+				
+				$i += 1;
+				if ($i > 3){
+					break;
+				}
 			}
 			$metaStuff .= ' - ';
+			$i = 1;
 			foreach ($this->directors as $key => $person){
 				$metaStuff .= $person->getName();
 				if ($key < count($this->directors) - 1){
 					$metaStuff .= ', ';
+				}
+				
+				$i += 1;
+				if ($i > 3){
+					break;
 				}
 			}
 		}

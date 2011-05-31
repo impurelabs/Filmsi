@@ -42,6 +42,7 @@ abstract class BasePersonForm extends BaseFormDoctrine
       'article_list'          => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Article')),
       'festival_section_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'FestivalSection')),
       'stires_list'           => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Stire')),
+      'no_display'            => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1))
     ));
 
     $this->setValidators(array(
@@ -72,6 +73,7 @@ abstract class BasePersonForm extends BaseFormDoctrine
       'article_list'          => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Article', 'required' => false)),
       'festival_section_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'FestivalSection', 'required' => false)),
       'stires_list'           => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Stire', 'required' => false)),
+      'no_display'              => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('person[%s]');

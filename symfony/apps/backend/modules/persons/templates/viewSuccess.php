@@ -59,6 +59,10 @@ Nu este nici o poza pregatita pentru import.
         <td><?php echo $person->getPlaceOfBirth();?></td>
     </tr>
 	<tr>
+    	<th>Ascunde biografie</th>
+        <td><?php echo $person->getNoDisplay() == '1' ? 'ascunsa' : 'afisata';?></td>
+    </tr>
+	<tr>
     	<th>Intro biografie</th>
         <td class="tinyMce"><?php echo $person->getBiographyTeaser();?></td>
     </tr>

@@ -201,6 +201,9 @@ abstract class BasePerson extends sfDoctrineRecord
         $this->hasColumn('video_album_id', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('no_display', 'bool', null, array(
+             'type' => 'bool',
+             ));
 
         $this->option('symfony', array(
              'filter' => false,

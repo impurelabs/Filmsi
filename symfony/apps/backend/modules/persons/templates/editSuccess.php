@@ -33,6 +33,10 @@
         <td><?php echo $form['place_of_birth']->render(array('class' => 'span-13'));?><br /><?php echo $form['place_of_birth']->renderError();?></td>
     </tr>
 	<tr>
+    	<th>Ascunde biografia</th>
+        <td><?php echo $form['no_display']->render();?> bifeaza pentru a ascunde<br /><?php echo $form['no_display']->renderError();?></td>
+    </tr>
+	<tr>
     	<th>Intro biografie</th>
         <td><?php echo $form['biography_teaser']->render(array('class' => 'span-13'));?><br /><?php echo $form['biography_teaser']->renderError();?></td>
     </tr>

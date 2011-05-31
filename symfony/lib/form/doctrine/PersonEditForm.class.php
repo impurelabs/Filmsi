@@ -6,7 +6,7 @@ class PersonEditForm extends PersonForm
   	$this->useFields(array(
   		'first_name', 'last_name', 'date_of_birth', 'date_of_death', 'place_of_birth', 'meta_description', 'meta_keywords', 'url_key',
   		'biography_teaser', 'biography_content', 'imdb', 'is_actor', 'is_director', 'is_scriptwriter',
-  		'is_producer', 'photo_album_id', 'video_album_id', 'publish_date'
+  		'is_producer', 'photo_album_id', 'video_album_id', 'publish_date', 'no_display'
   	));
   	
   	$this->widgetSchema['date_of_birth'] = new sfWidgetFormInput();

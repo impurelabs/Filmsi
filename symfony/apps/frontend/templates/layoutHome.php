@@ -32,8 +32,8 @@
 				<span><a href="<?php echo url_for('@sf_guard_signout');?>" class="white-link">Iesi</a></span>
 				<span class="last"><a href="javascript: void(0)" class="white-link user-opener" id="user-cover-link">Contul meu</a></span>
 				<?php else: ?>
-              	<span><a href="javascript: void(0)" class="white-link" id="user-login-link">Intra in cont</a></span>
-                <span class="last"><a href="javascript: void(0)" class="white-link" id="user-register-link">Creeaza cont</a></span>
+              	<span><a href="javascript: void(0)" class="white-link user-login-link">Intra in cont</a></span>
+                <span class="last"><a href="javascript: void(0)" class="white-link user-register-link">Creeaza cont</a></span>
 				<?php endif;?>
             </div><!-- menu-userlinks end -->
 
@@ -247,7 +247,7 @@ $(document).ready(function(){
             });
         });
 
-	$('#user-login-link').click(function(){
+	$('.user-login-link').click(function(){
 		if ($("#user-container").is(':hidden')){
 			$('#user-container').load('<?php echo url_for('@login');?>')
 				$('#user-container').slideDown('fast');
@@ -259,7 +259,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#user-register-link').click(function(){
+	$('.user-register-link').click(function(){
 		if ($("#user-container").is(':hidden')){
 			$('#user-container').load('<?php echo url_for('@default?module=user&action=register');?>')
 				$('#user-container').slideDown('fast');

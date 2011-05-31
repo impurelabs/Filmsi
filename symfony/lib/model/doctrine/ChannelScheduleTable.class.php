@@ -54,7 +54,7 @@ class ChannelScheduleTable extends Doctrine_Table
 	public function getFiltered($day, $hour, $channelId, $type)
 	{
 		$q = Doctrine_Query::create()
-			->select('s.time_hour, s.time_min, c.name channel_name, c.filename channel_filename, c.id channel_id, f.name_ro film_name, f.id film_id, f.url_key film_url_key, f.is_series film_is_series')
+			->select('s.time_hour, s.time_min, s.film_not_in_db, s.film_name, c.name channel_name, c.filename channel_filename, c.id channel_id, f.name_ro, f.id film_id, f.url_key film_url_key, f.is_series film_is_series')
 			->from('ChannelSchedule s')
 			->orderBy('c.name, s.time_hour, s.time_min ASC')
 			->leftJoin('s.Film f')
@@ -75,7 +75,7 @@ class ChannelScheduleTable extends Doctrine_Table
 		}
 
 		$q = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-echo '<pre>'; var_dump($q); exit;
+echo '<pre>'; var_dump($q); 
 		$results = array();
 		foreach ($q as $schedule){
 			if (!isset($results[$schedule['channel_id']] )){
@@ -88,12 +88,12 @@ echo '<pre>'; var_dump($q); exit;
 			$results[$schedule['channel_id']]['films'][$schedule['time_hour']][] = array(
 				'time_min' => $schedule['time_min'],
 				'film_id' => $schedule['film_id'],
-				'film_name' => $schedule['film_name'],
+				'film_name' => $schedule['film_not_in_db'] == '1' ? $schedule['film_name'] : $schedule['name_ro'],
 				'film_url_key' => $schedule['film_url_key'],
 				'film_is_series' => $schedule['film_is_series'],
 			);
 		}
-
+echo 'aaaaaaaaaaaaaaaa<pre>'; var_dump($results); exit;
 		return $results;
 	}
 

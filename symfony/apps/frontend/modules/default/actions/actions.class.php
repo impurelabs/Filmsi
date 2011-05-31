@@ -87,6 +87,7 @@ class defaultActions extends sfActions
 		
 		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
 		
+		$results['films'] = array();
 		foreach (FilmTable::getInstance()->getForSearch($request->getParameter('term'), 5) as $film) {
 			$persons = array();
 			foreach($film->getBestActors(2) as $person){
@@ -105,6 +106,7 @@ class defaultActions extends sfActions
 			);
 		}
 		
+		$results['persons'] = array();
 		foreach (PersonTable::getInstance()->getForSearch($request->getParameter('term'), 5) as $person) {
 			if ($film = $person->getMostViewedFilmsByRole(1, null, Doctrine_Core::HYDRATE_RECORD)->getFirst()){
 				$filmParam = array(

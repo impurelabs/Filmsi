@@ -318,7 +318,6 @@ a.header-logo{ display: block; width: 132px; height: 41px; float: left; backgrou
 
 .livesearch-result {
 	padding: 5px 0 5px 5px;
-	cursor: pointer
 }
 
 .livesearch-result:hover {

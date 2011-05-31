@@ -86,7 +86,7 @@ $(document).ready(function(){
 								$(document.createElement('div'))
 									.attr('class', 'left')
 									.css('width', '50px')
-									.html('<img src="' + data.films[i]['filename_url'] + '" width="50" />')
+									.html('<a href="' + data.films[i]['url'] + '"><img src="' + data.films[i]['filename_url'] + '" width="50" /></a>')
 							)
 							.append(
 								$(document.createElement('div'))
@@ -99,7 +99,6 @@ $(document).ready(function(){
 									)
 							)
 							.append('<div class="clear"></div>')
-							.click(function(){ location.href = data.films[i]['url'] })
 							.appendTo('#search-results-films-<?php echo $searchId;?>');
 					}
 					
@@ -113,7 +112,7 @@ $(document).ready(function(){
 								$(document.createElement('div'))
 									.attr('class', 'left')
 									.css('width', '50px')
-									.html('<img src="' + data.persons[i]['filename_url'] + '" width="50" />')
+									.html('<a href="' + data.persons[i]['url'] + '"><img src="' + data.persons[i]['filename_url'] + '" width="50" /></a>')
 							)
 							.append(
 								$(document.createElement('div'))
@@ -127,7 +126,6 @@ $(document).ready(function(){
 									)
 							)
 							.append('<div class="clear"></div>')
-							.click(function(){ location.href = data.persons[i]['url'] })
 							.appendTo('#search-results-persons-<?php echo $searchId;?>');
 					}
 				}

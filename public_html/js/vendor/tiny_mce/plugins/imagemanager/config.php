@@ -33,7 +33,7 @@
 	// General filesystem options
 	$mcImageManagerConfig['filesystem'] = "Moxiecode_LocalFileImpl";
 	$mcImageManagerConfig['filesystem.path'] = ''; // absolute or relative from this script path, optional.
-	$mcImageManagerConfig['filesystem.rootpath'] = 'i:/filmsi/public_html/content/cms_images'; // absolute or relative from this script path, required.
+	$mcImageManagerConfig['filesystem.rootpath'] = '../../../../../content/cms_images'; // absolute or relative from this script path, required.
 	$mcImageManagerConfig['filesystem.datefmt'] = "Y-m-d H:i";
 	$mcImageManagerConfig['filesystem.include_directory_pattern'] = '';
 	$mcImageManagerConfig['filesystem.exclude_directory_pattern'] = '/^mcith$/i';
@@ -94,9 +94,12 @@
 	$mcImageManagerConfig['edit.format'] = "";
 
 	// Authenication
-	$mcImageManagerConfig['authenticator'] = "SessionAuthenticator";
+	$mcImageManagerConfig['authenticator'] = "BaseAuthenticator";
 	$mcImageManagerConfig['authenticator.login_page'] = "login_session_auth.php";
 	$mcImageManagerConfig['authenticator.allow_override'] = "*";
+	
+	// IP Authenticator
+	$mcFileManagerConfig['IPAuthenticator.ip_numbers'] = "127.0.0.1,78.97.152.233,192.168.0.199";
 
 	// SessionAuthenticator
 	$mcImageManagerConfig['SessionAuthenticator.logged_in_key'] = "symfony/user/sfUser/authenticated";

@@ -112,7 +112,7 @@
 		<?php foreach ($films as $film):?>
     	<div class="left mb-3 ml-1 spacer-right-s">
         	<div class="innerspacer-bottom-s spacer-bottom-s cell-separator-dotted-bottom">
-                <a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>"><img src="<?php echo filmsiFilmPhotoThumb($film['filename']);?>" /></a><br />
+                <a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>"><img src="<?php echo filmsiFilmPhotoThumb($film['filename']);?>" style="width: 131px" /></a><br />
                 <a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>" class="important-link"><?php echo $film['name_ro'];?></a>
         	</div>
             <div>

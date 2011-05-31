@@ -8,6 +8,7 @@
     theme : "advanced",
 	skin: "emo-skin-0",
     plugins : "embed,pagebreak,layer,table,advimage,advlink,media,searchreplace,contextmenu,paste,xhtmlxtras,wordcount,advlist,imagemanager",
+	extended_valid_elements : "iframe[src|width|height|name|align]",
 
     // Theme options
     theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,link,unlink,anchor,|,bullist,numlist,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,forecolor,backcolor",

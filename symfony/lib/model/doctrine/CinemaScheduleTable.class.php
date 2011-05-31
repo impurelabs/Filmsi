@@ -7,6 +7,10 @@
  */
 class CinemaScheduleTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return CinemaScheduleTable
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('CinemaSchedule');
@@ -125,13 +129,19 @@ class CinemaScheduleTable extends Doctrine_Table
 		}
 	}
 
-	public function getAllFilmListByDays($days)
+	public function getAllFilmListByDaysAndLocation($days, $location = null)
 	{
+		if (!isset($location)){
+			return array();
+		}
+		
 		$q = Doctrine_Query::create()
 			->from('CinemaSchedule s')
 			->innerJoin('s.Film f')
+			->innerJoin('s.Cinema c')
 			->groupBy('s.film_id')
 			->where('f.state = 1')
+			->andWhere('c.location_id = ?', $location)
 			->andWhereIn('s.day', $days)
 			->orderBy('f.name_ro ASC')
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);

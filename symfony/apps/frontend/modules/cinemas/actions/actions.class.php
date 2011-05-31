@@ -33,9 +33,6 @@ class cinemasActions extends sfActions
 		for($i = 1; $i <= 7; $i++){
 			$this->currentWeekDays[$i] = date('Y-m-d', ( $i - $today ) * 86400 + $todayTime);
 		}
-
-		$this->filmsInCinema = CinemaScheduleTable::getInstance()->getAllFilmListByDays($this->currentWeekDays);
-		$this->locations = CinemaTable::getInstance()->getLocations();
 		
 		$this->currentDay = $request->getParameter('d', date('Y-m-d'));
 		$this->currentLocation = $request->getParameter('l', null);
@@ -46,6 +43,9 @@ class cinemasActions extends sfActions
 		if ($this->currentFilm == ''){
 			$this->currentFilm = null;
 		}
+		
+		$this->filmsInCinema = CinemaScheduleTable::getInstance()->getAllFilmListByDaysAndLocation($this->currentWeekDays, $this->currentLocation);
+		$this->locations = CinemaTable::getInstance()->getLocations();
 
 		$this->films = CinemaScheduleTable::getInstance()->getFilmsAndCinemasByDayAndLocationAndFilm($this->currentDay, $this->currentLocation, $this->currentFilm);
 	}

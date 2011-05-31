@@ -185,7 +185,13 @@
     <div class="cell innerspacer-bottom spacer-bottom-m">
         <h5 class="innerspacer cell-separator2 spacer-bottom">Cauta cinema unde ruleaza filmul <span class="black">in orasul tau</span></h5>
 
-        <select class="cinema-city spacer-left" style="width: 350px"><option>Selecteaza orasul tau</option></select><button class="cinema-searchbutton spacer-left"></button>
+        <select class="cinema-city spacer-left" style="width: 350px">
+			<option>Selecteaza orasul tau</option>
+			<?php foreach ($film->getLocationsWhereIsInCinema() as $location):?>
+			
+			<?php endforeach;?>
+		</select>
+		<button class="cinema-searchbutton spacer-left"></button>
     </div>
 	<?php endif;?>
 

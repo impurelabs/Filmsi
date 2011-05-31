@@ -265,4 +265,9 @@ class Film extends BaseFilm
 	{
 		return isset($this->bestDirectors) ? $this->bestDirectors : FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->getId());
 	}
+	
+	public function getLocationsWhereIsInCinema()
+	{
+		return CinemaScheduleTable::getInstance()->getLocationsByFilm($this->getId());
+	}
 }

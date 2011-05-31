@@ -198,4 +198,17 @@ class CinemaScheduleTable extends Doctrine_Table
 			->where('s.day < date_sub(NOW(), interval ? day)', $days)
 			->execute();
 	}
+	
+	public function getLocationsByFilm($filmId)
+	{
+		$q = Doctrine_Query::create()
+			->from('CinemaSchedule s')
+			->innerJoin('s.Cinema c')
+			->innerJoin('c.Location l')
+			->groupBy('c.location_id')
+			->where('s.film_id = ?', $filmId)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		echo '<pre>'; var_dump($q); exit;
+	}
 }

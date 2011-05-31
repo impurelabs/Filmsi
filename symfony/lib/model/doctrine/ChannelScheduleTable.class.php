@@ -7,6 +7,10 @@
  */
 class ChannelScheduleTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return ChannelScheduleTable
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('ChannelSchedule');
@@ -71,7 +75,7 @@ class ChannelScheduleTable extends Doctrine_Table
 		}
 
 		$q = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-
+echo '<pre>'; var_dump($q); exit;
 		$results = array();
 		foreach ($q as $schedule){
 			if (!isset($results[$schedule['channel_id']] )){

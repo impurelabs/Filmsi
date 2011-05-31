@@ -2,6 +2,7 @@
 	<button class="alert-film-trigger announcement spacer-bottom left spacer-right-l" style="cursor: pointer"></button>
 	<p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza in cinema</a></p>
 	<p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza pe DVD</a></p>
+	<div id="film-alert-container"></div>
 </div>
 
 <script type="text/javascript">

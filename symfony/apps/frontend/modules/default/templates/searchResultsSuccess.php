@@ -73,7 +73,7 @@
 
 
 	<?php if(count($persons)):?>
-     <h5 class="ml-2">Persoane</h5>
+     <h5 class="ml-2">Actori, regizori, scenaristi, producatori</h5>
 
      <div class="normalcell">
 		<?php foreach ($persons as $person):?>

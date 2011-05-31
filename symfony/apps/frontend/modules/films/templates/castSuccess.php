@@ -46,7 +46,7 @@
 		<?php if ($directors->count() > 0):?>
 			<h6 class="mb-2">Regizori</h6>
 			<?php foreach ($directors as $director):?>
-				<div class="spacer-bottom-m" style="display: inline-block; vertical-align: top; width: 75px; margin-left: 20px; text-align: center; margin-right: 20px">
+				<div class="spacer-bottom-m" style="display: inline-block; vertical-align: top; width: 75px; margin-left: 10px; text-align: center; margin-right: 10px">
 				<a href="<?php echo url_for('@person?id=' . $director->getId() . '&key=' . $director->getUrlKey());?>">
 					<img src="<?php echo filmsiPersonPhotoThumb($director->getFilename());?>" style="border: 1px solid #d5d5d5; padding: 1px; width: 75px" /><br />
 					<?php echo $director->getName();?>
@@ -60,7 +60,7 @@
 		<?php if ($actors->count() > 0):?>
 			<h6 class="mb-2">Actori</h6>
 			<?php foreach ($actors as $actor):?>
-				<div class="spacer-bottom-m" style="display: inline-block; vertical-align: top; width: 75px; margin-left: 20px; text-align: center; margin-right: 20px">
+				<div class="spacer-bottom-m" style="display: inline-block; vertical-align: top; width: 75px; margin-left: 10px; text-align: center; margin-right: 10px">
 				<a href="<?php echo url_for('@person?id=' . $actor->getId() . '&key=' . $actor->getUrlKey());?>">
 					<img src="<?php echo filmsiPersonPhotoThumb($actor->getFilename());?>" style="border: 1px solid #d5d5d5; padding: 1px; width: 75px" /><br />
 					<?php echo $actor->getName();?>
@@ -74,7 +74,7 @@
 		<?php if ($scriptwriters->count() > 0):?>
 			<h6 class="mb-2">Scenaristi</h6>
 			<?php foreach ($scriptwriters as $scriptwriter):?>
-				<div class="spacer-bottom-m" style="display: inline-block; vertical-align: top; width: 75px; margin-left: 20px; text-align: center; margin-right: 20px">
+				<div class="spacer-bottom-m" style="display: inline-block; vertical-align: top; width: 75px; margin-left: 10px; text-align: center; margin-right: 10px">
 				<a href="<?php echo url_for('@person?id=' . $scriptwriter->getId() . '&key=' . $scriptwriter->getUrlKey());?>">
 					<img src="<?php echo filmsiPersonPhotoThumb($scriptwriter->getFilename());?>" style="border: 1px solid #d5d5d5; padding: 1px; width: 75px" /><br />
 					<?php echo $scriptwriter->getName();?>
@@ -88,9 +88,9 @@
 		<?php if ($producers->count() > 0):?>
 			<h6 class="mb-2">Producatori</h6>
 			<?php foreach ($producers as $producer):?>
-				<div class="left spacer-bottom-m" style="width: 75px; margin-left: 20px; text-align: center; margin-right: 20px">
+				<div class="spacer-bottom-m" style="display: inline-block; vertical-align: top; width: 75px; margin-left: 10px; text-align: center; margin-right: 10px">
 				<a href="<?php echo url_for('@person?id=' . $producer->getId() . '&key=' . $producer->getUrlKey());?>">
-					<img src="<?php echo filmsiPersonPhotoThumb($producer->getFilename());?>" style="border: 1px solid #d5d5d5; padding: 1px" /><br />
+					<img src="<?php echo filmsiPersonPhotoThumb($producer->getFilename());?>" style="border: 1px solid #d5d5d5; padding: 1px; width: 75px" /><br />
 					<?php echo $producer->getName();?>
 				</a>
 			</div>

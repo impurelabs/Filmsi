@@ -74,11 +74,11 @@ all:
   article:
     aws_s3_folder: 'articles'
     maxfilesize: 5000000
-    sourceimage_width: 210
+    sourceimage_width: 465
     sourceimage_height: 210
-    thumbnail_width: 210
+    thumbnail_width: 465
     thumbnail_height: 210
-    thumbnail_small_width: 210
+    thumbnail_small_width: 465
     thumbnail_small_height: 210
     
   stire:

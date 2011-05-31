@@ -31,7 +31,7 @@ class ArticleTable extends Doctrine_Table
 		$q = Doctrine_Query::create()
 			->from('Article a')
 			->where('a.state = 1 AND a.publish_date IS NOT NULL AND a.publish_date <= NOW() AND (a.expiration_date IS NULL OR a.expiration_date > NOW())')
-			->orderBy('a.publish_date, a.id DESC');
+			->orderBy('a.publish_date DESC, a.id DESC');
 
 		if (!empty($categoryId)){
 			$q->innerJoin('a.ArticleCategory ac')

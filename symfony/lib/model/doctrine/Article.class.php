@@ -46,13 +46,24 @@ class Article extends BaseArticle
 			$type = $imageData['mime'];
 		}
 		
+		$pices = getimagesize($source);
+		if ($pices[0] < $pices[1]){
+			$isTaller = true;
+		} else {
+			$isTaller = false;
+		}
+		
 		$sourceData = file_get_contents($source);
 		
 		/* Initiate the Amazon S3 object */
 		$s3 = new AmazonS3(sfConfig::get('app_aws_key'), sfConfig::get('app_aws_secret_key'));
 		
 		/* Create and upload the the big file */
-		$photo = new sfThumbnail(sfConfig::get('app_article_sourceimage_width'), sfConfig::get('app_article_sourceimage_height'), true, false, 100);
+		if ($isTaller){
+			$photo = new sfThumbnail(null, sfConfig::get('app_article_sourceimage_height'), true, false, 100);
+		} else {
+			$photo = new sfThumbnail(sfConfig::get('app_article_sourceimage_width'), null, true, false, 100);
+		}
 		$photo->loadData($sourceData, $type);
 		
 		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_article_aws_s3_folder') . '/' . $this->getFilename(), array(
@@ -70,7 +81,11 @@ class Article extends BaseArticle
 		}
 
 		/* Create and upload the thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_article_thumbnail_width'), sfConfig::get('app_article_thumbnail_height'), true, false, 100);
+		if ($isTaller){
+			$thumb = new sfThumbnail(null, sfConfig::get('app_article_thumbnail_height'), true, false, 100);
+		} else {
+			$thumb = new sfThumbnail(sfConfig::get('app_article_thumbnail_width'), null, true, false, 100);
+		}
 		$thumb->loadData($sourceData, $type);
 		
 		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_article_aws_s3_folder') . '/t-' . $this->getFilename(), array(
@@ -88,7 +103,11 @@ class Article extends BaseArticle
 		}
 
 		/* Create and upload the small thumbnail */
-		$thumb = new sfThumbnail(sfConfig::get('app_article_thumbnail_small_width'), sfConfig::get('app_article_thumbnail_small_height'), true, false, 100);
+		if ($isTaller){
+			$thumb = new sfThumbnail(null, sfConfig::get('app_article_thumbnail_small_height'), true, false, 100);
+		} else {
+			$thumb = new sfThumbnail(sfConfig::get('app_article_thumbnail_small_width'), null, true, false, 100);
+		}
 		$thumb->loadData($sourceData, $type);
 		
 		$response = $s3->create_object(sfConfig::get('app_aws_bucket'), sfConfig::get('app_article_aws_s3_folder') . '/ts-' . $this->getFilename(), array(

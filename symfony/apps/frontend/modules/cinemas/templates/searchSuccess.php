@@ -73,7 +73,7 @@
         <div class="normalcell">
 			
 			<?php foreach ($films as $film):?>
-        	<div class="left cell-separator-dotted-right" style="width:480px">
+        	<div class="left cell-separator-dotted-right" style="width:420px">
                 <a href="<?php echo url_for('@film?id=' . $film['film']->getId() . '&key=' . $film['film']->getUrlKey());?>" class="left"><img src="<?php echo filmsiFilmPhotoThumb($film['film']->getFilename());?>" /></a>
 
                 <div class="left spacer-left" style="width: 320px">
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="spacer-left" style="450px">
+            <div class="" style="width: 450px">
                 <table>
                     <tr class="cell-separator-dotted-bottom">
 						<td class="explanation-small" style="width: 220px">Cinematograf</td>

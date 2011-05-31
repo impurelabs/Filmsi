@@ -1,9 +1,9 @@
 <div class="normalcell">
-        <button class="announcement spacer-bottom left spacer-right-l"></button>
-        <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza in cinema</a></p>
-        <p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza pe DVD</a></p>
-		<div id="person-alert-container"></div>
-    </div>
+	<button class="alert-person-trigger announcement spacer-bottom left spacer-right-l" style="cursor: pointer"></button>
+	<p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza in cinema</a></p>
+	<p><span class="icon-checkbox-checked"></span> <a href="" class="explanation-link">Cand se lanseaza pe DVD</a></p>
+	<div id="person-alert-container"></div>
+</div>
 
 
 <script type="text/javascript">

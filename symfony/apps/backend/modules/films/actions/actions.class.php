@@ -418,11 +418,26 @@ class filmsActions extends sfActions
 				$this->film->setStatusDvdMonth('01');
 				$this->film->setStatusDvdDay('01');
 
+				
+				if ('' == $this->film->getPhotoAlbumId()){
+					$photoAlbum = new PhotoAlbum();
+					$photoAlbum->setName('Film: ' . $this->film->getNameRo());
+					$photoAlbum->setUserId($this->getUser()->getGuardUser()->getId());
+					$photoAlbum->setPublishDate(date('Y-m-d'), time());
+					$photoAlbum->save();
+
+					/* Assign the photo album to the film */
+					$this->film->setPhotoAlbumId($photoAlbum->getId());
+				}
+				
 
                 $this->film->save();
 
+				
+				
                 /* Add the photo to the album */
                 if ($this->film->getPhotoAlbumId() != ''){
+					
                     $sourcefile = str_replace('_thumb', '', $produs['coperta']);
 
 					

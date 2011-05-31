@@ -7,6 +7,10 @@
  */
 class StireTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return StireTable
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('Stire');
@@ -31,7 +35,7 @@ class StireTable extends Doctrine_Table
             $q = Doctrine_Query::create()
                     ->from('Stire s')
                     ->where('s.state = 1 AND s.publish_date IS NOT NULL AND s.publish_date <= NOW() AND (s.expiration_date IS NULL OR s.expiration_date > NOW())')
-                    ->orderBy('s.publish_date, s.id DESC');
+                    ->orderBy('s.publish_date DESC, s.id DESC');
 
             if (!empty ($limit)){
                     $q->limit($limit);

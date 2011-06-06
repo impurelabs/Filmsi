@@ -464,7 +464,9 @@ class filmsActions extends sfActions
 		$this->photoCount = $this->photos->count();
 
 		$this->currentPhoto = $request->getParameter('pid', 1);
-		$this->currentPhotoObject = PhotoTable::getInstance()->getNonRedcarpetPhotoByPositionAndAlbum($this->currentPhoto, $this->film->getPhotoAlbum()->getId());
+		if (false === $this->currentPhotoObject = PhotoTable::getInstance()->getNonRedcarpetPhotoByPositionAndAlbum($this->currentPhoto, $this->film->getPhotoAlbumId()->getId())){
+			$this->forward404();
+		}
 
 
 		/* META Stuff */

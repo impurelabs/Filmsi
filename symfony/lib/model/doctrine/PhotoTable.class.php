@@ -249,7 +249,7 @@ class PhotoTable extends Doctrine_Table
 			->where('p.is_redcarpet IS NULL or p.is_redcarpet = 0')
 			->andWhere('p.album_id = ?', $albumId)
 			->andWhere('p.state = 1')
-			->offset($position - 1)
+			->andWhere('p.position = ?', $position)
 			->fetchOne();
 	}
 
@@ -265,14 +265,13 @@ class PhotoTable extends Doctrine_Table
 
 	public function getRedcarpetPhotoByPositionAndAlbum($position, $albumId)
 	{	
-		$q = Doctrine_Query::create()
+		return Doctrine_Query::create()
 			->from('Photo p')
 			->where('p.is_redcarpet = 1')
 			->andWhere('p.album_id = ?', $albumId)
 			->andWhere('p.state = 1')
-			->offset($position - 1);
-		die ($q->getSqlQuery());
-		//	->fetchOne();
+			->andWhere('p.position = ?', $position)
+			->fetchOne();
 	}
 
 	public function getLatestRedcarpetPhotosOnHome($limit)

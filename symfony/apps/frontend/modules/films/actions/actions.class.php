@@ -59,14 +59,22 @@ class filmsActions extends sfActions
 			/* Set the DVD status */
 			if ($this->film->getStatusDvd() == '1'){
 				if ($this->film->getStatusDvdYear() != '0' && $this->film->getStatusDvdMonth() != '0' && $this->film->getStatusDvdDay() != '0'){
-					if(strtotime($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01') < time()){
+					if(strtotime($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-' . $this->film->getStatusDvdMonth()) < time()){
 						$this->statuses[] = 'ACUM pe DVD';
 						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', DVD' : 'DVD');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-' . $this->film->getStatusDvdDay(),'D', 'ro')) . ' pe DVD';
 					}
 				} elseif ($this->film->getStatusDvdYear() != '0' && $this->film->getStatusDvdMonth() != '0') {
-					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01', 'M', 'ro')) . ' pe DVD';
+					if(strtotime($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01') < time()){
+						$this->statuses[] = 'ACUM pe DVD';
+						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', DVD' : 'DVD');
+					} else {
+						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01','M', 'ro')) . ' pe DVD';
+					}
+					
+					
+					//$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-01', 'M', 'ro')) . ' pe DVD';
 				} else {
 					$this->statuses[] = 'IN CURAND pe DVD';
 				}

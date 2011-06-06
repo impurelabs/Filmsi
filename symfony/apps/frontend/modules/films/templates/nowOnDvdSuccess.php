@@ -4,7 +4,7 @@
 
 <div class="spacer-bottom-m">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
-	<a href="<?php echo url_for('@film_now_on_dvd');?>" class="black-link">Filme in cinema</a>
+	<a href="<?php echo url_for('@film_now_on_dvd');?>" class="black-link">Filme pe DVD & Bluray</a>
 </div>
 
 

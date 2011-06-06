@@ -9,6 +9,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.alert-user-login-link').click(function(){
+		window.scroll(0, 0);
 		$('#user-container').load('<?php echo url_for('@login');?>');
 		$('#user-container').slideDown('fast');
 		$('#film-alert-container').dialog('close');

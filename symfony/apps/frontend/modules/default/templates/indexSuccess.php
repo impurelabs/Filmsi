@@ -89,7 +89,7 @@
           <span class="icon-popcorn"></span>
           <h4>La cinema</h4>
         </div>
-        <div class="cell-bd" style="height: 470px">
+        <div class="cell-bd" style="height: 490px">
 			<?php foreach ($filmsNowInCinema as $filmNowInCinema):?>
 				<div class="mb-3" style="position: relative">
 					<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
@@ -138,7 +138,7 @@
           <span class="icon-dvd"></span>
           <h4>Dvd <span class="black">&amp;</span> Bluray</h4>
         </div>
-        <div class="cell-bd" style="height: 470px">
+        <div class="cell-bd" style="height: 490px">
 			<?php foreach($filmsNowDbo as $filmNowDbo):?>
 			<div class="mb-3" style="position: relative">
 				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">
@@ -187,7 +187,7 @@
           <span class="icon-tv"></span>
           <h4>La TV</h4>
         </div>
-        <div class="cell-bd" style="height: 470px">
+        <div class="cell-bd" style="height: 490px">
 			<?php foreach ($filmsNowTv as $filmNowTv):?>
 			  <div class="mb-3" style="position: relative">
 				<div class="inline-block spacer-right-s details-container" style="vertical-align:top">

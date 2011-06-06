@@ -246,7 +246,7 @@
           <span class="icon-popcorn"></span>
           <h4>La cinema</h4>
         </div>
-        <div class="cell-bd" style="height: 470px">
+        <div class="cell-bd" style="height: 320px">
           <?php foreach ($filmsSoonInCinema as $filmSoonInCinema):?>
 				<div class="inline-block cell-separator-dotted-bottom mb-1"> 
 					<a href="<?php echo url_for('@film?id=' . $filmSoonInCinema->getId() . '&key=' . $filmSoonInCinema->getUrlKey());?>" class="important-link"><?php echo $filmSoonInCinema->getNameRo();?></a><br />
@@ -272,7 +272,7 @@
           <span class="icon-dvd"></span>
           <h4>Dvd <span class="black">&amp;</span> Bluray</h4>
         </div>
-        <div class="cell-bd" style="height: 470px">
+        <div class="cell-bd" style="height: 320px">
           <?php foreach($filmsSoonDbo as $filmSoonDbo):?>
 			<div class="inline-block cell-separator-dotted-bottom mb-1"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="important-link"><?php echo $filmSoonDbo->getNameRo();?></a><br />
 			  <?php if ($filmSoonDbo->getNameEn() != ''):?><em>(<?php echo $filmSoonDbo->getNameEn();?>)</em><?php endif;?>
@@ -296,7 +296,7 @@
           <span class="icon-tv"></span>
           <h4>La TV</h4>
         </div>
-        <div class="cell-bd" style="height: 470px">
+        <div class="cell-bd" style="height: 320px">
           <?php foreach ($filmsSoonTv as $filmSoonTv):?>
 				<div class="inline-block cell-separator-dotted-bottom mb-1"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="important-link"><?php echo $filmSoonTv->getNameRo();?></a><br />
 				  <?php if ($filmSoonTv->getNameEn() != ''):?><em>(<?php echo $filmSoonTv->getNameEn();?>)</em><?php endif;?>

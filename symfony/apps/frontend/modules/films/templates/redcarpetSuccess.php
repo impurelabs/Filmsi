@@ -46,7 +46,7 @@
         <?php if ($currentPhoto > 1):?>
 	<a href="<?php echo url_for('@film_redcarpet?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto - 1;?>" class="left"><span class="pagenav-back"></span></a>
         <?php endif;?>
-        <div class="align-center explanation-small"></div>
+        <div class="align-center explanation-small"><?php echo $currentPhoto;?> din <?php echo $photoCount;?></div>
         <div class="clear"></div>
     </div>
 
@@ -65,7 +65,7 @@
         <?php if ($currentPhoto > 1):?>
 	<a href="<?php echo url_for('@film_redcarpet?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $currentPhoto - 1;?>" class="left"><span class="pagenav-back"></span></a>
         <?php endif;?>
-        <div class="align-center explanation-small"></div>
+        <div class="align-center explanation-small"><?php echo $currentPhoto;?> din <?php echo $photoCount;?></div>
         <div class="clear"></div>
     </div>
 

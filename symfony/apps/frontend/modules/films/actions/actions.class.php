@@ -464,6 +464,7 @@ class filmsActions extends sfActions
 		$this->photoCount = $this->photos->count();
 
 		$this->currentPhoto = $request->getParameter('pid', 1);
+		
 		if (false === $this->currentPhotoObject = PhotoTable::getInstance()->getNonRedcarpetPhotoByPositionAndAlbum($this->currentPhoto, $this->film->getPhotoAlbumId())){
 			$this->forward404();
 		}
@@ -526,9 +527,16 @@ class filmsActions extends sfActions
 		$this->photos = $this->film->getPhotoAlbum()->getRedcarpetPhotos();
 		$this->photoCount = $this->photos->count();
 
-		$this->currentPhoto = $request->getParameter('pid', 1);
-		if (false === $this->currentPhotoObject = PhotoTable::getInstance()->getRedcarpetPhotoByPositionAndAlbum($this->currentPhoto, $this->film->getPhotoAlbumId())){
-			$this->forward404();
+		if ($request->hasParameter('pid')){
+			$this->currentPhoto = $request->getParameter('pid', 1);
+			if (false === $this->currentPhotoObject = PhotoTable::getInstance()->getRedcarpetPhotoByPositionAndAlbum($this->currentPhoto, $this->film->getPhotoAlbumId())){
+				$this->forward404();
+			}
+		} else {
+			$this->currentPhoto = PhotoTable::getInstance()->getRedcarpetPositionById($request->getParameter('photo_id'), $this->film->getPhotoAlbumId());
+			if (false === $this->currentPhotoObject = PhotoTable::getInstance()->findOneById($request->getParameter('photo_id'))){
+				$this->forward404();
+			}
 		}
 
 

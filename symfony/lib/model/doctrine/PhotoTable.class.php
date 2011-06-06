@@ -261,7 +261,26 @@ class PhotoTable extends Doctrine_Table
 			->where('p.is_redcarpet = 1')
 			->andWhere('p.album_id = ?', $albumId)
 			->andWhere('p.state = 1')
+			->orderBy('position ASC')
 			->execute();
+	}
+	
+	public function getRedcarpetPositionById($photoId, $albumId)
+	{
+		$q = Doctrine_Query::create()
+			->select('p.id')
+			->from('Photo p')
+			->where('p.is_redcarpet = 1')
+			->andWhere('p.album_id = ?', $albumId)
+			->andWhere('p.state = 1')
+			->orderBy('position ASC')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		foreach ($q as $key => $photo){
+			if ($photo['id'] = $photoId){
+				return $key + 1;
+			}
+		}
 	}
 
 	public function getRedcarpetPhotoByPositionAndAlbum($position, $albumId)

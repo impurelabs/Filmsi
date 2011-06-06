@@ -61,6 +61,7 @@ class filmsActions extends sfActions
 				if ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0' && $this->film->getStatusCinemaDay() != '0'){
 					if(strtotime($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-' . $this->film->getStatusCinemaDay()) < time()){
 						$this->statuses[] = 'ACUM in Cinema';
+						$this->isInCinema = true;
 						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Cinema' : 'Cinema');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-' . $this->film->getStatusCinemaDay(),'D', 'ro')) . ' in Cinema';
@@ -68,6 +69,7 @@ class filmsActions extends sfActions
 				} elseif ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0') {
 					if(strtotime($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01') < time()){
 						$this->statuses[] = 'ACUM in Cinema';
+						$this->isInCinema = true;
 						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Cinema' : 'Cinema');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01','M', 'ro')) . ' pe Cinema';

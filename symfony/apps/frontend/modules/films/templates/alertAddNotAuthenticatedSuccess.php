@@ -16,6 +16,7 @@ $(document).ready(function(){
 	});
 	
 	$('.alert-user-register-link').click(function(){
+		window.scroll(0, 0);
 		$('#user-container').load('<?php echo url_for('@default?module=user&action=register');?>');
 		$('#user-container').slideDown('fast');
 		$('#film-alert-container').dialog('close');

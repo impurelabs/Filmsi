@@ -11,12 +11,14 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.alert-user-login-link').click(function(){
+		window.scroll(0, 0);
 		$('#user-container').load('<?php echo url_for('@login');?>');
 		$('#user-container').slideDown('fast');
 		$('#person-alert-container').dialog('close');
 	});
 	
 	$('.alert-user-register-link').click(function(){
+		window.scroll(0, 0);
 		$('#user-container').load('<?php echo url_for('@default?module=user&action=register');?>');
 		$('#user-container').slideDown('fast');
 		$('#person-alert-container').dialog('close');

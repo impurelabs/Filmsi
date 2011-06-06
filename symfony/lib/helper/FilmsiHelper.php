@@ -2,7 +2,6 @@
 
 function filmsiPhoto($sourceimage)
 {
-	die('adddaa:' . $sourceimage);
 	return sfConfig::get('app_aws_s3_path') . sfConfig::get('app_aws_bucket') . '/' . sfConfig::get('app_photos_aws_s3_folder') .  '/' . $sourceimage;
 }
 

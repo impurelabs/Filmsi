@@ -7,6 +7,10 @@
  */
 class PhotoTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return PhotoTable 
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('Photo');
@@ -252,7 +256,8 @@ class PhotoTable extends Doctrine_Table
 			->andWhere('p.state = 1')
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 		
-		return $q['count'] > 0 ? true : false;
+		echo 'non:<pre>'; var_dump($q);
+		return (int)$q['count'] > 0 ? true : false;
 	}
 	
 	public function getNonRedcarpetPositionById($photoId, $albumId)
@@ -305,8 +310,8 @@ class PhotoTable extends Doctrine_Table
 			->andWhere('p.album_id = ?', $albumId)
 			->andWhere('p.state = 1')
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
-		
-		return $q['count'] > 0 ? true : false;
+		echo 'pho:<pre>'; var_dump($q);
+		return (int)$q['count'] > 0 ? true : false;
 	}
 	
 	public function getRedcarpetPositionById($photoId, $albumId)

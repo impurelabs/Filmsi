@@ -276,7 +276,7 @@
           <?php foreach($filmsSoonDbo as $filmSoonDbo):?>
 			<div class="inline-block cell-separator-dotted-bottom mb-1"> <a href="<?php echo url_for('@film?id=' . $filmSoonDbo->getId() . '&key=' . $filmSoonDbo->getUrlKey());?>" class="important-link"><?php echo $filmSoonDbo->getNameRo();?></a><br />
 			  <?php if ($filmSoonDbo->getNameEn() != ''):?><em>(<?php echo $filmSoonDbo->getNameEn();?>)</em><?php endif;?>
-			  <div class="spacer-top-sm explanation-small">Cu:
+			  <div class="mt-1 explanation-small">Cu:
 				  <?php foreach ($filmSoonDbo->getBestActors(3) as $person):?>
 					<a href="<?php echo url_for('@person?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="explanation-link"><?php echo $person->getName();?></a>,
 				<?php endforeach;?>

@@ -189,7 +189,7 @@
 					<a href="<?php echo url_for('@film?id=' . $currentFilm['film']['id'] . '&key=' . $currentFilm['film']['url_key']);?>">
 						<img src="<?php echo filmsiFilmPhotoThumbS($currentFilm['film']['filename']);?>" class="left" />
 					</a>
-					<div class="left spacer-left">
+					<div class="left spacer-left" style="width: 145px">
 						<a href="<?php echo url_for('@film?id=' . $currentFilm['film']['id'] . '&key=' . $currentFilm['film']['url_key']);?>" class="important-link"><?php echo $currentFilm['film']['name_ro'];?></a> <br />
 						<?php if ($currentFilm['film']['name_en'] != ''): ?><em>(<?php echo $currentFilm['film']['name_en'];?>)</em><?php endif;?>
 					</div>

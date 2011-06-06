@@ -591,7 +591,7 @@
     </div>
     <div class="cell-bd" style="height: 162px">
       <?php foreach($redcarpetPhotos  as $redcarpetPhoto):?>
-			<div class="inline-block align-center spacer-bottom ml-1" style="width: 85px; vertical-align: middle">
+			<div class="inline-block align-center spacer-bottom ml-1" style="width: 85px; vertical-align: top">
 				<a href="<?php echo url_for('@film_redcarpet?id=' . $redcarpetPhoto->getAlbum()->getFilm()->getId() . '&key=' . $redcarpetPhoto->getAlbum()->getFilm()->getUrlKey());?>?pid=<?php echo $redcarpetPhoto->getPosition();?>">
 					<img width="80" src="<?php echo filmsiPhotoThumb($redcarpetPhoto->getFilename());?>" />
 				</a> <br />

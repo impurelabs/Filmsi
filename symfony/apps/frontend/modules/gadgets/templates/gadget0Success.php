@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('main.css', true);?>" />
 <div class="cell" style="height:333px">
 	<div class="cell-hd">
-		<h5>Cele mai <span class="black">citite</span></h5>
+		<h5>Cele mai citite<span class="black"> articole</span></h5>
 	</div>
 	<div class="cell-bd">
 		<?php foreach ($articles as $article):?>

@@ -242,6 +242,19 @@ class PhotoTable extends Doctrine_Table
 			->execute();
 	}
 	
+	public function hasNonRedcarpetByAlbum($albumId)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(p.id) count')
+			->from('Photo p')
+			->where('p.is_redcarpet IS NULL or p.is_redcarpet = 0')
+			->andWhere('p.album_id = ?', $albumId)
+			->andWhere('p.state = 1')
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		return $q['count'] > 0 ? true : false;
+	}
+	
 	public function getNonRedcarpetPositionById($photoId, $albumId)
 	{
 		$q = Doctrine_Query::create()
@@ -281,6 +294,19 @@ class PhotoTable extends Doctrine_Table
 			->andWhere('p.state = 1')
 			->orderBy('position ASC')
 			->execute();
+	}
+	
+	public function hasRedcarpetByAlbum($albumId)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(p.id) count')
+			->from('Photo p')
+			->where('p.is_redcarpet = 1')
+			->andWhere('p.album_id = ?', $albumId)
+			->andWhere('p.state = 1')
+			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		return $q['count'] > 0 ? true : false;
 	}
 	
 	public function getRedcarpetPositionById($photoId, $albumId)

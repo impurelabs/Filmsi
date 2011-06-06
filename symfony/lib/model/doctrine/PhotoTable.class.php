@@ -275,7 +275,7 @@ class PhotoTable extends Doctrine_Table
 			->andWhere('p.state = 1')
 			->orderBy('position ASC')
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-		
+		echo $photoId . '<pre>'; var_dump($q);
 		foreach ($q as $key => $photo){
 			if ($photo['id'] = $photoId){
 				return $key + 1;

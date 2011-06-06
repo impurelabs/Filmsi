@@ -256,7 +256,6 @@ class PhotoTable extends Doctrine_Table
 			->andWhere('p.state = 1')
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
 		
-		echo 'non:<pre>'; var_dump($q);
 		return (int)$q['count'] > 0 ? true : false;
 	}
 	
@@ -310,7 +309,7 @@ class PhotoTable extends Doctrine_Table
 			->andWhere('p.album_id = ?', $albumId)
 			->andWhere('p.state = 1')
 			->fetchOne(array(), Doctrine_Core::HYDRATE_ARRAY);
-		echo 'pho:<pre>'; var_dump($q);
+		
 		return (int)$q['count'] > 0 ? true : false;
 	}
 	

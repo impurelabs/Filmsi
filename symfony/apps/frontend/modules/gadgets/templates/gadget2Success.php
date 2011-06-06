@@ -1,6 +1,6 @@
 <?php use_helper('Text');?>
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('main.css', true);?>" />
-<div class="cell" style="height:550px">
+<div class="cell">
 	<div class="cell-hd">
 		<h5>Acum pe <span class="black">DVD &amp; Bluray</span></h5>
 	</div>

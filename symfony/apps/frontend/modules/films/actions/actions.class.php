@@ -59,7 +59,7 @@ class filmsActions extends sfActions
 			/* Set the DVD status */
 			if ($this->film->getStatusDvd() == '1'){
 				if ($this->film->getStatusDvdYear() != '0' && $this->film->getStatusDvdMonth() != '0' && $this->film->getStatusDvdDay() != '0'){
-					if(strtotime($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-' . $this->film->getStatusDvdMonth()) < time()){
+					if(strtotime($this->film->getStatusDvdYear() . '-' . $this->film->getStatusDvdMonth() . '-' . $this->film->getStatusDvdDay()) < time()){
 						$this->statuses[] = 'ACUM pe DVD';
 						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', DVD' : 'DVD');
 					} else {

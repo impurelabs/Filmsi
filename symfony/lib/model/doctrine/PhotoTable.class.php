@@ -271,7 +271,8 @@ class PhotoTable extends Doctrine_Table
 			->where('p.is_redcarpet = 1')
 			->andWhere('p.album_id = ?', $albumId)
 			->andWhere('p.state = 1')
-			->andWhere('p.position = ?', $position)
+			->offset($position - 1)
+			->limit(1)
 			->fetchOne();
 	}
 

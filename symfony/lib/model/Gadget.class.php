@@ -45,7 +45,7 @@ class Gadget {
 		switch ($id){
 			case self::MOST_READ_ARTICLES: return 345; break;
 			case self::MOST_COMMENTED_ARTICLES: return 345; break;
-			case self::NOW_ON_DBO: return 550; break;
+			case self::NOW_ON_DBO: return 570; break;
 			case self::CINEMA_RESERVATIONS: return 125; break;
 			case self::BOX_OFFICE_RO: return 300; break;
 			case self::BOX_OFFICE_US: return 300; break;

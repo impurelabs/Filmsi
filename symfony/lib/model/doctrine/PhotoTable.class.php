@@ -265,6 +265,8 @@ class PhotoTable extends Doctrine_Table
 
 	public function getRedcarpetPhotoByPositionAndAlbum($position, $albumId)
 	{
+		die('pos:' . $position . '|' . $albumId);
+		
 		return Doctrine_Query::create()
 			->from('Photo p')
 			->where('p.is_redcarpet = 1')

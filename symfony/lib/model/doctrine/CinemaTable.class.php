@@ -246,6 +246,7 @@ class CinemaTable extends Doctrine_Table
 	public function getDetailsAndSchedulesByFilmAndLocation($filmId, $locationId)
 	{
 		$q = Doctrine_Query::create()
+			->select('c.id, c.name, s.*')
 			->from('Cinema c')
 			->innerJoin('c.Schedule s')
 			->where('c.location_id = ?', $locationId)

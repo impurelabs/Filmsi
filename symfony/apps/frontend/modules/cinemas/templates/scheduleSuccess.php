@@ -44,6 +44,12 @@
         </div>
 
         <div class="cell-bd">
+			<?php if(count($film) == 0):?>
+			<br /><br /><br /><br />
+			<h5>Ne cerem scuze ! Chiar in aceste momente actualizam programul cinematografelor. Reveniti pentru detalii.</h5>
+			<br /><br /><br /><br />
+			<?php endif;?>
+			
         	<?php foreach ($films as $film):?>
 				<div class="left" style="width: 220px">
 					<a href="<?php echo url_for('@film?id=' . $film['film']['id'] . '&key=' . $film['film']['url_key']);?>">

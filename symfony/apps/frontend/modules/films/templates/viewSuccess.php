@@ -38,7 +38,9 @@
         <?php include_partial('films/alert', array('filmId' => $film->getId()));?>
 		
 		<br />
-		<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+			<a href="http://twitter.com/share" class="twitter-share-button" data-text="Uite ba ce fim mishto , pe al mai tare site <?php echo $film->getNameRo();?>" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+			<div class="mb-2"></div>
+			<iframe src="http://www.facebook.com/plugins/like.php?app_id=210613575638257&amp;href&amp;send=false&amp;layout=standard&amp;width=180&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:180px; height:35px;" allowTransparency="true"></iframe>
     </div>
 
 
@@ -164,7 +166,6 @@
     	<div>
             <div class="right innerspacer-right spacer-right-m"><span class="st_email_large" st_title="" ></span></div>
             <div class="right innerspacer-right spacer-right-m"><span class="st_facebook_large" st_title=""></span></div>
-            <div class="right innerspacer-right spacer-right-m"><span class="st_twitter_large" st_title=""></span></div>
 
             <div class="inline-block spacer-right-l">Spune si prietenilor tai pe</div>
 

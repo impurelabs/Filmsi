@@ -36,8 +36,8 @@
         <h4 class="spacer-bottom-m">Filmografie</h4>
 
 		<div style="display: inline-block; width: 110px" class="explanation-small"></div>
-		<div class="ml-2" style="display: inline-block; width: 180px; vertical-align: top; text-align: right">Magazin</div>
-		<div class="ml-2" style="display: inline-block; width: 130px; vertical-align: top; text-align: right">Vezi Online/Cumpara</div>
+		<div class="ml-2 explanation-small" style="display: inline-block; width: 180px; vertical-align: top; text-align: right">Magazin</div>
+		<div class="ml-2 explanation-small" style="display: inline-block; width: 130px; vertical-align: top; text-align: right">Vezi Online/Cumpara</div>
 		
 		<hr class="cell-separator-double mb-2 mt-1" />
 		

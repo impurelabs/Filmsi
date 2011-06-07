@@ -11,6 +11,6 @@ class filmsComponents extends sfComponents
 		$this->displayPhotos = $this->film->hasNonRedcarpetPhotos();
 		
 		/* Count the redcarpet photos */
-		$this->displayRedcarpet = $this->film->hasRedcarpetPhotos();
+		$this->displayRedcarpet = $this->film->hasRedcarpetPhotos(); 
 	}
 }

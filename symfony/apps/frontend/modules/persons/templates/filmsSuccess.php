@@ -57,12 +57,10 @@
 						<?php foreach($shop['ShopFilm'] as $shopFilm):?>
 							<a href="<?php echo $shopFilm['url'];?>">
 								<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
-								<div class="mb-1"></div>
 								<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
-								<div class="mb-1"></div>
 								<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
-								<div class="mb-1"></div>
 							</a>
+							<div class="mb-1"></div>
 						<?php endforeach;?>
 					</div>
 					<div class="mb-1"></div>

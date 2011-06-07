@@ -171,7 +171,6 @@ abstract class BasePerson extends sfDoctrineRecord
              ));
         $this->hasColumn('imdb', 'string', 250, array(
              'type' => 'string',
-             'notnull' => true,
              'length' => 250,
              ));
         $this->hasColumn('is_actor', 'bool', null, array(

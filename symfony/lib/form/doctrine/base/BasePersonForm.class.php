@@ -59,7 +59,7 @@ abstract class BasePersonForm extends BaseFormDoctrine
       'meta_keywords'         => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'url_key'               => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'state'                 => new sfValidatorChoice(array('choices' => array(0 => -1, 1 => 0, 2 => 1), 'required' => false)),
-      'imdb'                  => new sfValidatorString(array('max_length' => 250)),
+      'imdb'                  => new sfValidatorString(array('max_length' => 250, 'required' => false)),
       'is_actor'              => new sfValidatorPass(array('required' => false)),
       'is_director'           => new sfValidatorPass(array('required' => false)),
       'is_scriptwriter'       => new sfValidatorPass(array('required' => false)),

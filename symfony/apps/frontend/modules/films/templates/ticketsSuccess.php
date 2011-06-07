@@ -62,7 +62,7 @@ $(document).ready(function(){
 			data: {
 				location_id: locationId
 			},
-			success: function(data){
+			success: function(response){
 				$('#cinemas-container').html(response);
 			}
 		});

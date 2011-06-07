@@ -44,7 +44,7 @@
         </div>
 
         <div class="cell-bd">
-			<?php if(count($film) == 0):?>
+			<?php if(count($films) == 0):?>
 			<br /><br /><br /><br />
 			<h5>Ne cerem scuze ! <br />Chiar in aceste momente actualizam programul cinematografelor. <br />Reveniti pentru detalii.</h5>
 			<br /><br /><br /><br />

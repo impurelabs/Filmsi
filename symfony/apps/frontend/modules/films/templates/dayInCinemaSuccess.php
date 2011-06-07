@@ -115,10 +115,11 @@
     	<div class="mb-3 ml-1 spacer-right-s" style="width: 138px; display: inline-block; vertical-align: top">
         	<div class="innerspacer-bottom-s spacer-bottom-s cell-separator-dotted-bottom">
                 <a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>"><img src="<?php echo filmsiFilmPhotoThumb($film['filename']);?>" style="width: 136px" /></a><br />
+				<div class="mb-2"></div>
                 <a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>" class="important-link"><?php echo $film['name_ro'];?></a>
         	</div>
             <div>
-            	<span class="icon-bulletarrow spacer-right-s"></span> <a href="" class="small-link">Rezerva bilete</a><br />
+            	<span class="icon-bulletarrow spacer-right-s"></span> <a href="<?php echo url_for('@film_tickets?id=' . $film['id'] . '&key=' . $film['url_key']);?>" class="small-link">Rezerva bilete</a><br />
             	<span class="icon-bulletarrow spacer-right-s"></span> <a href="<?php echo url_for('@film_videos?id=' . $film['id'] . '&key=' . $film['url_key']);?>" class="small-link">Vezi trailer</a><br />
             </div>
         </div>

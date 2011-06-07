@@ -42,18 +42,21 @@
 			<div style="display: inline-block; width: 140px; vertical-align: top">
 				<a href="<?php echo $shop['name'];?>" target="_blank"><?php echo $shop['name'];?></a>
 			</div>
-		<div class="ml-2" style="display: inline-block; width: 150px; vertical-align: top; text-align: center">
-			<a href="<?php echo $shop['name'];?>" target="_blank"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a>
-		</div>
-		<div class="ml-2" style="display: inline-block; width: 130px; vertical-align: top; text-align: right">
-			<?php foreach($shop['ShopFilm'] as $shopFilm):?>
-				<a href="<?php echo $shopFilm['url'];?>">
-					<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
-					<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
-					<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
-				</a>
-			<?php endforeach;?>
-		</div>
+			<div class="ml-2" style="display: inline-block; width: 150px; vertical-align: top; text-align: center">
+				<a href="<?php echo $shop['name'];?>" target="_blank"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a>
+			</div>
+			<div class="ml-2" style="display: inline-block; width: 130px; vertical-align: top; text-align: right">
+				<?php foreach($shop['ShopFilm'] as $shopFilm):?>
+					<a href="<?php echo $shopFilm['url'];?>">
+						<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
+						<div class="mb-1"></div>
+						<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
+						<div class="mb-1"></div>
+						<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
+					</a>
+				<?php endforeach;?>
+			</div>
+		<div class="mb-2"></div>
 		<?php endforeach;?>        
     </div>
 

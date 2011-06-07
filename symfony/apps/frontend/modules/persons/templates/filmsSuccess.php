@@ -35,7 +35,10 @@
     <div class="normalcell spacer-bottom tinyMce">
         <h4 class="spacer-bottom-m">Filmografie</h4>
 
+		<div style="display: inline-block; width: 110px" class="explanation-small"></div>
+		<div class="ml-2" style="display: inline-block; width: 330px; vertical-align: top"></div>
 		
+		<hr class="cell-separator-double" />
 		
         <?php foreach($sf_data->getRaw('films') as $film):?>
 			<div class="align-center mb-3" style="display: inline-block; width: 110px">
@@ -45,22 +48,21 @@
 				<em>( <?php echo $film['name_ro'];?>)</em>
 			</div>
 			<div class="ml-2" style="display: inline-block; width: 330px; vertical-align: top">
-				<table>
 				<?php foreach($film->getShops() as $shop):?>
-					<tr>
-						<td valign="top" align="right"><a href="<?php echo $shop['url'];?>"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a></td>
-						<td valign="top" align="right">
-							<?php foreach($shop['ShopFilm'] as $shopFilm):?>
-								<a href="<?php echo $shopFilm['url'];?>">
-									<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
-									<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
-									<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
-								</a>
-							<?php endforeach;?>
-						</td>
-					</tr>
+					<div style="display: inline-block; width: 180px; vertical-align: top; text-align: right">
+						<a href="<?php echo $shop['url'];?>"><?php echo filmsiShopPhotoThumbS($shop['name']);?></a>
+					</div>
+					<div style="display: inline-block; width: 140px; vertical-align: top; text-align: right; margin-left: 10px">
+						<?php foreach($shop['ShopFilm'] as $shopFilm):?>
+							<a href="<?php echo $shopFilm['url'];?>">
+								<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
+								<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
+								<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
+							</a>
+						<?php endforeach;?>
+					</div>
+					<div class="mb-1"></div>
 				<?php endforeach;?>
-				</table>
 			</div>
         <?php endforeach;?>
 

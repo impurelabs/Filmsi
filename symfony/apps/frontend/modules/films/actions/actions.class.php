@@ -852,6 +852,64 @@ class filmsActions extends sfActions
 		}
 	}
 
+	public function executeTickets(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+
+		if ($this->film->getBackgroundFilename() != ''){
+			$this->setLayout('layoutFilm');
+			$details = getimagesize(sfConfig::get('app_film_background_path') . '/' .$this->film->getBackgroundFilename());
+			$this->backgroundWidth = $details[0];
+		} else{
+			$this->backgroundWidth = '';
+		}
+
+		$this->shops = $this->film->getShopUrls();
+
+
+
+		/* META Stuff */
+		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
+		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
+		$this->getResponse()->setTitle('Cumpara pe DVD si Blu-ray ' . $this->film->getName() . ' - Filmsi.ro');
+
+		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
+			$metaStuff = 'Cumpara pe DVD si Blu-ray ' . $this->film->getName() . ' - ';
+
+			foreach($this->film->getGenres() as $key => $genre){
+				$metaStuff .= $genre->getName();
+				if ($key < count($this->film->getGenres()) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->actors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->actors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+			$metaStuff .= ' - ';
+			foreach ($this->directors as $key => $person){
+				$metaStuff .= $person->getName();
+				if ($key < count($this->directors) - 1){
+					$metaStuff .= ', ';
+				}
+			}
+		}
+
+		if ($this->film->getMetaKeywords() == ''){
+			$this->getResponse()->addMeta('keywords', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('keywords', $this->film->getMetaKeywords());
+		}
+		if ($this->film->getMetaDescription() == ''){
+			$this->getResponse()->addMeta('description', $metaStuff);
+		} else {
+			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
+		}
+	}
+
 	public function executeAwards(sfWebRequest $request)
 	{
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));

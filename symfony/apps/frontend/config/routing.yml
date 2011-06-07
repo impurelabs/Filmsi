@@ -181,6 +181,14 @@ film_buy_no_key:
   url: /cumpara-film/:id/
   param: { module: films, action: buy }
 
+film_tickets:
+  url: /rezerva-bilete-film/:id/:key
+  param: { module: films, action: tickets }
+
+film_tickets_no_key:
+  url: /rezerva-bilete-film/:id/
+  param: { module: films, action: tickets }
+
 film_cast:
   url: /echipa-film/:id/:key
   param: { module: films, action: cast }

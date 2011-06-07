@@ -1,7 +1,14 @@
 <ul class="filterlist spacer-bottom-m">
+	<?php if (isset($displayBuy) && $displayBuy):?>
 	<li onclick="location.href='<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"<?php if ($current == 'buy') echo ' class="active"';?>>
 		<a href="<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Cumpara DVD & Bluray<span class="filter-cioc"></span></a>
 	</li>
+	<?php endif;?>
+	<?php if (isset($displayTickets) && $displayTickets):?>
+	<li onclick="location.href='<?php echo url_for('@film_tickets?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"<?php if ($current == 'tickets') echo ' class="active"';?>>
+		<a href="<?php echo url_for('@film_tickets?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Rezerva bilete<span class="filter-cioc"></span></a>
+	</li>
+	<?php endif;?>
 	<li onclick="location.href='<?php echo url_for('@film_cast?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"<?php if ($current == 'cast') echo ' class="active"';?>>
 		<a href="<?php echo url_for('@film_cast?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Actori & echipa<span class="filter-cioc"></span></a>
 	</li>

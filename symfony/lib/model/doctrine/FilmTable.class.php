@@ -268,7 +268,7 @@ class FilmTable extends Doctrine_Table
 	public function getInCinemaNow($when = null, $limit = null, $page = null, $genres = array(), $ratings = array(), $locations = array(), $hydrator = Doctrine_Core::HYDRATE_ARRAY)
 	{
 		$q = Doctrine_Query::create()
-			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename')
+			->select('f.id, f.name_ro, f.name_en, f.url_key, f.filename, f.status_cinema_year, f.status_cinema_month, f.status_cinema_day, f.status_dvd_year, f.status_dvd_month, f.status_dvd_day, f.status_bluray_year, f.status_bluray_month, f.status_bluray_day')
 			->from('Film f')
 			->innerJoin('f.Schedule s')
 			->where('f.state = 1')

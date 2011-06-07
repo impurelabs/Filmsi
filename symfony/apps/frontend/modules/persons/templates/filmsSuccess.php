@@ -44,7 +44,7 @@
 				</a><br />
 				<em>( <?php echo $film['name_ro'];?>)</em>
 			</div>
-			<div class="ml-2" style="display: inline-block; width: 340px">
+			<div class="ml-2" style="display: inline-block; width: 330px">
 				<table>
 				<?php foreach($film->getShops() as $shop):?>
 					<tr>
@@ -60,7 +60,7 @@
 						</td>
 					</tr>
 				<?php endforeach;?>
-				</table>-->
+				</table>
 			</div>
         <?php endforeach;?>
 

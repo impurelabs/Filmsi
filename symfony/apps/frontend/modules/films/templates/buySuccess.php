@@ -32,6 +32,31 @@
         <h4 class="spacer-bottom-m">Cumpara pe DVD &amp Bluray</h4>
 		<br />
 
+		<div style="display: inline-block; width: 140px" class="explanation-small">Magazin</div>
+		<div class="ml-2 explanation-small" style="display: inline-block; width: 150px; vertical-align: top; text-align: right"></div>
+		<div class="ml-2 explanation-small" style="display: inline-block; width: 130px; vertical-align: top; text-align: right">Vezi Online/Cumpara</div>
+		
+		<hr class="cell-separator-double mb-2 mt-1" />
+		
+		<?php foreach($film->getShops() as $shop):?>
+			<div style="display: inline-block; width: 140px; vertical-align: top">
+				<a href="<?php echo $shop['name'];?>" target="_blank"><?php echo $shop['name'];?></a>
+			</div>
+		<div class="ml-2" style="display: inline-block; width: 150px; vertical-align: top; text-align: center">
+			<a href="<?php echo $shop['name'];?>" target="_blank"><?php echo filmsiShopPhotoThumbS($shop['filename']);?></a>
+		</div>
+		<div class="ml-2" style="display: inline-block; width: 130px; vertical-align: top; text-align: right">
+			<?php foreach($shop['ShopFilm'] as $shopFilm):?>
+				<a href="<?php echo $shopFilm['url'];?>">
+					<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
+					<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
+					<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
+				</a>
+			<?php endforeach;?>
+		</div>
+		<?php endforeach;?>
+		
+		
 		<?php if (count($shops['dvd']) > 0):?>
 			<h6 class="mb-2">Pe DVD</h6>
 			<?php foreach ($shops['dvd'] as $shop):?>

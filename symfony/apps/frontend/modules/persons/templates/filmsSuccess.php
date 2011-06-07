@@ -36,9 +36,10 @@
         <h4 class="spacer-bottom-m">Filmografie</h4>
 
 		<div style="display: inline-block; width: 110px" class="explanation-small"></div>
-		<div class="ml-2" style="display: inline-block; width: 330px; vertical-align: top"></div>
+		<div class="ml-2" style="display: inline-block; width: 180px; vertical-align: top"></div>
+		<div class="ml-2" style="display: inline-block; width: 130px; vertical-align: top"></div>
 		
-		<hr class="cell-separator-double" />
+		<hr class="cell-separator-double mb-2 mt-1" />
 		
         <?php foreach($sf_data->getRaw('films') as $film):?>
 			<div class="align-center mb-3" style="display: inline-block; width: 110px">
@@ -52,7 +53,7 @@
 					<div style="display: inline-block; width: 180px; vertical-align: top; text-align: right">
 						<a href="<?php echo $shop['url'];?>"><?php echo $shop['name'];?></a>
 					</div>
-					<div style="display: inline-block; width: 140px; vertical-align: top; text-align: right; margin-left: 10px">
+					<div style="display: inline-block; width: 130px; vertical-align: top; text-align: right; margin-left: 10px">
 						<?php foreach($shop['ShopFilm'] as $shopFilm):?>
 							<a href="<?php echo $shopFilm['url'];?>">
 								<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>

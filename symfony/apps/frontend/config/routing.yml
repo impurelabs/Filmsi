@@ -191,7 +191,7 @@ film_tickets_no_key:
 
 film_get_cinemas_by_location:
   url: /film_get_cinemas_by_location/:id/
-  param: { module: films, action: executeCinemasByLocation }
+  param: { module: films, action: cinemasByLocation }
 
 film_cast:
   url: /echipa-film/:id/:key

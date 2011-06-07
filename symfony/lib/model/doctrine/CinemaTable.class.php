@@ -256,7 +256,7 @@ class CinemaTable extends Doctrine_Table
 			$lastDay  = date('Y-m-d', strtotime("next Sunday"));
 		}
 		
-		$q = Doctrine_Query::create()
+		return Doctrine_Query::create()
 			->select('c.id, c.name, c.url_key, c.reservation_url, s.*')
 			->from('Cinema c')
 			->innerJoin('c.Schedule s')
@@ -265,7 +265,5 @@ class CinemaTable extends Doctrine_Table
 			->andWhere('s.day >= ?', $firstDay)
 			->andWhere('s.day <= ?', $lastDay)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-		
-		echo '<pre>'; var_dump($q); exit;
 	}
 }

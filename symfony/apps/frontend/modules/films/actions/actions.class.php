@@ -34,34 +34,16 @@ class filmsActions extends sfActions
 
 		$this->getContext()->getConfiguration()->loadHelpers('Date');
 		$this->statuses = array();
-		$this->isInCinema = false;
 
 		if ($this->film->getStatusInProduction() == '1'){
 			$this->statuses[] = 'IN PRODUCTIE';
 		} else {
-//			/* Set the cinema status */
-//			if ($this->film->getStatusCinema() == '1'){
-//				if ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0' && $this->film->getStatusCinemaDay() != '0'){
-//					if(strtotime($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01') < time()){
-//						$this->statuses[] = 'ACUM in cinema';
-//						$this->isInCinema = true;
-//						$statusForTitle = 'Cinema';
-//					} else {
-//						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-' . $this->film->getStatusCinemaDay(),'D', 'ro')) . ' in cinema';
-//					}
-//				} elseif ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0') {
-//					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01', 'M', 'ro')) . ' in cinema';
-//				} else {
-//					$this->statuses[] = 'IN CURAND in cinema';
-//				}
-//			}
 
 			/* Set the Cinema status */
 			if ($this->film->getStatusCinema() == '1'){
 				if ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0' && $this->film->getStatusCinemaDay() != '0'){
 					if(strtotime($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-' . $this->film->getStatusCinemaDay()) < time()){
 						$this->statuses[] = 'ACUM in Cinema';
-						$this->isInCinema = true;
 						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Cinema' : 'Cinema');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-' . $this->film->getStatusCinemaDay(),'D', 'ro')) . ' in Cinema';
@@ -69,7 +51,6 @@ class filmsActions extends sfActions
 				} elseif ($this->film->getStatusCinemaYear() != '0' && $this->film->getStatusCinemaMonth() != '0') {
 					if(strtotime($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01') < time()){
 						$this->statuses[] = 'ACUM in Cinema';
-						$this->isInCinema = true;
 						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Cinema' : 'Cinema');
 					} else {
 						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01','M', 'ro')) . ' pe Cinema';
@@ -162,38 +143,6 @@ class filmsActions extends sfActions
 					$this->statuses[] = 'IN CURAND la Tv';
 				}
 			}
-
-//			/* Set the Bluray status */
-//			if ($this->film->getStatusBluray() == '1'){
-//				if ($this->film->getStatusBlurayYear() != '0' && $this->film->getStatusBlurayMonth() != '0' && $this->film->getStatusBlurayDay() != '0'){
-//					if(strtotime($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-01') < time()){
-//						$this->statuses[] = 'ACUM pe Blu-ray';
-//						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Blu-ray' : 'Blu-ray');
-//					} else {
-//						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-' . $this->film->getStatusBlurayDay(),'D', 'ro')) . ' pe Blu-ray';
-//					}
-//				} elseif ($this->film->getStatusBlurayYear() != '0' && $this->film->getStatusBlurayMonth() != '0') {
-//					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusBlurayYear() . '-' . $this->film->getStatusBlurayMonth() . '-01', 'M', 'ro')) . ' pe Blu-ray';
-//				} else {
-//					$this->statuses[] = 'IN CURAND pe Blu-ray';
-//				}
-//			}
-
-//			/* Set the Online status */
-//			if ($this->film->getStatusOnline() == '1'){
-//				if ($this->film->getStatusOnlineYear() != '0' && $this->film->getStatusOnlineMonth() != '0' && $this->film->getStatusOnlineDay() != '0'){
-//					if(strtotime($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-01') < time()){
-//						$this->statuses[] = 'ACUM online';
-//						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Online' : 'Online');
-//					} else {
-//						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-' . $this->film->getStatusOnlineDay(),'D', 'ro')) . ' online';
-//					}
-//				} elseif ($this->film->getStatusOnlineYear() != '0' && $this->film->getStatusOnlineMonth() != '0') {
-//					$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusOnlineYear() . '-' . $this->film->getStatusOnlineMonth() . '-01', 'M', 'ro')) . ' online';
-//				} else {
-//					$this->statuses[] = 'IN CURAND online';
-//				}
-//			}
 		}
 
 

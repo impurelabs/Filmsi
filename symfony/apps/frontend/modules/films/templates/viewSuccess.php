@@ -170,7 +170,7 @@
     </div>
 
 
-	<?php if($isInCinema):?>
+	<?php if($film->isInCinema()):?>
     <div class="cell innerspacer-bottom spacer-bottom-m">
         <h5 class="innerspacer cell-separator2 spacer-bottom">Cauta cinema unde ruleaza filmul <span class="black">in orasul tau</span></h5>
 
@@ -186,8 +186,8 @@
 		</form>
     </div>
 	<?php endif;?>
-
-    <!--
+	
+	<?php if ($film->isOnDvd() || $film->isOnBluray()):?>
     <div class="greencell spacer-bottom-m">
     	<div class="left" style="width: 200px"><span class="hugewhite">CUMPARA</span><br /><span class="bigstrong">Intalnire exploziva</span></div>
         <div class="left innerspacer-top">
@@ -197,7 +197,7 @@
 
         <div class="clear"></div>
     </div>
-    -->
+	<?php endif;?>
 
 	<?php if(count($film->getFirstPhotos(3)) > 0):?>
 	<div class="cell spacer-bottom-m">

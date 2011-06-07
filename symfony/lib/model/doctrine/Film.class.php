@@ -270,4 +270,96 @@ class Film extends BaseFilm
 	{
 		return CinemaScheduleTable::getInstance()->getLocationsByFilm($this->getId());
 	}
+	
+	public function isInCinema()
+	{
+		if ($this->getStatusCinema() != '1'){
+			return false;
+		}
+		
+		if ($this->getStatusCinemaYear() != '0' && $this->getStatusCinemaMonth() != '0' && $this->getStatusCinemaDay() != '0'){
+			if(strtotime($this->getStatusCinemaYear() . '-' . $this->getStatusCinemaMonth() . '-' . $this->getStatusCinemaDay()) < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} elseif ($this->getStatusCinemaYear() != '0' && $this->getStatusCinemaMonth() != '0') {
+			if(strtotime($this->getStatusCinemaYear() . '-' . $this->getStatusCinemaMonth() . '-01') < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	public function isOnDvd()
+	{
+		if ($this->getStatusDvd() != '1'){
+			return false;
+		}
+		
+		if ($this->getStatusDvdYear() != '0' && $this->getStatusDvdMonth() != '0' && $this->getStatusDvdDay() != '0'){
+			if(strtotime($this->getStatusDvdYear() . '-' . $this->getStatusDvdMonth() . '-' . $this->getStatusDvdDay()) < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} elseif ($this->getStatusDvdYear() != '0' && $this->getStatusDvdMonth() != '0') {
+			if(strtotime($this->getStatusDvdYear() . '-' . $this->getStatusDvdMonth() . '-01') < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	public function isOnBluray()
+	{
+		if ($this->getStatusBluray() != '1'){
+			return false;
+		}
+		
+		if ($this->getStatusBlurayYear() != '0' && $this->getStatusBlurayMonth() != '0' && $this->getStatusBlurayDay() != '0'){
+			if(strtotime($this->getStatusBlurayYear() . '-' . $this->getStatusBlurayMonth() . '-' . $this->getStatusBlurayDay()) < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} elseif ($this->getStatusBlurayYear() != '0' && $this->getStatusBlurayMonth() != '0') {
+			if(strtotime($this->getStatusBlurayYear() . '-' . $this->getStatusBlurayMonth() . '-01') < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	public function isOnline()
+	{
+		if ($this->getStatusOnline() != '1'){
+			return false;
+		}
+		
+		if ($this->getStatusOnlineYear() != '0' && $this->getStatusOnlineMonth() != '0' && $this->getStatusOnlineDay() != '0'){
+			if(strtotime($this->getStatusOnlineYear() . '-' . $this->getStatusOnlineMonth() . '-' . $this->getStatusOnlineDay()) < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} elseif ($this->getStatusOnlineYear() != '0' && $this->getStatusOnlineMonth() != '0') {
+			if(strtotime($this->getStatusOnlineYear() . '-' . $this->getStatusOnlineMonth() . '-01') < time()){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

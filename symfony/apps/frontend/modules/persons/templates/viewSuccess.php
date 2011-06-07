@@ -63,10 +63,12 @@
 
 
         <div class="cell-separator-double spacer-bottom spacer-top"></div>
+		<?php if ($person->getNoDisplay() != '1'):?>
         <strong>Biografie</strong><br />
         <?php echo $person->getBiographyTeaser();?>
 
         <div class="more-cell"><a href="<?php echo url_for('@person_biography?id=' . $person->getId() . '&key=' . $person->getUrlKey());?>" class="smallwhite-link">afla mai multe &raquo;</a></div>
+		<?php endif;?>
 
     </div>
 

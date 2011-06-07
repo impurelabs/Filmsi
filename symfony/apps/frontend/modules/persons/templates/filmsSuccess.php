@@ -50,7 +50,7 @@
 			<div class="ml-2" style="display: inline-block; width: 330px; vertical-align: top">
 				<?php foreach($film->getShops() as $shop):?>
 					<div style="display: inline-block; width: 180px; vertical-align: top; text-align: right">
-						<a href="<?php echo $shop['url'];?>"><?php echo filmsiShopPhotoThumbS($shop['name']);?></a>
+						<a href="<?php echo $shop['url'];?>"><?php echo $shop['name'];?></a>
 					</div>
 					<div style="display: inline-block; width: 140px; vertical-align: top; text-align: right; margin-left: 10px">
 						<?php foreach($shop['ShopFilm'] as $shopFilm):?>

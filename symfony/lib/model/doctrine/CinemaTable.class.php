@@ -7,6 +7,10 @@
  */
 class CinemaTable extends Doctrine_Table
 {
+	/**
+	 *
+	 * @return CinemaTable
+	 */
 	public static function getInstance()
 	{
 		return Doctrine_Core::getTable('Cinema');
@@ -237,5 +241,17 @@ class CinemaTable extends Doctrine_Table
 		return $q->orderBy('c.visit_count desc')
 			->limit($limit)
 			->execute();
+	}
+	
+	public function getDetailsAndSchedulesByFilmAndLocation($filmId, $locationId)
+	{
+		$q = Doctrine_Query::create()
+			->from('Cinema c')
+			->innerJoin('c.Schedule s')
+			->where('c.location_id = ?', $locationId)
+			->andWhere('s.film_id = ?', $filmId)
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		echo '<pre>'; var_dump($q); exit;
 	}
 }

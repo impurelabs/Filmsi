@@ -189,6 +189,10 @@ film_tickets_no_key:
   url: /rezerva-bilete-film/:id/
   param: { module: films, action: tickets }
 
+film_get_cinemas_by_location:
+  url: /film_get_cinemas_by_location/:id/
+  param: { module: films, action: executeCinemasByLocation }
+
 film_cast:
   url: /echipa-film/:id/:key
   param: { module: films, action: cast }

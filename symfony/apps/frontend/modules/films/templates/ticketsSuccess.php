@@ -32,23 +32,43 @@
         <h4 class="spacer-bottom-m">Rezerva bilete</h4>
 		<br />
 
-		<select class="cinema-city spacer-left" name="l" style="width: 350px">
+		<select id="city-selector" class="cinema-city spacer-left" name="l" style="width: 350px">
 			<option>Selecteaza orasul tau</option>
 			<?php foreach ($film->getLocationsWhereIsInCinema() as $location):?>
 			<option value="<?php echo $location['id'];?>"><?php echo $location['city'];?></option>
 			<?php endforeach;?>
 		</select>
+		
+		<div id="cinemas-container">
+			
+		</div>
 
-
-        
     </div>
 
 </div> <!-- content column end -->
 
-
-
-
-
 <div class="cell-container7 spacer-left"> <!-- right column start -->
 	<?php include_component('default', 'rightColumn', array('page' => Page::FILM));?>
 </div> <!-- right column end -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#city-selector').onchange(function(){
+		locationId = $('#city-selector option:selected').val();
+		
+		$.ajax({
+			url: '<?php echo url_for('@film_get_cinemas_by_location?id=' . $film->getId());?>',
+			type: 'get',
+			data: {
+				location_id: locationId
+			},
+			dataType: 'json',
+			success: function(data){
+				$('#cinemas-container').html('');
+				
+				
+			}
+		});
+	});
+});
+</script>

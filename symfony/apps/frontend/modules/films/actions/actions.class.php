@@ -224,6 +224,13 @@ class filmsActions extends sfActions
 			$this->getResponse()->addMeta('description', $this->film->getMetaDescription());
 		}
 	}
+	
+	public function executeCinemasByLocation(sfWebRequest $request)
+	{
+		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
+		
+		$this->cinemaSchedules = CinemaTable::getInstance()->getDetailsAndSchedulesByFilmAndLocation($request->getParameter('id'), $request->getParameter('location_id'));
+	}
 
 	public function executeVote(sfWebRequest $request)
 	{

@@ -66,7 +66,7 @@
 						<tr>
 							<td class="explanation-small" style="width: 70px">Zile</td>
 							<td class="explanation-small" style="width: 70px">Ore</td>
-							<td class="explanation-small" style="width: 50px">Rezerve bilete</td>
+							<td class="explanation-small" style="width: 50px">Rezerva bilete</td>
 						</tr>
 						<?php foreach ($film['schedules'] as $schedule):?>
 							<tr>

@@ -190,7 +190,7 @@
 	<?php if ($film->isOnDvd() || $film->isOnBluray()):?>
     <div class="greencell spacer-bottom-m">
     	<div class="left" style="width: 200px"><span class="hugewhite">CUMPARA</span></div>
-        <div class="left innerspacer-top">
+        <div class="left">
             <button class="normalbutton spacer-right-m" onclick="location.href='<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><span class="icon-buttonbullet-green"></span> Pe DVD</button>
             <button class="normalbutton" onclick="location.href='<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><span class="icon-buttonbullet-green"></span> Pe Bluray</button>
 		</div>

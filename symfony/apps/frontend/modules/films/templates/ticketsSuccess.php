@@ -38,7 +38,7 @@
 			<option value="<?php echo $location['id'];?>"><?php echo $location['city'];?></option>
 			<?php endforeach;?>
 		</select>
-		
+		<br /><br />
 		<div id="cinemas-container"></div>
 <br /><br /><br /><br /><br /><br />
     </div>

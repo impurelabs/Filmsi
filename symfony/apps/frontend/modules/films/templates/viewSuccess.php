@@ -189,10 +189,10 @@
 	
 	<?php if ($film->isOnDvd() || $film->isOnBluray()):?>
     <div class="greencell spacer-bottom-m">
-    	<div class="left" style="width: 200px"><span class="hugewhite">CUMPARA</span><br /><span class="bigstrong">Intalnire exploziva</span></div>
+    	<div class="left" style="width: 200px"><span class="hugewhite">CUMPARA</span></div>
         <div class="left innerspacer-top">
-            <button class="normalbutton spacer-right-m"><span class="icon-buttonbullet-green"></span> Pe DVD</button>
-            <button class="normalbutton "><span class="icon-buttonbullet-green"></span> Pe Bluray</button>
+            <button class="normalbutton spacer-right-m" onclick="location.href='<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><span class="icon-buttonbullet-green"></span> Pe DVD</button>
+            <button class="normalbutton" onclick="location.href='<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>'"><span class="icon-buttonbullet-green"></span> Pe Bluray</button>
 		</div>
 
         <div class="clear"></div>

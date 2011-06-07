@@ -36,6 +36,9 @@
     	<img src="<?php echo filmsiFilmPhotoThumb($film->getFilename());?>" class="spacer-bottom" width="185" />
 
         <?php include_partial('films/alert', array('filmId' => $film->getId()));?>
+		
+		<br />
+		<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     </div>
 
 

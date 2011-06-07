@@ -264,6 +264,7 @@ class CinemaTable extends Doctrine_Table
 			->andWhere('s.film_id = ?', $filmId)
 			->andWhere('s.day >= ?', $firstDay)
 			->andWhere('s.day <= ?', $lastDay)
+			->orderBy('s.day ASC')
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 	}
 }

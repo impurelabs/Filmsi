@@ -82,11 +82,11 @@
 				<?php if (false !== $voteDetails = $film->getVoteDetails()):?>
 				<div style="margin-top: 5px">
 					<div class="left align-center" style="width: 110px;">
-						<span class="votedetails-yes"><?php echo $voteDetails['yesPercent'];?>%</span><br />
+						<span class="votedetails-yes"><?php echo number_format($voteDetails['yesPercent'], 2, ',');?>%</span><br />
 						<span class="explanation smalltext"><?php echo $voteDetails['yesCount'];?> useri au votat DA</span>
 					</div>
 					<div class="left align-center" style="width: 110px; margin-left: 40px;">
-						<span class="votedetails-no"><?php echo $voteDetails['noPercent'];?>%</span><br />
+						<span class="votedetails-no"><?php echo number_format($voteDetails['noPercent'], 2, ',');?>%</span><br />
 						<span class="explanation smalltext"><?php echo $voteDetails['noCount'];?> useri au votat NU</span>
 					</div>
 					<div class="clear"></div>

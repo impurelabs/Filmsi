@@ -872,3 +872,7 @@ button[disabled-hack="disabled"] .icon-button-add { background-position: 0px -15
 /* Enable the bullets for the lists in the editor generated text */
 .tinyMce ul { padding-left: 20px }
 .tinyMce li { list-style: disc }
+
+
+
+.film-bottom-menu-bullet{ color: #51b15c; font-size: 20px; margin-right: 5px; vertical-align: middle }

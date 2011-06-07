@@ -58,13 +58,23 @@ class ShopTable extends Doctrine_Table
 
 	public function getByFilm($filmId)
 	{
-		return  Doctrine_Query::create()
+		$q = Doctrine_Query::create()
 			->from('Shop s')
 			->innerJoin('s.ShopFilm sf')
 			->where('sf.film_id = ?', $filmId)
 			->orderBy('s.name ASC')
-			->groupBy('sf.shop_id')
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		
+		$result = array();
+		foreach ($q as $item){
+			if (array_key_exists($item['id'], $result)){
+				$result[$item['id']]['ShopFilm'][] = $item['ShopFilm'];
+			} else {
+				$result[$item['id']] = $item;
+			}
+		}
+		
+		return $result;
 	}
 
 	public function getForGadget($limit)

@@ -43,7 +43,7 @@
 				<a href="<?php echo $shop['name'];?>" target="_blank"><?php echo $shop['name'];?></a>
 			</div>
 		<div class="ml-2" style="display: inline-block; width: 150px; vertical-align: top; text-align: center">
-			<a href="<?php echo $shop['name'];?>" target="_blank"><?php echo filmsiShopPhotoThumbS($shop['filename']);?></a>
+			<a href="<?php echo $shop['name'];?>" target="_blank"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a>
 		</div>
 		<div class="ml-2" style="display: inline-block; width: 130px; vertical-align: top; text-align: right">
 			<?php foreach($shop['ShopFilm'] as $shopFilm):?>
@@ -54,50 +54,7 @@
 				</a>
 			<?php endforeach;?>
 		</div>
-		<?php endforeach;?>
-		
-		
-		<?php if (count($shops['dvd']) > 0):?>
-			<h6 class="mb-2">Pe DVD</h6>
-			<?php foreach ($shops['dvd'] as $shop):?>
-				<div class="left spacer-bottom-m align-center ml-2 mr-2" style="width: 100px">
-					<div style="display: table-cell; height: 100px; width: 100px; vertical-align: middle">
-						<a href="<?php echo $shop['film_url'];?>" target="_blank"><img src="<?php echo filmsiShopPhotoThumb($shop['filename']);?>"  /></a>
-					</div>
-				<a href="<?php echo $shop['film_url'];?>" target="_blank"><?php echo $shop['name'];?></a>
-			</div>
-			<?php endforeach;?>
-			<div class="clear"></div><br />
-		<?php endif;?>
-
-		<?php if (count($shops['bluray']) > 0):?>
-			<h6 class="mb-2">Pe Bluray</h6>
-			<?php foreach ($shops['bluray'] as $shop):?>
-				<div class="left spacer-bottom-m align-center ml-2 mr-2" style="width: 100px">
-					<div style="display: table-cell; height: 100px; width: 100px; vertical-align: middle">
-						<a href="<?php echo $shop['film_url'];?>" target="_blank"><img src="<?php echo filmsiShopPhotoThumb($shop['filename']);?>"  /></a>
-					</div>
-				<a href="<?php echo $shop['film_url'];?>" target="_blank"><?php echo $shop['name'];?></a>
-			</div>
-			<?php endforeach;?>
-			<div class="clear"></div><br />
-		<?php endif;?>
-
-		<?php if (count($shops['online']) > 0):?>
-			<h6 class="mb-2">Online</h6>
-			<?php foreach ($shops['online'] as $shop):?>
-				<div class="left spacer-bottom-m align-center ml-2 mr-2" style="width: 100px">
-					<div style="display: table-cell; height: 100px; width: 100px; vertical-align: middle">
-						<a href="<?php echo $shop['film_url'];?>" target="_blank"><img src="<?php echo filmsiShopPhotoThumb($shop['filename']);?>"  /></a>
-					</div>
-				<a href="<?php echo $shop['film_url'];?>" target="_blank"><?php echo $shop['name'];?></a>
-			</div>
-			<?php endforeach;?>
-			<div class="clear"></div><br />
-		<?php endif;?>
-
-
-        
+		<?php endforeach;?>        
     </div>
 
 </div> <!-- content column end -->

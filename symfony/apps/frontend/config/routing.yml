@@ -190,7 +190,7 @@ film_tickets_no_key:
   param: { module: films, action: tickets }
 
 film_get_cinemas_by_location:
-  url: /film_get_cinemas_by_location/:id/
+  url: /film-get-cinemas-by-location/:id/
   param: { module: films, action: cinemasByLocation }
 
 film_cast:

@@ -45,12 +45,19 @@
 				<em>( <?php echo $film['name_ro'];?>)</em>
 			</div>
 			<div class="ml-2" style="display: inline-block; width: 340px">
-				<pre><?php var_dump($film->getShops());?></pre>
-				<!--<table>
+				<table>
 				<?php foreach($film->getShops() as $shop):?>
 					<tr>
-						<td><a href="<?php echo $shop['url'];?>"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a></td>
-						<td valign="middle" align="left"><a href="<?php echo $shop['url'];?>"><?php echo $shop['name'];?></a></td>
+						<td valign="top" align="left"><a href="<?php echo $shop['url'];?>"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a></td>
+						<td valign="top" align="left">
+							<?php foreach($shop['ShopFilm'] as $shopFilm):?>
+								<a href="<?php echo $shopFilm['url'];?>">
+									<?php if ($shop['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
+									<?php if ($shop['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
+									<?php if ($shop['format'] == 'online'):?>Vezi Online<?php endif;?>
+								</a>
+							<?php endforeach;?>
+						</td>
 					</tr>
 				<?php endforeach;?>
 				</table>-->

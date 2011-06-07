@@ -44,17 +44,17 @@
 				</a><br />
 				<em>( <?php echo $film['name_ro'];?>)</em>
 			</div>
-			<div class="ml-2" style="display: inline-block; width: 330px">
+			<div class="ml-2" style="display: inline-block; width: 330px; vertical-align: top">
 				<table>
 				<?php foreach($film->getShops() as $shop):?>
 					<tr>
-						<td valign="top" align="left"><a href="<?php echo $shop['url'];?>"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a></td>
-						<td valign="top" align="left">
+						<td valign="top" align="right"><a href="<?php echo $shop['url'];?>"><img src="<?php echo filmsiShopPhotoThumbS($shop['filename']);?>" /></a></td>
+						<td valign="top" align="right">
 							<?php foreach($shop['ShopFilm'] as $shopFilm):?>
 								<a href="<?php echo $shopFilm['url'];?>">
-									<?php if ($shop['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
-									<?php if ($shop['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
-									<?php if ($shop['format'] == 'online'):?>Vezi Online<?php endif;?>
+									<?php if ($shopFilm['format'] == 'dvd'):?>Cumpara DVD<?php endif;?>
+									<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
+									<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
 								</a>
 							<?php endforeach;?>
 						</td>

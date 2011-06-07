@@ -206,7 +206,7 @@
 							<tr>
 								<td style="padding:5px 10px"><strong><?php echo filmsiDayOfWeek(date('N', strtotime($schedule['day'])));?></strong></td>
 								<td style="padding:5px 10px"><span class="smalltext"><?php echo $schedule['schedule'];?></span></td>
-								<td style="padding:5px 10px"><a href="<?php echo $cinema->getReservationUrl();?>" class="greenbutton-s-link" target="_blank">Rezerva</a></td>
+								<td style="padding:5px 10px"><?php if ($cinema->getReservationUrl() != ''):?><a href="<?php echo $cinema->getReservationUrl();?>" class="greenbutton-s-link" target="_blank">Rezerva</a><?php endif;?></td>
 							</tr>
 						<?php endforeach;?>
 

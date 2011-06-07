@@ -227,6 +227,8 @@ class filmsActions extends sfActions
 	
 	public function executeCinemasByLocation(sfWebRequest $request)
 	{
+		$this->setLayout(false);
+		
 		$this->film = FilmTable::getInstance()->findOneById($request->getParameter('id'));
 		
 		$this->cinemaSchedules = CinemaTable::getInstance()->getDetailsAndSchedulesByFilmAndLocation($request->getParameter('id'), $request->getParameter('location_id'));

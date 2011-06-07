@@ -6,7 +6,7 @@
 	<?php foreach($cinemaSchedule['Schedule'] as $schedule):?>
 		<tr>
 			<td><?php echo filmsiDayOfWeek(date('N'), strtotime($schedule['day']));?></td>
-			<td><?php echo $scheule['schedule'];?></td>
+			<td><?php echo $schedule['schedule'];?></td>
 			<td><?php if ($cinemaSchedule['reservation_url'] != ''):?><a href="<?php echo $cinemaSchedule['reservation_url'];?>" target="_blank" class="greenbutton-s-link">Rezerva</a><?php endif;?></td>
 		</tr>
 	<?php endforeach; ?>

@@ -323,12 +323,15 @@
 			
 			<div style="display: inline-block; width: 140px; vertical-align: top">
 				<?php if ($film->isOnDvd() || $film->isOnBluray() || $film->isOnline()):?>
-				<a href="<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Cumpara DVD & Bluray</a>
+				<span style="color: red">&#8226</span><a href="<?php echo url_for('@film_buy?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Cumpara DVD & Bluray</a>
+				<hr class="mb-1" />
 				<?php endif;?>
 				<?php if ($film->isInCinema()):?>
 				<a href="<?php echo url_for('@film_tickets?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Rezerva bilete</a>
+				<hr class="mb-1" />
 				<?php endif;?>
 				<a href="<?php echo url_for('@film_cast?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Actori & echipa<span class="filter-cioc"></span></a>
+				<hr class="mb-1" />
 				<a href="<?php echo url_for('@film_sinopsis?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Sinopsis<span class="filter-cioc"></span></a>
 			</div>
 			<div style="display: inline-block; width: 140px; vertical-align: top; margin-left: 10px">

@@ -262,8 +262,8 @@ class CinemaTable extends Doctrine_Table
 			->innerJoin('c.Schedule s')
 			->where('c.location_id = ?', $locationId)
 			->andWhere('s.film_id = ?', $filmId)
-			->andWhere('s.day <= ?', $firstDay)
-			->andWhere('s.day >= ?', $lastDay)
+			->andWhere('s.day >= ?', $firstDay)
+			->andWhere('s.day <= ?', $lastDay)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		
 		echo '<pre>'; var_dump($q); exit;

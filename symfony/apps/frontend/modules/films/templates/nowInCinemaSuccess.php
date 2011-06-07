@@ -116,7 +116,9 @@
         	<div class="innerspacer-bottom-s spacer-bottom-s cell-separator-dotted-bottom">
                 <a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>"><img src="<?php echo filmsiFilmPhotoThumb($film['filename']);?>" style="width: 136px" /></a>
 				<div class="mb-2"></div>
-				<span class="smalltext"><?php echo format_date($film['status_cinema_year'] . '-' . $film['status-cinema_month'] . '-' . $film['status-cinema_day'], 'd', 'ro');?></span>
+				<?php if ($film['status_cinema_year'] != '' && $film['status-cinema_month'] && $film['status-cinema_day'] != ''):?>
+					<span class="smalltext" style="color: #d70000"><?php echo format_date($film['status_cinema_year'] . '-' . $film['status-cinema_month'] . '-' . $film['status-cinema_day'], 'd', 'ro');?></span>
+				<?php endif;?>
                 <a href="<?php echo url_for('@film?id=' . $film['id'] . '&key=' . $film['url_key']);?>" class="important-link"><?php echo $film['name_ro'];?></a>
         	</div>
             <div>

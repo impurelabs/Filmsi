@@ -377,7 +377,7 @@ class Film extends BaseFilm
 	public function hasRedcarpetPhotos()
 	{
 		if (!isset($this->hasRedcarpetPhotos)){
-			$this->hasRedcarpetPhotos = PhotoTable::getInstance()->hasRedcarpetByAlbum($this->film->getPhotoAlbumId());
+				$this->hasRedcarpetPhotos = PhotoTable::getInstance()->hasRedcarpetByAlbum($this->getPhotoAlbumId());
 		} 
 		
 		return $this->hasRedcarpetPhotos;

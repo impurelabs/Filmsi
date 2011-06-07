@@ -39,10 +39,8 @@
 			<?php endforeach;?>
 		</select>
 		
-		<div id="cinemas-container">
-			
-		</div>
-
+		<div id="cinemas-container"></div>
+<br /><br /><br /><br /><br /><br />
     </div>
 
 </div> <!-- content column end -->
@@ -56,17 +54,16 @@ $(document).ready(function(){
 	$('#city-selector').onchange(function(){
 		locationId = $('#city-selector option:selected').val();
 		
+		$('#cinemas-container').html('<img src="<?php echo image_path('indicator.gif');?>" />');
+		
 		$.ajax({
 			url: '<?php echo url_for('@film_get_cinemas_by_location?id=' . $film->getId());?>',
 			type: 'get',
 			data: {
 				location_id: locationId
 			},
-			dataType: 'json',
 			success: function(data){
-				$('#cinemas-container').html('');
-				
-				
+				$('#cinemas-container').html(response);
 			}
 		});
 	});

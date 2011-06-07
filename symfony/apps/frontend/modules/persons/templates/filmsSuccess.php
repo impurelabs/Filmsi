@@ -61,6 +61,7 @@
 								<?php if ($shopFilm['format'] == 'bluray'):?>Cumpara Bluray<?php endif;?>
 								<div class="mb-1"></div>
 								<?php if ($shopFilm['format'] == 'online'):?>Vezi Online<?php endif;?>
+								<div class="mb-1"></div>
 							</a>
 						<?php endforeach;?>
 					</div>

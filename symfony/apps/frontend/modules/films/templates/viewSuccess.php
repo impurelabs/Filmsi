@@ -285,6 +285,36 @@
 		'comments' => $comments,
 		'action' => url_for('@film?id=' . $film->getId() . '&key=' . $film->getUrlKey())
 	));?>
+	
+	
+	<div class="normalcell spacer-top spacer-bottom">
+		<?php if ($film->checkIfIpVotedToday($_SERVER['REMOTE_ADDR'])):?>
+			<br />
+			<p class="spacer-bottom-s align-center"><strong>Ai votat deja azi pentru acest film!</strong></p>
+		<?php else:?>
+			<span class="bigstrong black">Iti place?</span> 
+			<span class="bigtext explanation">Voteaza si tu!</span>
+
+			<div style="margin-top: 5px">
+				<button class="votebutton-yes">DA</button>
+				<button class="votebutton-no">NU</button>
+			</div>
+		<?php endif;?>
+
+			<?php if (false !== $voteDetails = $film->getVoteDetails()):?>
+			<div style="margin-top: 5px">
+				<div class="left align-center" style="width: 110px;">
+					<span class="votedetails-yes"><?php echo number_format((float)$voteDetails['yesPercent'], 2);?>%</span><br />
+					<span class="explanation smalltext"><?php echo $voteDetails['yesCount'];?> useri au votat DA</span>
+				</div>
+				<div class="left align-center" style="width: 110px; margin-left: 40px;">
+					<span class="votedetails-no"><?php echo number_format((float)$voteDetails['noPercent'], 2);?>%</span><br />
+					<span class="explanation smalltext"><?php echo $voteDetails['noCount'];?> useri au votat NU</span>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<?php endif;?>
+    </div>
 
 
 

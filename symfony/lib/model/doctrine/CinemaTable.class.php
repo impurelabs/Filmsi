@@ -245,12 +245,25 @@ class CinemaTable extends Doctrine_Table
 	
 	public function getDetailsAndSchedulesByFilmAndLocation($filmId, $locationId)
 	{
+		if (date('N', time()) == '1') {
+			$firstDay = date('Y-m-d', time());
+			$lastDay  = date('Y-m-d', strtotime("next Sunday"));
+		} elseif (date('N', time()) == '7') {
+			$firstDay  = date('Y-m-d', strtotime("last Monday"));
+			$lastDay = date('Y-m-d', time());
+		} else {
+			$firstDay  = date('Y-m-d', strtotime("last Monday"));
+			$lastDay  = date('Y-m-d', strtotime("next Sunday"));
+		}
+		
 		$q = Doctrine_Query::create()
 			->select('c.id, c.name, s.*')
 			->from('Cinema c')
 			->innerJoin('c.Schedule s')
 			->where('c.location_id = ?', $locationId)
 			->andWhere('s.film_id = ?', $filmId)
+			->andWhere('d.day <= ?', $firstDay)
+			->andWhere('d.day >= ?', $lastDay)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		
 		echo '<pre>'; var_dump($q); exit;

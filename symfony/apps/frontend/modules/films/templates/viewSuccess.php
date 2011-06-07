@@ -290,9 +290,9 @@
 	<div class="normalcell spacer-top spacer-bottom">
 		<?php if ($film->checkIfIpVotedToday($_SERVER['REMOTE_ADDR'])):?>
 			<br />
-			<h5>Ai votat deja pentru acest film!</h5>
+			<h5>Ai votat deja pentru acest film!</h5><br />
 		<?php else:?>
-			<h5>Iti place? <span class="black">Voteaza si tu!</span></h5>
+			<h5>Iti place? <span class="black">Voteaza si tu!</span></h5><br />
 
 			<div style="margin-top: 5px; margin-left: 100px">
 				<button class="votebutton-yes">DA</button>
@@ -313,6 +313,14 @@
 				<div class="clear"></div>
 			</div>
 			<?php endif;?>
+			
+			<hr class="mt-1 mb-1 cell-separator-dotted-bottom" />
+			
+			<a href="<?php echo url_for('@film_sinopsis?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>">Afla mai multe despre</a> 
+			<a href="<?php echo url_for('@film_sinopsis?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>" class="important-link"><?php echo $film->getNameRo();?></a>
+			
+			<hr class="mt-1 mb-1 cell-separator-dotted-bottom" />
+			
     </div>
 
 

@@ -14,6 +14,8 @@ class Film extends BaseFilm
 {
 	protected $bestActors = null;
 	protected $bestDirectors = null;
+	protected $hasNonRedcarpetPhotos = null;
+	protected $hasRedcarpetPhotos = null;
 
 
 	public function  getUrlKey() {
@@ -362,4 +364,23 @@ class Film extends BaseFilm
 			return false;
 		}
 	}
+	
+	public function hasNonRedcarpetPhotos()
+	{
+		if (!isset($this->hasNonRedcarpetPhotos)){
+			$this->hasNonRedcarpetPhotos = PhotoTable::getInstance()->hasNonRedcarpetByAlbum($this->getPhotoAlbumId());
+		} 
+		
+		return $this->hasNonRedcarpetPhotos;
+	}
+	
+	public function hasRedcarpetPhotos()
+	{
+		if (!isset($this->hasRedcarpetPhotos)){
+			$this->hasRedcarpetPhotos = PhotoTable::getInstance()->hasRedcarpetByAlbum($this->film->getPhotoAlbumId());
+		} 
+		
+		return $this->hasRedcarpetPhotos;
+	}
+		
 }

@@ -8,9 +8,9 @@ class filmsComponents extends sfComponents
 		$this->displayTickets = $this->film->isInCinema();
 		
 		/* Count the photos */
-		$this->displayPhotos = PhotoTable::getInstance()->hasNonRedcarpetByAlbum($this->film->getPhotoAlbumId());
+		$this->displayPhotos = $this->film->hasNonRedcarpetPhotos();
 		
 		/* Count the redcarpet photos */
-		$this->displayRedcarpet = PhotoTable::getInstance()->hasRedcarpetByAlbum($this->film->getPhotoAlbumId());
+		$this->displayRedcarpet = $this->film->hasRedcarpetPhotos();
 	}
 }

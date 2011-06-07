@@ -1,6 +1,6 @@
 <h2>Stiri din filme</h2>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@stires');?>" class="black-link">Stiri din filme</a>
 </div>

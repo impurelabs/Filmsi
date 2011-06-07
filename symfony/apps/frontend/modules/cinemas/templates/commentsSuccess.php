@@ -1,6 +1,6 @@
 <h2><a href="<?php echo url_for('@cinema?id=' . $cinema->getId() . '&key=' . $cinema->getUrlKey());?>"><?php echo $cinema->getName();?></a></h2>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@cinemas');?>" class="black-link">Cinematografe</a> &raquo;
 	<a href="<?php echo url_for('@cinema?id=' . $cinema->getId() . '&key=' . $cinema->getUrlKey());?>" class="black-link"><?php echo $cinema->getName();?></a> &raquo;

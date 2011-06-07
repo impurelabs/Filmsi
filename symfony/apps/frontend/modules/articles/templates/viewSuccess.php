@@ -1,6 +1,6 @@
 <h2>Camera secreta</h2>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@articles');?>" class="black-link">Camera secreta</a> &raquo;
 	<a href="<?php echo url_for('@articles');?><?php echo isset($currentCategory) ? '?c=' . $currentCategory->getId() : '';?>" class="black-link"><?php echo isset($currentCategory) ? $currentCategory->getName() . ' &raquo;' : '';?></a>

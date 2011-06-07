@@ -2,7 +2,7 @@
 	<span class="icon-popcorn"></span><h2 class="spacer-left-xxl">Filme <span class="black">la cinema</span></h2>
 </div>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@film_now_in_cinema');?>" class="black-link">Filme in cinema</a>
 </div>

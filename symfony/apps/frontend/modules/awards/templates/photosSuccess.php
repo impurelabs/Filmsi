@@ -4,7 +4,7 @@
 
 <h2>Premii si <span class="white">si festivaluri</span></h2>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="white-link">Home</a> <span class="white">&raquo;</span>
 	<a href="<?php echo url_for('@festivals');?>" class="white-link">Festivaluri</a><span class="white">&raquo;</span>
 	<a href="<?php echo url_for('@festival_edition?id=' . $edition->getId() . '&key=' . $edition->getUrlKey());?>" class="white-link"><?php echo $edition->getFestival()->getName() . ' - ' . $edition->getEdition();?></a> <span class="white">&raquo;</span>

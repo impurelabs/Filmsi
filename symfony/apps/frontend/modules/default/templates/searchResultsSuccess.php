@@ -1,6 +1,6 @@
 <h2>Rezultate cautare: <span class="black"><?php echo $sf_request->getParameter('q');?></span></h2>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@default?module=default&action=search');?>?q=<?php echo urlencode($sf_request->getParameter('q'));?>" class="black-link">Rezultate cautare</a>
 </div>

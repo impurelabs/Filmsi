@@ -1,6 +1,6 @@
 <h2>Programul <span class="black">cinematografelor</span></h2>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@cinema_search');?>" class="black-link">Programul cinematografelor</a>
 </div>

@@ -2,7 +2,7 @@
 	<span class="icon-dvd"></span><h2 class="spacer-left-xxl">Filme <span class="black">pe Dvd & Bluray</span></h2>
 </div>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@film_now_on_dvd');?>" class="black-link">Filme pe DVD & Bluray</a>
 </div>

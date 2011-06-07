@@ -2,7 +2,7 @@
 	<span class="icon-tv"></span><h2 style="margin-left:70px">Filme <span class="black">la Tv</span></h2>
 </div>
 
-<div class="spacer-bottom-m">
+<div class="spacer-bottom-m" style="margin-top: 15px">
 	<a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo;
 	<a href="<?php echo url_for('@film_on_tv');?>" class="black-link">La Tv</a>
 </div>

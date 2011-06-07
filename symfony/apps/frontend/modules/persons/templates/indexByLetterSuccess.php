@@ -1,5 +1,5 @@
 <h2>Actori &amp; regizori</h2>
-<div class="spacer-bottom-m"><a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo; Actori &amp; Regizori </div>
+<div class="spacer-bottom-m" style="margin-top: 15px"><a href="<?php echo url_for('@homepage');?>" class="black-link">Home</a> &raquo; Actori &amp; Regizori </div>
 
 
 <div class="cell-container6"> <!-- left column start -->

@@ -51,7 +51,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#city-selector').onchange(function(){
+	$('#city-selector').change(function(){
 		locationId = $('#city-selector option:selected').val();
 		
 		$('#cinemas-container').html('<img src="<?php echo image_path('indicator.gif');?>" />');

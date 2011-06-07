@@ -242,7 +242,7 @@
 	<?php endif;?>
 
 	<?php if (count($film->getFirstVideos(3)) > 0):?>
-	<div class="cell spacer-bottom-m">
+	<div class="normalcell spacer-bottom-m">
         <h5>Trailere <span class="black">si clipuri video</span></h5>
         <div class="cell-bd innerspacer-bottom-m">
             <?php foreach($film->getFirstVideos(3) as $video):?>
@@ -290,19 +290,18 @@
 	<div class="normalcell spacer-top spacer-bottom">
 		<?php if ($film->checkIfIpVotedToday($_SERVER['REMOTE_ADDR'])):?>
 			<br />
-			<p class="spacer-bottom-s align-center"><strong>Ai votat deja azi pentru acest film!</strong></p>
+			<h5>Ai votat deja pentru acest film!</h5>
 		<?php else:?>
-			<span class="bigstrong black">Iti place?</span> 
-			<span class="bigtext explanation">Voteaza si tu!</span>
+			<h5>Iti place? <span class="black">Voteaza si tu!</span></h5>
 
-			<div style="margin-top: 5px">
+			<div style="margin-top: 5px; margin-left: 100px">
 				<button class="votebutton-yes">DA</button>
 				<button class="votebutton-no">NU</button>
 			</div>
 		<?php endif;?>
 
 			<?php if (false !== $voteDetails = $film->getVoteDetails()):?>
-			<div style="margin-top: 5px">
+			<div style="margin-top: 5px; margin-left: 100px">
 				<div class="left align-center" style="width: 110px;">
 					<span class="votedetails-yes"><?php echo number_format((float)$voteDetails['yesPercent'], 2);?>%</span><br />
 					<span class="explanation smalltext"><?php echo $voteDetails['yesCount'];?> useri au votat DA</span>

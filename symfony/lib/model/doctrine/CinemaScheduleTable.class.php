@@ -201,6 +201,12 @@ class CinemaScheduleTable extends Doctrine_Table
 	
 	public function getLocationsByFilm($filmId)
 	{
+		if (date('N') == '1'){
+			$firstDayOfWeek = date('Y-m-d', time());
+		} else {
+			$firstDayOfWeek = date('Y-m-d', strtotime('last Monday'));
+		}
+		
 		$q = Doctrine_Query::create()
 			->select('s.id, c.id, l.id, l.city')
 			->from('CinemaSchedule s')
@@ -208,6 +214,7 @@ class CinemaScheduleTable extends Doctrine_Table
 			->innerJoin('c.Location l')
 			->groupBy('c.location_id')
 			->where('s.film_id = ?', $filmId)
+			->andWhere('s.day >= ?', $firstDayOfWeek)
 			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 		
 		$results = array();

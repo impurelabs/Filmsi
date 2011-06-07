@@ -822,17 +822,14 @@ class filmsActions extends sfActions
 			$this->backgroundWidth = '';
 		}
 
-		$this->shops = $this->film->getShopUrls();
-
-
 
 		/* META Stuff */
 		$this->actors = FilmPersonTable::getInstance()->getBestActorsByFilm($this->film->getId(), 3);
 		$this->directors = FilmPersonTable::getInstance()->getBestDirectorsByFilm($this->film->getId());
-		$this->getResponse()->setTitle('Cumpara pe DVD si Blu-ray ' . $this->film->getName() . ' - Filmsi.ro');
+		$this->getResponse()->setTitle('Rezerva bilete ' . $this->film->getName() . ' - Filmsi.ro');
 
 		if ($this->film->getMetaKeywords() == '' || $this->film->getMetaDescription() == ''){
-			$metaStuff = 'Cumpara pe DVD si Blu-ray ' . $this->film->getName() . ' - ';
+			$metaStuff = 'Rezerva bilete ' . $this->film->getName() . ' - ';
 
 			foreach($this->film->getGenres() as $key => $genre){
 				$metaStuff .= $genre->getName();

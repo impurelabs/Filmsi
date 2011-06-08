@@ -137,11 +137,11 @@ class defaultActions extends sfActions
 		
 		$this->getContext()->getConfiguration()->loadHelpers('Filmsi');
 		
-		$this->films = FilmTable::getInstance()->getForSearch($term, 5);
-		$this->persons = PersonTable::getInstance()->getForSearch($term, 5);
-		$this->cinemas = CinemaTable::getInstance()->getForSearch($term, 5);
-		$this->articles = ArticleTable::getInstance()->getForSearch($term, 5);
-		$this->stires = StireTable::getInstance()->getForSearch($term, 5);
+		$this->films = FilmTable::getInstance()->getForSearch($term, 20);
+		$this->persons = PersonTable::getInstance()->getForSearch($term, 20);
+		$this->cinemas = CinemaTable::getInstance()->getForSearch($term, 20);
+		$this->articles = ArticleTable::getInstance()->getForSearch($term, 20);
+		$this->stires = StireTable::getInstance()->getForSearch($term, 20);
 		$this->photos = PhotoTable::getInstance()->getForSearch($term, 3);
 		$this->videos = VideoTable::getInstance()->getForSearch($term, 1);
 		

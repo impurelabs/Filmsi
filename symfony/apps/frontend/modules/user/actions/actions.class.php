@@ -43,7 +43,7 @@ class userActions extends sfActions
 	}
 	
 	public function executeFbLogin($request)
-	{
+	{	
 		$this->forward404If(!$request->isMethod('post'));
 		
 		$fbParams = $request->getParameter('fb');
@@ -51,8 +51,8 @@ class userActions extends sfActions
 		if (false === $user = Doctrine_Core::getTable('sfGuardUser')->findOneByFbId($fbParams['id'])){
 			if (false === $user = Doctrine_Core::getTable('sfGuardUser')->findOneByEmailAddress($fbParams['id'])){
 				$user = new sfGuardUser();
-				$user->setFirstName($sfParams['first_name']);
-				$user->setLastName($sfParams['last_name']);
+				$user->setFirstName($fbParams['first_name']);
+				$user->setLastName($fbParams['last_name']);
 				
 				$birthday = explode('/', $fbParams['birthday']);
 				$user->setDob($birthday[2] . '-' . $birthday[0] . '-' . $birthday[1]);
@@ -71,7 +71,7 @@ class userActions extends sfActions
 		
 		$this->getUser()->signIn($user, true);
 		
-		$this->renderText(json_encode(array('status' => true)));
+		return $this->renderText(json_encode(array('status' => true)));
 	}
 
 	public function executeLogout($request)

@@ -48,6 +48,7 @@ FB.init({
 		
 $(document).ready(function(){
 	$('#fb-button').click(function(){
+		alert('aaa');
 		FB.login(function(response){
 			if (response.session && response.perms){
 				alert('este ok');

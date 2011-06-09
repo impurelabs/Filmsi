@@ -243,6 +243,11 @@ class defaultActions extends sfActions
 		$this->content = ContentTable::getInstance()->findOneById(2);
 	}
 
+	public function executePrivacy(sfWebRequest $request)
+	{
+		$this->content = ContentTable::getInstance()->findOneById(6);
+	}
+
 	public function executePublicitate(sfWebRequest $request)
 	{
 		$this->content = ContentTable::getInstance()->findOneById(3);

@@ -127,6 +127,7 @@
 
             <div class="greencell white spacer-bottom-m">
             	<div class="right">
+                	<a href="<?php echo url_for('@default?module=default&action=privacy');?>" class="white-link">Politica de confidentialitate</a> |
                 	<a href="<?php echo url_for('@default?module=default&action=terms');?>" class="white-link">Termeni si conditii</a> |
                     <a href="<?php echo url_for('@default?module=default&action=publicitate');?>" class="white-link">Publicitate</a> |
                     <a href="<?php echo url_for('@default?module=default&action=contact');?>" class="white-link">Contact</a>

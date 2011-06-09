@@ -126,11 +126,13 @@ all:
     name_3: 'Pagina "Publicitate"'
     name_4: 'Celula sus din pagina "Publica stire"'
     name_5: 'Celula dreapta din pagina "Publica stire"'
+    name_6: 'Pagina "Politica confidentialitate"'
     width_1: 660
     width_2: 660
     width_3: 660
     width_4: 450
     width_5: 200
+    width_6: 660
     
   asset:
     aws_s3_folder: 'assets'

@@ -41,6 +41,11 @@ class userActions extends sfActions
 			}
 		}
 	}
+	
+	public function executeFbLogin($request)
+	{
+		echo '<pre>'; var_dump($_POST); exit;
+	}
 
 	public function executeLogout($request)
 	{

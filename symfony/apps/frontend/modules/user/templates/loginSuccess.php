@@ -52,7 +52,25 @@ $(document).ready(function(){
 	$('#fb-button').click(function(){
 		FB.login(function(response){
 			if (response.session && response.perms){
-				console.log(response);
+				FB.api('/me', function(response){
+					$.ajax({
+						url: '<?php echo url_for('@default?module=user&action=fbLogin');?>',
+						type: 'post',
+						dataType: 'json',
+						data: {
+							fb: response
+						},
+						success: function(response){
+							alert(response);
+//							if (location.href.indexOf('?') == -1){
+//								url = location.href + '?sc=1' ;
+//							} else {
+//								url = location.href + '&sc=1' ;
+//							}
+//							location.replace(url);
+						}
+					});
+				});
 			}
 		}, 
 		{

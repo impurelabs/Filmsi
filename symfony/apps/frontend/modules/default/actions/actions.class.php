@@ -27,7 +27,7 @@ class defaultActions extends sfActions
 			$days[$i] = date('Y-m-d', ( $i - $today ) * 86400 + $todayTime);
 		}
 		$this->filmsNowInCinema = FilmTable::getInstance()->getInCinemaNowByStatus(5);
-		$this->filmsNowDbo = FilmTable::getInstance()->getOnDvdAndBlurayNow(5, null, null, null, null, true, true, Doctrine_Core::HYDRATE_RECORD);
+		$this->filmsNowDbo = FilmTable::getInstance()->getOnDvdAndBlurayNowByStatus(5);
 		$this->filmsNowTv = ChannelScheduleTable::getInstance()->getFilmsByDay(date('Y-m-d'), 5);
 		$this->cinemaLocations = CinemaTable::getInstance()->getLocations();
 		$this->filmsSoonInCinema = FilmTable::getInstance()->getInCinemaSoonByStatus(5);

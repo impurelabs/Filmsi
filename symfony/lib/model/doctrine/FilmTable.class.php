@@ -485,6 +485,39 @@ text;
 		return  $q->execute(array(), $hydrator);
 
 	}
+	
+	public function getOnDvdAndBlurayNowByStatus($limit)
+	{
+		if (date('N', time()) == '1') {
+			$firstDay = date('Y-m-d', time());
+			$lastDay  = date('Y-m-d', strtotime("next Sunday") + 604800);
+		} elseif (date('N', time()) == '7') {
+			$firstDay  = date('Y-m-d', strtotime("last Monday"));
+			$lastDay = date('Y-m-d', strtotime('next Sunday'));
+		} else {
+			$firstDay  = date('Y-m-d', strtotime("last Monday"));
+			$lastDay  = date('Y-m-d', strtotime("next Sunday") + 604800);
+		}
+		
+		$dvdQueryString = <<<text
+		f.status_dvd = 1 AND
+		concat_ws("-", f.status_dvd_year, lpad(f.status_dvd_month, 2, "0"), lpad(f.status_dvd_day, 2, "0")) >= "$firstDay" AND
+		concat_ws("-", f.status_dvd_year, lpad(f.status_dvd_month, 2, "0"), lpad(f.status_dvd_day, 2, "0")) <= "$lastDay"
+text;
+		
+		$blurayQueryString = <<<text
+		f.status_bluray = 1 AND
+		concat_ws("-", f.status_bluray_year, lpad(f.status_bluray_month, 2, "0"), lpad(f.status_bluray_day, 2, "0")) >= "$firstDay" AND
+		concat_ws("-", f.status_bluray_year, lpad(f.status_bluray_month, 2, "0"), lpad(f.status_bluray_day, 2, "0")) <= "$lastDay"
+text;
+		
+		return Doctrine_Query::create()
+			->from('Film f')
+			->where($dvdQueryString)
+			->orWhere($blurayQueryString)
+			->limit($limit)
+			->execute();
+	}
 
 	public function getOnDvdAndBlurayNowCount($genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)
 	{
@@ -612,6 +645,40 @@ text;
 
 		return  $q->execute(array(), $hydrator);
 
+	}
+	
+	
+	public function getOnDvdAndBluraySoonByStatus($limit)
+	{
+		if (date('N', time()) == '1') {
+			$firstDay = date('Y-m-d', time() + 604800);
+			$lastDay  = date('Y-m-d', strtotime("next Sunday") + 1209600);
+		} elseif (date('N', time()) == '7') {
+			$firstDay  = date('Y-m-d', strtotime("last Monday") + 604800);
+			$lastDay = date('Y-m-d', strtotime('next Sunday') + 1209600);
+		} else {
+			$firstDay  = date('Y-m-d', strtotime("last Monday") + 604800);
+			$lastDay  = date('Y-m-d', strtotime("next Sunday") + 1209600);
+		}
+		
+		$dvdQueryString = <<<text
+		f.status_dvd = 1 AND
+		concat_ws("-", f.status_dvd_year, lpad(f.status_dvd_month, 2, "0"), lpad(f.status_dvd_day, 2, "0")) >= "$firstDay" AND
+		concat_ws("-", f.status_dvd_year, lpad(f.status_dvd_month, 2, "0"), lpad(f.status_dvd_day, 2, "0")) <= "$lastDay"
+text;
+		
+		$blurayQueryString = <<<text
+		f.status_bluray = 1 AND
+		concat_ws("-", f.status_bluray_year, lpad(f.status_bluray_month, 2, "0"), lpad(f.status_bluray_day, 2, "0")) >= "$firstDay" AND
+		concat_ws("-", f.status_bluray_year, lpad(f.status_bluray_month, 2, "0"), lpad(f.status_bluray_day, 2, "0")) <= "$lastDay"
+text;
+		
+		return Doctrine_Query::create()
+			->from('Film f')
+			->where($dvdQueryString)
+			->orWhere($blurayQueryString)
+			->limit($limit)
+			->execute();
 	}
 
 	public function getOnDvdAndBluraySoonCount($genres = array(), $ratings = array(), $awards = array(), $onDvd = true, $onBluray = true)

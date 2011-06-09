@@ -300,6 +300,29 @@ class FilmTable extends Doctrine_Table
 		return  $q->execute(array(), $hydrator);
 		
 	}
+	
+	public function getInCinemaNowByStatus($limit)
+	{
+		if (date('N', time()) == '1') {
+			$firstDay = date('Y-m-d', time());
+			$lastDay  = date('Y-m-d', strtotime("next Sunday") + 604800);
+		} elseif (date('N', time()) == '7') {
+			$firstDay  = date('Y-m-d', strtotime("last Monday"));
+			$lastDay = date('Y-m-d', strtotime('next Sunday'));
+		} else {
+			$firstDay  = date('Y-m-d', strtotime("last Monday"));
+			$lastDay  = date('Y-m-d', strtotime("next Sunday") + 604800);
+		}
+		
+		return Doctrine_Query::create()
+			->from('Film f')
+			->where('f.status_cinema = 1')
+			->andWhere('concat_ws("-", f.status_cinema_year, lpad(f.status_cinema_month, 2, "0"), lpad(f.status_cinema_day, 2, "0")) >= "' . $firstDay . '"')
+			->andWhere('concat_ws("-", f.status_cinema_year, lpad(f.status_cinema_month, 2, "0"), lpad(f.status_cinema_day, 2, "0")) <= "' . $lastDay . '"')
+			->orderBy('f.status_cinema_year ASC, f.status_cinema_month ASC, f.status_cinema_day ASC')
+			->limit($limit)
+			->execute();
+	}
 
 	public function getInCinemaNowCount($when = null, $genres = array(), $ratings = array(), $locations = array())
 	{

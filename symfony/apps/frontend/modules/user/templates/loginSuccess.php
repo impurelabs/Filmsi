@@ -41,7 +41,7 @@
 <div id="fb-root"></div>
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-<script type="text/javscript">
+<script type="text/javascript">
  FB.init({ 
 	appId:'207943125913396', cookie:true, 
 	status:true, xfbml:true 

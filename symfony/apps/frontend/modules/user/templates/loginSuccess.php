@@ -28,6 +28,8 @@
 			<div id="user-buttons">
 				<a href="javascript: void(0)" id="login-submit-button" class="whitebutton-small-link">Intra in cont</a>
 				<a href="javascript: void(0)" class="user-forgot ml-3">Am uitat parola!</a>
+				
+				<a href="javascript: void(0)" style="margin-left: 300px" id="fb-button"><img src="<?php echo image_path('fb-button.png');?>" /></a>
 			</div>
 		</div><br /><br />
 
@@ -37,8 +39,25 @@
 
 <div class="clear"></div>
 
+<script src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript">
+FB.init({ 
+	appId:'207943125913396', cookie:true, 
+	status:true, xfbml:true 
+ });
+		
 $(document).ready(function(){
+	$('#fb-button').click(function(){
+		FB.login(function(response){
+			if (response.session && response.perms){
+				alert('este ok');
+				console.log(response);
+			}
+		}, {
+			perms: 'user_location,user_birthday,email'
+		});
+	});
+	
 	$('#user-register-button').click(function(){
 		$('#user-container').slideUp('fast')
 			.load('<?php echo url_for('@default?module=user&action=register');?>', function(){

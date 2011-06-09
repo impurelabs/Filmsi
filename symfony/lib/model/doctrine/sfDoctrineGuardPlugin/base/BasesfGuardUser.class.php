@@ -126,6 +126,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasColumn('dob', 'date', null, array(
              'type' => 'date',
              ));
+        $this->hasColumn('fb_id', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
         $this->hasColumn('email_address', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,

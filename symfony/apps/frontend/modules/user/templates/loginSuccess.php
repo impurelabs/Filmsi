@@ -44,6 +44,9 @@
 <script type="text/javascript">		
 $(document).ready(function(){	
 	$('#fb-button').click(function(){
+		$('#user-buttons').hide();
+		$('#user-buttons-container').prepend('<div id="user-indicator"><img src="<?php echo image_path('indicator.gif');?>" /> Se intra in cont ...</div>');
+		
 		 FB.init({ 
 			appId:'207943125913396', cookie:true, 
 			status:true, xfbml:true 

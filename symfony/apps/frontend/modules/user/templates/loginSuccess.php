@@ -50,8 +50,14 @@
 <script type="text/javascript">		
 $(document).ready(function(){	
 	$('#fb-button').click(function(){
-		alert('aaa');
-		
+		FB.login(function(response){
+			if (response.session && response.perms){
+				console.log(response);
+			}
+		}, 
+		{
+			perms: 'user_location,user_birthday,email'
+		});
 	});
 	
 	$('#user-register-button').click(function(){

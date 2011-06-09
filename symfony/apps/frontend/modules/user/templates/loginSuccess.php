@@ -41,15 +41,14 @@
 <div id="fb-root"></div>
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-<script type="text/javascript">
- FB.init({ 
-	appId:'207943125913396', cookie:true, 
-	status:true, xfbml:true 
- });
-</script>
 <script type="text/javascript">		
 $(document).ready(function(){	
 	$('#fb-button').click(function(){
+		 FB.init({ 
+			appId:'207943125913396', cookie:true, 
+			status:true, xfbml:true 
+		 });
+		
 		FB.login(function(response){
 			if (response.session && response.perms){
 				FB.api('/me', function(response){

@@ -61,13 +61,12 @@ $(document).ready(function(){
 							fb: response
 						},
 						success: function(response){
-							alert(response);
-//							if (location.href.indexOf('?') == -1){
-//								url = location.href + '?sc=1' ;
-//							} else {
-//								url = location.href + '&sc=1' ;
-//							}
-//							location.replace(url);
+							if (location.href.indexOf('?') == -1){
+								url = location.href + '?sc=1' ;
+							} else {
+								url = location.href + '&sc=1' ;
+							}
+							location.replace(url);
 						}
 					});
 				});

@@ -647,7 +647,6 @@ text;
 
 	}
 	
-	
 	public function getOnDvdAndBluraySoonByStatus($limit)
 	{
 		if (date('N', time()) == '1') {

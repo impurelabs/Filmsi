@@ -31,7 +31,7 @@ class defaultActions extends sfActions
 		$this->filmsNowTv = ChannelScheduleTable::getInstance()->getFilmsByDay(date('Y-m-d'), 5);
 		$this->cinemaLocations = CinemaTable::getInstance()->getLocations();
 		$this->filmsSoonInCinema = FilmTable::getInstance()->getInCinemaSoonByStatus(5);
-		$this->filmsSoonDbo = FilmTable::getInstance()->getOnDvdAndBluraySoon(5, null, null, null, null, true, true, Doctrine_Core::HYDRATE_RECORD);
+		$this->filmsSoonDbo = FilmTable::getInstance()->getOnDvdAndBluraySoonByStatus(5);
 		$this->filmsSoonTv = FilmTable::getInstance()->getOnTvSoon(5, null, null, null, Doctrine_Core::HYDRATE_RECORD);
 		$this->latestTrailers = VideoTable::getInstance()->getLatestTrailers(6);
 		$this->personsBorn = PersonTable::getInstance()->getBornToday(5);

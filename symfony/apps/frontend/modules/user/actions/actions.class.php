@@ -59,7 +59,7 @@ class userActions extends sfActions
 				$user->setGender($fbParams['gender'] == 'male' ? 0 : 1);
 				$user->setFbId($fbParams['id']);
 				$user->setEmailAddress($fbParams['email']);
-				$user->setUsername(Doctrine_Core::getTable('sfGuardUser')->getNewUserByNames($fbParams['first_name'], $fbParams['first_name']));
+				$user->setUsername(Doctrine_Core::getTable('sfGuardUser')->getNewUserByNames($fbParams['first_name'], $fbParams['last_name']));
 				$user->setPassword(rand(0, 100000));
 				$user->setIsActive('1');
 				$user->save();

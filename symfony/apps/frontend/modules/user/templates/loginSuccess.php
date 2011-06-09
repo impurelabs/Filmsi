@@ -40,9 +40,13 @@
 <div class="clear"></div>
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-<script type="text/javascript">
-		
+<script type="text/javascript">		
 $(document).ready(function(){
+	FB.init({ 
+		appId:'207943125913396', cookie:true, 
+		status:true, xfbml:true 
+	 });
+	
 	$('#fb-button').click(function(){
 		alert('aaa');
 		

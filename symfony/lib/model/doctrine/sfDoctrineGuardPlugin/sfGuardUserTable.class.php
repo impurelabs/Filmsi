@@ -204,4 +204,18 @@ public function countFiltered($filters)
 
 		return $users;
 	}
+	
+	public function getNewUserByNames($firstName, $lastName)
+	{
+		$q = Doctrine_Query::create()
+			->select('COUNT(u.id) count')
+			->from('sfGuardUser u')
+			->where('u.username LIKE ?', '%' . $firstName . $lastName . '%')
+			->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+		if ($q['count'] > 0){
+			return $firstName . $lastName . $q['count'];
+		} else {
+			return $firstName . $lastName;
+		}
+	}
 }

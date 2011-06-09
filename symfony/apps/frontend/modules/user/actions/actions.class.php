@@ -44,7 +44,34 @@ class userActions extends sfActions
 	
 	public function executeFbLogin($request)
 	{
-		echo '<pre>'; var_dump($_POST); exit;
+		$this->forward404If(!$request->isMethod('post'));
+		
+		$fbParams = $request->getParameter('fb');
+		
+		if (false === $user = Doctrine_Core::getTable('sfGuardUser')->findOneByFbId($fbParams['id'])){
+			if (false === $user = Doctrine_Core::getTable('sfGuardUser')->findOneByEmailAddress($fbParams['id'])){
+				$user = new sfGuardUser();
+				$user->setFirstName($sfParams['first_name']);
+				$user->setLastName($sfParams['last_name']);
+				
+				$birthday = explode('/', $fbParams['birthday']);
+				$user->setDob($birthday[2] . '-' . $birthday[0] . '-' . $birthday[1]);
+				$user->setGender($fbParams['gender'] == 'male' ? 0 : 1);
+				$user->setFbId($fbParams['id']);
+				$user->setEmailAddress($fbParams['email']);
+				$user->setUsername(Doctrine_Core::getTable('sfGuardUser')->getNewUserByNames($fbParams['first_name'], $fbParams['first_name']));
+				$user->setPassword(rand(0, 100000));
+				$user->setIsActive('1');
+				$user->save();
+			} else {
+				$user->setFbId($fbParams['id']);
+				$user->save();
+			}
+		}
+		
+		$this->getUser()->signIn($user, true);
+		
+		$this->renderText(json_encode(array('status' => true)));
 	}
 
 	public function executeLogout($request)

@@ -38,15 +38,17 @@
 </div><!-- user-content end -->
 
 <div class="clear"></div>
+<div id="fb-root"></div>
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
+<script type="text/javscript">
+ FB.init({ 
+	appId:'207943125913396', cookie:true, 
+	status:true, xfbml:true 
+ });
+</script>
 <script type="text/javascript">		
-$(document).ready(function(){
-	FB.init({ 
-		appId:'207943125913396', cookie:true, 
-		status:true, xfbml:true 
-	 });
-	
+$(document).ready(function(){	
 	$('#fb-button').click(function(){
 		alert('aaa');
 		

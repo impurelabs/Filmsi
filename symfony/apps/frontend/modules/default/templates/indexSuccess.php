@@ -532,10 +532,9 @@
     <div class="cell-bd" style="height: 162px">
       <?php foreach($redcarpetPhotos  as $redcarpetPhoto):?>
 			<div class="inline-block align-center spacer-bottom ml-1" style="width: 85px; vertical-align: top">
-				<a href="<?php echo url_for('@film_redcarpet?id=' . $redcarpetPhoto->getAlbum()->getFilm()->getId() . '&key=' . $redcarpetPhoto->getAlbum()->getFilm()->getUrlKey());?>?photo_id=<?php echo $redcarpetPhoto->getId();?>">
-					<img width="80" src="<?php echo filmsiPhotoThumb($redcarpetPhoto->getFilename());?>" />
-				</a> <br />
-				<a href="<?php echo url_for('@film_redcarpet?id=' . $redcarpetPhoto->getAlbum()->getFilm()->getId() . '&key=' . $redcarpetPhoto->getAlbum()->getFilm()->getUrlKey());?>?photo_id=<?php echo $redcarpetPhoto->getId();?>" class="black-link">
+				<a href="<?php echo url_for('@film_redcarpet?id=' . $redcarpetPhoto->getAlbum()->getFilm()->getId() . '&key=' . $redcarpetPhoto->getAlbum()->getFilm()->getUrlKey());?>?photo_id=<?php echo $redcarpetPhoto->getId();?>"
+				   style="display: inline-block; width: 80px; height: 107px; padding: 1px; border: 1px solid #d5d5d5; overflow: hidden; background-image: url('<?php echo filmsiPhotoThumb($redcarpetPhoto->getFilename());?>'); background-repeat: no-repeat; background-position: center center;"></a> <br />
+				<a href="<?php echo url_for('@film_redcarpet?id=' . $redcarpetPhoto->getAlbum()->getFilm()->getId() . '&key=' . $redcarpetPhoto->getAlbum()->getFilm()->getUrlKey());?>?photo_id=<?php echo $redcarpetPhoto->getId();?>" class="black-link xs-link">
 					<?php echo $redcarpetPhoto->getDescription();?>
 				</a> <br />
 			</div>

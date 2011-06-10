@@ -28,7 +28,7 @@ class defaultActions extends sfActions
 		}
 		$this->filmsNowInCinema = FilmTable::getInstance()->getInCinemaNowByStatus(5);
 		$this->filmsNowDbo = FilmTable::getInstance()->getOnDvdAndBlurayNowByStatus(5);
-		$this->filmsNowTv = ChannelScheduleTable::getInstance()->getFilmsByDay(date('Y-m-d'), 5);
+		$this->filmsNowTv = ChannelScheduleTable::getInstance()->getNowFilms(5);
 		$this->cinemaLocations = CinemaTable::getInstance()->getLocations();
 		$this->filmsSoonInCinema = FilmTable::getInstance()->getInCinemaSoonByStatus(5);
 		$this->filmsSoonDbo = FilmTable::getInstance()->getOnDvdAndBluraySoonByStatus(5);

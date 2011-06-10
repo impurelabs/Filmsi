@@ -129,4 +129,23 @@ class ChannelScheduleTable extends Doctrine_Table
 			->where('s.day < date_sub(NOW(), interval ? day)', $days)	
 			->execute();
 	}
+	
+	public function getNowFilms($limit)
+	{
+		$q = Doctrine_Query::create()
+			->from('ChannelSchedule s')
+			->orderBy('f.visit_count DESC')
+			->innerJoin('s.Film f')
+			->innerJoin('s.Channel c')
+			->groupBy('f.id')
+			->where('s.day = CURDATE()')
+			->andWhere('concat_ws(":", lpad(s.time_hour, 2, "0"), lpad(s.time_min, 2, "0"), "00") >= CURTIME()')
+			->orderBy('lpad(s.time_hour, 2, "0") ASC, lpad(s.time_min, 2, "0") ASC');
+
+		if (isset($limit)){
+			$q = $q->limit($limit);
+		}
+
+		return $q->execute();
+	}
 }

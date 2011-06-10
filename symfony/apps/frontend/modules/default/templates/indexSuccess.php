@@ -305,7 +305,7 @@
 						<a href="<?php echo url_for('@film?id=' . $filmSoonTv['Film']['id'] . '&key=' . $filmSoonTv['Film']['url_key']);?>" class="important-link"><?php echo $filmSoonTv['Film']['name_ro'] ;?></a><br />
 						<?php if ($filmSoonTv['Film']['name_en'] != ''):?><em>(<?php echo $filmSoonTv['Film']['name_en'];?>)</em><?php endif;?>
 					<?php endif;?>
-				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film_on_tv?c=' . $filmSoonTv['Channel']['id']);?>" class="explanation-link"><?php echo $filmSoonTv['Channel']['name'];?></a></div>
+				  <div><a href="<?php echo url_for('@film_on_tv?c=' . $filmSoonTv['Channel']['id']);?>" class="explanation-link"><?php echo $filmSoonTv['Channel']['name'];?></a></div>
 				</div>
 			<?php endforeach;?>
         </div>

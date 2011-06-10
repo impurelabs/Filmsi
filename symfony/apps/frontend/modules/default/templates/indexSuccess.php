@@ -213,7 +213,7 @@
 				</div>
 				<div class="inline-block cell-separator-dotted-bottom" style="width: 135px"> <a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="important-link"><?php echo $filmNowTv->getFilm()->getNameRo();?></a><br />
 				  <?php if ($filmNowTv->getFilm()->getNameEn() != ''):?><em>(<?php echo $filmNowTv->getFilm()->getNameEn();?>)</em><?php endif;?>
-				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film?id=' . $filmNowTv->getFilm()->getId() . '&key=' . $filmNowTv->getFilm()->getUrlKey());?>" class="explanation-link">Pro TV</a></div>
+				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film_on_tv?c=' . $filmNowTv->getChannel()->getId());?>" class="explanation-link"><?php echo $filmNowTv->getChannel()->getName();?></a></div>
 				</div>
 			  </div>
 			<?php endforeach;?>
@@ -298,9 +298,14 @@
         </div>
         <div class="cell-bd" style="height: 320px">
           <?php foreach ($filmsSoonTv as $filmSoonTv):?>
-				<div class="inline-block cell-separator-dotted-bottom mb-1"> <a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="important-link"><?php echo $filmSoonTv->getNameRo();?></a><br />
-				  <?php if ($filmSoonTv->getNameEn() != ''):?><em>(<?php echo $filmSoonTv->getNameEn();?>)</em><?php endif;?>
-				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film?id=' . $filmSoonTv->getId() . '&key=' . $filmSoonTv->getUrlKey());?>" class="explanation-link">Pro TV</a></div>
+				<div class="inline-block cell-separator-dotted-bottom mb-1"> 
+					<?php if ($filmSoonTv['film_not_in_db'] == '1'):?>
+						<?php echo $filmSoonTv['film_name'];?>
+					<?php else: ?>
+						<a href="<?php echo url_for('@film?id=' . $filmSoonTv['Film']['id'] . '&key=' . $filmSoonTv['Film']['url_key']);?>" class="important-link"><?php echo $filmSoonTv['Film']['name_ro'] ;?></a><br />
+						<?php if ($filmSoonTv['Film']['name_en'] != ''):?><em>(<?php echo $filmSoonTv['Film']['name_en'];?>)</em><?php endif;?>
+					<?php endif;?>
+				  <div class="spacer-top-ml"><a href="<?php echo url_for('@film_on_tv?c=' . $filmSoonTv['Channel']['id']);?>" class="explanation-link"><?php echo $filmSoonTv['Channel']['name'];?></a></div>
 				</div>
 			<?php endforeach;?>
         </div>

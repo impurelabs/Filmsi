@@ -148,4 +148,24 @@ class ChannelScheduleTable extends Doctrine_Table
 
 		return $q->execute();
 	}
+	
+	public function getSoonFilms($limit)
+	{
+		$q = Doctrine_Query::create()
+			->select('s.time_hour, s.time_min, s.film_not_in_db, s.film_name, c.name, c.filename, c.id, f.name_ro, f.name_en, f.id, f.url_key, f.is_series')
+			->from('ChannelSchedule s')
+			->orderBy('f.visit_count DESC')
+			->leftJoin('s.Film f')
+			->innerJoin('s.Channel c')
+			->groupBy('f.id')
+			->where('s.day = DATE_ADD(CURDATE(), INTERVAL 1 DAY)')
+			->andWhere('concat_ws(":", lpad(s.time_hour, 2, "0"), lpad(s.time_min, 2, "0"), "00") >= CURTIME()')
+			->orderBy('lpad(s.time_hour, 2, "0") ASC, lpad(s.time_min, 2, "0") ASC');
+
+		if (isset($limit)){
+			$q = $q->limit($limit);
+		}
+
+		return $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+	}
 }

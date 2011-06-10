@@ -319,7 +319,7 @@ class FilmTable extends Doctrine_Table
 			->where('f.status_cinema = 1')
 			->andWhere('concat_ws("-", f.status_cinema_year, lpad(f.status_cinema_month, 2, "0"), lpad(f.status_cinema_day, 2, "0")) >= "' . $firstDay . '"')
 			->andWhere('concat_ws("-", f.status_cinema_year, lpad(f.status_cinema_month, 2, "0"), lpad(f.status_cinema_day, 2, "0")) <= "' . $lastDay . '"')
-			->orderBy('f.status_cinema_year ASC, f.status_cinema_month ASC, f.status_cinema_day ASC')
+			->orderBy('f.status_cinema_year ASC, lpad(f.status_cinema_month, 2, "0") ASC, lpad(f.status_cinema_day, 2, "0") ASC')
 			->limit($limit)
 			->execute();
 	}
@@ -400,7 +400,7 @@ class FilmTable extends Doctrine_Table
 			->where('f.status_cinema = 1')
 			->andWhere('concat_ws("-", f.status_cinema_year, lpad(f.status_cinema_month, 2, "0"), lpad(f.status_cinema_day, 2, "0")) >= "' . $firstDay . '"')
 			->andWhere('concat_ws("-", f.status_cinema_year, lpad(f.status_cinema_month, 2, "0"), lpad(f.status_cinema_day, 2, "0")) <= "' . $lastDay . '"')
-			->orderBy('f.status_cinema_year ASC, f.status_cinema_month ASC, f.status_cinema_day ASC')
+			->orderBy('f.status_cinema_year ASC, lpad(f.status_cinema_month, 2, "0") ASC, lpad(f.status_cinema_day, 2, "0") ASC')
 			->limit($limit)
 			->execute();
 	}

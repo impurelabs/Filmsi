@@ -54,7 +54,7 @@ class ChannelScheduleTable extends Doctrine_Table
 	public function getFiltered($day, $hour, $channelId, $type)
 	{
 		$q = Doctrine_Query::create()
-			->select('s.time_hour, s.time_min, s.film_not_in_db, s.film_name, c.name channel_name, c.filename channel_filename, c.id channel_id, f.name_ro, f.id film_id, f.url_key film_url_key, f.is_series film_is_series')
+			->select('s.time_hour, s.time_min, s.film_not_in_db, s.film_name, c.name channel_name, c.filename channel_filename, c.id channel_id, f.name_ro, f.name_en, f.id film_id, f.url_key film_url_key, f.is_series film_is_series')
 			->from('ChannelSchedule s')
 			->orderBy('c.name, s.time_hour, s.time_min ASC')
 			->leftJoin('s.Film f')
@@ -88,7 +88,7 @@ class ChannelScheduleTable extends Doctrine_Table
 			$results[$schedule['channel_id']]['films'][$schedule['time_hour']][] = array(
 				'time_min' => $schedule['time_min'],
 				'film_id' => $schedule['film_id'],
-				'film_name' => $schedule['film_not_in_db'] == '1' ? $schedule['film_name'] : $schedule['name_ro'],
+				'film_name' => $schedule['film_not_in_db'] == '1' ? $schedule['film_name'] : ( $schedule['name_ro'] != '' ? $schedule['name_ro'] : $schedule['name_en'] ),
 				'film_url_key' => $schedule['film_url_key'],
 				'film_is_series' => $schedule['film_is_series'],
 			);

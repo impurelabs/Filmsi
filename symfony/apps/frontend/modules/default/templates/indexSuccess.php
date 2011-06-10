@@ -512,7 +512,7 @@
     <div class="cell-bd" style="height: 162px">
 		<?php foreach($filmPhotos  as $filmPhoto):?>
 			<div class="inline-block align-center spacer-bottom ml-1" style="width: 85px; vertical-align: top">
-				<a href="<?php echo url_for('@film_photos?id=' . $filmPhoto->getAlbum()->getFilm()->getId() . '&key=' . $filmPhoto->getAlbum()->getFilm()->getUrlKey());?>?photo_id=<?php echo $filmPhoto->getId();?>" style="display: inline-block; width: 80px; height: 107px; padding: 1px; border: 1px solid #d5d5d5; overflow: hidden; background-image: url('<?php echo filmsiPhotoThumb($filmPhoto->getFilename());?>')">
+				<a href="<?php echo url_for('@film_photos?id=' . $filmPhoto->getAlbum()->getFilm()->getId() . '&key=' . $filmPhoto->getAlbum()->getFilm()->getUrlKey());?>?photo_id=<?php echo $filmPhoto->getId();?>" style="display: inline-block; width: 80px; height: 107px; padding: 1px; border: 1px solid #d5d5d5; overflow: hidden; background-image: url('<?php echo filmsiPhotoThumb($filmPhoto->getFilename());?>'); background-repeat: no-repeat;">
 				</a> <br />
 				<a href="<?php echo url_for('@film_photos?id=' . $filmPhoto->getAlbum()->getFilm()->getId() . '&key=' . $filmPhoto->getAlbum()->getFilm()->getUrlKey());?>?photo_id=<?php echo $filmPhoto->getId();?>" class="black-link xs-link">
 					<?php echo $filmPhoto->getAlbum()->getFilm()->getNameRo();?>

@@ -457,6 +457,7 @@
   <!-- cell container 4 -->
 
   <div class="cell-container1 spacer-left">
+    <?php if (count($latestAwards) > 0):?>
     <div class="cell spacer-bottom-m">
       <div class="cell-hd">
         <h4>Festival de film</h4>
@@ -472,6 +473,9 @@
         </ul>
         <span class="more-cell"><a href="<?php echo url_for('@festivals');?>" class="smallwhite-link">afla mai multe &raquo;</a></span> </div>
     </div>
+	<?php endif;?>
+	  
+	<?php if (count($latestComments) > 0):?>
     <div class="cell spacer-bottom-m" style="border:0; background-color: transparent">
       <div class="cell-hd">
         <div style="background-color: #ffffff; width: 205px; height: 11px; position: absolute; top:0; left: 0"></div>
@@ -491,6 +495,7 @@
         </ul>
       </div>
     </div>
+	<?php endif;?>
   </div>
 </div>
 <!-- container 2 end -->

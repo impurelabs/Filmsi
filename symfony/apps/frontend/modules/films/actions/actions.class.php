@@ -53,7 +53,7 @@ class filmsActions extends sfActions
 						$this->statuses[] = 'ACUM in Cinema';
 						$statusForTitle = $statusForTitle . ($statusForTitle != '' ? ', Cinema' : 'Cinema');
 					} else {
-						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01','M', 'ro')) . ' pe Cinema';
+						$this->statuses[] = 'DIN ' . strtoupper(format_date($this->film->getStatusCinemaYear() . '-' . $this->film->getStatusCinemaMonth() . '-01','M', 'ro')) . ' in Cinema';
 					}
 				} else {
 					$this->statuses[] = 'IN CURAND in Cinema';

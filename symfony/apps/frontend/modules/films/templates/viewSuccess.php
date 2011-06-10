@@ -34,13 +34,13 @@
 
 	<div class="left" style="width:185px">
     	<img src="<?php echo filmsiFilmPhotoThumb($film->getFilename());?>" class="spacer-bottom" width="185" />
-
-        <?php include_partial('films/alert', array('filmId' => $film->getId()));?>
 		
 		<br />
 			<a href="http://twitter.com/share" class="twitter-share-button" data-text="Uite ba ce fim mishto , pe al mai tare site <?php echo $film->getNameRo();?>" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 			<div class="mb-2"></div>
 			<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=210613575638257&amp;xfbml=1"></script><fb:like href="" send="false" layout="button_count" width="180" show_faces="false" font=""></fb:like>
+
+        <?php include_partial('films/alert', array('filmId' => $film->getId()));?>		
     </div>
 
 

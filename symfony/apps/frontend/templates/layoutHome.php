@@ -57,7 +57,6 @@
                 <span><a href="<?php echo url_for('@film_on_tv');?>" class="menu-link<?php if ($sf_params->get('module') == 'films' && $sf_params->get('action') == 'onTv') echo '-active';?>">La TV</a></span>
                 <span><a href="<?php echo url_for('@stires');?>" class="menu-link<?php if ($sf_params->get('module') == 'stires') echo '-active';?>">Stiri</a></span>
                 <span><a href="<?php echo url_for('@trailers');?>" class="menu-link<?php if ($sf_params->get('module') == 'trailers') echo '-active';?>">Trailere</a></span>
-                <span><a href="<?php echo url_for('@festivals');?>" class="menu-link<?php if ($sf_params->get('module') == 'awards') echo '-active';?>">Festivaluri</a></span>
                 <span><a href="<?php echo url_for('@articles');?>" class="menu-link<?php if ($sf_params->get('module') == 'articles') echo '-active';?>">Camera secreta</a></span>
                 <span><a href="<?php echo url_for('@persons');?>" class="menu-link<?php if ($sf_params->get('module') == 'persons') echo '-active';?>">Actori &amp; Regizori</a></span>
                 <span class="last"><a href="<?php echo url_for('@cinemas');?>" class="menu-link<?php if ($sf_params->get('module') == 'cinemas') echo '-active';?>">Cinematografe</a></span>

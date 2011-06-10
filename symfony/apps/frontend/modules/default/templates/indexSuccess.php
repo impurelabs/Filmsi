@@ -430,7 +430,7 @@
 		  <div class="cell-bd">
 			  <?php foreach($personsBorn as $personBorn):?>
 				<div class="inline-block align-center spacer-bottom spacer-left" style="width: 95px; vertical-align: top;">
-					<a href="<?php echo url_for('@person?id=' . $personBorn->getId() . '&key=' . $personBorn->getUrlKey());?>"><img src="<?php echo filmsiPersonPhotoThumb($personBorn->getFilename());?>" /></a> <br />
+					<a href="<?php echo url_for('@person?id=' . $personBorn->getId() . '&key=' . $personBorn->getUrlKey());?>"><img src="<?php echo filmsiPersonPhotoThumb($personBorn->getFilename());?>" style="width: 75px" /></a> <br />
 					<a href="<?php echo url_for('@person?id=' . $personBorn->getId() . '&key=' . $personBorn->getUrlKey());?>" class="black-link"><?php echo $personBorn->getName();?></a> <br />
 				</div>
 			  <?php endforeach;?>

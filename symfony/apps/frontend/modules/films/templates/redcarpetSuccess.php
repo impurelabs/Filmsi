@@ -77,10 +77,10 @@
     <div class="cell spacer-bottom-m">
         <div class="cell-hd"><h4>Fotografii <span class="black">cu <?php echo $film->getName();?></span></h4></div>
         <div class="cell-bd">
-            <?php foreach($photos as $photo):?>
+            <?php foreach($photos as $key => $photo):?>
             <div class="inline-block align-center spacer-bottom-m ml-3" style="width: 125px; vertical-align: middle">
-                <a href="<?php echo url_for('@film_redcarpet?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>"><img src="<?php echo filmsiPhotoThumbS($photo->getFilename());?>" /></a> <br />
-                <a href="<?php echo url_for('@film_redcarpet?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $photo->getPosition();?>" class="black-link"><?php echo $photo->getDescription();?></a> <br />
+                <a href="<?php echo url_for('@film_redcarpet?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $key;?>"><img src="<?php echo filmsiPhotoThumbS($photo->getFilename());?>" /></a> <br />
+                <a href="<?php echo url_for('@film_redcarpet?id=' . $film->getId() . '&key=' . $film->getUrlKey());?>?pid=<?php echo $key;?>" class="black-link"><?php echo $photo->getDescription();?></a> <br />
             </div>
             <?php endforeach;?>
         </div>
